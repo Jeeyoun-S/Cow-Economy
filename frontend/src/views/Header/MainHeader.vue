@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MainHeaderLogin from "@/components/UserInfo/MainHeaderLogin.vue";
+import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
 export default {
   components: {
     MainHeaderLogin
