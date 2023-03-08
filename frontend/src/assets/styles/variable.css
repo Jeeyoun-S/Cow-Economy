@@ -1,0 +1,46 @@
+:root {
+  /* 색상 */
+  /* 숫자가 커질수록 연해지거나 순서대로. */
+
+  /* 회색의 경우 Vuetify grey 사용*/
+  /* 왼쪽 링크 맨아래 참고 https://v2.vuetifyjs.com/en/styles/colors/ */
+
+  --main-col-1: #485DFE;
+  --main-col-2: #5176FA;
+  --main-col-3: #819CFC;
+  --main-col-4: #95ABFA;
+  --main-col-5: #F0F3FE;
+
+  --error-col-1: #FA5151;
+
+  --graph-1-col-1: #5176FA;
+  --graph-1-col-2: #656FFA;
+  --graph-1-col-3: #7669FA;
+  --graph-1-col-4: #8862FA;
+  --graph-1-col-5: #9C5BFA;
+  --graph-1-col-6: #C15EF0;
+
+  --graph-2-col-1: #000000;
+  --graph-2-col-2: #000c64;
+  --graph-2-col-3: #182271;
+  --graph-2-col-4: #23319d;
+  --graph-2-col-5: #3c4bbf;
+  --graph-2-col-6: #6979F8;
+  --graph-2-col-7: #9BA6FA;
+  --graph-2-col-8: #CDD2FD;
+
+  /* 글씨체 */
+  /* 숫자가 클수록 두꺼워집니다. */
+  --main-font-1: 'LINESeedKR-Th';
+  --main-font-2: 'LINESeedKR-Rg';
+  --main-font-3: 'LINESeedKR-Bd';
+  
+  --logo-font-1: 'Cafe24SsurroundAir';
+  --logo-font-2: 'Cafe24Ssurround';
+
+  --menu-font-1: 'BRBA_R';
+  --menu-font-2: 'BRBA_B';
+
+  /* 크기 (h:높이, w:너비) */
+  --header-h: 65px;
+}
