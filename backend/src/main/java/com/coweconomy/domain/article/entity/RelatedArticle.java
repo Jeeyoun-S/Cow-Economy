@@ -13,4 +13,13 @@ public class RelatedArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long relatedArticleId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id")
+    @NotNull
+    private Article article;
+
+    @NotNull
+    private Long recommend;
+
 }
