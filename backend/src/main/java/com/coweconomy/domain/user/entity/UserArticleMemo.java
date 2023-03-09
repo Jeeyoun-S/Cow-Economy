@@ -1,32 +1,37 @@
 package com.coweconomy.domain.user.entity;
 
 import com.coweconomy.domain.article.entity.Article;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 public class UserArticleMemo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memoId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    @NotNull
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "article_id")
-    @NotNull
     private Article article;
 
     @NotNull
+    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regtime;
 
     @Column(length = 500)
@@ -37,5 +42,6 @@ public class UserArticleMemo {
     private int memoEndPoint;
 
     @NotNull
-    private int memoPublicScope;
+    @Column(columnDefinition = "Boolean default false")
+    private Boolean memoPublicScope;
 }

@@ -1,13 +1,18 @@
 package com.coweconomy.domain.article.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 public class RelatedArticle {
     @Id
@@ -16,10 +21,10 @@ public class RelatedArticle {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    @NotNull
     private Article article;
 
-    @NotNull
-    private Long recommend;
 
+    @Comment("관련 기사 추천도")
+    @NotNull
+    private int recommend;
 }

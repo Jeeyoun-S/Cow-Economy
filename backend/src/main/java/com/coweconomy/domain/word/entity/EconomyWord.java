@@ -1,6 +1,8 @@
 package com.coweconomy.domain.word.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -9,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 public class EconomyWord {
     @Id
@@ -20,6 +24,8 @@ public class EconomyWord {
     @NotNull
     private String word;
 
+    @Column(length = 100)
+    private String subword;
     @Column(columnDefinition = "MEDIUMTEXT")
     @NotNull
     private String wordExpl;

@@ -1,14 +1,18 @@
 package com.coweconomy.domain.word.entity;
 
 import com.coweconomy.domain.article.entity.Article;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 public class ArticleWord {
     @Id
@@ -17,13 +21,12 @@ public class ArticleWord {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "word_id")
-    @NotNull
     private EconomyWord economyWord;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    @NotNull
     private Article article;
 
+    @Comment("기사 내 단어 시작 위치")
     private Long wordIndex;
 }

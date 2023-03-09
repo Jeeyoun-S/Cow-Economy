@@ -4,7 +4,9 @@ import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.entity.ArticleWord;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import javax.validation.constraints.NotNull;
 import javax.persistence.*;
@@ -13,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 public class Article {
     @Id
@@ -25,6 +29,7 @@ public class Article {
     private String articleCategory;
 
     @NotNull
+    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime articleRegtime;
 
     @Column(length = 30)
@@ -39,10 +44,6 @@ public class Article {
     @NotNull
     private String articleTitle;
 
-    @Column(length = 100)
-    @NotNull
-    private String articleSubtitle;
-
     @Column(columnDefinition = "MEDIUMTEXT")
     @NotNull
     private String articleContent;
@@ -55,6 +56,7 @@ public class Article {
     private String articleThumbnail;
 
     @NotNull
+    @Column(columnDefinition = "int default 0")
     private int articleHits;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
