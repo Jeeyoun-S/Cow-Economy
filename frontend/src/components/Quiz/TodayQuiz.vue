@@ -3,10 +3,7 @@
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
     <!-- 스탑워치 -->
-    <div
-      class="stopWatch"
-      v-if="this.correctFlag == null || this.timeoutFlag == null"
-    >
+    <div class="stopWatch" v-if="this.timerVisiFlag == true">
       <stop-watch></stop-watch>
     </div>
     <!-- 정답/오답 결과 출력 -->
@@ -23,16 +20,7 @@
         :key="key"
         v-for="(answer, key) in questions[index]['answers']"
       >
-        <!-- 원래 Button -->
-        <!-- <v-btn
-          class="px-15 py-15 ma-2"
-          :color="isHovering ? 'var(--quiz-1-col-6)' : 'var(--main-col-4)'"
-          :id="key"
-          :value="key"
-          v-model="selectedAnswer"
-          @click="selectClickAnswer(key)"
-          >{{ answer }}</v-btn
-        > -->
+        <!-- 정답 후보 -->
         <v-btn
           class="answerBtn"
           style="height: 150px"
@@ -62,9 +50,10 @@ export default {
       index: 0, // 전체 문제 no
       time: 10000, // 문제 풀이 시간, 10초(10000)
       timer: null, // 타이머 interval
-      // timer: setTimeout(this.timeOut, 10000),
+      timerVisiFlag: true, // 타이머 Front 표시 판별 Flag
       correctFlag: null, // 현재 문제 정답/오답 판별 Flag
       timeoutFlag: null, // timeout 판별 Flag
+      endFlag: false, // TEST 종료 판별 Flag
       correctAnswer: 0, // 정답 개수
       wrongAnswer: 0, // 오답 개수
       count: 7, // 문제 수
@@ -144,43 +133,32 @@ export default {
     };
   },
   created() {
-    // setTimeout(this.timeOut, 10000);
-    // this.timer();
-    // setInterval(this.timeOut, this.time);
     this.timer = setInterval(this.timeOut, this.time);
   },
   methods: {
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
-      console.log("#21# 선택한 정답 번호: ", key);
-
-      // 선택한 답변 정답 or 오답, 시간 초과에 따라 점수 계산
-      // if (key == this.questions[this.index]["correctAnswer"]) {
-      //   this.correctAnswer++;
-      //   this.correctFlag = true;
-      // } else {
-      //   this.wrongAnswer++;
-      //   this.correctFlag = false;
-      // }
+      // console.log("#21# 선택한 정답 번호: ", key);
       // i) 시간 초과
       if (this.timeoutFlag == true) {
         this.timeoutFlag = true;
         this.wrongAnswer++;
         this.correctFlag = false;
+        this.timerVisiFlag = false;
       }
       // ii) 정답
       else if (key == this.questions[this.index]["correctAnswer"]) {
         this.correctAnswer++;
         this.correctFlag = true;
+        this.timerVisiFlag = false;
       }
       // iii) 오답
       else {
         this.wrongAnswer++;
         this.correctFlag = false;
+        this.timerVisiFlag = false;
       }
-      // console.log("#21# 정답 점수: ", this.correctAnswer);
-      // console.log("#21# 오답 점수: ", this.wrongAnswer);
-      console.log("#21# 정답/오답 확인: ", this.correctFlag);
+      // console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
       setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
@@ -190,12 +168,15 @@ export default {
       this.index++;
       this.correctFlag = null;
       this.timeoutFlag = false;
+      this.timerVisiFlag = true;
 
       this.timer = setInterval(this.timeOut, this.time);
       // 문제 끝 > 결과 출력
       if (this.index == 7) {
+        this.timerVisiFlag = false;
         this.timeoutFlag = false;
         clearInterval(this.timer);
+        this.endFlag = true;
       }
     },
     // [@Method] TimeOut에 따른 Data 값 변경
