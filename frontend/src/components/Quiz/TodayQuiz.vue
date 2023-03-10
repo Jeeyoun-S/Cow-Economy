@@ -40,8 +40,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import StepProgress from "./StepProgress.vue";
-import StopWatch from "./StopWatch.vue";
+import StepProgress from "./element/StepProgress.vue";
+import StopWatch from "./element/StopWatch.vue";
 
 const mypageStore = "mypageStore";
 
