@@ -13,12 +13,12 @@
     </div>
     <div v-if="this.timeoutFlag == true">시간 초과</div>
     <!-- 문제 -->
-    <div class="quizBox" v-if="index < count">
-      <div class="questionTxt">{{ questions[index]["question"] }}</div>
+    <div class="quizBox" v-if="this.index < count">
+      <div class="questionTxt">{{ questions[this.index]["question"] }}</div>
       <v-card-content
         class="answerBox"
         :key="key"
-        v-for="(answer, key) in questions[index]['answers']"
+        v-for="(answer, key) in questions[this.index]['answers']"
       >
         <!-- 정답 후보 -->
         <v-btn
@@ -39,15 +39,17 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import StepProgress from "./StepProgress.vue";
 import StopWatch from "./StopWatch.vue";
 
+const mypageStore = "mypageStore";
+
 export default {
-  components: { StepProgress, StopWatch },
   name: "TodayQuiz",
   data() {
     return {
-      index: 0, // 전체 문제 no
+      // index: 0, // 전체 문제 no
       time: 10000, // 문제 풀이 시간, 10초(10000)
       timer: null, // 타이머 interval
       timerVisiFlag: true, // 타이머 Front 표시 판별 Flag
@@ -135,7 +137,12 @@ export default {
   created() {
     this.timer = setInterval(this.timeOut, this.time);
   },
+  components: { StepProgress, StopWatch },
+  computed: {
+    ...mapState(mypageStore, ["index"]),
+  },
   methods: {
+    ...mapActions(mypageStore, ["increaseIndex"]),
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
       // console.log("#21# 선택한 정답 번호: ", key);
@@ -165,7 +172,7 @@ export default {
     },
     // [@Method] 다음 문제로 이동
     nextQuestion() {
-      this.index++;
+      this.increaseIndex(this.index); // [@Method] mypageStore - index 증가
       this.correctFlag = null;
       this.timeoutFlag = false;
       this.timerVisiFlag = true;
