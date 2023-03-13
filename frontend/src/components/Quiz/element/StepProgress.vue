@@ -73,7 +73,6 @@ export default {
     height: 80px
     justify-content: space-between
     align-items: center
-    margin-bottom: 40px
 
   &__step
     z-index: 2

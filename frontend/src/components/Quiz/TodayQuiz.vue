@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="quiz">
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
     <!-- 스탑워치 -->
@@ -62,7 +62,7 @@ export default {
       questions: [
         {
           question:
-            "1. [ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
+            "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
           answers: {
             a: "중산층가구",
             b: "0.5인 가구",
@@ -135,7 +135,7 @@ export default {
     };
   },
   created() {
-    this.timer = setInterval(this.timeOut, this.time);
+    // this.timer = setInterval(this.timeOut, this.time);
   },
   components: { StepProgress, StopWatch },
   computed: {
@@ -200,23 +200,31 @@ export default {
 </script>
 
 <style>
+/* 퀴즈 */
 .quizBox {
-  margin-left: 5%;
-  margin-right: 5%;
+  font-family: var(--main-font-2);
+
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
+/* 퀴즈 문제 Txt */
 .questionTxt {
   text-align: center;
-  font-size: larger;
+  font-size: 20px;
   letter-spacing: normal;
   line-height: 28px;
+
+  margin-top: 3%;
   margin-bottom: 10%;
 }
 
+/* 퀴즈 답변 Button (4지선다) */
 .answerBtn {
   width: 150px;
   height: 150px;
-  margin-left: 5%;
-  margin-bottom: 5%;
+
+  margin-left: 9%;
+  margin-bottom: 9%;
 }
 </style>
