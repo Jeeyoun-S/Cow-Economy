@@ -4,7 +4,7 @@
     <router-view name="header" />
     <!-- Main -->
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
     <!-- Footer -->
     <router-view name="footer" />
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
 
   data: () => ({
     //
@@ -27,7 +27,7 @@ export default {
 @import "@/assets/styles/text.css";
 
 html body {
-  background: #FAFAFA;
+  background: #fafafa;
   max-width: 500px;
   margin: 0 auto;
   height: 100%;
