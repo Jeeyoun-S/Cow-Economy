@@ -12,7 +12,7 @@
       <answer-wrong></answer-wrong>
     </div>
     <div v-if="this.timeoutFlag == true">
-      시간 초과<wrong-answer></wrong-answer>
+      <answer-wrong></answer-wrong>
     </div>
     <!-- 문제 -->
     <div class="quizBox" v-if="this.index < count">
@@ -170,10 +170,10 @@ export default {
         this.correctFlag = false;
         this.timerVisiFlag = false;
       }
-      // console.log("#21# 정답/오답 확인: ", this.correctFlag);
+      console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
-      // setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
+      setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
     },
     // [@Method] 다음 문제로 이동
     nextQuestion() {

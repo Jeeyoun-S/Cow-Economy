@@ -1,12 +1,14 @@
 <template>
-  <div class="answer-result">
+  <div class="answer-correct">
     <img :src="require('@/assets/images/mypage/correct.png')" />
   </div>
 </template>
 
 <style>
-.answer-result img {
-  width: 100%;
-  height: 100%;
+.answer-correct img {
+  width: 70%;
+
+  margin-left: 18%;
+  margin-bottom: 2%;
 }
 </style>

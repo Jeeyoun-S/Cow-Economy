@@ -33,6 +33,14 @@ html body {
   height: 100%;
   min-height: 100%;
 }
+
+/* @media (max-width: 750px) {
+  #app {
+    width: 100%;
+    border-left: 0;
+    border-right: 0;
+  }
+} */
 #app {
   background-color: var(--main-col-5);
   max-width: 100%;
