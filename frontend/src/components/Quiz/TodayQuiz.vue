@@ -163,7 +163,7 @@ export default {
     ...mapState(quizStore, ["index"]),
   },
   methods: {
-    ...mapActions(quizStore, ["increaseIndex"]),
+    ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
       // console.log("#21# 선택한 정답 번호: ", key);
@@ -204,12 +204,20 @@ export default {
       // if (this.index == 7) {
       //   this.timerVisiFlag = false;
       //   this.timeoutFlag = false;
+
+      //   // [@Method] Quiz 결과 저장 (quizStore)
+      //   this.setQuizResult(this.correctAnswer);
+
       //   clearInterval(this.timer);
       //   this.endFlag = true;
       // }
       if (this.index == 2) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
+
+        // [@Method] Quiz 결과 저장 (quizStore)
+        this.setQuizResult(this.correctAnswer);
+
         clearInterval(this.timer);
         this.endFlag = true;
       }
