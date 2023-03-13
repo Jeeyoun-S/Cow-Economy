@@ -1,3 +1,12 @@
 .footer-font {
   font-size: 10px;
 }
+.main-title-font {
+  font-size: 20px;
+  font-family: var(--main-font-3);
+}
+.main-subtitle-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: grey;
+}
