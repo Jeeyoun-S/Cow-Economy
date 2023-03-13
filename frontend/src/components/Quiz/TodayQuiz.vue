@@ -36,7 +36,16 @@
       </v-card-content>
     </div>
     <!-- 최종 결과 -->
-    <div v-if="this.index == 7">끝-</div>
+    <!-- <div v-if="this.index == 7">끝-</div> -->
+    <!-- <div v-if="this.index == 7">
+      <test-result-modal></test-result-modal>
+    </div> -->
+    <!-- <div v-if="this.index == 7"> -->
+    <div v-if="this.index == 2">
+      <h5>Modal!</h5>
+      <p>이렇게 하는거 맞냥</p>
+      <test-result-modal></test-result-modal>
+    </div>
   </div>
 </template>
 
@@ -47,8 +56,9 @@ import StopWatch from "./element/StopWatch.vue";
 
 import AnswerCorrect from "./element/AnswerCorrect.vue";
 import AnswerWrong from "./element/AnswerWrong.vue";
+import TestResultModal from "./element/TestResultModal.vue";
 
-const mypageStore = "mypageStore";
+const quizStore = "quizStore";
 
 export default {
   name: "TodayQuiz",
@@ -142,12 +152,18 @@ export default {
   created() {
     this.timer = setInterval(this.timeOut, this.time);
   },
-  components: { StepProgress, StopWatch, AnswerCorrect, AnswerWrong },
+  components: {
+    StepProgress,
+    StopWatch,
+    AnswerCorrect,
+    AnswerWrong,
+    TestResultModal,
+  },
   computed: {
-    ...mapState(mypageStore, ["index"]),
+    ...mapState(quizStore, ["index"]),
   },
   methods: {
-    ...mapActions(mypageStore, ["increaseIndex"]),
+    ...mapActions(quizStore, ["increaseIndex"]),
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
       // console.log("#21# 선택한 정답 번호: ", key);
@@ -173,18 +189,25 @@ export default {
       console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
-      setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
+      // setTimeout(this.nextQuestion, 5000); // 5초 후 다음 문제로 넘어감
+      setTimeout(this.nextQuestion, 2000); // 5초 후 다음 문제로 넘어감
     },
     // [@Method] 다음 문제로 이동
     nextQuestion() {
-      this.increaseIndex(this.index); // [@Method] mypageStore - index 증가
+      this.increaseIndex(this.index); // [@Method] quizStore - index 증가
       this.correctFlag = null;
       this.timeoutFlag = false;
       this.timerVisiFlag = true;
 
       this.timer = setInterval(this.timeOut, this.time);
       // 문제 끝 > 결과 출력
-      if (this.index == 7) {
+      // if (this.index == 7) {
+      //   this.timerVisiFlag = false;
+      //   this.timeoutFlag = false;
+      //   clearInterval(this.timer);
+      //   this.endFlag = true;
+      // }
+      if (this.index == 2) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
         clearInterval(this.timer);
