@@ -7,11 +7,13 @@
       <stop-watch></stop-watch>
     </div>
     <!-- 정답/오답 결과 출력 -->
-    <div v-if="this.correctFlag == true">정답</div>
+    <div v-if="this.correctFlag == true"><answer-correct></answer-correct></div>
     <div v-else-if="this.correctFlag == false && this.timeoutFlag == false">
-      오답
+      <answer-wrong></answer-wrong>
     </div>
-    <div v-if="this.timeoutFlag == true">시간 초과</div>
+    <div v-if="this.timeoutFlag == true">
+      시간 초과<wrong-answer></wrong-answer>
+    </div>
     <!-- 문제 -->
     <div class="quizBox" v-if="this.index < count">
       <div class="questionTxt">{{ questions[this.index]["question"] }}</div>
@@ -42,6 +44,9 @@
 import { mapActions, mapState } from "vuex";
 import StepProgress from "./element/StepProgress.vue";
 import StopWatch from "./element/StopWatch.vue";
+
+import AnswerCorrect from "./element/AnswerCorrect.vue";
+import AnswerWrong from "./element/AnswerWrong.vue";
 
 const mypageStore = "mypageStore";
 
@@ -135,9 +140,9 @@ export default {
     };
   },
   created() {
-    // this.timer = setInterval(this.timeOut, this.time);
+    this.timer = setInterval(this.timeOut, this.time);
   },
-  components: { StepProgress, StopWatch },
+  components: { StepProgress, StopWatch, AnswerCorrect, AnswerWrong },
   computed: {
     ...mapState(mypageStore, ["index"]),
   },
@@ -168,7 +173,7 @@ export default {
       // console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
-      setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
+      // setTimeout(this.nextQuestion, 5000); // 10초 후 다음 문제로 넘어감
     },
     // [@Method] 다음 문제로 이동
     nextQuestion() {
