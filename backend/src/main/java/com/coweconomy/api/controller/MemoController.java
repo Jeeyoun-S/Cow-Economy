@@ -5,9 +5,12 @@ import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.repository.UserArticleMemoRepository;
 import com.coweconomy.service.MemoService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/memo")
@@ -47,12 +50,21 @@ public class MemoController {
     }
 
     @PutMapping("")
-    public int modifyMemo() {
-        return 0;
+    public BaseResponse modifyMemo() {
+
+
+        return BaseResponse.fail();
     }
 
     @DeleteMapping("")
-    public int deleteMemo() {
-        return 0;
+    public BaseResponse deleteMemo(Long memoId) {
+
+        Optional<UserArticleMemo> optionalUserArticleMemo = userArticleMemoRepository.findByMemoId(memoId);
+        if (optionalUserArticleMemo.isPresent()) {
+            userArticleMemoRepository.delete(optionalUserArticleMemo.get());
+            return BaseResponse.success(null);
+        }
+
+        return BaseResponse.fail();
     }
 }

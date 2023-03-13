@@ -9,5 +9,10 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+    /**
+     * article Id로 Article Table에서 값 찾기
+     * @param articleId
+     * @return Optional<Article>
+     * **/
     Optional<Article> findByArticleId(Long articleId);
 }
