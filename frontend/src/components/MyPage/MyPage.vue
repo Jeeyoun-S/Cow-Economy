@@ -8,7 +8,7 @@
           <v-img src="@/assets/images/login/google_login.png"  class="blur-on-hover"></v-img>
         </v-flex>
         <v-flex class="d-flex flex-column align-center justify-center">
-          <v-img src="@/assets/images/login/kakao_login.png" @click="kakaoLogin" class="blur-on-hover"></v-img>
+          <v-img src="@/assets/images/login/kakao_login.png" @click="kakaoLogin()" class="blur-on-hover"></v-img>
         </v-flex>
       </div>
     </v-container>
@@ -20,6 +20,7 @@ export default {
   methods: {
     kakaoLogin() {
       window.location.replace(
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.VUE_APP_KAKAO_REDIRECT_URI}&response_type=code`
       )
     }
   }

@@ -33,7 +33,7 @@ server:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
-  port: 5000
+  port: 8080
   servlet:
     contextPath: /
     encoding:
@@ -81,3 +81,12 @@ springfox:
   documentation:
     swagger:
       use-model-v3: false
+
+
+# Security OAuth
+security:
+  oauth2.client:
+    registration:
+      kakao:
+        clientId: a8424f450f05d7160ccc24288e86ec14
+        clientSecret: riKZOBeEYWzWDVfGSijnZgXi2wgDX4Sp

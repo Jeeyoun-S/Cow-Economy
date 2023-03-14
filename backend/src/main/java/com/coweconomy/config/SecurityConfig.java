@@ -1,5 +1,8 @@
 package com.coweconomy.config;
 
+import com.coweconomy.common.jwt.JwtTokenProvider;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,7 +24,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity                                      // 기본적인 Web 보안 활성화
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
     // Password 인코딩 방식 - BCrypt 암호화 방식 사용
     @Bean
     public static PasswordEncoder passwordEncoder() {

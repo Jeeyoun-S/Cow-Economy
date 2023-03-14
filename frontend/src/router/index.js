@@ -7,7 +7,7 @@ import news from "@/router/modules/news";
 import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
-
+import login from "@/router/modules/login";
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,7 +16,8 @@ const routes = [
   ...news,
   ...quiz,
   ...myPage,
-  ...search
+  ...search,
+  ...login,
 ]
 
 const router = new VueRouter({
