@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="overflow-hidden">
     <!-- Header -->
     <router-view name="header" />
     <!-- Main -->
@@ -14,10 +14,32 @@
 <script>
 export default {
   name: "App",
-
   data: () => ({
-    //
+    isShowHeader: true,
+    scrollPosition: 0,
   }),
+  // methods: {
+  //   changeShowHeader() {
+  //     console.log("여기");
+  //     var currentScrollPosition = window.scrollY;
+  //     console.log(currentScrollPosition);
+
+  //     if (currentScrollPosition + 10 < this.scrollPosition) {
+  //       console.log("Scrolling up");
+  //       this.isShowHeader = true;
+  //       //your desire logic
+  //     } else if (currentScrollPosition < this.scrollPosition - 10) {
+  //       this.isShowHeader = false;
+  //       console.log("Scrolling down");
+  //       //your desire logic
+  //     }
+
+  //     this.scrollPosition = window.scrollY;
+  //   },
+  // },
+  // mounted() {
+  //   window.addEventListener("scroll", this.changeShowHeader);
+  // },
 };
 </script>
 
@@ -25,6 +47,8 @@ export default {
 @import "@/assets/styles/font.css";
 @import "@/assets/styles/variable.css";
 @import "@/assets/styles/text.css";
+@import "@/assets/styles/sheet.css";
+@import "@/assets/styles/article.css";
 
 html body {
   background: #fafafa;

@@ -17,16 +17,14 @@
 </template>
 
 <script>
-import BackIcon from "@/common/component/BackIcon.vue"
+import BackIcon from "@/common/component/BackIcon.vue";
 
 export default {
   name: "NewsHeader",
   components: {
-    BackIcon
-  }
-}
+    BackIcon,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
