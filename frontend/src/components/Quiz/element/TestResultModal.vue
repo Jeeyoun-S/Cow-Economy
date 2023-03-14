@@ -5,7 +5,9 @@
         <div class="modal-score-title">최종 스코어</div>
         <div class="modal-score-text">{{ this.correctCount }}/7</div>
         <div v-if="this.isPass">
-          <img :src="require('@/assets/images/mypage/congratulations.gif')" />
+          <img
+            :src="require('@/assets/images/mypage/quiz/congratulations.gif')"
+          />
           <!-- <div class="modal-exp-title">경험치를 획득했어요!</div> -->
           <p class="modal-exp-title">경험치를 획득했어요!</p>
           <div class="modal-exp-text">
@@ -13,7 +15,7 @@
           </div>
         </div>
         <div v-else>
-          <img :src="require('@/assets/images/mypage/fail.gif')" />
+          <img :src="require('@/assets/images/mypage/quiz/fail.gif')" />
           <p class="modal-exp-title">아쉽네요</p>
           <div class="modal-exp-text">테스트를 통과하지 못했습니다.</div>
         </div>

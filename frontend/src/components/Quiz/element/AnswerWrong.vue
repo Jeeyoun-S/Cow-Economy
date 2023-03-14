@@ -1,6 +1,6 @@
 <template>
   <div class="answer-wrong">
-    <img :src="require('@/assets/images/mypage/wrong.png')" />
+    <img :src="require('@/assets/images/mypage/quiz/wrong.png')" />
   </div>
 </template>
 

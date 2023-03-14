@@ -2,7 +2,7 @@
   <div class="quiz-info">
     <div class="quiz-center">
       <div class="quiz-title">
-        <img :src="require('@/assets/images/mypage/pencil.png')" />
+        <img :src="require('@/assets/images/mypage/quiz/pencil.png')" />
         오늘의 퀴즈
         <div class="quiz-title-bar"></div>
       </div>
@@ -12,11 +12,11 @@
           7문제 중 5문제 이상 통과하면<br />
           경험치 +100을 얻을 수 있습니다.
         </div>
-        <img :src="require('@/assets/images/mypage/book.png')" />
+        <img :src="require('@/assets/images/mypage/quiz/book.png')" />
       </div>
       <!-- 2ed -->
       <div class="quiz-center-item-second">
-        <img :src="require('@/assets/images/mypage/question-mark.png')" />
+        <img :src="require('@/assets/images/mypage/quiz/question-mark.png')" />
         <div>
           문제로는 경제 용어에 대한<br />
           설명이 주어집니다.
@@ -28,7 +28,7 @@
           보기 4개 중 설명에 맞는 단어를<br />
           선택하시면 됩니다.
         </div>
-        <img :src="require('@/assets/images/mypage/winking-emoji.gif')" />
+        <img :src="require('@/assets/images/mypage/quiz/winking-emoji.gif')" />
       </div>
       <!-- 4th -->
       <div class="quiz-center-item-fourth">

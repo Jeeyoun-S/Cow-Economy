@@ -51,6 +51,8 @@ import AnswerCorrect from "./element/AnswerCorrect.vue";
 import AnswerWrong from "./element/AnswerWrong.vue";
 import TestResultModal from "./element/TestResultModal.vue";
 
+import bgm from "@/assets/images/mypage/quiz/quiz_bgm.mp3";
+
 const quizStore = "quizStore";
 
 export default {
@@ -140,10 +142,14 @@ export default {
           correctAnswer: "c",
         },
       ],
+      audio: null, // Audio 객체 (BGM)
     };
   },
   created() {
     this.timer = setInterval(this.timeOut, this.time);
+
+    // BGM 실행
+    if (this.index == 0) this.play();
   },
   components: {
     StepProgress,
@@ -201,19 +207,10 @@ export default {
         // [@Method] Quiz 결과 저장 (quizStore)
         this.setQuizResult(this.correctAnswer);
 
+        // timer stop
         clearInterval(this.timer);
         this.endFlag = true;
       }
-      // if (this.index == 2) {
-      //   this.timerVisiFlag = false;
-      //   this.timeoutFlag = false;
-
-      //   // [@Method] Quiz 결과 저장 (quizStore)
-      //   this.setQuizResult(this.correctAnswer);
-
-      //   clearInterval(this.timer);
-      //   this.endFlag = true;
-      // }
     },
     // [@Method] TimeOut에 따른 Data 값 변경
     timeOut() {
@@ -223,6 +220,13 @@ export default {
 
         this.checkAnswer(null);
       }
+    },
+    // [@Method] BGM 재생
+    play() {
+      this.audio = new Audio(bgm);
+      // this.audio.loop = true; // 반복 재생
+      this.audio.volume = 0.3;
+      this.audio.play();
     },
   },
 };
