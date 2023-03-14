@@ -5,13 +5,18 @@
         <div class="modal-score-title">최종 스코어</div>
         <div class="modal-score-text">{{ this.correctCount }}/7</div>
         <div v-if="this.isPass">
-          <img :src="require('@/assets/images/mypage/correct.png')" />
+          <img :src="require('@/assets/images/mypage/congratulations.gif')" />
+          <!-- <div class="modal-exp-title">경험치를 획득했어요!</div> -->
+          <p class="modal-exp-title">경험치를 획득했어요!</p>
+          <div class="modal-exp-text">
+            현재 경험치 {{ this.experience }} EXP
+          </div>
         </div>
         <div v-else>
-          <img :src="require('@/assets/images/mypage/wrong.png')" />
+          <img :src="require('@/assets/images/mypage/fail.gif')" />
+          <p class="modal-exp-title">아쉽네요</p>
+          <div class="modal-exp-text">테스트를 통과하지 못했습니다.</div>
         </div>
-        <p class="modal-exp-title">경험치를 획득했어요!</p>
-        <div class="modal-exp-text">현재 경험치 {{ this.experience }} EXP</div>
       </v-card-text>
       <v-card-actions class="modal-button">
         <v-btn block dark color="var(--main-col-2)" @click="closeModal()"
@@ -74,8 +79,8 @@ export default {
   color: black;
 }
 .modal-wrapper-text img {
-  width: 115px;
-  height: 115px;
+  width: 250px;
+  height: 100px;
 
   margin-bottom: 5%;
 }
@@ -99,6 +104,10 @@ export default {
   font-size: larger;
   font-weight: 600;
   color: black;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .modal-exp-text {
   font-size: medium;
@@ -106,6 +115,10 @@ export default {
   color: black;
 
   margin-bottom: 10%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* modal - button 부분 */

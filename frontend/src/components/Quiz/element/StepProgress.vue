@@ -19,7 +19,7 @@
 import StepProgress from "vue-step-progress";
 import { mapState } from "vuex";
 
-const mypageStore = "mypageStore";
+const quizStore = "quizStore";
 
 export default {
   name: "TodayQuiz",
@@ -37,7 +37,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(mypageStore, ["index"]),
+    ...mapState(quizStore, ["index"]),
   },
 };
 </script>

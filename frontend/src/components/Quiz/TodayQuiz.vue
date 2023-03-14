@@ -36,14 +36,7 @@
       </v-card-content>
     </div>
     <!-- 최종 결과 -->
-    <!-- <div v-if="this.index == 7">끝-</div> -->
-    <!-- <div v-if="this.index == 7">
-      <test-result-modal></test-result-modal>
-    </div> -->
-    <!-- <div v-if="this.index == 7"> -->
-    <div v-if="this.index == 2">
-      <h5>Modal!</h5>
-      <p>이렇게 하는거 맞냥</p>
+    <div v-if="this.index == 7">
       <test-result-modal></test-result-modal>
     </div>
   </div>
@@ -190,7 +183,7 @@ export default {
 
       clearInterval(this.timer);
       // setTimeout(this.nextQuestion, 5000); // 5초 후 다음 문제로 넘어감
-      setTimeout(this.nextQuestion, 2000); // 5초 후 다음 문제로 넘어감
+      setTimeout(this.nextQuestion, 2000); // 2초 후 다음 문제로 넘어감
     },
     // [@Method] 다음 문제로 이동
     nextQuestion() {
@@ -201,17 +194,7 @@ export default {
 
       this.timer = setInterval(this.timeOut, this.time);
       // 문제 끝 > 결과 출력
-      // if (this.index == 7) {
-      //   this.timerVisiFlag = false;
-      //   this.timeoutFlag = false;
-
-      //   // [@Method] Quiz 결과 저장 (quizStore)
-      //   this.setQuizResult(this.correctAnswer);
-
-      //   clearInterval(this.timer);
-      //   this.endFlag = true;
-      // }
-      if (this.index == 2) {
+      if (this.index == 7) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
 
@@ -221,6 +204,16 @@ export default {
         clearInterval(this.timer);
         this.endFlag = true;
       }
+      // if (this.index == 2) {
+      //   this.timerVisiFlag = false;
+      //   this.timeoutFlag = false;
+
+      //   // [@Method] Quiz 결과 저장 (quizStore)
+      //   this.setQuizResult(this.correctAnswer);
+
+      //   clearInterval(this.timer);
+      //   this.endFlag = true;
+      // }
     },
     // [@Method] TimeOut에 따른 Data 값 변경
     timeOut() {
