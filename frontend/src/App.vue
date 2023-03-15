@@ -49,6 +49,7 @@ export default {
 @import "@/assets/styles/text.css";
 @import "@/assets/styles/sheet.css";
 @import "@/assets/styles/article.css";
+@import "@/assets/styles/override.css";
 
 html body {
   background: #fafafa;

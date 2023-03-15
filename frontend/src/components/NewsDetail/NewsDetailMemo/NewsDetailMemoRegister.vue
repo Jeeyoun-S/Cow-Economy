@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="mt-4 pa-5" rounded="lg" outlined>
+  <v-sheet class="mx-7 my-4 pa-5" rounded="lg" outlined>
     <div class="d-flex justify-space-between">
       <v-card
         class="pa-1"

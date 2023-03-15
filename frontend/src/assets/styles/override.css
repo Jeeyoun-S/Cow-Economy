@@ -1,0 +1,15 @@
+.v-text-field--rounded > .v-input__control > .v-input__slot {
+  padding: 0px 10px 0px 17px !important;
+}
+.v-text-field--outlined.v-input--dense.v-text-field--outlined
+  > .v-input__control
+  > .v-input__slot {
+  min-height: 30px !important;
+  height: 35px !important;
+}
+.v-text-field--enclosed.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__append-inner {
+  margin-top: 4px !important;
+}

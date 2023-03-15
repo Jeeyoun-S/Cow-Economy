@@ -1,36 +1,47 @@
 <template>
   <div>
-    <!-- memo box -->
-    <v-sheet
-      v-if="!modifyMode"
-      class="mt-3 pa-5 d-flex flex-column"
-      elevation="1"
-      rounded="lg"
-    >
-      <!-- memo header -->
-      <v-sheet class="mb-3 d-flex align-center">
-        <!-- memo editor -->
-        <v-chip class="mr-auto" color="var(--main-col-3)" label dark>{{
-          nickname
-        }}</v-chip>
-        <!-- memo date -->
-        <span class="mx-1 sm-font">{{ date }}</span>
-        <!-- memo open status button -->
-        <NewsDetailMemoBtnLock></NewsDetailMemoBtnLock>
-        <!-- memo modify button -->
-        <v-btn icon text color="var(--main-col-3)" @click="modifyMode = true"
-          ><v-icon> mdi-pencil </v-icon></v-btn
-        >
-        <!-- memo delete button -->
-        <NewsDetailMemoBtnDelete :memoId="memoId"></NewsDetailMemoBtnDelete>
+    <v-hover v-if="!modifyMode" v-slot="{ hover }" open-delay="200">
+      <!-- memo box -->
+      <v-sheet
+        :color="hover ? 'var(--main-col-5)' : 'transparent'"
+        :class="{ 'on-hover': hover }"
+        class="px-8 py-3 d-flex flex-column"
+      >
+        <!-- memo header -->
+        <v-sheet class="mb-3 d-flex align-center" color="transparent">
+          <!-- memo editor -->
+          <v-chip class="mr-3" color="var(--main-col-3)" label dark small>{{
+            nickname
+          }}</v-chip>
+          <v-divider></v-divider>
+          <!-- memo date -->
+          <span class="mx-1 ml-2 sm-font">{{ date }}</span>
+          <!-- memo update -->
+          <div v-if="isMine">
+            <!-- memo open status button -->
+            <NewsDetailMemoBtnLock></NewsDetailMemoBtnLock>
+            <!-- memo modify button -->
+            <v-btn
+              icon
+              text
+              color="var(--main-col-3)"
+              @click="modifyMode = true"
+              ><v-icon> mdi-pencil </v-icon></v-btn
+            >
+            <!-- memo delete button -->
+            <NewsDetailMemoBtnDelete :memoId="memoId"></NewsDetailMemoBtnDelete>
+          </div>
+        </v-sheet>
+        <!-- memo reference box -->
+        <NewsDetailMemoReference
+          :reference="reference"
+        ></NewsDetailMemoReference>
+        <!-- memo content -->
+        <v-sheet color="transparent">
+          {{ content }}
+        </v-sheet>
       </v-sheet>
-      <!-- memo reference box -->
-      <NewsDetailMemoReference :reference="reference"></NewsDetailMemoReference>
-      <!-- memo content -->
-      <v-sheet>
-        {{ content }}
-      </v-sheet>
-    </v-sheet>
+    </v-hover>
     <!-- memo modify version -->
     <NewsDetailMemoModify
       v-else
@@ -39,6 +50,7 @@
       :memoId="memoId"
       :content="content"
     ></NewsDetailMemoModify>
+    <!-- <v-divider></v-divider> -->
   </div>
 </template>
 
@@ -56,6 +68,9 @@ export default {
     NewsDetailMemoBtnLock,
     NewsDetailMemoModify,
   },
+  props: {
+    isMine: Boolean,
+  },
   data() {
     return {
       reference:
@@ -66,6 +81,11 @@ export default {
       memoId: 1,
       modifyMode: false,
     };
+  },
+  created() {
+    if (this.isMine) {
+      this.nickname = "MY";
+    }
   },
 };
 </script>

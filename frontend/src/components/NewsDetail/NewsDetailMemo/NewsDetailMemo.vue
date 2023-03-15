@@ -1,8 +1,8 @@
 <template>
-  <v-sheet class="pa-7">
-    <v-sheet class="d-flex flex-row">
+  <v-sheet class="py-7">
+    <v-sheet class="mx-7 d-flex flex-row align-center">
       <h3 class="mr-auto">메모</h3>
-      <v-sheet width="125px">
+      <v-sheet width="100px">
         <v-select
           v-model="sort"
           :items="['최신순', '인기순']"
@@ -11,36 +11,58 @@
           rounded
           outlined
           hide-details
+          style="font-size: 15px"
         ></v-select>
       </v-sheet>
     </v-sheet>
-    <v-btn
+    <!-- <v-btn
       elevation="0"
       color="var(--main-col-1)"
       @click="moveIndex()"
       dark
       block
       >이동</v-btn
-    >
-    <NewsDetailMemoOther></NewsDetailMemoOther>
-    <NewsDetailMemoRegister></NewsDetailMemoRegister>
-    <NewsDetailMemoBox v-for="n in 5" :key="n"></NewsDetailMemoBox>
-    <div id="article" @mouseup="getSelectedText()">
+    > -->
+    <v-row class="mx-7 py-5 pt-7">
+      <v-col class="pa-0">
+        <v-btn
+          elevation="0"
+          color="var(--main-col-2)"
+          @click="isListMine = true"
+          :dark="isListMine ? true : false"
+          :outlined="isListMine ? false : true"
+          block
+          >나의 메모</v-btn
+        >
+      </v-col>
+      <v-col class="pa-0">
+        <v-btn
+          elevation="0"
+          color="var(--main-col-2)"
+          @click="isListMine = false"
+          :dark="isListMine ? false : true"
+          :outlined="isListMine ? true : false"
+          block
+          >전체 메모</v-btn
+        >
+      </v-col>
+    </v-row>
+    <NewsDetailMemoOther v-if="!isListMine"></NewsDetailMemoOther>
+    <NewsDetailMemoMine v-else></NewsDetailMemoMine>
+    <!-- <div id="article" @mouseup="getSelectedText()">
       <div v-html="html"></div>
-    </div>
+    </div> -->
   </v-sheet>
 </template>
 
 <script>
-import NewsDetailMemoRegister from "./NewsDetailMemoRegister.vue";
-import NewsDetailMemoBox from "./NewsDetailMemoBox.vue";
 import NewsDetailMemoOther from "./NewsDetailMemoOther.vue";
+import NewsDetailMemoMine from "./NewsDetailMemoMine.vue";
 
 export default {
   name: "NewsDetail",
   components: {
-    NewsDetailMemoRegister,
-    NewsDetailMemoBox,
+    NewsDetailMemoMine,
     NewsDetailMemoOther,
   },
   data() {
@@ -49,6 +71,7 @@ export default {
       html2: "인<br/>천<br/>공항",
       start: 0,
       sort: "최신순",
+      isListMine: true,
     };
   },
   methods: {

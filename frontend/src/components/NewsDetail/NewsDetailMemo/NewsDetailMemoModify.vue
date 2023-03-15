@@ -1,10 +1,11 @@
 <template>
-  <v-sheet
-    class="mt-3 pa-5 d-flex flex-column"
-    color="var(--main-col-5)"
-    rounded="lg"
-  >
-    <v-sheet v-if="!!referenceM" class="pa-3 d-flex align-center" rounded="">
+  <v-sheet class="px-8 mt-3 py-3 d-flex flex-column" rounded="lg">
+    <v-sheet
+      color="var(--main-col-5)"
+      v-if="!!referenceM"
+      class="pa-3 d-flex align-center"
+      rounded
+    >
       <div class="font-italic sm-font">
         {{ referenceM }}
       </div>
