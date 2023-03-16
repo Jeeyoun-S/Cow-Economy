@@ -8,6 +8,7 @@ import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
 import login from "@/router/modules/login";
+// import login from "@/router/modules/login";
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
   ...myPage,
   ...search,
   ...login,
+  // ...login,
 ]
 
 const router = new VueRouter({

@@ -1,13 +1,13 @@
-import LoginRedirect from "@/components/User/LoginRedirect"
+import KakaoCallback from "@/components/MainPage/MainPage.vue";
 
-const login = [
+const myPage = [
   {
-    path: "/login/redirect",
-    name: "loginRedirect",
-    component: {
-      LoginRedirect
+    path: "/kakao/callback",
+    name: "KakaoCallback",
+    components: {
+      KakaoCallback
     },
   },
 ]
 
-export default login;
+export default myPage;

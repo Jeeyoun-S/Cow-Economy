@@ -1,6 +1,8 @@
 package com.coweconomy.common.jwt;
 
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -18,7 +20,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private static final String JWT_SECRET = "secretKey";
+    public static final Key JWT_SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     // 토큰 유효시간
     private static final int JWT_EXPIRATION_MS = 604800000;
