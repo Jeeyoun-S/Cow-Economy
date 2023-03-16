@@ -1,11 +1,11 @@
 <template>
-  <v-sheet class="py-7">
+  <v-sheet class="py-7" id="memo">
     <v-sheet class="mx-7 d-flex flex-row align-center">
       <h3 class="mr-auto">메모</h3>
       <v-sheet width="100px">
         <v-select
           v-model="sort"
-          :items="['최신순', '인기순']"
+          :items="['최신순', '인기순', '레벨순']"
           color="var(--main-col-2)"
           dense
           rounded
@@ -32,6 +32,7 @@
           :dark="isListMine ? true : false"
           :outlined="isListMine ? false : true"
           block
+          tile
           >나의 메모</v-btn
         >
       </v-col>
@@ -43,6 +44,7 @@
           :dark="isListMine ? false : true"
           :outlined="isListMine ? true : false"
           block
+          tile
           >전체 메모</v-btn
         >
       </v-col>

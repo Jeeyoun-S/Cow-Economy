@@ -50,6 +50,7 @@ export default {
 @import "@/assets/styles/sheet.css";
 @import "@/assets/styles/article.css";
 @import "@/assets/styles/override.css";
+@import "@/assets/styles/scroll.css";
 
 html body {
   background: #fafafa;

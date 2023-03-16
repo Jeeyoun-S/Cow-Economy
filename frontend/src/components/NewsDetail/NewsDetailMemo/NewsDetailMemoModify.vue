@@ -1,21 +1,14 @@
 <template>
-  <v-sheet class="px-8 mt-3 py-3 d-flex flex-column" rounded="lg">
-    <v-sheet
-      color="var(--main-col-5)"
-      v-if="!!referenceM"
-      class="pa-3 d-flex align-center"
-      rounded
-    >
-      <div class="font-italic sm-font">
+  <v-sheet color="var(--main-col-5)" class="px-7 mt-3 py-4 d-flex flex-column">
+    <v-sheet v-if="!!referenceM" class="pa-3 d-flex align-center">
+      <div class="font-italic sm-font spacing-all">
         {{ referenceM }}
       </div>
       <v-btn
         class="ml-1"
-        v-bind="attrs"
-        v-on="on"
         icon
         text
-        color="var(--main-col-3)"
+        color="var(--main-col-4)"
         @click="referenceM = null"
         ><v-icon> mdi-close-circle </v-icon></v-btn
       >
@@ -31,17 +24,30 @@
       clearable
       counter
     ></v-textarea>
-    <div class="d-flex justify-end">
-      <v-btn
-        class="mr-3"
-        color="var(--main-col-1)"
-        elevation="0"
-        dark
-        @click="modifyMemo()"
-        >수정</v-btn
+    <v-row class="px-2 py-2">
+      <v-col class="pa-1"
+        ><v-btn
+          color="var(--main-col-2)"
+          elevation="0"
+          dark
+          @click="modifyMemo()"
+          rounded
+          block
+          >수정</v-btn
+        ></v-col
       >
-      <v-btn color="white" elevation="0" @click="goBack()">취소</v-btn>
-    </div>
+      <v-col class="pa-1"
+        ><v-btn
+          color="var(--main-col-2)"
+          elevation="0"
+          @click="goBack()"
+          rounded
+          outlined
+          block
+          >취소</v-btn
+        ></v-col
+      >
+    </v-row>
   </v-sheet>
 </template>
 

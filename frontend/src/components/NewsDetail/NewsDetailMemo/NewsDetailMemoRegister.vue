@@ -27,6 +27,14 @@
         ><v-icon> mdi-plus </v-icon></v-btn
       >
     </div>
+    <v-sheet class="mt-2 pa-2 d-flex align-center" color="grey lighten-2">
+      <v-sheet class="font-italic sm-font" color="transparent">
+        <div class="spacing-all">{{ reference }}</div>
+      </v-sheet>
+      <v-btn class="ml-1 ml-auto" icon text color="grey darken-1"
+        ><v-icon> mdi-close-circle </v-icon></v-btn
+      >
+    </v-sheet>
     <v-form ref="form">
       <v-textarea
         placeholder="메모 내용을 작성해 주세요.
@@ -54,6 +62,8 @@ export default {
           (!!v && v.length > 0 && v.length <= 500) ||
           "500자 이하로 내용을 입력해 주세요.",
       ], // 메모 내용 유효성
+      reference:
+        "ddddddddddddddddddrㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssssddsssssssssssss",
     };
   },
   methods: {

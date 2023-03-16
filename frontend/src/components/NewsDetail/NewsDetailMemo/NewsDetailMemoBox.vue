@@ -8,14 +8,15 @@
         class="px-8 py-3 d-flex flex-column"
       >
         <!-- memo header -->
-        <v-sheet class="mb-3 d-flex align-center" color="transparent">
+        <v-sheet class="mb-2 d-flex align-center" color="transparent">
           <!-- memo editor -->
-          <v-chip class="mr-3" color="var(--main-col-3)" label dark small>{{
-            nickname
+          <v-chip v-if="!isMine" color="var(--main-col-3)" label dark small>{{
+            memo.nickname
           }}</v-chip>
-          <v-divider></v-divider>
+          <v-divider v-if="!isMine" class="mx-2"></v-divider>
           <!-- memo date -->
-          <span class="mx-1 ml-2 sm-font">{{ date }}</span>
+          <span class="sm-font">{{ memo.date }}</span>
+          <v-divider v-if="isMine" class="mx-2"></v-divider>
           <!-- memo update -->
           <div v-if="isMine">
             <!-- memo open status button -->
@@ -29,16 +30,23 @@
               ><v-icon> mdi-pencil </v-icon></v-btn
             >
             <!-- memo delete button -->
-            <NewsDetailMemoBtnDelete :memoId="memoId"></NewsDetailMemoBtnDelete>
+            <NewsDetailMemoBtnDelete
+              :memoId="memo.memoId"
+            ></NewsDetailMemoBtnDelete>
+          </div>
+          <div class="ml-1" v-else>
+            <v-btn small icon text color="var(--main-col-3)"
+              ><v-icon small> mdi-thumb-up </v-icon></v-btn
+            >
           </div>
         </v-sheet>
         <!-- memo reference box -->
         <NewsDetailMemoReference
-          :reference="reference"
+          :reference="memo.reference"
         ></NewsDetailMemoReference>
         <!-- memo content -->
         <v-sheet color="transparent">
-          {{ content }}
+          {{ memo.content }}
         </v-sheet>
       </v-sheet>
     </v-hover>
@@ -46,11 +54,10 @@
     <NewsDetailMemoModify
       v-else
       @changeMode="modifyMode = false"
-      :reference="reference"
-      :memoId="memoId"
-      :content="content"
+      :reference="memo.reference"
+      :memoId="memo.memoId"
+      :content="memo.content"
     ></NewsDetailMemoModify>
-    <!-- <v-divider></v-divider> -->
   </div>
 </template>
 
@@ -70,22 +77,12 @@ export default {
   },
   props: {
     isMine: Boolean,
+    memo: Object,
   },
   data() {
     return {
-      reference:
-        "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-      content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-      date: "2023.03.02 18:00",
-      nickname: "경제왕이될거야",
-      memoId: 1,
       modifyMode: false,
     };
-  },
-  created() {
-    if (this.isMine) {
-      this.nickname = "MY";
-    }
   },
 };
 </script>
