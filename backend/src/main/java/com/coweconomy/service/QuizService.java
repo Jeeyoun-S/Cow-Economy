@@ -33,8 +33,9 @@ public class QuizService {
         List<UserArticle> userArticles = new ArrayList<>();
         Date oneWeekAgo = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
 //        userArticles = userArticleRepository.findByUserArticleId(userId);
-        logger.info("#21# 일주일 전 ");
-        userArticles = userArticleRepository.findByUserArticleId(userId, oneWeekAgo);
+        logger.info("#21# 일주일 전: {}", oneWeekAgo);
+        userArticles = userArticleRepository.findByArticle(userId, oneWeekAgo);
+//        userArticles = userArticleRepository.findByArticle(userId);
 
         List<UserArticleDto> result = userArticles.stream().map(u->new UserArticleDto(u)).collect(Collectors.toList());
         return result;

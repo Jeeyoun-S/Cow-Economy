@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 public interface UserArticleRepository extends JpaRepository<UserArticle, Long> {
 
+    @Query("select ua from UserArticle ua where ua.user.userId= :userId and ua.regtime>= :regtime")
 //    @Query("select ua from UserArticle ua where ua.user.userId= :userId")
-    @Query("select ua from UserArticle ua where ua.user.userId= :userId and ua.regtime>= :oneWeekAgo")
-    List<UserArticle> findByUserArticleId(@Param("userId") Long userId, @Param("oneWeekAgo") Date oneWeekAgo);
+//    List<UserArticle> findByArticle(@Param("userId") Long userId);
+    List<UserArticle> findByArticle(@Param("userId") Long userId, @Param("regtime") Date regtime);
+//    List<UserArticle> findByUserArticleId(@Param("userId") Long userId, @Param("oneWeekAgo") Date oneWeekAgo);
 }
