@@ -33,7 +33,6 @@ public class Article {
     private LocalDateTime articleRegtime;
 
     @Column(length = 30)
-    @NotNull
     private String articleEditor;
 
     @Column(length = 30)
