@@ -19,3 +19,11 @@
   -webkit-user-select: text;
   user-select: text;
 }
+#article::-moz-selection {
+  color: white;
+  background: var(--main-col-4);
+}
+#article::selection {
+  color: white;
+  background: var(--main-col-4);
+}
