@@ -1,4 +1,5 @@
 FROM nginx:stable-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
