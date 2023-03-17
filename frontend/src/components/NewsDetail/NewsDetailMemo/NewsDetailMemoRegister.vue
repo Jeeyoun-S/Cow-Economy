@@ -31,9 +31,10 @@
       v-if="!!getSelectioNText"
       class="mt-2 pa-2 d-flex align-center"
       color="grey lighten-2"
+      @click="move()"
     >
       <v-sheet class="font-italic sm-font" color="transparent">
-        <div class="spacing-all">{{ getSelectioNText }}</div>
+        <div class="spacing-all" v-html="getSelectioNText"></div>
       </v-sheet>
       <v-btn
         class="ml-1 ml-auto"
@@ -60,6 +61,8 @@
 </template>
 
 <script>
+import { moveReference } from "@/common/function/textSelection";
+
 export default {
   name: "NewsDetailMemoRegister",
   data() {
@@ -87,6 +90,16 @@ export default {
     },
     removeReference() {
       this.$store.dispatch("removeSelectionText");
+    },
+    move() {
+      const selectionResult = this.$store.getters.getSelectionResult;
+      console.log(selectionResult);
+      moveReference(
+        selectionResult.startRange,
+        selectionResult.endRange,
+        selectionResult.startIndex,
+        selectionResult.endIndex
+      );
     },
   },
 };

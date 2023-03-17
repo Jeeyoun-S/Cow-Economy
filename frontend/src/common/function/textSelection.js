@@ -16,7 +16,7 @@ function getSelection() {
 
   // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
   var result = {
-    "text": selection.toString(),
+    "text": null,
     "startIndex": selection.baseOffset,
     "endIndex": selection.focusOffset,
     "startNode": selection.baseNode,
@@ -47,6 +47,8 @@ function getSelection() {
     result.endRange = result.endIndex;
     result.endIndex = 0;
   }
+
+  result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);
 
   return result;
 }
@@ -150,6 +152,9 @@ function moveReferenceScroll(startRange) {
  * @param {*} endIndex 종료 element 내의 종료 index
  */
 function addHighlightReference(startRange, endRange, startIndex, endIndex) {
+
+  // 기존에 존재하는 highlight 삭제
+  removeHighlightReference();
 
   // vuex에 저장
   memoStore.state.highlightReference.startRange = startRange;
@@ -272,6 +277,14 @@ function removeHighlightReference() {
       }
     }
   }
+
+  // event 삭제
+  document.removeEventListener("mousedown", removeHighlightReference);
+
+  // vuex에서 정보 삭제
+  memoStore.state.highlightReference.startRange = null;
+  memoStore.state.highlightReference.endRange = null;
+  memoStore.state.highlightReference.endNode = null;
 }
 
 /**
@@ -284,7 +297,7 @@ function removeHighlightReference() {
 function moveReference(startRange, endRange, startIndex, endIndex) {
   moveReferenceScroll(startRange);
   addHighlightReference(startRange, endRange, startIndex, endIndex);
-  setTimeout(removeHighlightReference, 1000);
+  document.addEventListener("mousedown", removeHighlightReference);
 }
 
 export { getSelection, addSelectionEvent, moveReference, insertBefore, getReferenceHTML, moveReferenceScroll, addHighlightReference, removeHighlightReference }

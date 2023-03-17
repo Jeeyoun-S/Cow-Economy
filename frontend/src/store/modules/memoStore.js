@@ -17,6 +17,9 @@ const memoStore = {
     },
     getSelectioNText(state) {
       return state.selectionText;
+    },
+    getSelectionResult(state) {
+      return state.selectionResult;
     }
   },
   mutations: {
