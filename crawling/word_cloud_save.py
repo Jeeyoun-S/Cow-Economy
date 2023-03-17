@@ -14,5 +14,5 @@ from hdfs import InsecureClient
 
 print("saving...")
 client = InsecureClient(hdfs_path, user='j8a509')
-client.upload(hdfs_img_path, img_path)
+client.upload(hdfs_img_path, img_path, overwrite=True)
 print("save ok")
