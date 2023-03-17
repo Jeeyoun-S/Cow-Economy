@@ -67,14 +67,13 @@ print("#### word count 완료 ####")
 print(f"word count 소요 시간 : {time.time() - start:.5f} 초")
 
 # wordcloud
-wc = WordCloud(font_path="./NotoSansKR-Black.otf",
+wc = WordCloud(font_path="./assets/NotoSansKR-Black.otf",
                background_color='white',
                height=600,
                width=1000,
                max_words=400,
                max_font_size=100,
-               colormap='Set3_r',
-            #    mask=mask
+               colormap='Set3_r'
                )
 
 # rdd -> dict 설정
