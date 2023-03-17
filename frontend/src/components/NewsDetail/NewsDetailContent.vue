@@ -15,7 +15,9 @@
         >원본 보기</v-btn
       >
     </div>
-    <div id="article" class="py-2" v-html="content"></div>
+    <div id="content" class="py-2">
+      <div id="article" v-html="content"></div>
+    </div>
     <div class="py-2 ml-auto">{{ editor }}</div>
     <v-snackbar v-model="memoBtn" :multi-line="true">
       메모 추가하기~~
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-import newsDetailStore from "@/store/modules/newsDetailStore";
+import { addSelectionEvent } from "@/common/function/textSelection";
 
 export default {
   name: "NewsDetailContent",
@@ -78,10 +80,13 @@ export default {
       .replaceAll("@@br", "<br />");
   },
   mounted() {
-    document.addEventListener("selectionchange", () => {
-      var selection = document.getSelection();
-      newsDetailStore.state.memoBtn = !selection.isCollapsed;
-    });
+    // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
+    // document 전체에 적용 (div#article에만 하면 미작동)
+    document.addEventListener("selectionchange", addSelectionEvent);
+  },
+  destroyed() {
+    // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
+    document.removeEventListener("selectionchange", addSelectionEvent);
   },
 };
 </script>

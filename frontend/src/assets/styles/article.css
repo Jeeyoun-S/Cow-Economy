@@ -6,10 +6,14 @@
   justify-content: center;
   font-size: 14px;
 }
-#article div {
+#article div:not(#bookmark-pointer) {
   border-width: 0px 0px 0px 5px;
   border-style: solid;
   font-size: 17px;
   padding: 4px 10px 4px 15px;
   margin: 17px 0px;
+}
+#article #highlight-pointer {
+  background-color: var(--main-col-2);
+  color: white;
 }
