@@ -23,10 +23,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         log.info(request.getRequestURI());
-        if(!request.getRequestURI().contains("login") && !request.getRequestURI().contains("favicon")) {
+        if((!request.getRequestURI().contains("my-page") || !request.getRequestURI().contains("kakao")) && !request.getRequestURI().contains("favicon")) {
             log.info("토큰 체크");
             try {
                 String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
+                log.info(jwt);
+                System.out.println(jwt);
                 if (StringUtils.hasText(jwt) && JwtTokenProvider.validateToken(jwt)) {
                     String userId = JwtTokenProvider.getUserIdFromJWT(jwt); //jwt에서 사용자 id를 꺼낸다.
 

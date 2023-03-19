@@ -1,10 +1,11 @@
 package com.coweconomy.api.response;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class BaseResponse<T> {
     private final static int SUCCESS = 200;
     private final static int NOT_FOUND = 400;
@@ -17,8 +18,19 @@ public class BaseResponse<T> {
     private final static String NOT_EXPIRED_TOKEN_YET = "만료되지 않은 토큰 입니다";
     private final int statusCode;
     private final String message;
-    private final T data;
+    private final Object data;
 
+    public BaseResponse(int statusCode, String message, Object data) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.data = data;
+    }
+
+    public BaseResponse() {
+        this.statusCode = 0;
+        this.message = null;
+        this.data = null;
+    }
     public static <T> BaseResponse<T> success(T body) {
         return new BaseResponse(SUCCESS, SUCCESS_MESSAGE, body);
     }

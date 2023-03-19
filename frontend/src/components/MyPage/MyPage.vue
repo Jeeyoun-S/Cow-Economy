@@ -16,15 +16,47 @@
 </template>
 
 <script>
+import axios from "@/api/index.js";
+
 export default {
   methods: {
+    async handleKakaoLogin(code) {
+      try {
+        console.log('Sending request to backend with code:', code);
+        const response = await axios.post('/kakao/callback', { code });
+        console.log('##############');
+        if (response.status === 200) {
+          const token = response.data.token;
+          localStorage.setItem('token', token);
+          console.log('#123#');
+          const redirect = localStorage.getItem('redirect') || '/home';
+          this.$router.push({ path: redirect });
+        } else {
+          console.error('카카오 로그인 실패');
+        }
+      } catch (error) {
+        console.error('카카오 로그인 중 에러 발생', error);
+      }
+    },
     kakaoLogin() {
-      window.location.replace(
-        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.VUE_APP_KAKAO_REDIRECT_URI}&response_type=code`
-      )
+      const redirectUri = encodeURIComponent(process.env.VUE_APP_KAKAO_REDIRECT_URI);
+      const oauthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code`;
+      window.location.href = oauthUrl;
+    },
+  },
+  beforeRouteEnter(to, from, next) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    console.log('Code:', code);
+
+    if (code) {
+      console.log('Calling handleKakaoLogin...');
+      next((vm) => vm.handleKakaoLogin(code));
+    } else {
+      next();
     }
-  }
-}
+  },
+};
 </script>
 
 <style>

@@ -15,11 +15,15 @@ public class UserLoginResponseDto extends BaseResponseBody  {
     @ApiModelProperty(name="JWT 인증 토큰", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
     String token;
 
-    public static UserLoginResponseDto of(Integer statusCode, String message, String token) {
+    @ApiModelProperty(name="사용자 등록 여부", example="true")
+    boolean isRegistered;
+
+    public static UserLoginResponseDto of(Integer statusCode, String message, String token, boolean isRegistered) {
         UserLoginResponseDto response = new UserLoginResponseDto();
         response.setStatusCode(statusCode);
         response.setMessage(message);
         response.setToken(token);
+        response.setRegistered(isRegistered);
 
         return response;
     }

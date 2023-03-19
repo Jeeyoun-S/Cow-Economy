@@ -1,8 +1,6 @@
 package com.coweconomy.domain.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -12,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
