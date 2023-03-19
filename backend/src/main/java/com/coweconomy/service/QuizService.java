@@ -3,6 +3,10 @@ package com.coweconomy.service;
 import com.coweconomy.api.controller.UserController;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.UserArticle;
+import com.coweconomy.domain.word.dto.ArticleWordDto;
+import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
+import com.coweconomy.domain.word.entity.ArticleWord;
+import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.UserArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,13 +38,22 @@ public class QuizService {
      * **/
     public List<UserArticleDto> getUserReadArticle(Long userId) {
         List<UserArticle> userArticles = new ArrayList<>();
-        Date oneWeekAgo = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
-//        userArticles = userArticleRepository.findByUserArticleId(userId);
-        logger.info("#21# 일주일 전: {}", oneWeekAgo);
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+//        logger.info("#21# 일주일 전: {}", oneWeekAgo);
         userArticles = userArticleRepository.findByArticle(userId, oneWeekAgo);
-//        userArticles = userArticleRepository.findByArticle(userId);
 
         List<UserArticleDto> result = userArticles.stream().map(u->new UserArticleDto(u)).collect(Collectors.toList());
+        return result;
+    }
+
+    /**
+     * 읽은 기사에 있는 경제 단어 List 조회
+     * @param List<Long> 읽은 기사 ID _List
+     * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
+     * **/
+    public List<ArticleWordQuizDto> getEconomyWord(List<Long> articleIdList) {
+        // !!
+        List<ArticleWordQuizDto> result = userArticleRepository.findByArticleIn(articleIdList);
         return result;
     }
 
