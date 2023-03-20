@@ -127,7 +127,8 @@ const quizStore = {
         info,
         async ({ data }) => {
           // i) 성공
-          if (data.message == `${process.env.VUE_APP_API_RESULT_SUCCESS}`) {
+          //if (data.message == `${process.env.VUE_APP_API_RESULT_SUCCESS}`) {
+          if (data.statusCode == 200) {
             console.log("#21# Quiz 단어 가져오기 성공: ", data);
 
             // Quiz 출제

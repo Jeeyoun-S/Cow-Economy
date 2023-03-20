@@ -2,16 +2,14 @@
   <div class="quiz">
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
-    <!-- 페이지 이동 금지 알림 -->
-    <v-alert
-      type="Error"
-      title="NO!"
-      text="Quiz를 다 풀기 전까진 이동할 수 없습니다."
-    ></v-alert>
     <!-- 스탑워치 -->
     <div class="stopWatch" v-if="this.timerVisiFlag == true">
       <stop-watch></stop-watch>
     </div>
+    <!-- 페이지 이동 금지 알림 -->
+    <v-alert dense border="left" shaped type="error" v-show="moveTry"
+      >Quiz를 다 풀어주세요! •̀ㅅ•́</v-alert
+    >
     <!-- 정답/오답 결과 출력 -->
     <div v-if="this.correctFlag == true"><answer-correct></answer-correct></div>
     <div v-else-if="this.correctFlag == false && this.timeoutFlag == false">
@@ -156,7 +154,11 @@ export default {
       //   },
       // ],
       audio: null, // Audio 객체 (BGM)
+      moveTry: false, // 다른 페이지로 이동 시도 여부
     };
+  },
+  watch: {
+    moveTry: {},
   },
   created() {
     this.timer = setInterval(this.timeOut, this.time);
@@ -178,7 +180,12 @@ export default {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
   },
   beforeRouteLeave(next) {
-    if (this.todayQuizFlag == true) next();
+    if (this.todayQuizFlag == true) {
+      next();
+    } else {
+      this.moveTry = true;
+      setTimeout(this.showAlert, 2000);
+    }
   },
   methods: {
     ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
@@ -222,6 +229,7 @@ export default {
       if (this.index == 7) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
+        clearInterval(this.timer);
 
         // [@Method] Quiz 결과 저장 (quizStore)
         this.setQuizResult(this.correctAnswer);
@@ -246,6 +254,11 @@ export default {
       // this.audio.loop = true; // 반복 재생
       this.audio.volume = 0.3;
       this.audio.play();
+    },
+    // [@Method] Alert 창 노출
+    showAlert() {
+      this.moveTry = !this.moveTry;
+      console.log("#21# alert창 닫기: ", this.moveTry);
     },
   },
 };
