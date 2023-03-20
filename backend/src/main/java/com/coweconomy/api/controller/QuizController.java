@@ -2,11 +2,13 @@ package com.coweconomy.api.controller;
 
 import com.coweconomy.api.request.QuizRequestDto;
 import com.coweconomy.api.response.BaseResponse;
+import com.coweconomy.common.util.RandomSelect;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.service.QuizService;
+import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/quiz")
 public class QuizController {
 
@@ -23,6 +26,8 @@ public class QuizController {
 
     @Autowired
     QuizService quizService;
+
+    RandomSelect randomSelect = new RandomSelect();
 
     /**
      * 오늘의 Quiz 문제 출제
@@ -41,11 +46,34 @@ public class QuizController {
         for (UserArticleDto ra: userReadArticle) {
             articleIdList.add(ra.getArticle());
         }
-//        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList.get(0));
+//        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
         List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
         logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
+        // i) 7개 단어 선정 (Random)
+        List<Integer> random = randomSelect.getRandomSelect(wordList.size());
+//        logger.info("#21# 랜덤 선택 확인: {}", random);
+        List<ArticleWordQuizDto> quizWord = new ArrayList<>();
+        for (Integer idx: random) {
+            quizWord.add(wordList.get(idx));
+        }
+        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+        // ii) 문제 출제
+//        questions: [
+//        {
+//            question:
+//            "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
+//                    answers: {
+//                    a: "중산층가구",
+//                    b: "0.5인 가구",
+//                    c: "중위소득",
+//                    d: "4차 산업혁명",
+//        },
+//            correctAnswer: "a",
+//        },
+//      ],
+
 
 
         return BaseResponse.success(null);
