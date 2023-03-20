@@ -42,19 +42,29 @@
           >시작하기</v-btn
         >
       </div>
+      <!-- 오늘의 Quiz 진입불가 Alert -->
+      <div v-if="alertQuizFlag">
+        <today-not-enter-modal></today-not-enter-modal>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import TodayNotEnterModal from "./element/TodayNotEnterModal.vue";
 
 const quizStore = "quizStore";
 
 export default {
   name: "TodayQuizInfo",
   data() {
-    return {};
+    return {
+      alertQuizFlag: false, // 오늘의 Quiz 진행 여부에 따른 alert창
+    };
+  },
+  components: {
+    TodayNotEnterModal,
   },
   computed: {
     ...mapState(quizStore, ["questions", "todayQuizFlag"]),
@@ -72,6 +82,7 @@ export default {
         this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
       } else {
         // ! 오늘 Quiz 다 했다고 alert 창 띄우기
+        this.alertQuizFlag = true;
       }
     },
   },

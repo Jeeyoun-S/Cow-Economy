@@ -126,6 +126,7 @@ const quizStore = {
       await getQuizWords(
         info,
         async ({ data }) => {
+          console.log("#21# getQuizWords 실행결과: ", data);
           // i) 성공
           //if (data.message == `${process.env.VUE_APP_API_RESULT_SUCCESS}`) {
           if (data.statusCode == 200) {
