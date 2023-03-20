@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const quizStore = "quizStore";
 
@@ -56,12 +56,19 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapState(quizStore, ["questions"]),
+  },
+  watch: {
+    questions() {
+      location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
+    },
+  },
   methods: {
     ...mapActions(quizStore, ["setExamQuestions"]),
     // [@Method] Quiz 페이지로 이동
     moveQuiz() {
-      this.setExamQuestions(); // Quiz 문제 출제 - QuizStore
-      // location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
+      this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
     },
   },
 };

@@ -16,11 +16,19 @@
     </div>
     <!-- 문제 -->
     <div class="quizBox" v-if="this.index < count">
-      <div class="questionTxt">{{ questions[this.index]["question"] }}</div>
-      <v-card-content
+      <div class="questionTxt">
+        <!-- {{ questions[this.index]["question"] }} -->
+        {{ this.questions[this.index]["question"] }}
+      </div>
+      <!-- <v-card-content
         class="answerBox"
         :key="key"
         v-for="(answer, key) in questions[this.index]['answers']"
+      > -->
+      <v-card-content
+        class="answerBox"
+        :key="key"
+        v-for="(answer, key) in this.questions[this.index]['answers']"
       >
         <!-- 정답 후보 -->
         <v-btn
@@ -29,7 +37,6 @@
           :color="`var(--quiz-1-col-6)`"
           :id="key"
           :value="key"
-          v-model="selectedAnswer"
           @click="checkAnswer(key)"
           >{{ answer }}</v-btn
         >
@@ -69,79 +76,79 @@ export default {
       correctAnswer: 0, // 정답 개수
       wrongAnswer: 0, // 오답 개수
       count: 7, // 문제 수
-      questions: [
-        {
-          question:
-            "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
-          answers: {
-            a: "중산층가구",
-            b: "0.5인 가구",
-            c: "중위소득",
-            d: "4차 산업혁명",
-          },
-          correctAnswer: "a",
-        },
-        {
-          question: "Q. 문제 - 2",
-          answers: {
-            a: "2000",
-            b: "2001",
-            c: "2002",
-            d: "2003",
-          },
-          correctAnswer: "b",
-        },
-        {
-          question: "Q. 문제 - 3",
-          answers: {
-            a: "3000",
-            b: "3001",
-            c: "3002",
-            d: "3003",
-          },
-          correctAnswer: "c",
-        },
-        {
-          question: "Q. 문제 - 4",
-          answers: {
-            a: "4000",
-            b: "4001",
-            c: "4002",
-            d: "4003",
-          },
-          correctAnswer: "d",
-        },
-        {
-          question: "Q. 문제 - 5",
-          answers: {
-            a: "5000",
-            b: "5001",
-            c: "5002",
-            d: "5003",
-          },
-          correctAnswer: "a",
-        },
-        {
-          question: "Q. 문제 - 6",
-          answers: {
-            a: "6000",
-            b: "6001",
-            c: "6002",
-            d: "6003",
-          },
-          correctAnswer: "b",
-        },
-        {
-          question: "Q. 문제 - 7",
-          answers: {
-            a: "7000",
-            b: "7001",
-            c: "7002",
-            d: "7003",
-          },
-          correctAnswer: "c",
-        },
-      ],
+      // questions: [
+      //   {
+      //     question:
+      //       "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
+      //     answers: {
+      //       a: "중산층가구",
+      //       b: "0.5인 가구",
+      //       c: "중위소득",
+      //       d: "4차 산업혁명",
+      //     },
+      //     correctAnswer: "a",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 2",
+      //     answers: {
+      //       a: "2000",
+      //       b: "2001",
+      //       c: "2002",
+      //       d: "2003",
+      //     },
+      //     correctAnswer: "b",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 3",
+      //     answers: {
+      //       a: "3000",
+      //       b: "3001",
+      //       c: "3002",
+      //       d: "3003",
+      //     },
+      //     correctAnswer: "c",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 4",
+      //     answers: {
+      //       a: "4000",
+      //       b: "4001",
+      //       c: "4002",
+      //       d: "4003",
+      //     },
+      //     correctAnswer: "d",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 5",
+      //     answers: {
+      //       a: "5000",
+      //       b: "5001",
+      //       c: "5002",
+      //       d: "5003",
+      //     },
+      //     correctAnswer: "a",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 6",
+      //     answers: {
+      //       a: "6000",
+      //       b: "6001",
+      //       c: "6002",
+      //       d: "6003",
+      //     },
+      //     correctAnswer: "b",
+      //   },
+      //   {
+      //     question: "Q. 문제 - 7",
+      //     answers: {
+      //       a: "7000",
+      //       b: "7001",
+      //       c: "7002",
+      //       d: "7003",
+      //     },
+      //     correctAnswer: "c",
+      //   },
+      // ],
       audio: null, // Audio 객체 (BGM)
     };
   },
@@ -150,6 +157,9 @@ export default {
 
     // BGM 실행
     if (this.index == 0) this.play();
+
+    // Quiz
+    console.log("#21# [info 페이지] Quiz 확인: ", this.questions);
   },
   components: {
     StepProgress,
@@ -159,7 +169,7 @@ export default {
     TestResultModal,
   },
   computed: {
-    ...mapState(quizStore, ["index"]),
+    ...mapState(quizStore, ["index", "questions"]),
   },
   methods: {
     ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 const quizStore = "quizStore";
 
 export default {
@@ -42,8 +42,10 @@ export default {
     ...mapState(quizStore, ["isPass", "experience", "correctCount"]),
   },
   methods: {
+    ...mapActions(quizStore, ["initQuiz"]),
     // [@Method] Modal 닫고 마이페이지로 이동
     closeModal() {
+      this.initQuiz();
       location.href = `${process.env.VUE_APP_BASE_URL}/my-page`;
     },
   },
