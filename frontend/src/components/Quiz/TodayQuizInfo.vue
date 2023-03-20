@@ -47,15 +47,21 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+const quizStore = "quizStore";
+
 export default {
   name: "TodayQuizInfo",
   data() {
     return {};
   },
   methods: {
+    ...mapActions(quizStore, ["setExamQuestions"]),
     // [@Method] Quiz 페이지로 이동
     moveQuiz() {
-      location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
+      this.setExamQuestions(); // Quiz 문제 출제 - QuizStore
+      // location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
     },
   },
 };

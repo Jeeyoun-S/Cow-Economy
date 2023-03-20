@@ -1,3 +1,5 @@
+import { getQuizWords } from "@/api/quiz";
+
 const quizStore = {
   namespaced: true,
   state: {
@@ -29,6 +31,26 @@ const quizStore = {
     },
   },
   actions: {
+    // [@Method] Quiz 문제 출제
+    async setExamQuestions() {
+      // !FIX! 나중에 로그인 완료되면 현 login ID 붙이기
+      const info = {
+        userId: 1,
+      };
+
+      await getQuizWords(
+        info,
+        ({ data }) => {
+          // i) 성공
+          if (data.message == `${process.env.VUE_APP_API_RESULT_SUCCESS}`) {
+            console.log("#21# Quiz 단어 가져오기 성공: ", data);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
     // [@Method] index 증가 (Quiz index)
     increaseIndex({ commit }, value) {
       //   console.log("#21# index 확인: ", value);
