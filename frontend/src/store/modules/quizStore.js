@@ -133,6 +133,7 @@ const quizStore = {
             console.log("#21# Quiz 단어 가져오기 성공: ", data);
 
             // Quiz 출제
+            // i) 검색 api를 활용하여 유사한 단어 가져오기
             const quiz = [
               {
                 question:
