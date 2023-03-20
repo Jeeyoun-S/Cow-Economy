@@ -127,6 +127,9 @@ fabric.properties
 .history
 .ionide
 
+### Crawling ###
+/crawling/.ipynb_checkpoints
+
 ### Settings ###
 env.*
 application*
