@@ -57,7 +57,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(quizStore, ["questions"]),
+    ...mapState(quizStore, ["questions", "todayQuizFlag"]),
   },
   watch: {
     questions() {
@@ -68,7 +68,11 @@ export default {
     ...mapActions(quizStore, ["setExamQuestions"]),
     // [@Method] Quiz 페이지로 이동
     moveQuiz() {
-      this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
+      if (this.todayQuizFlag == false) {
+        this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
+      } else {
+        // ! 오늘 Quiz 다 했다고 alert 창 띄우기
+      }
     },
   },
 };

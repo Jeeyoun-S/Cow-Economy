@@ -2,6 +2,12 @@
   <div class="quiz">
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
+    <!-- 페이지 이동 금지 알림 -->
+    <v-alert
+      type="Error"
+      title="NO!"
+      text="Quiz를 다 풀기 전까진 이동할 수 없습니다."
+    ></v-alert>
     <!-- 스탑워치 -->
     <div class="stopWatch" v-if="this.timerVisiFlag == true">
       <stop-watch></stop-watch>
@@ -169,7 +175,10 @@ export default {
     TestResultModal,
   },
   computed: {
-    ...mapState(quizStore, ["index", "questions"]),
+    ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
+  },
+  beforeRouteLeave(next) {
+    if (this.todayQuizFlag == true) next();
   },
   methods: {
     ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
