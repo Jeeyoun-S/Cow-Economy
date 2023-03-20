@@ -4,11 +4,8 @@ import com.coweconomy.api.request.QuizRequestDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.util.RandomSelect;
 import com.coweconomy.domain.user.dto.UserArticleDto;
-import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
-import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.service.QuizService;
-import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,23 +56,7 @@ public class QuizController {
             quizWord.add(wordList.get(idx));
         }
         logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
-        // ii) 문제 출제
-//        questions: [
-//        {
-//            question:
-//            "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
-//                    answers: {
-//                    a: "중산층가구",
-//                    b: "0.5인 가구",
-//                    c: "중위소득",
-//                    d: "4차 산업혁명",
-//        },
-//            correctAnswer: "a",
-//        },
-//      ],
 
-
-
-        return BaseResponse.success(null);
+        return BaseResponse.success(quizWord);
     }
 }
