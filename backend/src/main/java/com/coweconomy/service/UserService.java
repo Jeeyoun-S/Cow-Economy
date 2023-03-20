@@ -1,5 +1,7 @@
 package com.coweconomy.service;
 
+import com.coweconomy.api.request.UserRegisterPostReq;
+import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
 
 import java.util.Optional;
@@ -14,6 +16,7 @@ public interface UserService {
      * @return User 회원 Entity
      * **/
 
-    User registerUser(User user);
-    Optional<User> findByUserEmail(String userEmail);
+    User createUser(UserRegisterPostReq userRegisterInfo);
+    User getUserByUserEmail(String userEmail);
+    UserDto getUserInfoByEmail(String userId);
 }

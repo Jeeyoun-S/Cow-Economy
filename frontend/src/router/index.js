@@ -27,21 +27,4 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  // 인증이 필요한 페이지 확인
-  if(to.matched.some(record => record.meta.requireAuth)) {
-    // 로컬 스토리지에서 토큰 가져오기
-    const token = localStorage.getItem('token');
-
-    ///토큰이 있는지 확인
-    if (token) {
-      next();
-    } else {
-      next({ path: '/my-page', query: { redirect: to.fullPath} });
-    }
-  } else {
-    next();
-  }
-});
-
 export default router

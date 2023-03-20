@@ -7,8 +7,9 @@
         <v-flex class="d-flex flex-column align-center justify-center ma-3">
           <v-img src="@/assets/images/login/google_login.png"  class="blur-on-hover"></v-img>
         </v-flex>
+        <!-- 카카오 로그인 버튼 -->
         <v-flex class="d-flex flex-column align-center justify-center">
-          <v-img src="@/assets/images/login/kakao_login.png" @click="kakaoLogin()" class="blur-on-hover"></v-img>
+          <kakaoLogin></kakaoLogin>
         </v-flex>
       </div>
     </v-container>
@@ -17,18 +18,21 @@
 
 <script>
 import axios from "@/api/index.js";
+import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
 
 export default {
+  name: "MyPage",
+  components: {
+    kakaoLogin
+  },
   methods: {
-    async handleKakaoLogin(code) {
+    async handleKakaoLogin(token) {
       try {
-        console.log('Sending request to backend with code:', code);
-        const response = await axios.post('/kakao/callback', { code });
-        console.log('##############');
-        if (response.status === 200) {
+        const response = await axios.post('/kakao/callback', { token });
+
+        if (response.status === 302) {
           const token = response.data.token;
           localStorage.setItem('token', token);
-          console.log('#123#');
           const redirect = localStorage.getItem('redirect') || '/home';
           this.$router.push({ path: redirect });
         } else {
@@ -46,12 +50,13 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    console.log('Code:', code);
+    const token = urlParams.get('token');
 
-    if (code) {
+    console.log(localStorage.getItem('token'));
+
+    if (token) {
       console.log('Calling handleKakaoLogin...');
-      next((vm) => vm.handleKakaoLogin(code));
+      next((vm) => vm.handleKakaoLogin(token));
     } else {
       next();
     }

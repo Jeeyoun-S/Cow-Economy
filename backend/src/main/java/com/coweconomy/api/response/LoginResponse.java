@@ -8,9 +8,9 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoginResponse extends BaseResponse{
     private String status;
-    private UserLoginResponseDto data;
+    private UserLoginPostResDto data;
 
-    public LoginResponse(String status, UserLoginResponseDto responseDto) {
+    public LoginResponse(String status, UserLoginPostResDto responseDto) {
         this.status = status;
         this.data = responseDto;
     }

@@ -26,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if((!request.getRequestURI().contains("my-page") || !request.getRequestURI().contains("kakao")) && !request.getRequestURI().contains("favicon")) {
             log.info("토큰 체크");
             try {
+                System.out.println("##!!@@##");
                 String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
                 log.info(jwt);
                 System.out.println(jwt);
