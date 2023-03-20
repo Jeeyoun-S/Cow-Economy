@@ -11,17 +11,20 @@
         <v-sheet class="mb-2 d-flex align-center" color="transparent">
           <!-- memo editor -->
           <v-chip v-if="!isMine" color="var(--main-col-3)" label dark small>{{
-            memo.nickname
+            memo.userNickname
           }}</v-chip>
           <v-divider v-if="!isMine" class="mx-2"></v-divider>
           <!-- memo date -->
-          <span class="sm-font">{{ memo.date }}</span>
+          <span class="sm-font">{{ memo.regtime }}</span>
           <v-divider v-if="isMine" class="mx-2"></v-divider>
           <!-- memo update -->
           <div v-if="isMine">
             <!-- memo open status button -->
-            <NewsDetailMemoBtnLock></NewsDetailMemoBtnLock>
-            <!-- memo modify button -->
+            <NewsDetailMemoBtnLock
+              :memoPublicScope="memo.memoPublicScope"
+              :index="index"
+            ></NewsDetailMemoBtnLock>
+            <!-- memo modify button : 보류 -->
             <v-btn
               icon
               text
@@ -32,6 +35,8 @@
             <!-- memo delete button -->
             <NewsDetailMemoBtnDelete
               :memoId="memo.memoId"
+              :index="index"
+              @deleteMemoItem="deleteMemoItem"
             ></NewsDetailMemoBtnDelete>
           </div>
           <div class="ml-1" v-else>
@@ -42,11 +47,16 @@
         </v-sheet>
         <!-- memo reference box -->
         <NewsDetailMemoReference
-          :reference="memo.reference"
+          v-if="!!memo.referenceText"
+          :referenceText="memo.referenceText"
+          :startIndex="memo.memoStartIndex"
+          :endIndex="memo.memoEndIndex"
+          :startRange="memo.memoStartRange"
+          :endRange="memo.memoEndRange"
         ></NewsDetailMemoReference>
         <!-- memo content -->
-        <v-sheet color="transparent">
-          {{ memo.content }}
+        <v-sheet color="transparent" class="sm-font">
+          {{ memo.memoContent }}
         </v-sheet>
       </v-sheet>
     </v-hover>
@@ -54,9 +64,9 @@
     <NewsDetailMemoModify
       v-else
       @changeMode="modifyMode = false"
-      :reference="memo.reference"
+      :reference="memo.referenceText"
       :memoId="memo.memoId"
-      :content="memo.content"
+      :content="memo.memoContent"
     ></NewsDetailMemoModify>
   </div>
 </template>
@@ -78,11 +88,17 @@ export default {
   props: {
     isMine: Boolean,
     memo: Object,
+    index: Number,
   },
   data() {
     return {
       modifyMode: false,
     };
+  },
+  methods: {
+    deleteMemoItem() {
+      this.$emit("deleteMemoItem", this.index);
+    },
   },
 };
 </script>

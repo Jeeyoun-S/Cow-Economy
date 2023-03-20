@@ -22,143 +22,143 @@ export default {
       memos: [],
       memos_all: [
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 1,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 2,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 3,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 4,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 5,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 6,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 7,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 8,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 9,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 10,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 11,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 12,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 13,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 14,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 15,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 16,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          content: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
+          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
+          regtime: "2023.03.02 18:00",
           nickname: "경제왕이될거야",
           memoId: 17,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -166,7 +166,7 @@ export default {
           memoId: 18,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -174,7 +174,7 @@ export default {
           memoId: 19,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -182,7 +182,7 @@ export default {
           memoId: 20,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -190,7 +190,7 @@ export default {
           memoId: 21,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -198,7 +198,7 @@ export default {
           memoId: 22,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -206,7 +206,7 @@ export default {
           memoId: 23,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -214,7 +214,7 @@ export default {
           memoId: 24,
         },
         {
-          reference:
+          referenceText:
             "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
           content: "와~ 돈이 참 많네요... 진짜 부럽다...",
           date: "2023.03.02 18:00",
@@ -244,7 +244,7 @@ export default {
   },
   watch: {
     bottom(bottom) {
-      if (bottom) {
+      if (bottom && this.memos.length < this.memos_all.length) {
         this.addMemo();
       }
     },

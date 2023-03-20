@@ -18,6 +18,7 @@
 }
 .v-textarea textarea {
   line-height: 1.4rem !important;
+  font-size: 15px !important;
 }
 .v-tabs:not(.v-tabs--vertical):not(.v-tabs--right)
   > .v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(

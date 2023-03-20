@@ -14,43 +14,46 @@ function addSelectionEvent() {
 function getSelection() {
   var selection = window.getSelection();
 
-  // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
-  var result = {
-    "text": null,
-    "startIndex": selection.baseOffset,
-    "endIndex": selection.focusOffset,
-    "startNode": selection.baseNode,
-    "endNode": selection.focusNode,
-    "startRange": null,
-    "endRange": null
-  };
+  if (selection.toString().length > 0) {
+    // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
+    var result = {
+      "text": null,
+      "startIndex": selection.baseOffset,
+      "endIndex": selection.focusOffset,
+      "startNode": selection.baseNode,
+      "endNode": selection.focusNode,
+      "startRange": null,
+      "endRange": null
+    };
 
-  // article이 있는 곳의 모든 요소 가져오기
-  var article = document.getElementById("article")
-  var contents = article.childNodes;
+    // article이 있는 곳의 모든 요소 가져오기
+    var article = document.getElementById("article")
+    var contents = article.childNodes;
 
-  // 요소를 반복하며 마지막 node와 시작 node 인덱스 값 저장
-  for (var i = 0; i < contents.length; i++) {
-    var node = contents[i];
-    if (node === result.startNode) result.startRange = i;
-    if (node === result.endNode) result.endRange = i;
+    // 요소를 반복하며 마지막 node와 시작 node 인덱스 값 저장
+    for (var i = 0; i < contents.length; i++) {
+      var node = contents[i];
+      if (node === result.startNode) result.startRange = i;
+      if (node === result.endNode) result.endRange = i;
+    }
+
+    // <br> 또는 공백이 시작 node로 선택된 경우
+    if (result.startNode === article) {
+      result.startRange = result.startIndex;
+      result.startIndex = 0;
+    }
+
+    // <br> 또는 공백이 마지막 node로 선택된 경우
+    if (result.endNode === article) {
+      result.endRange = result.endIndex;
+      result.endIndex = 0;
+    }
+
+    result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);
+
+    return result;
   }
-
-  // <br> 또는 공백이 시작 node로 선택된 경우
-  if (result.startNode === article) {
-    result.startRange = result.startIndex;
-    result.startIndex = 0;
-  }
-
-  // <br> 또는 공백이 마지막 node로 선택된 경우
-  if (result.endNode === article) {
-    result.endRange = result.endIndex;
-    result.endIndex = 0;
-  }
-
-  result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);
-
-  return result;
+  return null;
 }
 
 /** 
@@ -73,6 +76,9 @@ function insertBefore(parentElement, newNode, referenceNode) {
  * @param {*} endIndex 종료 element 내의 종료 index
  */
 function getReferenceHTML(startRange, endRange, startIndex, endIndex) {
+
+  // truncate를 위해 100자 넘어가는 경우
+  var going = true;
 
   // 기사 내용 내의 자식 요소들 가져오기
   var contents = document.getElementById("article").childNodes;
@@ -107,11 +113,21 @@ function getReferenceHTML(startRange, endRange, startIndex, endIndex) {
       else {
         reference += item.textContent;
       }
+
+      if (going && reference.length > 100) {
+        reference = reference.slice(0, 100) + "@@@" + reference.slice(100);
+        going = false;
+      }
     }
     // 그 외의 경우
     else {
       // HTML 그대로 문자열 변환 후 추가
       reference += String(item.outerHTML);
+
+      if (going && reference.length > 80) {
+        reference += "@@@";
+        going = false;
+      }
     }
   }
 

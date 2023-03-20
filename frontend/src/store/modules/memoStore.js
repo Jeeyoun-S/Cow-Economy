@@ -1,25 +1,39 @@
 import { getSelection } from "@/common/function/textSelection";
 
 const memoStore = {
+  namespaced: true,
   state: {
     memoBtn: false,
     selectionText: null,
-    selectionResult: {},
+    selectionResult: {
+      startIndex: null,
+      endIndex: null,
+      startRange: null,
+      endRange: null
+    },
     highlightReference: {
       endNode: null,
       startRange: null,
       endRange: null
-    }
+    },
+    otherMemoList: [],
+    myMemoList: []
   },
   getters: {
     getMemoBtn(state) {
       return state.memoBtn;
     },
-    getSelectioNText(state) {
+    getSelectionText(state) {
       return state.selectionText;
     },
     getSelectionResult(state) {
       return state.selectionResult;
+    },
+    getMyMemoList(state) {
+      return state.myMemoList;
+    },
+    getOtherMemoList(state) {
+      return state.otherMemoList;
     }
   },
   mutations: {
@@ -27,12 +41,22 @@ const memoStore = {
       state.memoBtn = !state.memoBtn;
     },
     UPDATE_REFERENCE(state, payload) {
-      state.selectionText = payload.text;
+      if (payload.text == null) state.selectionText = null
+      else state.selectionText = payload.text.split("@@@");
+
       state.selectionResult["startIndex"] = payload.startIndex;
       state.selectionResult["endIndex"] = payload.endIndex;
       state.selectionResult["startRange"] = payload.startRange;
       state.selectionResult["endRange"] = payload.endRange;
-      console.log("selectionResult", state.selectionResult);
+    },
+    UPDATE_MY_MEMO(state, payload) {
+      state.myMemoList.push(payload);
+    },
+    UPDATE_PUBLIC_SCOPE(state, payload) {
+      state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
+    },
+    DELETE_MEMO(state, payload) {
+      state.myMemoList.splice(payload, 1);
     }
   },
   actions: {
@@ -40,7 +64,8 @@ const memoStore = {
       commit("UPDATE_MEMO_BTN");
     },
     getSelectionText({ commit }) {
-      commit("UPDATE_REFERENCE", getSelection());
+      const selection = getSelection();
+      if (selection != null) commit("UPDATE_REFERENCE", selection);
       commit("UPDATE_MEMO_BTN");
     },
     removeSelectionText({ commit }) {
@@ -51,6 +76,15 @@ const memoStore = {
         "startRange": null,
         "endRange": null,
       });
+    },
+    addMyMemo({ commit }, memo) {
+      commit("UPDATE_MY_MEMO", memo);
+    },
+    updatePublicScope({ commit }, index) {
+      commit("UPDATE_PUBLIC_SCOPE", index);
+    },
+    deleteMemo({ commit }, index) {
+      commit("DELETE_MEMO", index);
     }
   },
   modules: {

@@ -8,3 +8,6 @@
   border-style: solid;
   font-size: 18px;
 }
+.pointer {
+  cursor: pointer;
+}

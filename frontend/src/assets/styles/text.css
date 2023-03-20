@@ -7,9 +7,15 @@
 .sm-font {
   font-size: 14px;
 }
+.xs-font {
+  font-size: 12px;
+}
 .main-2-font {
   color: var(--main-col-2);
 }
 .spacing-all {
   word-break: break-all;
+}
+.underline {
+  text-decoration: underline;
 }

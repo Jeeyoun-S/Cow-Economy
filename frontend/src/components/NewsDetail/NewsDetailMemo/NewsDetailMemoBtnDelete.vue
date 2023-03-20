@@ -16,7 +16,7 @@
           <v-btn
             elevation="0"
             color="var(--error-col-1)"
-            @click="deleteMemo()"
+            @click="deleteMemoItem()"
             dark
             >삭제</v-btn
           >
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+import { deleteMemo } from "@/api/modules/memo";
+import { mapActions } from "vuex";
+
 export default {
   name: "NewsDetailMemoDeleteBtn",
   data() {
@@ -37,10 +40,21 @@ export default {
   },
   props: {
     memoId: Number,
+    index: Number,
   },
   methods: {
-    deleteMemo() {
-      alert("삭제 함수 구현 필요");
+    ...mapActions("memoStore", ["deleteMemo"]),
+    deleteMemoItem() {
+      deleteMemo().then((res) => {
+        if (res) {
+          // 삭제 성공
+          this.deleteMemo(this.index);
+          this.dialog = false;
+          this.$emit("deleteMemoItem");
+        } else {
+          // 삭제 실패
+        }
+      });
     },
   },
 };
