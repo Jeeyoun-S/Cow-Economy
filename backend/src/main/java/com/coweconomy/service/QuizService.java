@@ -52,8 +52,10 @@ public class QuizService {
      * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
      * **/
     public List<ArticleWordQuizDto> getEconomyWord(List<Long> articleIdList) {
-        // !!
-        List<ArticleWordQuizDto> result = userArticleRepository.findByArticleIn(articleIdList);
+        List<ArticleWord> articleWords = new ArrayList<>();
+        articleWords = userArticleRepository.findByArticleIn(articleIdList);
+
+        List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
         return result;
     }
 

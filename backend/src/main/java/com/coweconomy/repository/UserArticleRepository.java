@@ -2,6 +2,7 @@ package com.coweconomy.repository;
 
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
+import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,7 +29,7 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
      * @param List<UserArticleDto> 읽은 기사 List
      * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
      * **/
-    List<ArticleWordQuizDto> findByArticleIn(@Param("articleId") List<Long> articleId);
-
+    @Query("select aw from ArticleWord aw where aw.article.articleId in :articleId")
+    List<ArticleWord> findByArticleIn(@Param("articleId") List<Long> articleId);
 
 }
