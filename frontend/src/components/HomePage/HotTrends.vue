@@ -7,8 +7,12 @@
     <div class="main-subtitle-font">
       최근 경제 뉴스에서 다루고 있는 핵심 키워드를 확인해 보세요.
     </div>
-    <v-sheet class="mt-4" rounded color="white" width="100%" height="229">
-      <p>word cloud 이미지 영역</p>
+    <v-sheet class="mt-4 trend_area" rounded color="white">
+      <img
+        class="trend_img"
+        src="https://j8a509.p.ssafy.io/wordcloud/word_cloud.png"
+        alt="word cloud 이미지"
+      />
     </v-sheet>
   </v-sheet>
 </template>
@@ -22,4 +26,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.trend_area {
+  text-align: center;
+  width: 338;
+  height: 229;
+}
+.trend_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
