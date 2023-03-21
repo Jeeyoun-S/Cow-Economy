@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-hover v-if="!modifyMode" v-slot="{ hover }" open-delay="200">
+    <v-hover v-slot="{ hover }" open-delay="200">
       <!-- memo box -->
       <v-sheet
         :color="hover ? 'var(--main-col-5)' : 'transparent'"
@@ -25,11 +25,7 @@
               :index="index"
             ></NewsDetailMemoBtnLock>
             <!-- memo modify button : 보류 -->
-            <v-btn
-              icon
-              text
-              color="var(--main-col-3)"
-              @click="modifyMode = true"
+            <v-btn icon text color="var(--main-col-3)" @click="checkRegister()"
               ><v-icon> mdi-pencil </v-icon></v-btn
             >
             <!-- memo delete button -->
@@ -61,13 +57,27 @@
       </v-sheet>
     </v-hover>
     <!-- memo modify version -->
-    <NewsDetailMemoModify
-      v-else
-      @changeMode="modifyMode = false"
-      :reference="memo.referenceText"
-      :memoId="memo.memoId"
-      :content="memo.memoContent"
-    ></NewsDetailMemoModify>
+    <v-dialog v-model="dialog" max-width="300">
+      <template v-slot:default="dialog">
+        <v-card class="pb-3">
+          <v-card-title>메모 수정하기</v-card-title>
+          <v-card-text
+            >등록 또는 수정 중이던 메모가 있습니다.<br />
+            이를 무시하고, 수정을 진행하시겠습니까?</v-card-text
+          >
+          <v-card-actions class="justify-center">
+            <v-btn
+              elevation="0"
+              color="var(--error-col-1)"
+              @click="modifyMemo()"
+              dark
+              >수정</v-btn
+            >
+            <v-btn elevation="0" @click="dialog.value = false">취소</v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 
@@ -75,7 +85,9 @@
 import NewsDetailMemoReference from "./NewsDetailMemoReference.vue";
 import NewsDetailMemoBtnDelete from "./NewsDetailMemoBtnDelete.vue";
 import NewsDetailMemoBtnLock from "./NewsDetailMemoBtnLock.vue";
-import NewsDetailMemoModify from "./NewsDetailMemoModify.vue";
+import { mapActions, mapState } from "vuex";
+
+const memoStore = "memoStore";
 
 export default {
   name: "NewsDetailMemoItem",
@@ -83,7 +95,6 @@ export default {
     NewsDetailMemoReference,
     NewsDetailMemoBtnDelete,
     NewsDetailMemoBtnLock,
-    NewsDetailMemoModify,
   },
   props: {
     isMine: Boolean,
@@ -92,12 +103,41 @@ export default {
   },
   data() {
     return {
-      modifyMode: false,
+      dialog: false,
     };
   },
+  computed: {
+    ...mapState(memoStore, ["newMemo", "selectionText"]),
+  },
   methods: {
+    ...mapActions(memoStore, ["updateNewMemo", "updateSelectionText"]),
     deleteMemoItem() {
       this.$emit("deleteMemoItem", this.index);
+    },
+    checkRegister() {
+      if (this.newMemo.memoContent != null || this.selectionText != null) {
+        this.dialog = true;
+      } else {
+        this.modifyMemo();
+      }
+    },
+    modifyMemo() {
+      this.updateNewMemo({
+        memoContent: this.memo.memoContent,
+        memoPublicScope: this.memo.memoPublicScope,
+        isModify: true,
+        memoId: this.memo.memoId,
+        index: this.index,
+      });
+      this.updateSelectionText({
+        text: this.memo.referenceText,
+        startIndex: this.memo.memoStartIndex,
+        endIndex: this.memo.memoEndIndex,
+        startRange: this.memo.memoStartRange,
+        endRange: this.memo.memoEndRange,
+      });
+      scrollTo(0, document.getElementById("memo-register").offsetTop);
+      this.dialog = false;
     },
   },
 };

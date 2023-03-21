@@ -1,7 +1,10 @@
 <template>
   <v-sheet>
     <!-- register -->
-    <NewsDetailMemoRegister @addNewMemo="addNewMemo"></NewsDetailMemoRegister>
+    <NewsDetailMemoRegister
+      @addNewMemo="addNewMemo"
+      @updateMemo="updateMemo"
+    ></NewsDetailMemoRegister>
     <!-- memo boxes -->
     <NewsDetailMemoBox
       :isMine="true"
@@ -24,7 +27,7 @@
 <script>
 import NewsDetailMemoRegister from "./NewsDetailMemoRegister.vue";
 import NewsDetailMemoBox from "./NewsDetailMemoBox.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const memoStore = "memoStore";
 
@@ -49,6 +52,7 @@ export default {
     ...mapState(memoStore, ["myMemoList"]),
   },
   methods: {
+    ...mapActions(memoStore, ["addMyMemo"]),
     deleteMemoItem(index) {
       if (this.memos.length > index) {
         this.memos.splice(index, 1);
@@ -89,14 +93,26 @@ export default {
       this.addMemo();
     },
     addNewMemo(memo) {
+      this.addMyMemo({
+        memo: memo,
+        sort: this.sort,
+      });
       if (this.sort == "최신순") {
         this.memos.unshift(memo);
         this.memoIndex += 1;
       } else {
-        if (this.myMemoList.length <= this.memos.length) {
+        if (this.myMemoList.length - 1 <= this.memos.length) {
           this.memos.push(memo);
           this.memoIndex += 1;
         }
+      }
+    },
+    updateMemo(memo, index) {
+      if (index < this.memos.length) {
+        // re-rendering
+        var memoList = [...this.memos];
+        memoList[index] = memo;
+        this.memos = memoList;
       }
     },
   },

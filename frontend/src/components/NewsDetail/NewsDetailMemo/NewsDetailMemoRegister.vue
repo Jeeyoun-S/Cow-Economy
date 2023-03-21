@@ -1,8 +1,8 @@
 <template>
-  <v-sheet class="mx-7 my-4 pa-5" rounded="lg" outlined>
+  <v-sheet id="memo-register" class="mx-7 my-4 pa-5" rounded="lg" outlined>
     <!-- top -->
-    <div class="d-flex justify-space-between">
-      <!-- check memoPublicScrope -->
+    <div class="d-flex justify-space-between align-center">
+      <!-- left : check memoPublicScrope -->
       <v-card
         class="pa-1 d-flex flex-row align-center"
         color="grey lighten-1"
@@ -27,45 +27,34 @@
           ><v-icon left small> mdi-lock-outline </v-icon>비공개</v-chip
         >
       </v-card>
-      <!-- register button -->
-      <v-btn @click="registerMemo()" icon text
-        ><v-icon> mdi-plus </v-icon></v-btn
-      >
+      <!-- right -->
+      <div class="d-flex align-center">
+        <!-- is modifying -->
+        <v-btn
+          class="sm-font"
+          v-if="newMemo.isModify"
+          @click="deleteMemoInfo()"
+          text
+          rounded
+          small
+          >수정 취소</v-btn
+        >
+        <!-- register button -->
+        <v-btn @click="registerMemo()" icon text
+          ><v-icon> mdi-plus </v-icon></v-btn
+        >
+      </div>
     </div>
     <!-- reference -->
-    <v-sheet
-      v-if="!!selectionText"
-      class="mt-2 pa-2 d-flex align-start pointer"
-      color="grey lighten-2"
-      @click="move()"
-    >
-      <!-- reference text -->
-      <v-hover v-slot="{ hover }">
-        <v-sheet
-          class="font-italic sm-font"
-          color="transparent"
-          :class="{ 'on-hover underline': hover }"
-        >
-          <div
-            class="spacing-all"
-            v-html="
-              selectionText.length > 1
-                ? selectionText[0] + (hover ? selectionText[1] : '···')
-                : selectionText[0]
-            "
-          ></div>
-        </v-sheet>
-      </v-hover>
-      <!-- remove reference -->
-      <v-btn
-        class="ml-1 ml-auto"
-        icon
-        text
-        color="grey darken-1"
-        @click="removeReference()"
-        ><v-icon> mdi-close-circle </v-icon></v-btn
-      >
-    </v-sheet>
+    <NewsDetailMemoReferenceBtn
+      :text="selectionText"
+      :startRange="selectionResult.startRange"
+      :endRange="selectionResult.endRange"
+      :startIndex="selectionResult.startIndex"
+      :endIndex="selectionResult.endIndex"
+      @removeReference="removeSelectionText"
+      color="grey"
+    ></NewsDetailMemoReferenceBtn>
     <!-- input memoContent -->
     <v-form ref="form">
       <v-textarea
@@ -91,7 +80,8 @@
     >
       <v-sheet color="transparent" class="d-flex flex-row align-center">
         <v-icon class="mr-3"> mdi-check-circle-outline </v-icon>
-        새로운 메모를 등록했습니다.
+        <span v-if="barOption">메모를 수정했습니다.</span>
+        <span v-else>새로운 메모를 등록했습니다.</span>
       </v-sheet>
     </v-snackbar>
     <!-- failure register (keep 2 seconds) -->
@@ -106,21 +96,27 @@
     >
       <v-sheet color="transparent" class="d-flex flex-row align-center">
         <v-icon class="mr-3"> mdi-close-circle-outline </v-icon>
-        <div>메모 등록에 실패했습니다.<br />다시 시도해 주시기 바랍니다.</div>
+        <div>
+          메모 <span v-if="barOption">수정</span><span v-else>등록</span>에
+          실패했습니다.<br />다시 시도해 주시기 바랍니다.
+        </div>
       </v-sheet>
     </v-snackbar>
   </v-sheet>
 </template>
 
 <script>
-import { moveReference } from "@/common/function/textSelection";
-import { createMemo } from "@/api/modules/memo";
+import NewsDetailMemoReferenceBtn from "./NewDetailMemoReferenceBtn.vue";
+import { updateMemo } from "@/api/modules/memo";
 import { mapActions, mapState } from "vuex";
 
 const memoStore = "memoStore";
 
 export default {
   name: "NewsDetailMemoRegister",
+  components: {
+    NewsDetailMemoReferenceBtn,
+  },
   data() {
     return {
       publicScope: false, // 공개 여부
@@ -132,56 +128,91 @@ export default {
       ], // 메모 내용 유효성
       successBar: false,
       failureBar: false,
+      barOption: false,
     };
   },
   computed: {
-    ...mapState(memoStore, ["myMemoList", "selectionResult", "selectionText"]),
+    ...mapState(memoStore, ["selectionResult", "selectionText", "newMemo"]),
   },
   methods: {
-    ...mapActions(memoStore, ["removeSelectionText", "addMyMemo"]),
+    ...mapActions(memoStore, [
+      "removeSelectionText",
+      "updateNewMemo",
+      "modifyMyMemo",
+    ]),
     async registerMemo() {
       // 메모 등록하기
       const valid = this.$refs.form.validate();
       if (valid) {
         // 메모 등록 API 실행
-        await createMemo(
-          this.publicScope,
-          this.content,
-          this.selectionResult
-        ).then((newMemo) => {
-          if (newMemo != null) {
-            // vuex에 값 추가하기
-            this.addMyMemo(newMemo);
-            // 등록 완료 snackbar 활성화
-            this.successBar = true;
-            // 인용문 초기화
-            this.removeSelectionText();
-            // 입력 값 초기화
-            this.memoPublicScope = false;
-            this.memoContent = null;
-            // 유효성 검사 초기화
-            this.$refs.form.reset();
-            // 부모 요소(Mine)로 등록된 메모 보내기
-            this.$emit("addNewMemo", newMemo);
+        await updateMemo(
+          this.newMemo,
+          this.selectionResult,
+          this.selectionText
+        ).then((res) => {
+          if (res != null) {
+            new Promise(() => {
+              // 등록 완료 snackbar 활성화
+              this.successBar = true;
+              this.barOption = this.newMemo.isModify;
+              // 유효성 검사 초기화
+              this.$refs.form.reset();
+              // 수정인 경우
+              if (this.newMemo.isModify) {
+                // vuex 전체 메모 리스트에서 수정
+                this.modifyMyMemo({
+                  newMemo: res,
+                  index: this.newMemo.index,
+                });
+                // 지금 보여지고 있는 메모 리스트에서 수정
+                this.$emit("updateMemo", res, this.newMemo.index);
+              }
+              // 등록인 경우
+              else {
+                // 부모 요소(NewsDetailMemoMine)로 등록된 메모 보내기
+                this.$emit("addNewMemo", res);
+              }
+            }).then(
+              // 등록 완료된 메모 정보 모두 삭제
+              this.deleteMemoInfo()
+            );
           } else {
+            // 등록 실패 snackbar 활성화
             this.failureBar = true;
           }
         });
       }
     },
-    removeReference() {
-      // 인용문 삭제하기
+    // 작성 중인 메모 정보 모두 삭제
+    deleteMemoInfo() {
+      // 인용문 초기화
       this.removeSelectionText();
+      // vuex 값 초기화
+      this.updateNewMemo({
+        isModify: false,
+        memoId: null,
+        memoContnet: null,
+        memoPublicScope: false,
+        index: null,
+      });
+      // 유효성 검사 초기화
+      this.$refs.form.reset();
     },
-    move() {
-      // 인용문 위치로 이동하기
-      const selectionResult = this.selectionResult;
-      moveReference(
-        selectionResult.startRange,
-        selectionResult.endRange,
-        selectionResult.startIndex,
-        selectionResult.endIndex
-      );
+  },
+  watch: {
+    // vuex와 data가 똑같이 변경되도록 설정
+    publicScope() {
+      this.newMemo.memoPublicScope = this.publicScope;
+    },
+    content() {
+      this.newMemo.memoContent = this.content;
+    },
+    newMemo: {
+      handler() {
+        this.content = this.newMemo.memoContent;
+        this.publicScope = this.newMemo.memoPublicScope;
+      },
+      deep: true,
     },
   },
 };

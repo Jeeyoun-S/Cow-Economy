@@ -1,13 +1,13 @@
-import { getReferenceHTML } from "@/common/function/textSelection";
 
 // api instance 가져오기
 // const api = apiInstance();
 
 // [POST /memo] 메모 작성
-async function createMemo(publicScope, content, selectionResult) {
-  var newMemo = {
-    memoContent: content,
-    memoPublicScope: publicScope,
+async function updateMemo(newMemo, selectionResult, selectionText) {
+
+  var memo = {
+    memoContent: newMemo.memoContent,
+    memoPublicScope: newMemo.memoPublicScope,
     memoStartIndex: selectionResult.startIndex,
     memoEndIndex: selectionResult.endIndex,
     memoStartRange: selectionResult.startRange,
@@ -15,15 +15,16 @@ async function createMemo(publicScope, content, selectionResult) {
   };
 
   // api 요청 보내기
-
-  if (newMemo.memoStartIndex != null) {
-    const referenceText = getReferenceHTML(newMemo.memoStartRange, newMemo.memoEndRange, newMemo.memoStartIndex, newMemo.memoEndIndex);
-    newMemo["referenceText"] = referenceText;
+  if (newMemo.isModify) {
+    alert("수정 요청")
+    memo.memoId = newMemo.memoId;
   } else {
-    newMemo["referenceText"] = null;
+    alert("등록 요청")
   }
 
-  return Promise.resolve(newMemo);
+  memo.referenceText = selectionText;
+
+  return Promise.resolve(memo);
 }
 
 // [POST /memo/{memo_id}] 메모 공개 여부 변경하기
@@ -32,8 +33,9 @@ async function updateMemoPublicScope() {
 }
 
 // [DELETE /memo]  메모 삭제하기
-async function deleteMemo() {
+async function deleteMemo(memoId) {
+  console.log(memoId);
   return Promise.resolve(true);
 }
 
-export { createMemo, updateMemoPublicScope, deleteMemo };
+export { updateMemo, updateMemoPublicScope, deleteMemo };

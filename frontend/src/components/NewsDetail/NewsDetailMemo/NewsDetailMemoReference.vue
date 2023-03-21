@@ -7,9 +7,9 @@
     >
       <div
         v-html="
-          referenceList.length > 1
-            ? referenceList[0] + (hover ? referenceList[1] : '···')
-            : referenceList[0]
+          referenceText.length > 1
+            ? referenceText[0] + (hover ? referenceText[1] : '···')
+            : referenceText[0]
         "
       ></div>
     </div>
@@ -21,13 +21,8 @@ import { moveReference } from "@/common/function/textSelection";
 
 export default {
   name: "NewsDetailMemoReference",
-  data() {
-    return {
-      referenceList: null,
-    };
-  },
   props: {
-    referenceText: String,
+    referenceText: Array,
     startIndex: Number,
     endIndex: Number,
     startRange: Number,
@@ -42,9 +37,6 @@ export default {
         this.endIndex
       );
     },
-  },
-  created() {
-    this.referenceList = this.referenceText.split("@@@");
   },
 };
 </script>

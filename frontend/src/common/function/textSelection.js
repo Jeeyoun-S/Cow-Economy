@@ -25,7 +25,6 @@ function getSelection() {
       "startRange": null,
       "endRange": null
     };
-
     // article이 있는 곳의 모든 요소 가져오기
     var article = document.getElementById("article")
     var contents = article.childNodes;
@@ -47,6 +46,19 @@ function getSelection() {
     if (result.endNode === article) {
       result.endRange = result.endIndex;
       result.endIndex = 0;
+    }
+
+    // 거꾸로 선택된 경우를 고려
+    if (result.startRange > result.endRange) {
+      result.startIndex = selection.focusOffset;
+      result.endIndex = selection.baseOffset;
+      const startRange = result.startRange;
+      const endRange = result.endRange;
+      result.startRange = endRange;
+      result.endRange = startRange;
+    } else if (result.startRange == result.endRange) {
+      result.startIndex = Math.min(selection.focusOffset, selection.baseOffset);
+      result.endIndex = Math.max(selection.focusOffset, selection.baseOffset);
     }
 
     result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);

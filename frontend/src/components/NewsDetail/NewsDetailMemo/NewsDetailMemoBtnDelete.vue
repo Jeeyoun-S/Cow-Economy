@@ -29,7 +29,7 @@
 
 <script>
 import { deleteMemo } from "@/api/modules/memo";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "NewsDetailMemoDeleteBtn",
@@ -38,18 +38,35 @@ export default {
       dialog: false,
     };
   },
+  computed: {
+    ...mapState("memoStore", ["newMemo"]),
+  },
   props: {
     memoId: Number,
     index: Number,
   },
   methods: {
-    ...mapActions("memoStore", ["deleteMemo"]),
+    ...mapActions("memoStore", [
+      "deleteMemo",
+      "updateNewMemo",
+      "removeSelectionText",
+    ]),
     deleteMemoItem() {
-      deleteMemo().then((res) => {
+      deleteMemo(this.memoId).then((res) => {
         if (res) {
           // 삭제 성공
           this.deleteMemo(this.index);
           this.dialog = false;
+          if (this.newMemo.memoId == this.memoId) {
+            this.removeSelectionText();
+            this.updateNewMemo({
+              isModify: false,
+              memoId: null,
+              memoContnet: null,
+              memoPublicScope: false,
+              index: null,
+            });
+          }
           this.$emit("deleteMemoItem");
         } else {
           // 삭제 실패
