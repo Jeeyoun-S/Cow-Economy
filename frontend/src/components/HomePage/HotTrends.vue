@@ -8,11 +8,7 @@
       최근 경제 뉴스에서 다루고 있는 핵심 키워드를 확인해 보세요.
     </div>
     <v-sheet class="mt-4 trend_area" rounded color="white">
-      <img
-        class="trend_img"
-        src="https://j8a509.p.ssafy.io/wordcloud/word_cloud.png"
-        alt="word cloud 이미지"
-      />
+      <img class="trend_img" :src="`${imgPath}`" alt="word cloud 이미지" />
     </v-sheet>
   </v-sheet>
 </template>
@@ -21,7 +17,9 @@
 export default {
   name: "HotTrends",
   data() {
-    return {};
+    return {
+      imgPath: process.env.VUE_APP_WORD_CLOUD_URL,
+    };
   },
 };
 </script>
