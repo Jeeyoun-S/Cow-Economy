@@ -17,14 +17,25 @@ from wordcloud import WordCloud
 from pyspark.mllib.feature import HashingTF, IDF
 from math import log
 
+# 시간 설정
+from datetime import datetime
+from pytz import timezone
+
+today = datetime.today().astimezone(timezone('Asia/Seoul')).strftime("%Y%m%d") # 오늘 날짜 ex) 20230320
+
 # ----------- 설정 끝 -----------
 
 # HDFS에서 기사 가져오기
 def getNewsFromHdfs(path_str):
+   # 모든 뉴스 데이터
   df = spark.read.option("multiLine",True).option("header", True).option("sep", ",").csv(path_str+"*.csv")
+  # 오늘 크롤링한 데이터
+  nowDay = spark.read.option("multiLine",True).option("header", True).option("sep", ",").csv(path_str+today+".csv")
+  
   print("#### 데이터 가져오기 완료 ####")
-  print(f"{df.count()}개")
-  return df
+  print(f"전체 데이터 {df.count()}개")
+  print(f"방금 크롤링한 데이터 {nowDay.count()}개")
+  return df, nowDay
 
 # 불용어 설정
 def setStopWords(path):
@@ -73,7 +84,7 @@ def setOneList(data):
   return total_data
 
 # word counting & word cloud
-def setWordCloud(data, font_path):
+def setWordCloud(data, font_path, hdfs_path):
   data2 = data.map(lambda x:(x,1)).groupByKey().mapValues(sum).sortByKey(True)
   print("#### word count 완료 ####")
   
@@ -92,25 +103,9 @@ def setWordCloud(data, font_path):
   
   # 파일 저장
   cloud.to_file('word_cloud.png')
+  
+  # hdfs에 날짜 폴더로 저장
+  save_df = spark.createDataFrame(data2)
+  save_df.repartition(1).write.mode("append").csv(hdfs_path+today)
+  
   return 'success'
-
-# TF-IDF 계산
-# def setTFIDF(data):
-#   # 단어 hashing
-#   hashingTF = HashingTF()
-#   tf = hashingTF.transform(data)
-  
-#   # IDF 계산
-#   idf = IDF().fit(tf)
-#   tfidf = idf.transform(tf)
-  
-#   # 단어와 해당 단어의 TF-IDF 값을 출력
-#   words = data.flatMap(lambda x: x)
-#   words_hash = hashingTF.transform(words.map(lambda x: [x]))
-#   words_tfidf = idf.transform(words_hash)
-#   word_tfidf_pair = words.zip(words_tfidf.collect())
-#   word_tfidf = word_tfidf_pair.map(lambda x: (x[0], x[1].toArray()[0])).sortBy(lambda x: x[1], False)
-  
-#   print(word_tfidf)
-  
-#   return tfidf, word_tfidf
