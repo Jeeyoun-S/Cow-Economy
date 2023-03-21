@@ -9,7 +9,6 @@ import mainStore from "@/store/modules/mainStore.js";
 import mypageStore from "@/store/modules/mypageStore.js";
 import userStore from "@/store/modules/userStore.js";
 import quizStore from "@/store/modules/quizStore.js";
-import quizGptStore from "./modules/quizGptStore"; // Quiz 문제 출제 시 chatGPT를 사용하는 store
 
 Vue.use(Vuex);
 
@@ -24,7 +23,6 @@ export default new Vuex.Store({
     mypageStore: mypageStore,
     userStore: userStore,
     quizStore: quizStore,
-    quizGptStore: quizGptStore,
   },
   plugins: [
     createPersistedState({

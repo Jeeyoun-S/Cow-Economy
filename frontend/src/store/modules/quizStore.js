@@ -32,9 +32,7 @@ const quizStore = {
   mutations: {
     SET_QUESTIONS: (state, questions) => {
       state.questions = questions;
-      // console.log("#21# SET_QUESTIONS: ", state.questions);
     },
-    // #21#
     SET_SIMILARITY_WORD: (state, similarityWord) => {
       state.similarityWord = similarityWord;
     },
@@ -68,7 +66,7 @@ const quizStore = {
           console.log("#21# getQuizWords 실행결과: ", data);
           // i) 성공
           if (data.statusCode == 200) {
-            console.log("#21# Quiz 단어 가져오기 성공: ", data);
+            // console.log("#21# Quiz 단어 가져오기 성공: ", data);
             // console.log("#21# Quiz 단어 가져오기 성공: ", data.data[0]);
 
             // Quiz 제작
@@ -77,50 +75,32 @@ const quizStore = {
             for (const word of data.data) {
               const quizItem = new Object();
               const answers = new Object();
-              // const randomNum = Math.floor(Math.random() * 4 + 1); // 1-4 중 Random 숫자 뽑기 (for. 정답 자리)
-              const randomNum = Math.floor(Math.random() * (102 - 98) + 97);
-              console.log("#21# 경제 단어: ", word.word);
-              console.log("#21# 경제 단어: ", word.wordExpl);
-              console.log(
-                "#21# 경제 단어 - 정답 자리: ",
-                String.fromCharCode(randomNum)
-              ); // [a:97, b:98, c:99, d:100]
+              const randomNum = Math.floor(Math.random() * (102 - 98) + 97); // 97-100 중 Random 숫자 뽑기 (for. 정답 자리), [a:97, b:98, c:99, d:100]
 
-              // i) 문제, 정답 번호, 정답
+              // i) 문제, 정답 번호 setting
               quizItem.question = word.wordExpl;
               quizItem.correctAnswer = String.fromCharCode(randomNum);
               // ii) 4지선다
-              //     - [호출] chatGPT로 유사한 단어 3개 가져오기
-              // await store.dispatch("quizStore/excuteSendMessage", word.word, {
-              //   root: true,
-              // });
+              // - [호출] chatGPT로 유사한 단어 3개 가져오기
               await store.dispatch("quizStore/excuteSendMessage", word.word, {
                 root: true,
               });
-              // const similarityWord = await store.dispatch("getSimilarityWord");
-              console.log(
-                "#21# store에 있는 유사단어 확인: ",
-                state.similarityWord
-              );
-              answers.a = word.word;
-              answers.b = "b";
-              answers.c = "c";
-              answers.d = "d";
+              // console.log(
+              //   "#21# store에 있는 유사단어 확인: ",
+              //   state.similarityWord
+              // );
+              // - 4지선다 setting
+              answers[String.fromCharCode(randomNum)] = word.word;
+              let cnt = 0;
+              for (let i = 97; i <= 100; i++) {
+                if (i == randomNum) continue;
+                answers[String.fromCharCode(i)] = state.similarityWord[cnt];
+                cnt++;
+              }
               quizItem.answers = answers;
-
-              // {
-              //   question: "Q. 문제 - 2",
-              //   answers: {
-              //     a: "2000",
-              //     b: "2001",
-              //     c: "2002",
-              //     d: "2003",
-              //   },
-              //   correctAnswer: "b",
-              // },
               quiz.push(quizItem);
             }
-            console.log("#21# quiz 확인: ", quiz);
+            // console.log("#21# quiz 확인: ", quiz);
             await commit("SET_QUESTIONS", quiz);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
@@ -132,10 +112,9 @@ const quizStore = {
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
     async excuteSendMessage({ commit }, word) {
-      console.log("#21# chatGPT 질문 동작 word: ", word);
+      // console.log("#21# chatGPT 질문 동작 word: ", word);
       const message =
         "경제용어 " + word + "와 유사한 경제용어 3개 설명없이 단어만 알려줘";
-      console.log("#21# chatGPT 질문 동작 message: ", message);
 
       await sendMessageWord(
         message,
@@ -154,7 +133,6 @@ const quizStore = {
             // console.log("#21# 단어 추출 확인: ", match[1]);
             similarityWord.push(match[1]);
           }
-          console.log("#21# 유사 경제단어 확인: ", similarityWord);
           commit("SET_SIMILARITY_WORD", similarityWord);
         },
         (error) => {
