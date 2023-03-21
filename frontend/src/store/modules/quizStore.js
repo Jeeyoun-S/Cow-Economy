@@ -1,4 +1,5 @@
 import { getQuizWords } from "@/api/quiz";
+import { sendMessageWord } from "@/api/chatGPT";
 
 const quizStore = {
   namespaced: true,
@@ -97,7 +98,7 @@ const quizStore = {
   mutations: {
     SET_QUESTIONS: (state, questions) => {
       state.questions = questions;
-      console.log("#21# SET_QUESTIONS: ", state.questions);
+      // console.log("#21# SET_QUESTIONS: ", state.questions);
     },
     SET_INDEX: (state, index) => {
       state.index = index;
@@ -128,7 +129,6 @@ const quizStore = {
         async ({ data }) => {
           console.log("#21# getQuizWords 실행결과: ", data);
           // i) 성공
-          //if (data.message == `${process.env.VUE_APP_API_RESULT_SUCCESS}`) {
           if (data.statusCode == 200) {
             console.log("#21# Quiz 단어 가져오기 성공: ", data);
 
@@ -210,6 +210,24 @@ const quizStore = {
             await commit("SET_QUESTIONS", quiz);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
+    async excuteSendMessage() {
+      const message = "경제용어 커버드콜과 유사한 경제용어 3개 알려줘";
+      // console.log("#21# chatGPT 질문 동작 message: ", message);
+
+      await sendMessageWord(
+        message,
+        async ({ data }) => {
+          console.log(
+            "#21# chatGPT 질문 실행결과: ",
+            data.choices[0].message.content
+          );
         },
         (error) => {
           console.log(error);

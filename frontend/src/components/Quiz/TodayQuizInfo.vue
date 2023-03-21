@@ -46,6 +46,12 @@
       <div v-if="alertQuizFlag">
         <today-not-enter-modal></today-not-enter-modal>
       </div>
+      <!-- #21# chatGPT TEST용 -->
+      <div class="quiz-center-button">
+        <v-btn block dark color="var(--main-col-2)" @click="questionGPT()"
+          >chatGPT</v-btn
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -75,7 +81,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(quizStore, ["setExamQuestions"]),
+    // ...mapActions(quizStore, ["setExamQuestions"]),
+    ...mapActions(quizStore, ["setExamQuestions", "excuteSendMessage"]), // #21#
     // [@Method] Quiz 페이지로 이동
     moveQuiz() {
       if (this.todayQuizFlag == false) {
@@ -84,6 +91,10 @@ export default {
         // ! 오늘 Quiz 다 했다고 alert 창 띄우기
         this.alertQuizFlag = true;
       }
+    },
+    // #21# [@MEthod] chatGPT 테스트용
+    questionGPT() {
+      this.excuteSendMessage();
     },
   },
 };
