@@ -1,5 +1,5 @@
 <template>
-  <v-app class="overflow-hidden">
+  <v-app>
     <!-- Header -->
     <router-view name="header" />
     <!-- Main -->
@@ -51,6 +51,7 @@ export default {
 @import "@/assets/styles/article.css";
 @import "@/assets/styles/override.css";
 @import "@/assets/styles/scroll.css";
+@import "@/assets/styles/swiper.css";
 
 html body {
   background: #fafafa;

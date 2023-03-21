@@ -2,7 +2,7 @@
   font-size: 10px;
 }
 .b-font {
-  font-weight: 800;
+  font-weight: 900;
 }
 .sm-font {
   font-size: 14px;
@@ -18,4 +18,13 @@
 }
 .underline {
   text-decoration: underline;
+}
+.main-title-font {
+  font-size: 20px;
+  font-family: var(--main-font-3);
+}
+.main-subtitle-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: grey;
 }

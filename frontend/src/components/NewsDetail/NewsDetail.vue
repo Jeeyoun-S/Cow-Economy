@@ -4,6 +4,7 @@
     id="scrolling-techniques-7"
     class="overflow-y-auto"
   >
+    <NewsDetailFloatingBtn v-show="false"></NewsDetailFloatingBtn>
     <NewsDetailContent></NewsDetailContent>
     <NewsDetailRelation></NewsDetailRelation>
     <NewsDetailMemo></NewsDetailMemo>
@@ -11,9 +12,10 @@
 </template>
 
 <script>
-import NewsDetailContent from "@/components/NewsDetail/NewsDetailContent.vue";
-import NewsDetailRelation from "@/components/NewsDetail/NewsDetailRelation.vue";
-import NewsDetailMemo from "@/components/NewsDetail/NewsDetailMemo/NewsDetailMemo.vue";
+import NewsDetailContent from "./NewsDetailContent.vue";
+import NewsDetailRelation from "./NewsDetailRelation/NewsDetailRelation.vue";
+import NewsDetailMemo from "./NewsDetailMemo/NewsDetailMemo.vue";
+import NewsDetailFloatingBtn from "./NewsDetailFloatingBtn/NewsDetailFloatingBtn.vue";
 
 export default {
   name: "NewsDetail",
@@ -21,6 +23,7 @@ export default {
     NewsDetailContent,
     NewsDetailRelation,
     NewsDetailMemo,
+    NewsDetailFloatingBtn,
   },
 };
 </script>

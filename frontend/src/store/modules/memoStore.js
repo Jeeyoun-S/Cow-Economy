@@ -11,6 +11,13 @@ const memoStore = {
       startRange: null,
       endRange: null
     },
+    newMemo: {
+      memoId: null,
+      isModify: false,
+      memoContent: null,
+      memoPublicScope: false,
+      index: null
+    },
     highlightReference: {
       endNode: null,
       startRange: null,
@@ -20,28 +27,15 @@ const memoStore = {
     myMemoList: []
   },
   getters: {
-    getMemoBtn(state) {
-      return state.memoBtn;
-    },
-    getSelectionText(state) {
-      return state.selectionText;
-    },
-    getSelectionResult(state) {
-      return state.selectionResult;
-    },
-    getMyMemoList(state) {
-      return state.myMemoList;
-    },
-    getOtherMemoList(state) {
-      return state.otherMemoList;
-    }
+
   },
   mutations: {
     UPDATE_MEMO_BTN(state) {
       state.memoBtn = !state.memoBtn;
     },
     UPDATE_REFERENCE(state, payload) {
-      if (payload.text == null) state.selectionText = null
+      if (payload.text == null) state.selectionText = null;
+      else if (Array.isArray(payload.text)) state.selectionText = payload.text;
       else state.selectionText = payload.text.split("@@@");
 
       state.selectionResult["startIndex"] = payload.startIndex;
@@ -50,13 +44,27 @@ const memoStore = {
       state.selectionResult["endRange"] = payload.endRange;
     },
     UPDATE_MY_MEMO(state, payload) {
-      state.myMemoList.push(payload);
+      if (payload.sort == "최신순") {
+        state.myMemoList.unshift(payload.memo);
+      } else {
+        state.myMemoList.push(payload.memo);
+      }
     },
     UPDATE_PUBLIC_SCOPE(state, payload) {
       state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
     },
     DELETE_MEMO(state, payload) {
       state.myMemoList.splice(payload, 1);
+    },
+    UPDATE_NEW_MEMO(state, payload) {
+      state.newMemo.isModify = payload.isModify;
+      state.newMemo.memoContent = payload.memoContent;
+      state.newMemo.memoPublicScope = payload.memoPublicScope;
+      state.newMemo.memoId = payload.memoId;
+      state.newMemo.index = payload.index;
+    },
+    UPDATE_ONE_MY_MEMO(state, payload) {
+      state.myMemoList[payload.index] = payload.newMemo;
     }
   },
   actions: {
@@ -68,6 +76,9 @@ const memoStore = {
       if (selection != null) commit("UPDATE_REFERENCE", selection);
       commit("UPDATE_MEMO_BTN");
     },
+    updateSelectionText({ commit }, selection) {
+      commit("UPDATE_REFERENCE", selection);
+    },
     removeSelectionText({ commit }) {
       commit("UPDATE_REFERENCE", {
         "text": null,
@@ -77,14 +88,20 @@ const memoStore = {
         "endRange": null,
       });
     },
-    addMyMemo({ commit }, memo) {
-      commit("UPDATE_MY_MEMO", memo);
+    addMyMemo({ commit }, data) {
+      commit("UPDATE_MY_MEMO", data);
     },
     updatePublicScope({ commit }, index) {
       commit("UPDATE_PUBLIC_SCOPE", index);
     },
     deleteMemo({ commit }, index) {
       commit("DELETE_MEMO", index);
+    },
+    updateNewMemo({ commit }, memo) {
+      commit("UPDATE_NEW_MEMO", memo);
+    },
+    modifyMyMemo({ commit }, memo) {
+      commit("UPDATE_ONE_MY_MEMO", memo);
     }
   },
   modules: {
