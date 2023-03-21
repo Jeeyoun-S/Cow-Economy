@@ -77,7 +77,7 @@ export default {
   },
   watch: {
     questions() {
-      location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
+      // location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`; // #21# 문제 출제 test동안만 주석
     },
   },
   methods: {

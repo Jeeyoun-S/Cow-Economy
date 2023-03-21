@@ -1,83 +1,13 @@
 import { getQuizWords } from "@/api/quiz";
 import { sendMessageWord } from "@/api/chatGPT";
 
+import store from "@/store/index.js";
+
 const quizStore = {
   namespaced: true,
   state: {
-    // questions: [
-    //   {
-    //     question:
-    //       "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
-    //     answers: {
-    //       a: "중산층가구",
-    //       b: "0.5인 가구",
-    //       c: "중위소득",
-    //       d: "4차 산업혁명",
-    //     },
-    //     correctAnswer: "a",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 2",
-    //     answers: {
-    //       a: "2000",
-    //       b: "2001",
-    //       c: "2002",
-    //       d: "2003",
-    //     },
-    //     correctAnswer: "b",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 3",
-    //     answers: {
-    //       a: "3000",
-    //       b: "3001",
-    //       c: "3002",
-    //       d: "3003",
-    //     },
-    //     correctAnswer: "c",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 4",
-    //     answers: {
-    //       a: "4000",
-    //       b: "4001",
-    //       c: "4002",
-    //       d: "4003",
-    //     },
-    //     correctAnswer: "d",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 5",
-    //     answers: {
-    //       a: "5000",
-    //       b: "5001",
-    //       c: "5002",
-    //       d: "5003",
-    //     },
-    //     correctAnswer: "a",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 6",
-    //     answers: {
-    //       a: "6000",
-    //       b: "6001",
-    //       c: "6002",
-    //       d: "6003",
-    //     },
-    //     correctAnswer: "b",
-    //   },
-    //   {
-    //     question: "Q. 문제 - 7",
-    //     answers: {
-    //       a: "7000",
-    //       b: "7001",
-    //       c: "7002",
-    //       d: "7003",
-    //     },
-    //     correctAnswer: "c",
-    //   },
-    // ], // Quiz
-    questions: [],
+    questions: [], // Quiz 문제
+    similarityWord: [], // 경제단어와 유사한 단어 3개
     todayQuizFlag: false, // 금일 오늘의 Quiz 진행 여부
     index: 0, // Quiz index
     isPass: false, // Quiz 통과 여부
@@ -87,6 +17,10 @@ const quizStore = {
   getters: {
     getQuestions: (state) => {
       return state.questions;
+    },
+    // #21#
+    getSimilarityWord: (state) => {
+      return state.similarityWord;
     },
     getIndex: (state) => {
       return state.index;
@@ -99,6 +33,10 @@ const quizStore = {
     SET_QUESTIONS: (state, questions) => {
       state.questions = questions;
       // console.log("#21# SET_QUESTIONS: ", state.questions);
+    },
+    // #21#
+    SET_SIMILARITY_WORD: (state, similarityWord) => {
+      state.similarityWord = similarityWord;
     },
     SET_INDEX: (state, index) => {
       state.index = index;
@@ -118,7 +56,7 @@ const quizStore = {
   },
   actions: {
     // [@Method] Quiz 문제 출제
-    async setExamQuestions({ commit }) {
+    async setExamQuestions({ commit, state }) {
       // !FIX! 나중에 로그인 완료되면 현 login ID 붙이기
       const info = {
         userId: 1,
@@ -131,82 +69,58 @@ const quizStore = {
           // i) 성공
           if (data.statusCode == 200) {
             console.log("#21# Quiz 단어 가져오기 성공: ", data);
+            // console.log("#21# Quiz 단어 가져오기 성공: ", data.data[0]);
 
-            // Quiz 출제
-            // i) 검색 api를 활용하여 유사한 단어 가져오기
-            const quiz = [
-              {
-                question:
-                  "[ ]란 OECD 기준에 따라 가구를 소득 순으로 나열했을 때, 한가운데에 있는 가구소득(중위소득)의 50~150% 범위에 속한 가구를 뜻한다.",
-                answers: {
-                  a: "중산층가구",
-                  b: "0.5인 가구",
-                  c: "중위소득",
-                  d: "4차 산업혁명",
-                },
-                correctAnswer: "a",
-              },
-              {
-                question: "Q. 문제 - 2",
-                answers: {
-                  a: "2000",
-                  b: "2001",
-                  c: "2002",
-                  d: "2003",
-                },
-                correctAnswer: "b",
-              },
-              {
-                question: "Q. 문제 - 3",
-                answers: {
-                  a: "3000",
-                  b: "3001",
-                  c: "3002",
-                  d: "3003",
-                },
-                correctAnswer: "c",
-              },
-              {
-                question: "Q. 문제 - 4",
-                answers: {
-                  a: "4000",
-                  b: "4001",
-                  c: "4002",
-                  d: "4003",
-                },
-                correctAnswer: "d",
-              },
-              {
-                question: "Q. 문제 - 5",
-                answers: {
-                  a: "5000",
-                  b: "5001",
-                  c: "5002",
-                  d: "5003",
-                },
-                correctAnswer: "a",
-              },
-              {
-                question: "Q. 문제 - 6",
-                answers: {
-                  a: "6000",
-                  b: "6001",
-                  c: "6002",
-                  d: "6003",
-                },
-                correctAnswer: "b",
-              },
-              {
-                question: "Q. 문제 - 7",
-                answers: {
-                  a: "7000",
-                  b: "7001",
-                  c: "7002",
-                  d: "7003",
-                },
-                correctAnswer: "c",
-              },
-            ]; // Quiz
+            // Quiz 제작
+            const quiz = []; // Quiz
+            // 1) 가져온 경제용어로 문제 만들기
+            for (const word of data.data) {
+              const quizItem = new Object();
+              const answers = new Object();
+              // const randomNum = Math.floor(Math.random() * 4 + 1); // 1-4 중 Random 숫자 뽑기 (for. 정답 자리)
+              const randomNum = Math.floor(Math.random() * (102 - 98) + 97);
+              console.log("#21# 경제 단어: ", word.word);
+              console.log("#21# 경제 단어: ", word.wordExpl);
+              console.log(
+                "#21# 경제 단어 - 정답 자리: ",
+                String.fromCharCode(randomNum)
+              ); // [a:97, b:98, c:99, d:100]
+
+              // i) 문제, 정답 번호, 정답
+              quizItem.question = word.wordExpl;
+              quizItem.correctAnswer = String.fromCharCode(randomNum);
+              // ii) 4지선다
+              //     - [호출] chatGPT로 유사한 단어 3개 가져오기
+              // await store.dispatch("quizStore/excuteSendMessage", word.word, {
+              //   root: true,
+              // });
+              await store.dispatch("quizStore/excuteSendMessage", word.word, {
+                root: true,
+              });
+              // const similarityWord = await store.dispatch("getSimilarityWord");
+              console.log(
+                "#21# store에 있는 유사단어 확인: ",
+                state.similarityWord
+              );
+              answers.a = word.word;
+              answers.b = "b";
+              answers.c = "c";
+              answers.d = "d";
+              quizItem.answers = answers;
+
+              // {
+              //   question: "Q. 문제 - 2",
+              //   answers: {
+              //     a: "2000",
+              //     b: "2001",
+              //     c: "2002",
+              //     d: "2003",
+              //   },
+              //   correctAnswer: "b",
+              // },
+              quiz.push(quizItem);
+            }
+            console.log("#21# quiz 확인: ", quiz);
             await commit("SET_QUESTIONS", quiz);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
@@ -217,17 +131,31 @@ const quizStore = {
       );
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
-    async excuteSendMessage() {
-      const message = "경제용어 커버드콜과 유사한 경제용어 3개 알려줘";
-      // console.log("#21# chatGPT 질문 동작 message: ", message);
+    async excuteSendMessage({ commit }, word) {
+      console.log("#21# chatGPT 질문 동작 word: ", word);
+      const message =
+        "경제용어 " + word + "와 유사한 경제용어 3개 설명없이 단어만 알려줘";
+      console.log("#21# chatGPT 질문 동작 message: ", message);
 
       await sendMessageWord(
         message,
         async ({ data }) => {
-          console.log(
-            "#21# chatGPT 질문 실행결과: ",
-            data.choices[0].message.content
-          );
+          // console.log(
+          //   "#21# chatGPT 질문 실행결과: ",
+          //   data.choices[0].message.content
+          // );
+          // 경제단어 추출 [정규식 사용]
+          const regex = /(?:\d\. )(.+?)(?=\n\d|\n|$)/g;
+          var similarityWord = [];
+          let match;
+          while (
+            (match = regex.exec(data.choices[0].message.content)) !== null
+          ) {
+            // console.log("#21# 단어 추출 확인: ", match[1]);
+            similarityWord.push(match[1]);
+          }
+          console.log("#21# 유사 경제단어 확인: ", similarityWord);
+          commit("SET_SIMILARITY_WORD", similarityWord);
         },
         (error) => {
           console.log(error);
