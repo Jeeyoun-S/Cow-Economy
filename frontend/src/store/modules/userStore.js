@@ -5,9 +5,13 @@ Vue.use(Vuex)
 
 const userStore = new Vuex.Store({
   state: {
-    token: null
+    token: null,
+    isLogin: false, 
   },
   getters: {
+    getToken: (state) => {
+      return state.token;
+    }
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -15,6 +19,11 @@ const userStore = new Vuex.Store({
     },
   },
   actions: {
+    async executeKakaoToken({ commit }, code) {
+      const kakaoInfo = {
+        grant_type: ""
+      }
+    }
   },
   modules: {
   }

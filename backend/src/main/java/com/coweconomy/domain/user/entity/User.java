@@ -1,6 +1,7 @@
 package com.coweconomy.domain.user.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -33,6 +34,10 @@ public class User {
 
     @NotNull
     private int userExperience;
+
+    @Comment("토큰")
+    @Column(length = 300)
+    private String token;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserArticle> userArticleList = new ArrayList<>();

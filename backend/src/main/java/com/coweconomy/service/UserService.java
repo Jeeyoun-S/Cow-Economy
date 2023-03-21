@@ -15,8 +15,8 @@ public interface UserService {
      * @param userId 조회할 회원 ID
      * @return User 회원 Entity
      * **/
-
     User createUser(UserRegisterPostReq userRegisterInfo);
     User getUserByUserEmail(String userEmail);
+    boolean isTokenSaved(String userEmail, String token);
     UserDto getUserInfoByEmail(String userId);
 }

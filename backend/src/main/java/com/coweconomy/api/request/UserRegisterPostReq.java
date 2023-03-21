@@ -9,9 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRegisterPostReq {
-    Long userId;
+//    Long userId;
     String userEmail;
     String userNickname;
     int userLevel;
     int userExperience;
+
 }

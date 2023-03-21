@@ -1,5 +1,6 @@
 package com.coweconomy.common.jwt;
 
+import com.coweconomy.domain.user.entity.User;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
