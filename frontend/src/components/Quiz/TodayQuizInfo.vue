@@ -104,7 +104,7 @@ export default {
   height: 518px;
   background-color: var(--quiz-1-col-6);
 
-  margin-left: 17%;
+  margin-left: 7%;
   margin-top: 10%;
 }
 
