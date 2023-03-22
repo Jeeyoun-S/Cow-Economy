@@ -66,7 +66,7 @@ const quizStore = {
       await getQuizWords(
         info,
         async ({ data }) => {
-          console.log("#21# getQuizWords 실행결과: ", data);
+          // console.log("#21# getQuizWords 실행결과: ", data);
           // i) 성공
           if (data.statusCode == 200) {
             // console.log("#21# Quiz 단어 가져오기 성공: ", data);
@@ -122,7 +122,9 @@ const quizStore = {
 
       // console.log("#21# chatGPT 질문 동작 word: ", word);
       const message =
-        "경제용어 " + word + "와 유사한 경제용어 3개 설명없이 단어만 알려줘";
+        "경제용어 " +
+        word +
+        "와 유사한 경제용어 3개 설명없이 단어만 1, 2, 3으로 출력해줘";
 
       await sendMessageWord(
         message,
@@ -132,7 +134,8 @@ const quizStore = {
           //   data.choices[0].message.content
           // );
           // 경제단어 추출 [정규식 사용]
-          const regex = /(?:\d\. )(.+?)(?=\n\d|\n|$)/g;
+          // const regex = /(?:\d\. )(.+?)(?=\(\n\d|\n|$)/g; // 영어 포함 버전
+          const regex = /(?:\d\. )(.+?)(?=\(|\n|$)/g;
           var similarityWord = [];
           let match;
           while (
