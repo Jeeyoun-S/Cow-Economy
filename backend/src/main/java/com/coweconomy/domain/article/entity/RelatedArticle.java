@@ -23,7 +23,7 @@ public class RelatedArticle {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    @Comment("관련 기사 6개 아이디")
+    @Comment("관련 기사 6개 Id 문자열")
     @Column(columnDefinition = "MEDIUMTEXT")
     @NotNull
     private String subArticleId;
