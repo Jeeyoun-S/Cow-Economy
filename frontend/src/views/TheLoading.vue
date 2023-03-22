@@ -1,5 +1,5 @@
 <!-- # for. axios 통신 시 Loading 창 -->
-<!-- <template>
+<template>
   <div class="lds-facebook" v-if="loading">
     <div></div>
     <div></div>
@@ -63,63 +63,5 @@ export default {
     top: 19px;
     height: 26px;
   }
-}
-</style> -->
-<template>
-  <div class="modal-mask" v-if="loading">
-    <vue-circle
-      :progress="50"
-      :size="100"
-      :reverse="false"
-      line-cap="round"
-      :fill="fill"
-      empty-fill="rgba(0, 0, 0, .1)"
-      :animation-start-value="0.0"
-      :start-angle="0"
-      insert-mode="append"
-      :thickness="5"
-      :show-percent="true"
-      @vue-circle-progress="progress"
-      @vue-circle-end="progress_end"
-    >
-      <p>Slot!</p>
-    </vue-circle>
-  </div>
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
-</template>
-
-<script>
-export default {
-  name: "NowLoading",
-};
-</script>
-
-<style scoped>
-.loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 600px;
-  padding: 20px;
-}
-.loading span {
-  font-size: 50px;
-  font-weight: 800;
 }
 </style>
