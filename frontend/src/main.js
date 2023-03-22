@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import 'swiper/dist/css/swiper.min.css'
+import 'swiper/css/swiper.min.css'
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)

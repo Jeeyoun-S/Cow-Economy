@@ -1,6 +1,22 @@
 <template>
   <div class="pa-1">
-    <v-expansion-panels class="swiper-item" accordion multiple tile>
+    <v-row class="pb-7">
+      <v-col cols="3"
+        ><v-select
+          :items="['전체', '기사 제목', '인용구', '메모 내용']"
+          dense
+          hide-details
+        ></v-select
+      ></v-col>
+      <v-col
+        ><v-text-field
+          placeholder="검색어를 입력해 주세요"
+          dense
+          hide-details
+        ></v-text-field
+      ></v-col>
+    </v-row>
+    <v-expansion-panels class="swiper-item" hover accordion multiple tile>
       <v-expansion-panel v-for="(article, i) in articles" :key="i">
         <v-expansion-panel-header>{{ article.title }}</v-expansion-panel-header>
         <v-expansion-panel-content>
