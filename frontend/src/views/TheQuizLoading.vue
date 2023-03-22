@@ -1,9 +1,11 @@
-<!-- # for. axios 통신 시 Loading 창 -->
+<!-- # for. quiz Loading 창 -->
 <!-- <template>
-  <div class="lds-facebook" v-if="loading">
-    <div></div>
-    <div></div>
-    <div></div>
+  <div class="modal-mask" v-if="loading">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ export default {
 <style>
 .lds-facebook {
   display: inline-block;
+  position: absolute;
   position: fixed;
   width: 64px;
   height: 64px;
@@ -33,7 +36,7 @@ export default {
   position: absolute;
   left: 6px;
   width: 13px;
-  background: #42b883;
+  background: #5176fa;
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 
@@ -65,7 +68,7 @@ export default {
   }
 }
 </style> -->
-<template>
+<!-- <template>
   <div class="modal-mask" v-if="loading">
     <vue-circle
       :progress="50"
@@ -82,44 +85,25 @@ export default {
       @vue-circle-progress="progress"
       @vue-circle-end="progress_end"
     >
-      <p>Slot!</p>
+      <p>로오딩</p>
     </vue-circle>
   </div>
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
+</template> -->
+<template>
+  <div class="modal-mask" v-if="loading">
+    <div><img :src="require('@/assets/images/mypage/quiz/fail.gif')" /></div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "NowLoading",
+  props: {
+    loading: {
+      type: Boolean,
+      required: true,
+    },
+  },
 };
 </script>
 
-<style scoped>
-.loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 600px;
-  padding: 20px;
-}
-.loading span {
-  font-size: 50px;
-  font-weight: 800;
-}
-</style>
+<style></style>
