@@ -32,6 +32,9 @@ const quizStore = {
   mutations: {
     SET_QUESTIONS: (state, questions) => {
       state.questions = questions;
+
+      // # for. quiz Loading 창
+      store.commit("QUIZ_LOADING_STATUS", false);
     },
     SET_SIMILARITY_WORD: (state, similarityWord) => {
       state.similarityWord = similarityWord;
@@ -100,7 +103,7 @@ const quizStore = {
               quizItem.answers = answers;
               quiz.push(quizItem);
             }
-            // console.log("#21# quiz 확인: ", quiz);
+            console.log("#21# quiz 확인: ", quiz);
             await commit("SET_QUESTIONS", quiz);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
@@ -112,6 +115,9 @@ const quizStore = {
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
     async excuteSendMessage({ commit }, word) {
+      // # for. quiz Loading 창
+      store.commit("QUIZ_LOADING_STATUS", true);
+
       // console.log("#21# chatGPT 질문 동작 word: ", word);
       const message =
         "경제용어 " + word + "와 유사한 경제용어 3개 설명없이 단어만 알려줘";

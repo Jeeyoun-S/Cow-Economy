@@ -1,4 +1,4 @@
-<!-- # for. axios 통신 시 Loading 창 -->
+<!-- # for. quiz Loading 창 -->
 <template>
   <div class="lds-facebook" v-if="loading">
     <div></div>
@@ -33,7 +33,7 @@ export default {
   position: absolute;
   left: 6px;
   width: 13px;
-  background: #42b883;
+  background: #485dfe;
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 

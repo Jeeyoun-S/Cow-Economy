@@ -13,9 +13,23 @@ import quizStore from "@/store/modules/quizStore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    // # for. axios 통신 시 Loading 창
+    loadingStatus: false,
+    // # for. quiz Loading 창
+    quizLoadingStatus: false,
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    // # for. axios 통신 시 Loading 창
+    LOADING_STATUS: (state, loadingStatus) => {
+      state.loadingStatus = loadingStatus;
+    },
+    // # for. quiz Loading 창
+    QUIZ_LOADING_STATUS: (state, quizLoadingStatus) => {
+      state.quizLoadingStatus = quizLoadingStatus;
+    },
+  },
   actions: {},
   modules: {
     homeStore: homeStore,

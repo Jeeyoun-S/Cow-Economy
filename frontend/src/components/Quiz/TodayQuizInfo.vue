@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       alertQuizFlag: false, // 오늘의 Quiz 진행 여부에 따른 alert창
+      isLoading: false, // 오늘의 Quiz가 준비될 동안 보여줄 Loading
     };
   },
   components: {
