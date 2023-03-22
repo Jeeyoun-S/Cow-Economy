@@ -1,3 +1,30 @@
 .footer-font {
   font-size: 10px;
 }
+.b-font {
+  font-weight: 800;
+}
+.sm-font {
+  font-size: 14px;
+}
+.xs-font {
+  font-size: 12px;
+}
+.main-2-font {
+  color: var(--main-col-2);
+}
+.spacing-all {
+  word-break: break-all;
+}
+.underline {
+  text-decoration: underline;
+}
+.main-title-font {
+  font-size: 20px;
+  font-family: var(--main-font-3);
+}
+.main-subtitle-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: grey;
+}
