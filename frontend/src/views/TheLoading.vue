@@ -11,7 +11,7 @@
   <div class="main-loading-mask" v-if="loading">
     <v-card class="main-wrapper">
       <v-card-text class="main-wrapper-text">
-        <p class="main-exp-title">Quiz 만드는 중</p>
+        <p class="main-exp-title">Loading</p>
       </v-card-text>
       <v-card-text class="main-wrapper-img">
         <img
