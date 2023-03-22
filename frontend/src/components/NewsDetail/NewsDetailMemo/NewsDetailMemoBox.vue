@@ -23,6 +23,7 @@
             <NewsDetailMemoBtnLock
               :memoPublicScope="memo.memoPublicScope"
               :index="index"
+              color="var(--main-col-3)"
             ></NewsDetailMemoBtnLock>
             <!-- memo modify button : 보류 -->
             <v-btn icon text color="var(--main-col-3)" @click="checkRegister()"
@@ -32,6 +33,7 @@
             <NewsDetailMemoBtnDelete
               :memoId="memo.memoId"
               :index="index"
+              color="var(--main-col-3)"
               @deleteMemoItem="deleteMemoItem"
             ></NewsDetailMemoBtnDelete>
           </div>

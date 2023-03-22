@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="300">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" icon text color="var(--main-col-3)"
+      <v-btn v-bind="attrs" v-on="on" icon text :color="color"
         ><v-icon> mdi-delete-forever </v-icon></v-btn
       >
     </template>
@@ -44,6 +44,7 @@ export default {
   props: {
     memoId: Number,
     index: Number,
+    color: String,
   },
   methods: {
     ...mapActions("memoStore", [

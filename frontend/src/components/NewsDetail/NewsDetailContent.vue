@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-7 d-flex flex-column">
+  <v-sheet id="news-content" class="pa-7 d-flex flex-column">
     <div class="pb-2">
       <v-chip class="mr-2" color="var(--main-col-2)" outlined>{{
         category
