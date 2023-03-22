@@ -47,4 +47,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTestResult>  userTestResultList = new ArrayList<>();
+
+    public User(List<UserArticle> userArticleList, List<UserArticleMemo> userArticleMemoList, List<UserTestResult> userTestResultList) {
+        this.userArticleList = userArticleList;
+        this.userArticleMemoList = userArticleMemoList;
+        this.userTestResultList = userTestResultList;
+    }
 }

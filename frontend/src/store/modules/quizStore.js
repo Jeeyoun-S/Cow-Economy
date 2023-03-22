@@ -96,7 +96,7 @@ const quizStore = {
               let cnt = 0;
               for (let i = 97; i <= 100; i++) {
                 if (i == randomNum) {
-                  answers[String.fromCharCode(randomNum)] = word.word;
+                  answers[String.fromCharCode(randomNum)] = word.word + "+";
                 } else {
                   answers[String.fromCharCode(i)] = state.similarityWord[cnt];
                   cnt++;

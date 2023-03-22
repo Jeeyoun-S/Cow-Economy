@@ -75,6 +75,8 @@ public class QuizService {
         if (user != null) {
             // 2) 경험치 획득 적용
             user.setUserExperience(user.getUserExperience() + 100);
+            logger.info("#21# 경험치 획득 적용 user 확인: {}", user);
+            // ! 연관된 user_test_result 테이블도 데이터 저장해야함 
             User result = userRepository.save(user);
 
             return result;
