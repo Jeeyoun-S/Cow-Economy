@@ -1,8 +1,7 @@
 package com.coweconomy.domain.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -12,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
@@ -33,6 +34,10 @@ public class User {
 
     @NotNull
     private int userExperience;
+
+    @Comment("토큰")
+    @Column(length = 300)
+    private String token;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserArticle> userArticleList = new ArrayList<>();

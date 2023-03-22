@@ -1,5 +1,7 @@
 <template>
   <v-sheet color="transparent">
+    <!-- 로그인 -->
+
     <!-- level profile -->
     <MyPageProfile class="justify-center"></MyPageProfile>
     <!-- username & logout btn -->
@@ -75,6 +77,7 @@ export default {
       selectedBtn: "my-memo",
     };
   },
+  methods: {},
 };
 </script>
 
