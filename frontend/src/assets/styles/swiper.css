@@ -1,0 +1,25 @@
+#relation-article {
+  position: relative;
+}
+#relation-article img {
+  object-fit: cover;
+}
+#relation-article .swiper-container-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+  top: 0px !important;
+  width: auto !important;
+  right: 0px !important;
+  text-align: right !important;
+}
+#relation-article h3 {
+  position: absolute;
+  top: 25px !important;
+}
+#relation-article .swiper-pagination-bullet-active {
+  width: 25px !important;
+  background: var(--main-col-2);
+}
+#relation-article .swiper-pagination-bullet {
+  border-radius: 0% !important;
+}

@@ -2,6 +2,7 @@ package com.coweconomy.domain.user.entity;
 
 import com.coweconomy.domain.article.entity.Article;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -41,7 +42,22 @@ public class UserArticleMemo {
 
     private int memoEndPoint;
 
+    private int memoScrollPoint;
+
     @NotNull
     @Column(columnDefinition = "Boolean default false")
     private Boolean memoPublicScope;
+
+    @Builder
+    public UserArticleMemo(Long memoId, User user, Article article, LocalDateTime regtime, String memoContent, int memoStartPoint, int memoEndPoint, int memoScrollPoint, boolean memoPublicScope) {
+        this.memoId = memoId;
+        this.user = user;
+        this.article = article;
+        this.regtime = regtime;
+        this.memoContent = memoContent;
+        this.memoStartPoint = memoStartPoint;
+        this.memoEndPoint = memoEndPoint;
+        this.memoScrollPoint = memoScrollPoint;
+        this.memoPublicScope = memoPublicScope;
+    }
 }

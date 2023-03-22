@@ -25,9 +25,9 @@ import TheQuizLoading from "./views/TheQuizLoading.vue";
 
 export default {
   name: "App",
-
   data: () => ({
-    //
+    isShowHeader: true,
+    scrollPosition: 0,
   }),
   components: {
     TheLoading,
@@ -40,6 +40,11 @@ export default {
 @import "@/assets/styles/font.css";
 @import "@/assets/styles/variable.css";
 @import "@/assets/styles/text.css";
+@import "@/assets/styles/sheet.css";
+@import "@/assets/styles/article.css";
+@import "@/assets/styles/override.css";
+@import "@/assets/styles/scroll.css";
+@import "@/assets/styles/swiper.css";
 
 html body {
   background: #fafafa;
