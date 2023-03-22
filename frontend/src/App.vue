@@ -29,6 +29,28 @@ export default {
     isShowHeader: true,
     scrollPosition: 0,
   }),
+  // methods: {
+  //   changeShowHeader() {
+  //     console.log("여기");
+  //     var currentScrollPosition = window.scrollY;
+  //     console.log(currentScrollPosition);
+
+  //     if (currentScrollPosition + 10 < this.scrollPosition) {
+  //       console.log("Scrolling up");
+  //       this.isShowHeader = true;
+  //       //your desire logic
+  //     } else if (currentScrollPosition < this.scrollPosition - 10) {
+  //       this.isShowHeader = false;
+  //       console.log("Scrolling down");
+  //       //your desire logic
+  //     }
+
+  //     this.scrollPosition = window.scrollY;
+  //   },
+  // },
+  // mounted() {
+  //   window.addEventListener("scroll", this.changeShowHeader);
+  // },
   components: {
     TheLoading,
     TheQuizLoading,
@@ -53,14 +75,6 @@ html body {
   height: 100%;
   min-height: 100%;
 }
-
-/* @media (max-width: 750px) {
-  #app {
-    width: 100%;
-    border-left: 0;
-    border-right: 0;
-  }
-} */
 #app {
   background-color: var(--main-col-5);
   max-width: 100%;

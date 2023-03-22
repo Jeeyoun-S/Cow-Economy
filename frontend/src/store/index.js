@@ -8,8 +8,8 @@ import homeStore from "@/store/modules/homeStore.js";
 import mainStore from "@/store/modules/mainStore.js";
 import mypageStore from "@/store/modules/mypageStore.js";
 import userStore from "@/store/modules/userStore.js";
-import quizStore from "@/store/modules/quizStore.js";
 import memoStore from "@/store/modules/memoStore.js";
+import quizStore from "@/store/modules/quizStore.js";
 
 Vue.use(Vuex);
 

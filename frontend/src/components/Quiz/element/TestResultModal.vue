@@ -1,31 +1,35 @@
 <template>
-  <div class="modal-mask">
-    <v-card class="modal-wrapper">
-      <v-card-text class="modal-wrapper-text">
-        <div class="modal-score-title">최종 스코어</div>
-        <div class="modal-score-text">{{ this.correctCount }}/7</div>
-        <div v-if="this.isPass">
+  <div>
+    <v-dialog v-model="dialog" persistent max-width="400px">
+      <v-sheet class="pa-7 d-flex flex-column align-center">
+        <h2>최종 스코어</h2>
+        <p>{{ this.correctCount }} / 7</p>
+        <div class="d-flex flex-column align-center" v-if="this.isPass">
           <img
             :src="require('@/assets/images/mypage/quiz/congratulations.gif')"
           />
           <!-- <div class="modal-exp-title">경험치를 획득했어요!</div> -->
-          <p class="modal-exp-title">경험치를 획득했어요!</p>
-          <div class="modal-exp-text">
-            현재 경험치 {{ this.experience }} EXP
-          </div>
+          <div class="lg-font b-font">경험치를 획득했어요!</div>
+          <p>현재 경험치 {{ this.experience }} EXP</p>
         </div>
-        <div v-else>
-          <img :src="require('@/assets/images/mypage/quiz/fail.gif')" />
-          <p class="modal-exp-title">아쉽네요</p>
-          <div class="modal-exp-text">테스트를 통과하지 못했습니다.</div>
+        <div class="d-flex flex-column align-center" v-else>
+          <img
+            class="pb-3"
+            :src="require('@/assets/images/mypage/quiz/fail.gif')"
+          />
+          <div class="lg-font b-font">아쉽네요</div>
+          <p>테스트를 통과하지 못했습니다.</p>
         </div>
-      </v-card-text>
-      <v-card-actions class="modal-button">
-        <v-btn block dark color="var(--main-col-2)" @click="closeModal()"
+        <v-btn
+          elevation="0"
+          block
+          dark
+          color="var(--main-col-2)"
+          @click="closeModal()"
           >퀴즈 종료하기</v-btn
         >
-      </v-card-actions>
-    </v-card>
+      </v-sheet>
+    </v-dialog>
   </div>
 </template>
 
@@ -36,7 +40,9 @@ const quizStore = "quizStore";
 export default {
   name: "TestResultModal",
   data() {
-    return {};
+    return {
+      dialog: true,
+    };
   },
   computed: {
     ...mapState(quizStore, ["isPass", "experience", "correctCount"]),
@@ -45,6 +51,7 @@ export default {
     ...mapActions(quizStore, ["initQuiz"]),
     // [@Method] Modal 닫고 마이페이지로 이동
     closeModal() {
+      this.dialog = false;
       this.initQuiz();
       location.href = `${process.env.VUE_APP_BASE_URL}/my-page`;
     },

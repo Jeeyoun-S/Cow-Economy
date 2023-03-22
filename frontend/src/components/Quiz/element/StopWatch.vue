@@ -22,8 +22,8 @@ $size: 3em;
   position: relative;
   display: inline-block;
   //   margin: 0.5em;
-  margin-left: 6%;
-  margin-bottom: 2%;
+  // margin-left: 6%;
+  // margin-bottom: 2%;
   width: $size;
   height: $size;
 
