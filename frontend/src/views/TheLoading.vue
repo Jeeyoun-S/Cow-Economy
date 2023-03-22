@@ -105,7 +105,12 @@ export default {
 
 <script>
 export default {
-  name: "NowLoading",
+  name: "TheLoading",
+  data() {
+    return {
+      loading: false,
+    };
+  },
 };
 </script>
 

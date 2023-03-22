@@ -1,5 +1,5 @@
 <template>
-  <div>MyPageInfo</div>
+  <div class="swiper-item">MyPageInfo</div>
 </template>
 
 <script>

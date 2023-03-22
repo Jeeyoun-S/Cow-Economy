@@ -1,52 +1,69 @@
 <template>
-  <div class="quiz-info">
-    <div class="quiz-center">
-      <div class="quiz-title">
-        <img :src="require('@/assets/images/mypage/quiz/pencil.png')" />
-        오늘의 퀴즈
-        <div class="quiz-title-bar"></div>
+  <div class="pa-8">
+    <v-sheet class="pa-8" rounded="xl">
+      <div class="py-2 d-flex flex-row align-center">
+        <img
+          class="mr-2"
+          height="30"
+          :src="require('@/assets/images/mypage/quiz/pencil.png')"
+        />
+        <span class="black-font xxxl-font">오늘의 퀴즈</span>
       </div>
-      <!-- 1st -->
-      <div class="quiz-center-item-first">
-        <div>
-          7문제 중 5문제 이상 통과하면<br />
-          경험치 +100을 얻을 수 있습니다.
+      <v-divider class="my-1"></v-divider>
+      <div class="xl-font">
+        <!-- 1st -->
+        <div class="py-3 d-flex flex-row justify-space-between">
+          <v-sheet width="85%">
+            7문제 중 5문제 이상 통과하면<br />
+            경험치 +100을 얻을 수 있습니다.
+          </v-sheet>
+          <img
+            width="10%"
+            :src="require('@/assets/images/mypage/quiz/book.png')"
+          />
         </div>
-        <img :src="require('@/assets/images/mypage/quiz/book.png')" />
-      </div>
-      <!-- 2ed -->
-      <div class="quiz-center-item-second">
-        <img :src="require('@/assets/images/mypage/quiz/question-mark.png')" />
-        <div>
-          문제로는 경제 용어에 대한<br />
-          설명이 주어집니다.
+        <!-- 2ed -->
+        <div class="py-3 d-flex flex-row justify-space-between">
+          <img
+            width="10%"
+            aspect-ratio="1"
+            :src="require('@/assets/images/mypage/quiz/question-mark.png')"
+          />
+          <v-sheet width="85%">
+            문제로는 경제 용어에 대한<br />
+            설명이 주어집니다.
+          </v-sheet>
         </div>
-      </div>
-      <!-- 3th -->
-      <div class="quiz-center-item-third">
-        <div>
-          보기 4개 중 설명에 맞는 단어를<br />
-          선택하시면 됩니다.
+        <!-- 3th -->
+        <div class="py-3 d-flex flex-row justify-space-between">
+          <v-sheet width="85%">
+            보기 4개 중 설명에 맞는 단어를<br />
+            선택하시면 됩니다.
+          </v-sheet>
+          <img
+            width="10%"
+            height="auto"
+            :src="require('@/assets/images/mypage/quiz/winking-emoji.gif')"
+          />
         </div>
-        <img :src="require('@/assets/images/mypage/quiz/winking-emoji.gif')" />
-      </div>
-      <!-- 4th -->
-      <div class="quiz-center-item-fourth">
-        <div>
-          한 문제에 10초의 시간⏰이 주어집니다.<br />
-          1일 1회 도전 가능합니다.
+        <!-- 4th -->
+        <div class="py-3 d-flex flex-row justify-space-between">
+          <div>
+            한 문제에 10초의 시간⏰이 주어집니다.<br />
+            1일 1회 도전 가능합니다.
+          </div>
         </div>
-      </div>
-      <div class="quiz-center-button">
-        <v-btn block dark color="var(--main-col-2)" @click="moveQuiz()"
-          >시작하기</v-btn
-        >
+        <div class="py-3">
+          <v-btn block dark color="var(--main-col-2)" @click="moveQuiz()" large
+            >시작하기</v-btn
+          >
+        </div>
       </div>
       <!-- 오늘의 Quiz 진입불가 Alert -->
       <div v-if="alertQuizFlag">
         <today-not-enter-modal></today-not-enter-modal>
       </div>
-    </div>
+    </v-sheet>
   </div>
 </template>
 

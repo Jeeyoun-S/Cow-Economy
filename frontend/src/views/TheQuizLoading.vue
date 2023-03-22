@@ -90,9 +90,9 @@ export default {
   </div>
 </template> -->
 <template>
-  <div class="modal-mask" v-if="loading">
-    <div><img :src="require('@/assets/images/mypage/quiz/fail.gif')" /></div>
-  </div>
+  <v-overlay v-if="loading">
+    <img :src="require('@/assets/images/mypage/quiz/fail.gif')" />
+  </v-overlay>
 </template>
 
 <script>

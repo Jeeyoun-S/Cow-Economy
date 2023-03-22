@@ -1,13 +1,9 @@
 <template>
-  <div class="quiz">
+  <v-sheet class="pa-8" color="transparent">
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
-    <!-- 스탑워치 -->
-    <div class="stopWatch" v-if="this.timerVisiFlag == true">
-      <stop-watch></stop-watch>
-    </div>
     <!-- 페이지 이동 금지 알림 -->
-    <v-alert dense border="left" shaped type="error" v-show="moveTry"
+    <v-alert dense shaped type="error" v-show="moveTry"
       >Quiz를 다 풀어주세요! •̀ㅅ•́</v-alert
     >
     <!-- 정답/오답 결과 출력 -->
@@ -19,32 +15,47 @@
       <answer-wrong></answer-wrong>
     </div>
     <!-- 문제 -->
-    <div class="quizBox" v-if="this.index < count">
-      <div class="questionTxt">
-        {{ this.questions[this.index]["question"] }}
-      </div>
-      <v-card-content
-        class="answerBox"
-        :key="key"
-        v-for="(answer, key) in this.questions[this.index]['answers']"
+    <div v-if="this.index < count">
+      <v-sheet
+        color="transparent"
+        class="pa-5 b-font lg-font d-flex flex-row align-center justify-space-between"
+      >
+        <!-- 스탑워치 -->
+        <div v-if="this.timerVisiFlag == true">
+          <stop-watch></stop-watch>
+        </div>
+        <!-- ! 현재는 잘라서 넣는 방식으로 수정 필요 ! -->
+        <v-sheet width="80%" color="transparent">{{
+          this.questions[this.index]["question"].split(".")[0]
+        }}</v-sheet>
+      </v-sheet>
+      <v-sheet
+        color="transparent"
+        height="350px"
+        class="d-flex flex-row justify-space-between flex-wrap"
       >
         <!-- 정답 후보 -->
         <v-btn
-          class="answerBtn"
-          style="height: 150px"
-          :color="`var(--quiz-1-col-6)`"
+          class="quiz spacing-all"
+          elevation="0"
+          width="47%"
+          height="150px"
+          v-for="(answer, key) in this.questions[this.index]['answers']"
+          color="white"
+          :key="key"
           :id="key"
           :value="key"
           @click="checkAnswer(key)"
-          >{{ answer }}</v-btn
         >
-      </v-card-content>
+          {{ answer }}
+        </v-btn>
+      </v-sheet>
     </div>
     <!-- 최종 결과 -->
     <div v-if="this.index == 7">
       <test-result-modal></test-result-modal>
     </div>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -81,7 +92,7 @@ export default {
     moveTry: {},
   },
   created() {
-    this.timer = setInterval(this.timeOut, this.time);
+    // this.timer = setInterval(this.timeOut, this.time);
 
     // BGM 실행
     if (this.index == 0) this.play();

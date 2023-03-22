@@ -34,3 +34,8 @@
     var(--main-col-4)
   ) !important;
 }
+.quiz .v-btn__content {
+  white-space: initial !important;
+  display: block !important;
+  flex: 0 1 auto;
+}

@@ -2,12 +2,12 @@
   <v-sheet
     id="profile"
     color="transparent"
-    class="my-6 d-flex flex-row align-center"
+    class="py-7 d-flex flex-row align-center"
     ><img class="mr-4" height="70" src="@/assets/images/level/level_f.png" />
     <v-sheet color="transparent" class="d-flex flex-column" width="63%"
       ><div class="d-flex flex-row align-center justify-space-between">
-        <span class="b-font xl-font main-col-1">LEVEL F</span>
-        <v-icon small>mdi-information-outline</v-icon>
+        <span class="b-font xl-font b-font main-col-1">LEVEL F</span>
+        <v-icon color="grey lighten-1">mdi-information-outline</v-icon>
       </div>
       <div class="my-1">
         <v-progress-linear

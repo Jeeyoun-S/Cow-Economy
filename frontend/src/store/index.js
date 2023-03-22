@@ -37,7 +37,7 @@ export default new Vuex.Store({
     mainStore: mainStore,
     mypageStore: mypageStore,
     userStore: userStore,
-    memoStore: memoStore
+    memoStore: memoStore,
     quizStore: quizStore,
   },
   plugins: [
