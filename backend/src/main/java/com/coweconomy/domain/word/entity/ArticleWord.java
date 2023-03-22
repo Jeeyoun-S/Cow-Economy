@@ -21,11 +21,11 @@ public class ArticleWord {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "word_id")
-    private EconomyWord economyWord;
+    private EconomyWord economyWord; // 단어 id
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
-    private Article article;
+    private Article article; // 기사 id
 
     @Comment("기사 내 단어 시작 위치")
     private Long wordIndex;

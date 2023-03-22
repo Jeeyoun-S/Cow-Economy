@@ -5,41 +5,48 @@
   /* 회색의 경우 Vuetify grey 사용*/
   /* 왼쪽 링크 맨아래 참고 https://v2.vuetifyjs.com/en/styles/colors/ */
 
-  --main-col-1: #485DFE;
-  --main-col-2: #5176FA;
-  --main-col-3: #819CFC;
-  --main-col-4: #95ABFA;
-  --main-col-5: #F0F3FE;
+  --main-col-1: #485dfe;
+  --main-col-2: #5176fa;
+  --main-col-3: #819cfc;
+  --main-col-4: #95abfa;
+  --main-col-5: #f0f3fe;
 
-  --error-col-1: #FA5151;
+  --error-col-1: #fa5151;
 
-  --graph-1-col-1: #5176FA;
-  --graph-1-col-2: #656FFA;
-  --graph-1-col-3: #7669FA;
-  --graph-1-col-4: #8862FA;
-  --graph-1-col-5: #9C5BFA;
-  --graph-1-col-6: #C15EF0;
+  --graph-1-col-1: #5176fa;
+  --graph-1-col-2: #656ffa;
+  --graph-1-col-3: #7669fa;
+  --graph-1-col-4: #8862fa;
+  --graph-1-col-5: #9c5bfa;
+  --graph-1-col-6: #c15ef0;
 
   --graph-2-col-1: #000000;
   --graph-2-col-2: #000c64;
   --graph-2-col-3: #182271;
   --graph-2-col-4: #23319d;
   --graph-2-col-5: #3c4bbf;
-  --graph-2-col-6: #6979F8;
-  --graph-2-col-7: #9BA6FA;
-  --graph-2-col-8: #CDD2FD;
+  --graph-2-col-6: #6979f8;
+  --graph-2-col-7: #9ba6fa;
+  --graph-2-col-8: #cdd2fd;
 
   /* 글씨체 */
   /* 숫자가 클수록 두꺼워집니다. */
-  --main-font-1: 'LINESeedKR-Th';
-  --main-font-2: 'LINESeedKR-Rg';
-  --main-font-3: 'LINESeedKR-Bd';
-  
-  --logo-font-1: 'Cafe24SsurroundAir';
-  --logo-font-2: 'Cafe24Ssurround';
+  --main-font-0: "MinSans-Thin";
+  --main-font-1: "MinSans-ExtraLight";
+  --main-font-1-1: "MinSans-Light";
+  --main-font-2: "MinSans-Regular";
+  --main-font-2-1: "MinSans-Medium";
+  --main-font-2-2: "MinSans-SemiBold";
+  --main-font-3: "MinSans-Bold";
+  --main-font-4: "MinSans-ExtraBold";
+  --main-font-5: "MinSans-Black";
 
-  --menu-font-1: 'BRBA_R';
-  --menu-font-2: 'BRBA_B';
+  --logo-font-1: "Cafe24SsurroundAir";
+  --logo-font-2: "Cafe24Ssurround";
+
+  --point-font-1: "GongGothicLight";
+  --point-font-2: "GongGothicMedium";
+  --point-font-3: "GongGothicBold";
 
   /* 크기 (h:높이, w:너비) */
   --header-h: 65px;

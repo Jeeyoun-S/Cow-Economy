@@ -1,9 +1,8 @@
-// import { checkLoggedIn, getToken } from '@/api/user';
-import { getToken } from '@/api/user';
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { getToken } from "@/api/user";
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const userStore = {
   namespaced: true,
@@ -11,13 +10,13 @@ const userStore = {
     isLoggedIn: false,
   },
   getters: {
-    isLoggedIn: state => state.isLoggedIn,
+    isLoggedIn: (state) => state.isLoggedIn,
   },
   mutations: {
     SET_IS_LOGGED_IN(state, value) {
       state.isLoggedIn = value;
       console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
-    }
+    },
   },
   actions: {
     async executeToken({ commit }) {
@@ -43,6 +42,6 @@ const userStore = {
     },
   },
   modules: {},
-}
+};
 
 export default userStore;
