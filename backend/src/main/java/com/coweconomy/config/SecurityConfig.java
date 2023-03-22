@@ -43,12 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
-                
-                // login, 회원가입 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll
-                .antMatchers("/oauth/callback/kakao/**")
-                .permitAll()
 
-                // /kakao/callback permitAll
+                // 로그인할 때 permitAll
                 .antMatchers("/auth/login/kakao/**")
                 .permitAll()
 

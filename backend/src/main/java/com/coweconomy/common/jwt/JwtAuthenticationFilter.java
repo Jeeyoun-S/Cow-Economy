@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.coweconomy.common.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -21,7 +22,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
+//        String header = request.getHeader(JwtTokenUtil.HEADER_STRING);
+//        if (header == null || !header.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        try {
+//            // If header is present, try grab user principal from database and perform authorization
+//            Authentication authentication = getAuthentication(request);
+//            // jwt 토큰으로 부터 획득한 인증 정보(authentication) 설정.
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        } catch (Exception ex) {
+//            ResponseBodyWriteUtil.sendError(request, response, ex);
+//            return;
+//        }
         log.info(request.getRequestURI());
         if((!request.getRequestURI().contains("my-page") || !request.getRequestURI().contains("kakao")) && !request.getRequestURI().contains("favicon")) {
             log.info("토큰 체크");
