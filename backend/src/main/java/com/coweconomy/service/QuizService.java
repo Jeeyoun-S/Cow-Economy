@@ -1,6 +1,5 @@
 package com.coweconomy.service;
 
-import com.coweconomy.api.controller.UserController;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class QuizService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuizService.class);
 
     @Autowired
     UserArticleRepository userArticleRepository;
