@@ -1,9 +1,11 @@
 <!-- # for. quiz Loading 창 -->
-<template>
-  <div class="lds-facebook" v-if="loading">
-    <div></div>
-    <div></div>
-    <div></div>
+<!-- <template>
+  <div class="modal-mask" v-if="loading">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ export default {
 <style>
 .lds-facebook {
   display: inline-block;
+  position: absolute;
   position: fixed;
   width: 64px;
   height: 64px;
@@ -33,7 +36,7 @@ export default {
   position: absolute;
   left: 6px;
   width: 13px;
-  background: #485dfe;
+  background: #5176fa;
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 
@@ -64,4 +67,43 @@ export default {
     height: 26px;
   }
 }
-</style>
+</style> -->
+<!-- <template>
+  <div class="modal-mask" v-if="loading">
+    <vue-circle
+      :progress="50"
+      :size="100"
+      :reverse="false"
+      line-cap="round"
+      :fill="fill"
+      empty-fill="rgba(0, 0, 0, .1)"
+      :animation-start-value="0.0"
+      :start-angle="0"
+      insert-mode="append"
+      :thickness="5"
+      :show-percent="true"
+      @vue-circle-progress="progress"
+      @vue-circle-end="progress_end"
+    >
+      <p>로오딩</p>
+    </vue-circle>
+  </div>
+</template> -->
+<template>
+  <div class="modal-mask" v-if="loading">
+    <div><img :src="require('@/assets/images/mypage/quiz/fail.gif')" /></div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    loading: {
+      type: Boolean,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style></style>
