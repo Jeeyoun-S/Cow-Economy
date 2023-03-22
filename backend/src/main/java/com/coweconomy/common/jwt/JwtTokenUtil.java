@@ -25,6 +25,9 @@ public class JwtTokenUtil {
     private static Integer expirationTime;
     private static Integer expirationRefreshTime;
 
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String HEADER_STRING = "Authorization";
+
     @Autowired
     public JwtTokenUtil(@Value("${jwt.secret1}") String secretKey1, @Value("${jwt.secret2}") String secretKey2, @Value("${jwt.expiration}") Integer expirationTime, @Value("${jwt.expirationRefresh}") Integer expirationRefreshTime) {
         this.secretKey1 = secretKey1;
@@ -68,25 +71,22 @@ public class JwtTokenUtil {
         return new Date(now.getTime() + expirationTime);
     }
 
-    // Jwt 토큰에서 아이디 추출
-
-
     // Jwt 토큰 유효성 검사
-    public static boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secretKey2.getBytes()).parseClaimsJws(token);
-            return true;
-        } catch (SignatureException e) {
-            log.error("Invalid JWT signature", e);
-        } catch (MalformedJwtException e) {
-            log.error("Invalid JWT token", e);
-        } catch (ExpiredJwtException e) {
-            log.error("Expired JWT token", e);
-        } catch (UnsupportedJwtException e) {
-            log.error("Unsupported JWT token", e);
-        } catch (IllegalArgumentException e) {
-            log.error("JWT claims string is empty.", e);
-        }
-        return false;
-    }
+//    public static boolean validateToken(String token) {
+//        try {
+//            Jwts.parser().setSigningKey(secretKey2.getBytes()).parseClaimsJws(token);
+//            return true;
+//        } catch (SignatureException e) {
+//            log.error("Invalid JWT signature", e);
+//        } catch (MalformedJwtException e) {
+//            log.error("Invalid JWT token", e);
+//        } catch (ExpiredJwtException e) {
+//            log.error("Expired JWT token", e);
+//        } catch (UnsupportedJwtException e) {
+//            log.error("Unsupported JWT token", e);
+//        } catch (IllegalArgumentException e) {
+//            log.error("JWT claims string is empty.", e);
+//        }
+//        return false;
+//    }
 }

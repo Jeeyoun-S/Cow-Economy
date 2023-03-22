@@ -7,7 +7,8 @@ import news from "@/router/modules/news";
 import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
-import login from "@/router/modules/login";
+
+import store from "@/store";
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,6 @@ const routes = [
   ...quiz,
   ...myPage,
   ...search,
-  ...login,
 ]
 
 const router = new VueRouter({
@@ -27,4 +27,14 @@ const router = new VueRouter({
   routes
 });
 
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = store.state.userStore.isLoggedIn;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !isLoggedIn) {
+    next("/my-age");
+  } else {
+    next();
+  }
+})
 export default router

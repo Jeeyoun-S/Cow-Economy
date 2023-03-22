@@ -1,35 +1,58 @@
 <template>
-  <div>
-    <div v-if="isLogin == false">
+  <div v-if="loaded">
+    <div v-if="isLoggedIn">
+      마이페이지
+    </div>
+    <div v-else>
       <kakaoLogin></kakaoLogin>
       로그인 페이지
     </div>
-    <div v-else>마이페이지</div>
-    <!-- <v-container class="login">
-      <div class="login-title">LOGIN</div>
-        <div class="login-text">로그인 후 이용 가능한 페이지입니다.<br />로그인 하시겠습니까?</div>
-        <div class="social-login">
-        <v-flex class="d-flex flex-column align-center justify-center ma-3">
-          <v-img src="@/assets/images/login/google_login.png"  class="blur-on-hover"></v-img>
-        </v-flex>
-        <v-flex class="d-flex flex-column align-center justify-center">
-          <kakaoLogin></kakaoLogin>
-        </v-flex>
-      </div>
-    </v-container> -->
   </div>
+  <div v-else>Loading...</div>
 </template>
 
 <script>
 // import axios from "@/api/index.js";
 import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
+import { mapGetters, mapActions } from 'vuex';
+// import userStore from '@/store/modules/userStore';
 
 export default {
   name: "MyPage",
+  data() {
+    return {
+      kakaoCode: null,
+      loaded: false,
+    };
+  },
+  watch: {
+    isLoggedIn() {
+      this.loaded =true;
+    }
+  },
+  created() {
+    this.loaded = false;
+    // 인가 코드 추출
+    this.kakaoCode = this.$route.query.code;
+    if (this.kakaoCode != null) {
+      this.kakao();
+    }
+    this.loaded = true;
+  },
   components: {
     kakaoLogin
   },
+  computed: {
+    ...mapGetters("userStore", ["isLoggedIn"])
+  },
   methods: {
+    ...mapActions("userStore", ["executeToken"]),
+    // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
+    async kakao () {
+      await this.executeToken();
+      // 받은 인가 코드 초기화
+      this.kakaoCode = null;
+    }
   },
 };
 </script>
