@@ -34,7 +34,7 @@
         height="350px"
         class="d-flex flex-row justify-space-between flex-wrap"
       >
-        <!-- 정답 후보 -->
+        <!-- 정답 후보 [4지선다] -->
         <v-btn
           class="quiz spacing-all"
           elevation="0"

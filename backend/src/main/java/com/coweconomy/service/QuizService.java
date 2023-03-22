@@ -1,12 +1,14 @@
 package com.coweconomy.service;
 
 import com.coweconomy.domain.user.dto.UserArticleDto;
+import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.UserArticleRepository;
+import com.coweconomy.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class QuizService {
 
     @Autowired
     UserArticleRepository userArticleRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * 회원이 일주일 이내에 읽은 기사 조회
@@ -56,6 +61,26 @@ public class QuizService {
 
         List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
         return result;
+    }
+
+    /**
+     * 경험치 획득 (+100)
+     * @param userId 경험치 획득한 회원 ID
+     * @return User 회원 정보
+     * **/
+    public User getUserExperience(Long userId) {
+        // 1) 회원정보 가져오기
+        User user = userRepository.findByUserId(userId);
+
+        if (user != null) {
+            // 2) 경험치 획득 적용
+            user.setUserExperience(user.getUserExperience() + 100);
+            User result = userRepository.save(user);
+
+            return result;
+        }
+        // 3) 없을 경우 null return
+        return null;
     }
 
 }

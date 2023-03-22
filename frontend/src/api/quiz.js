@@ -15,4 +15,12 @@ async function getQuizWords(userId, success, fail) {
     .catch(fail);
 }
 
-export { getQuizWords };
+// [POST] 경험치 획득
+async function getExp(userId, success, fail) {
+  await api
+    .post(`/quiz/getExp`, JSON.stringify(userId))
+    .then(success)
+    .catch(fail);
+}
+
+export { getQuizWords, getExp };
