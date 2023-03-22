@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // UsernamePasswordAuthenticationFilter보다 JwtAuthenticationFilter를 먼저 수행
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
 
