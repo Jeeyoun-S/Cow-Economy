@@ -1,23 +1,86 @@
-.footer-font {
+/* 폰트 크기 */
+.xxs-font {
   font-size: 10px;
-}
-.b-font {
-  font-weight: 900;
-}
-.sm-font {
-  font-size: 14px;
 }
 .xs-font {
   font-size: 12px;
 }
-.main-2-font {
+.sm-font {
+  font-size: 14px;
+}
+.lg-font {
+  font-size: 18px;
+}
+.xl-font {
+  font-size: 20px;
+}
+.xxl-font {
+  font-size: 22px;
+}
+/* 폰트 색상 */
+.main-col-1 {
+  color: var(--main-col-1);
+}
+.main-col-2 {
   color: var(--main-col-2);
 }
-.spacing-all {
-  word-break: break-all;
+.main-col-3 {
+  color: var(--main-col-3);
 }
+.main-col-4 {
+  color: var(--main-col-4);
+}
+.main-col-5 {
+  color: var(--main-col-5);
+}
+.error-col-5 {
+  color: var(--error-col-1);
+}
+/* 폰트 굵기 */
+.th-font {
+  font-family: var(--main-font-0);
+}
+.th-ex-font {
+  font-family: var(--main-font-1);
+}
+.lt-font {
+  font-family: var(--main-font-1-1);
+}
+.md-font {
+  font-family: var(--main-font-2-1);
+}
+.b-sm-font {
+  font-family: var(--main-font-2-2);
+}
+.b-font {
+  font-family: var(--main-font-3);
+}
+.b-ex-font {
+  font-family: var(--main-font-4);
+}
+.black-font {
+  font-family: var(--main-font-5);
+}
+/* 폰트 변경 */
+.point-th {
+  font-family: var(--point-font-1);
+}
+.point-md {
+  font-family: var(--point-font-2);
+}
+.point-b {
+  font-family: var(--point-font-3);
+}
+/* 폰트 스타일 */
 .underline {
   text-decoration: underline;
+}
+.italic {
+  font-style: italic;
+}
+/* 기타 */
+.spacing-all {
+  word-break: break-all;
 }
 .main-title-font {
   font-size: 20px;

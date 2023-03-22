@@ -27,3 +27,10 @@
   .v-slide-group__prev {
   display: none !important;
 }
+#profile .v-progress-linear__determinate {
+  background: linear-gradient(
+    to right,
+    var(--main-col-1),
+    var(--main-col-4)
+  ) !important;
+}

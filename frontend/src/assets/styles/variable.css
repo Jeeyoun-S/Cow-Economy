@@ -31,15 +31,22 @@
 
   /* 글씨체 */
   /* 숫자가 클수록 두꺼워집니다. */
-  --main-font-1: "LINESeedKR-Th";
+  --main-font-0: "MinSans-Thin";
+  --main-font-1: "MinSans-ExtraLight";
+  --main-font-1-1: "MinSans-Light";
   --main-font-2: "MinSans-Regular";
-  --main-font-3: "LINESeedKR-Bd";
+  --main-font-2-1: "MinSans-Medium";
+  --main-font-2-2: "MinSans-SemiBold";
+  --main-font-3: "MinSans-Bold";
+  --main-font-4: "MinSans-ExtraBold";
+  --main-font-5: "MinSans-Black";
 
   --logo-font-1: "Cafe24SsurroundAir";
   --logo-font-2: "Cafe24Ssurround";
 
-  --menu-font-1: "BRBA_R";
-  --menu-font-2: "BRBA_B";
+  --point-font-1: "GongGothicLight";
+  --point-font-2: "GongGothicMedium";
+  --point-font-3: "GongGothicBold";
 
   /* 크기 (h:높이, w:너비) */
   --header-h: 65px;
