@@ -28,6 +28,8 @@ public class KakaoController {
     private static final Logger logger = LoggerFactory.getLogger(KakaoController.class);
     @Autowired
     UserService userService;
+    
+    // 이거 다 yml으로 빼기
     private final String KAKAO_TOKEN_REQUEST_URL = "https://kauth.kakao.com/oauth/token";
     private final String KAKAO_USER_INFO_REQUEST_URL = "https://kapi.kakao.com/v2/user/me";
     private final String CLIENT_ID = "a8424f450f05d7160ccc24288e86ec14";
@@ -107,5 +109,26 @@ public class KakaoController {
         result.put("refreshToken", refreshToken);
 
         return BaseResponse.success(result);
+    }
+
+    @PostMapping("/logout/kakao")
+    public BaseResponse<?> kakaoLogout(@RequestParam("accessToken") String accessToken) {
+        logger.info("#[KakaoController]# KakaoLogout 동작 - accessToken: {}", accessToken);
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<Map> response =restTemplate.exchange("http://kapi.kakao.com/v1/user/logout", HttpMethod.POST, request, Map.class);
+        int responseStatusCode = response.getStatusCodeValue();
+
+        if (responseStatusCode == 200) {
+            // 로그아웃 성공 처리 하기(토큰 무효화 등등)
+            return BaseResponse.success("카카오 로그아웃 성공");
+        } else {
+            // 로그아웃 실패 처리
+            return BaseResponse.fail();
+        }
     }
 }

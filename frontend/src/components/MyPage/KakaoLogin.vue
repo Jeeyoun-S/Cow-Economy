@@ -9,7 +9,6 @@
 
 export default {
 	name: "kakaoLogin",
-	data() {},
 	components: {},
 	computed: {},
 	methods: {

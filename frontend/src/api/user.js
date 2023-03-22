@@ -10,4 +10,10 @@ async function getToken(success, fail) {
   //   await api.get(`/auth/login/kakao?code=${code}`).then(success).catch(fail);
 }
 
-export { getToken };
+async function logOut(success, fail) {
+  // const accessToken = localStorage.getItem("access-token");
+  await api.get('/api/auth/logout/kakao').then(success).catch(fail);
+
+}
+
+export { getToken, logOut };
