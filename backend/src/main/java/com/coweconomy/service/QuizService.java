@@ -3,6 +3,7 @@ package com.coweconomy.service;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
+import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
@@ -21,10 +22,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true) // .....ㅎ
 public class QuizService {
 
     private static final Logger logger = LoggerFactory.getLogger(QuizService.class);
@@ -41,13 +43,11 @@ public class QuizService {
      * @return List<UserArticle> 회원이 읽은 기사 List
      * **/
     public List<UserArticleDto> getUserReadArticle(Long userId) {
-        List<UserArticle> userArticles = new ArrayList<>();
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
 //        logger.info("#21# 일주일 전: {}", oneWeekAgo);
-        userArticles = userArticleRepository.findByArticle(userId, oneWeekAgo);
+        List<UserArticle> userArticles = userArticleRepository.findByArticle(userId, oneWeekAgo);
 
-        List<UserArticleDto> result = userArticles.stream().map(u->new UserArticleDto(u)).collect(Collectors.toList());
-        return result;
+        return userArticles.stream().map(UserArticleDto::new).collect(Collectors.toList());
     }
 
     /**
@@ -56,8 +56,7 @@ public class QuizService {
      * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
      * **/
     public List<ArticleWordQuizDto> getEconomyWord(List<Long> articleIdList) {
-        List<ArticleWord> articleWords = new ArrayList<>();
-        articleWords = userArticleRepository.findByArticleIn(articleIdList);
+        List<ArticleWord> articleWords = userArticleRepository.findByArticleIn(articleIdList);
 
         List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
         return result;
@@ -70,19 +69,36 @@ public class QuizService {
      * **/
     public User getUserExperience(Long userId) {
         // 1) 회원정보 가져오기
-        User user = userRepository.findByUserId(userId);
+        Optional<User> user = userRepository.findByUserId(userId);
 
-        if (user != null) {
+        if (user.isPresent()) {
             // 2) 경험치 획득 적용
-            user.setUserExperience(user.getUserExperience() + 100);
-            logger.info("#21# 경험치 획득 적용 user 확인: {}", user);
-            // ! 연관된 user_test_result 테이블도 데이터 저장해야함 
-            User result = userRepository.save(user);
+            User originUser = user.get();
+            originUser.setUserExperience(originUser.getUserExperience() + 100);
+//            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
+            // ! 연관된 user_test_result 테이블도 데이터 저장해야함
 
-            return result;
+            userRepository.save(originUser);
+            return originUser;
         }
         // 3) 없을 경우 null return
         return null;
     }
+
+    /**
+     * Quiz 결과 저장
+     * @param userId 회원 ID
+     * @return UserTestResult
+     * **/
+//    public UserTestResult saveQuizResult(Long userId) {
+//        // 1) 회원정보 가져오기
+//        Optional<User> user = userRepository.findByUserId(userId);
+//
+//        if (user.isPresent()) {
+//            // 2) Quiz 결과 저장
+//            UserTestResult userTestResult = new UserTestResult();
+//        }
+//
+//    }
 
 }

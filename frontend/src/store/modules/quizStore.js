@@ -13,6 +13,7 @@ const quizStore = {
     isPass: false, // Quiz 통과 여부
     experience: 0, // 사용자 경험치
     correctCount: 0, // 맞은 Quiz 개수
+    selectQuizArticle: [], // Quiz로 출제하기 위해 선정한 기사 및 경제용어 List (Quiz 완료 후 back-end로 보낼 예정)
   },
   getters: {
     getQuestions: (state) => {
@@ -54,6 +55,10 @@ const quizStore = {
     SET_CORRECTCOUNT: (state, correctCount) => {
       state.correctCount = correctCount;
     },
+    SET_SELECT_QUIZ_ARTICLE: (state, selectQuizArticle) => {
+      state.selectQuizArticle = selectQuizArticle;
+      console.log("#21# 출제한 기사 확인: ", state.selectQuizArticle);
+    },
   },
   actions: {
     // [@Method] Quiz 문제 출제
@@ -71,6 +76,7 @@ const quizStore = {
           if (data.statusCode == 200) {
             // console.log("#21# Quiz 단어 가져오기 성공: ", data);
             // console.log("#21# Quiz 단어 가져오기 성공: ", data.data[0]);
+            commit("SET_SELECT_QUIZ_ARTICLE", data.data[0]);
 
             // Quiz 제작
             const quiz = []; // Quiz
@@ -170,6 +176,7 @@ const quizStore = {
         const info = {
           userId: 1,
         };
+
         await getExp(
           info,
           async ({ data }) => {

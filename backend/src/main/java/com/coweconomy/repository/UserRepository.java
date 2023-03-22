@@ -28,8 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * ID(seq)에 해당되는 User 조회
+     *
      * @param userId 조회할 회원 ID(seq)
      * @return User 회원 Entity
-     * **/
-    User findByUserId(Long userId);
+     **/
+    Optional<User> findByUserId(Long userId);
 }
