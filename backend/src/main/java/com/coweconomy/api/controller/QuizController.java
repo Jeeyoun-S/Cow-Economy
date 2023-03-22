@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/quiz")
 public class QuizController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
 
     @Autowired
     QuizService quizService;
