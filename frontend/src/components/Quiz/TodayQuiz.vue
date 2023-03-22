@@ -32,7 +32,7 @@
         <v-btn
           class="answerBtn"
           style="height: 150px"
-          :color="`var(--quiz-1-col-6)`"
+          color="white"
           :id="key"
           :value="key"
           @click="checkAnswer(key)"

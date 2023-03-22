@@ -30,7 +30,7 @@ export default {
     return {
       steps: ["1", "2", "3", "4", "5", "6", "7"],
       activeColor: `var(--main-col-2)`, // #5176FA
-      passiveColor: `var(--quiz-1-col-6)`, //  #FFFFFF
+      passiveColor: "white", //  #FFFFFF
       lineThickness: 6,
       activeThickness: 3,
       passiveThickness: 3,
