@@ -36,7 +36,7 @@ public class QuizController {
 
         // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
         List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
-        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
+//        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
 
         // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
         List<Long> articleIdList = new ArrayList<>();
@@ -45,7 +45,7 @@ public class QuizController {
         }
 //        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
         List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
-        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
+//        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
         // i) 7개 단어 선정 (Random)
@@ -56,7 +56,7 @@ public class QuizController {
         for (Integer idx: random) {
             quizWord.add(wordList.get(idx));
         }
-        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+//        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
     }

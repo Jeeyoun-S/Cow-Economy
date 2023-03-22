@@ -8,7 +8,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 async function sendMessageWord(message, success, fail) {
-  console.log("#chatGPT - sendMessageWord# message: ", message);
+  // console.log("#chatGPT - sendMessageWord# message: ", message);
 
   await openai
     .createChatCompletion({
