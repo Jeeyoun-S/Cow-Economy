@@ -93,17 +93,19 @@ const quizStore = {
               //   state.similarityWord
               // );
               // - 4지선다 setting
-              answers[String.fromCharCode(randomNum)] = word.word;
               let cnt = 0;
               for (let i = 97; i <= 100; i++) {
-                if (i == randomNum) continue;
-                answers[String.fromCharCode(i)] = state.similarityWord[cnt];
-                cnt++;
+                if (i == randomNum) {
+                  answers[String.fromCharCode(randomNum)] = word.word;
+                } else {
+                  answers[String.fromCharCode(i)] = state.similarityWord[cnt];
+                  cnt++;
+                }
               }
               quizItem.answers = answers;
               quiz.push(quizItem);
             }
-            console.log("#21# quiz 확인: ", quiz);
+            // console.log("#21# quiz 확인: ", quiz);
             await commit("SET_QUESTIONS", quiz);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
