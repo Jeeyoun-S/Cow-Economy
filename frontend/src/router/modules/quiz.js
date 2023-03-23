@@ -19,6 +19,7 @@ const quiz = [
       header: HomeHeader,
       default: TodayQuizInfo,
     },
+    meta: { requiresAuth: true },
   },
   // Quiz 페이지
   {
@@ -28,6 +29,7 @@ const quiz = [
       header: HomeHeader,
       default: TodayQuiz,
     },
+    meta: { requiresAuth: true },
   },
 ];
 

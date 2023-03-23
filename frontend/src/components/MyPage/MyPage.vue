@@ -1,6 +1,6 @@
 <template>
   <v-sheet color="transparent">
-    <!-- 로그인 -->
+    <!-- 로그인 상태 -->
     <div v-if="isLoggedIn">
       <!-- level profile -->
       <MyPageProfile class="justify-center"></MyPageProfile>
@@ -49,6 +49,7 @@
         </div>
       </v-sheet>
     </div>
+    <!-- 로그아웃 상태 -->
     <div v-else>
         <kakaoLogin></kakaoLogin>
     </div>    

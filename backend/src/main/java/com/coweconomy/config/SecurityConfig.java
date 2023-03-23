@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -35,25 +34,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 // 인증, 허가 에러 시 공통적으로 처리해주는 부분
-//                .exceptionHandling()
-//                .authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-//                .sessionManagement() //(4)
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement() //(4)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 // UsernamePasswordAuthenticationFilter보다 JwtAuthenticationFilter를 먼저 수행
-//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                 HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
                 .antMatchers("/api/**").permitAll()		// 모두 허용
 
-                // 로그인할 때 permitAll
-//                .antMatchers("/auth/login/kakao/**")
-//                .permitAll()
+                // 로그인할 때는 검증 X
+                .antMatchers("/auth/login/kakao/**")
+                .permitAll()
 
                 // 나머지는 전부 인증 필요
-//                .antMatchers("/**")
-//                .authenticated()
+                .antMatchers("/**")
+                .authenticated()
 
                 // 시큐리티는 기본적으로 세션을 사용
                 // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정

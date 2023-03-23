@@ -3,6 +3,7 @@
 		<div class="login-title">LOGIN</div>
 			<div class="login-text">로그인 후 이용 가능한 페이지입니다.<br />로그인 하시겠습니까?</div>
 			<div class="social-login">
+			<!-- 카카오톡 로그인 버튼 -->
 			<v-flex class="d-flex flex-clumn align-center justify-center ma-3">
 				<a id="custom-login-btn" @click="kakaoLogin">
 					<v-img src="@/assets/images/login/kakao_login.png"/>

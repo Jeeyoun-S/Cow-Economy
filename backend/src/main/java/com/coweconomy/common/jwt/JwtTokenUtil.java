@@ -41,6 +41,12 @@ public class JwtTokenUtil {
 //        System.out.println("#123# : " + token);
 //    public static final Key JWT_SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
+    public static String getVerifier() {
+        return Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, secretKey1.getBytes())
+                .compact();
+    }
+
     public static String getAccessToken(String userEmail, Long userId) {
         Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
 

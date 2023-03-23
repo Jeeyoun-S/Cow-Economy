@@ -21,33 +21,22 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    public static final Key JWT_SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+//    public static final Key JWT_SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+    @Value("${jwt.secret1}")
+    private String secretKey1;
 
     // 토큰 유효시간
     private static final int JWT_EXPIRATION_MS = 604800000;
 
-    // jwt 토큰 생성
-    public static String generateToken(Authentication authentication) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
-
-        return Jwts.builder()
-                .setSubject((String) authentication.getPrincipal()) // 사용자
-                .setIssuedAt(new Date()) // 현재 시간 기반으로 생성
-                .setExpiration(expiryDate) // 만료 시간 세팅
-                .claim("userId", "admin")
-                .claim("userName", "홍길동")
-                // 사용할 암호화 알고리즘, signature에 들어갈 secret 값 세팅
-                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
-                .compact();
-    }
-
     // Jwt 토큰에서 아이디 추출
-    public static String getUserIdFromJWT(String token) {
+    public String getUserIdFromJWT(String token) {
+        log.info("#4");
         Claims claims = Jwts.parser()
-                .setSigningKey(JWT_SECRET)
+                .setSigningKey(secretKey1.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
+        log.info("#5");
 
         log.info("id:"+claims.getId());
         log.info("issuer:"+claims.getIssuer());
@@ -61,9 +50,11 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰 유효성 검사
-    public static boolean validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
+            System.out.println("hi");
+            Jwts.parser().setSigningKey(secretKey1.getBytes()).parseClaimsJws(token);
+            System.out.println("bye");
             return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT signature", e);
