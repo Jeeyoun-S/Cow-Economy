@@ -39,7 +39,7 @@ public class User {
     private int userExperience;
 
     @Column(length = 300)
-    @Comment("로그인 시 회원 access token")
+    @Comment("로그인 시 회원 refrash_token")
     private String userToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
