@@ -1,0 +1,13 @@
+.border-left {
+  border-width: 0px 0px 0px 3px;
+  border-style: solid;
+  color: var(--main-col-2);
+}
+.border-left-bg {
+  border-width: 0px 0px 0px 5px;
+  border-style: solid;
+  font-size: 18px;
+}
+.pointer {
+  cursor: pointer;
+}

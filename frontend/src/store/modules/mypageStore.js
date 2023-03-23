@@ -1,14 +1,10 @@
 const mypageStore = {
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-}
+  namespaced: true,
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: {},
+};
 
 export default mypageStore;
