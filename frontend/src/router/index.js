@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 import main from "@/router/modules/main";
 import home from "@/router/modules/home";
@@ -8,21 +8,27 @@ import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
 
-Vue.use(VueRouter)
+import store from "@/store";
 
-const routes = [
-  ...main,
-  ...home,
-  ...news,
-  ...quiz,
-  ...myPage,
-  ...search
-]
+Vue.use(VueRouter);
+
+const routes = [...main, ...home, ...news, ...quiz, ...myPage, ...search];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+// # for. 로그인 token 검증 후 로그인 안되었다면 my-page로 이동
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = store.state.userStore.isLoggedIn;
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (requiresAuth && !isLoggedIn) {
+    next("/my-page");
+  } else {
+    next();
+  }
+});
+export default router;
