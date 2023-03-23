@@ -61,23 +61,9 @@ public class UserArticleMemo {
     @Comment("memoEndRange 속 메모 종료 위치")
     private int memoEndIndex;
 
-    private int memoScrollPoint;
-
     @NotNull
     @Column(columnDefinition = "Boolean default false")
     @Comment("메모 공개 여부 : true-공개, false-비공개")
     private Boolean memoPublicScope;
 
-    @Builder
-    public UserArticleMemo(Long memoId, User user, Article article, LocalDateTime regtime, String memoContent, int memoStartPoint, int memoEndPoint, int memoScrollPoint, boolean memoPublicScope) {
-        this.memoId = memoId;
-        this.user = user;
-        this.article = article;
-        this.regtime = regtime;
-        this.memoContent = memoContent;
-        this.memoStartPoint = memoStartPoint;
-        this.memoEndPoint = memoEndPoint;
-        this.memoScrollPoint = memoScrollPoint;
-        this.memoPublicScope = memoPublicScope;
-    }
 }

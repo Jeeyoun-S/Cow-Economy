@@ -55,9 +55,9 @@ public class MemoService {
 //                    .user()
                     .article(optionalArticle.get())
                     .memoContent(memoRequestDto.getMemoContent())
-                    .memoStartPoint(memoRequestDto.getMemoStartPoint())
-                    .memoEndPoint(memoRequestDto.getMemoEndPoint())
-                    .memoScrollPoint(memoRequestDto.getMemoScrollPoint())
+//                    .memoStartPoint(memoRequestDto.getMemoStartPoint())
+//                    .memoEndPoint(memoRequestDto.getMemoEndPoint())
+//                    .memoScrollPoint(memoRequestDto.getMemoScrollPoint())
                     .memoPublicScope(memoRequestDto.isMemoPublicScope())
                     .build();
 
