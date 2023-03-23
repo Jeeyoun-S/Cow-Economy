@@ -12,14 +12,16 @@ async function getToken(success, fail) {
 
 async function logOut(success, fail) {
   const accessToken = localStorage.getItem("access-token");
-  console.log(accessToken)
+  console.log(accessToken);
 
-  await api.post('/api/auth/logout/kakao', null, {
-    params: {
-      accessToken: accessToken
-    }
-  }).then(success).catch(fail);
-
+  await api
+    .post("/api/auth/logout/kakao", null, {
+      params: {
+        accessToken: accessToken,
+      },
+    })
+    .then(success)
+    .catch(fail);
 }
 
 export { getToken, logOut };

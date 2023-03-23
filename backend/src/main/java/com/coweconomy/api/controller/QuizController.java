@@ -49,8 +49,7 @@ public class QuizController {
 //        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
-        // i) 7개 단어 선정 (Random)
-        // ii) chatGPT API 사용해서 유사한 단어
+        // - 7개 단어 선정 (Random)
         List<Integer> random = randomSelect.getRandomSelect(wordList.size());
 //        logger.info("#21# 랜덤 선택 확인: {}", random);
         List<ArticleWordQuizDto> quizWord = new ArrayList<>();
