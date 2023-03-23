@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
-     * ID에 해당되는 User 조회
-     * @param userId 조회할 회원 ID
+     * email에 해당되는 User 정보 조회
+     * @param userEmail 회원 email
      * @return User 회원 Entity
      * **/
-    User findByUserId(String userId);
+    User findByUserEmail(String userEmail);
 
     /**
      * ID(seq)에 해당되는 User 조회

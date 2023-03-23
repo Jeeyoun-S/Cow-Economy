@@ -1,9 +1,6 @@
 package com.coweconomy.domain.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -43,7 +40,7 @@ public class User {
 
     @Column(length = 300)
     @Comment("로그인 시 회원 access token")
-    private int userToken;
+    private String userToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserArticle> userArticleList = new ArrayList<>();
