@@ -1,4 +1,4 @@
-import { getQuizWords, getExp } from "@/api/quiz";
+import { getQuizWords } from "@/api/quiz";
 import { sendMessageWord } from "@/api/chatGPT";
 
 import store from "@/store/index.js";
@@ -173,19 +173,19 @@ const quizStore = {
 
         // [@Method] 경험치 획득
         // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
-        const info = {
-          userId: 1,
-        };
+        // const info = {
+        //   userId: 1,
+        // };
 
-        await getExp(
-          info,
-          async ({ data }) => {
-            console.log("#21# 경험치 획득 성공: ", data);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        // await getExp(
+        //   info,
+        //   async ({ data }) => {
+        //     console.log("#21# 경험치 획득 성공: ", data);
+        //   },
+        //   (error) => {
+        //     console.log(error);
+        //   }
+        // );
       }
       // ii) 실패
       else {
