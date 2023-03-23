@@ -1,4 +1,4 @@
-import { getToken } from "@/api/user";
+import { getToken, logOut } from "@/api/user";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -17,6 +17,10 @@ const userStore = {
       state.isLoggedIn = value;
       console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
     },
+    SET_IS_LOGGED_OUT(state, value) {
+      state.isLoggedIn = value;
+      console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin)
+    }
   },
   actions: {
     async executeToken({ commit }) {
@@ -40,8 +44,30 @@ const userStore = {
         }
       );
     },
+
+    // 로그아웃
+    async exceuteLogOut({ commit }) {
+      await logOut(
+        ({data}) => {
+          if (data.statusCode == 200) {
+            // 로그아웃 성공 처리
+            localStorage.removeItem("access-token")
+            commit("SET_IS_LOGGED_IN", false);
+            window.location.replace("/my-page");
+          } else {
+            console.error("카카오 로그 아웃 실패");
+          }
+        }
+      )
+    }
   },
   modules: {},
 };
 
 export default userStore;
+    //   try {
+    //     const accessToken = localStorage.getItem("access-token");
+
+    //     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
+    //     const response = await this.$
+    //   }
