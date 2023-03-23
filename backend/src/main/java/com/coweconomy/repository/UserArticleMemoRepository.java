@@ -1,17 +1,23 @@
 package com.coweconomy.repository;
 
-import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface UserArticleMemoRepository extends JpaRepository<UserArticleMemo, Long> {
 
     /**
-     * memo id로 memo table에서 값 찾기
-     * @param memoId
-     * @return UserArticleMemo
+     * userId에 해당하는 사용자가 작성한 모든 Memo 가져오기
+     * @param userId 사용자 ID
+     * @return List<UserArticleMemo> 사용자의 모든 메모 리스트
      * **/
-    Optional<UserArticleMemo> findByMemoId(Long memoId);
+    List<UserArticleMemo> findAllByUser_UserId(Long userId);
+
+    /**
+     * memoId의 작성자 userId 가져오기
+     * @param memoId 메모 ID
+     * @return Long userID 사용자 ID
+     * **/
+    Long findUserIdByMemoId(Long memoId);
 }
