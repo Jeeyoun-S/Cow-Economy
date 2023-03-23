@@ -13,8 +13,8 @@ async function getQuizWords(userId, success, fail) {
 }
 
 // [POST] 경험치 획득
-async function getExp(userId, success, fail) {
-  console.log("#user - getExp# params - userId: ", userId);
+async function getExper(userId, success, fail) {
+  // console.log("#user - getExp# params - userId: ", userId);
 
   await api
     .post(`/api/quiz/getExp`, JSON.stringify(userId))
@@ -22,4 +22,4 @@ async function getExp(userId, success, fail) {
     .catch(fail);
 }
 
-export { getQuizWords, getExp };
+export { getQuizWords, getExper };

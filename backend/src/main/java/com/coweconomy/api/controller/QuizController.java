@@ -66,7 +66,7 @@ public class QuizController {
      */
     @PostMapping("/getExp")
     public BaseResponse<?> getExperience(@RequestBody QuizRequestDto info) {
-//        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
+        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
 
         // 1) 해당 user 경험치 +100 적용
         User user = quizService.getUserExperience(info.getUserId());
