@@ -33,7 +33,7 @@ public class QuizController {
      */
     @PostMapping("")
     public BaseResponse<?> getTodayQuizQuestion(@RequestBody QuizRequestDto info) {
-        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
+//        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
 
         // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
         List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
@@ -57,7 +57,7 @@ public class QuizController {
         for (Integer idx: random) {
             quizWord.add(wordList.get(idx));
         }
-        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+//        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
     }
@@ -67,13 +67,13 @@ public class QuizController {
      */
     @PostMapping("/getExp")
     public BaseResponse<?> getExperience(@RequestBody QuizRequestDto info) {
-        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
+//        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
 
         // 1) 해당 user 경험치 +100 적용
         User user = quizService.getUserExperience(info.getUserId());
         if (user != null) {
             // S) user 현재 경험치 정보 return
-            logger.info("#21# 경험치 적용 user 확인: {}", user);
+//            logger.info("#21# 경험치 적용 user 확인: {}", user);
             return BaseResponse.success(user.getUserExperience());
         }
 
