@@ -33,5 +33,4 @@ public class UserTestResult {
     @NotNull
     @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime regtime;
-
 }

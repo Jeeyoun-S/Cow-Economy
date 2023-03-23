@@ -1,6 +1,9 @@
 package com.coweconomy.domain.user.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -10,16 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long userId;
 
     @Column(length = 50, unique=true)
@@ -36,10 +36,6 @@ public class User {
     @NotNull
     private int userExperience;
 
-    @Comment("토큰")
-    @Column(length = 300)
-    private String token;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserArticle> userArticleList = new ArrayList<>();
 
@@ -48,10 +44,4 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTestResult>  userTestResultList = new ArrayList<>();
-
-    public User(List<UserArticle> userArticleList, List<UserArticleMemo> userArticleMemoList, List<UserTestResult> userTestResultList) {
-        this.userArticleList = userArticleList;
-        this.userArticleMemoList = userArticleMemoList;
-        this.userTestResultList = userTestResultList;
-    }
 }

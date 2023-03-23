@@ -1,9 +1,9 @@
 package com.coweconomy.service;
 
+import com.coweconomy.api.controller.UserController;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
-import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
@@ -26,10 +26,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-//@Transactional(readOnly = true) // .....ㅎ
+//@Transactional(readOnly = true)
 public class QuizService {
 
-    private static final Logger logger = LoggerFactory.getLogger(QuizService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserArticleRepository userArticleRepository;

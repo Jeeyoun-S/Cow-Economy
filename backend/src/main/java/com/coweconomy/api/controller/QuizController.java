@@ -14,20 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-@CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping("/quiz")
 public class QuizController {
-    private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     QuizService quizService;
 
     RandomSelect randomSelect = new RandomSelect();
-
 
     /**
      * 오늘의 Quiz 문제 출제
@@ -51,15 +49,15 @@ public class QuizController {
 //        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
-        // - 7개 단어 선정 (Random)
-        List<Integer> random = randomSelect.getRandomSelect(wordList.size()); //여기에 아티클 아이디, 워드 아이디
+        // i) 7개 단어 선정 (Random)
+        // ii) chatGPT API 사용해서 유사한 단어
+        List<Integer> random = randomSelect.getRandomSelect(wordList.size());
 //        logger.info("#21# 랜덤 선택 확인: {}", random);
-
         List<ArticleWordQuizDto> quizWord = new ArrayList<>();
         for (Integer idx: random) {
             quizWord.add(wordList.get(idx));
         }
-//        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
     }
