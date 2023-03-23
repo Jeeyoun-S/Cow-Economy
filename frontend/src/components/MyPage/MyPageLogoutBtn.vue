@@ -13,9 +13,10 @@ export default {
     ...mapGetters("userStore", ["isLoggedIn"])
   },
   methods: {
-    ...mapActions("userStore", ["executeLogOut"]),
-    async kakaoLogOut() {
-      await this.executeLogOut();
+    
+    ...mapActions("userStore", ["logout"]),
+    kakaoLogOut() {
+      this.logout();
     }
   }
 };

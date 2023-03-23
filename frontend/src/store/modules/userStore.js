@@ -45,6 +45,12 @@ const userStore = {
       );
     },
 
+    logout({ commit }) {
+      localStorage.removeItem('access-token');
+      window.location.replace("/home");
+      commit("SET_IS_LOGGED_IN", false);
+    },
+
     // 로그아웃
     async executeLogOut({ commit }) {
       await logOut(
