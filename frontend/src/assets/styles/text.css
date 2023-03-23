@@ -1,114 +1,23 @@
-/* 폰트 크기 */
-.xxs-font {
+.footer-font {
   font-size: 10px;
 }
-.xs-font {
-  font-size: 12px;
+.b-font {
+  font-weight: 800;
 }
 .sm-font {
   font-size: 14px;
 }
-.lg-font {
-  font-size: 18px;
+.xs-font {
+  font-size: 12px;
 }
-.xl-font {
-  font-size: 20px;
-}
-.xxl-font {
-  font-size: 22px;
-}
-.xxxl-font {
-  font-size: 24px;
-}
-/* 폰트 크기 비율 */
-.xxs-r-font {
-  font-size: 1em;
-}
-.xs-r-font {
-  font-size: 3em;
-}
-.sm-r-font {
-  font-size: 5em;
-}
-.md-r-font {
-  font-size: 7em;
-}
-.lg-r-font {
-  font-size: 9em;
-}
-.xl-r-font {
-  font-size: 11em;
-}
-.xxl-r-font {
-  font-size: 13em;
-}
-.xxxl-r-font {
-  font-size: 15em;
-}
-/* 폰트 색상 */
-.main-col-1 {
-  color: var(--main-col-1);
-}
-.main-col-2 {
+.main-2-font {
   color: var(--main-col-2);
 }
-.main-col-3 {
-  color: var(--main-col-3);
-}
-.main-col-4 {
-  color: var(--main-col-4);
-}
-.main-col-5 {
-  color: var(--main-col-5);
-}
-.error-col-5 {
-  color: var(--error-col-1);
-}
-/* 폰트 굵기 */
-.th-font {
-  font-family: var(--main-font-0);
-}
-.th-ex-font {
-  font-family: var(--main-font-1);
-}
-.lt-font {
-  font-family: var(--main-font-1-1);
-}
-.md-font {
-  font-family: var(--main-font-2-1);
-}
-.b-sm-font {
-  font-family: var(--main-font-2-2);
-}
-.b-font {
-  font-family: var(--main-font-3);
-}
-.b-ex-font {
-  font-family: var(--main-font-4);
-}
-.black-font {
-  font-family: var(--main-font-5);
-}
-/* 폰트 변경 */
-.point-th {
-  font-family: var(--point-font-1);
-}
-.point-md {
-  font-family: var(--point-font-2);
-}
-.point-b {
-  font-family: var(--point-font-3);
-}
-/* 폰트 스타일 */
-.underline {
-  text-decoration: underline;
-}
-.italic {
-  font-style: italic;
-}
-/* 기타 */
 .spacing-all {
   word-break: break-all;
+}
+.underline {
+  text-decoration: underline;
 }
 .main-title-font {
   font-size: 20px;

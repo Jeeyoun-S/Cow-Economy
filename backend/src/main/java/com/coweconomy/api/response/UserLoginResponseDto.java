@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class UserLoginResponseDto extends BaseResponseBody  {
 
-    // JWT 인증 토큰, example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN..."
+    @ApiModelProperty(name="JWT 인증 토큰", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
     String token;
 
     public static UserLoginResponseDto of(Integer statusCode, String message, String token) {

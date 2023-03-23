@@ -1,7 +1,6 @@
 package com.coweconomy.domain.user.entity;
 
 import com.coweconomy.domain.article.entity.Article;
-import com.coweconomy.domain.user.dto.UserArticleDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

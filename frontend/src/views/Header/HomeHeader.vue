@@ -14,7 +14,7 @@
     </v-toolbar>
 
     <!-- 하단 메뉴 -->
-    <v-tabs class="menu b-font" color="var(--main-col-2)" grow>
+    <v-tabs class="menu" color="var(--main-col-2)" grow show-arrows>
       <v-tab to="/home">Home</v-tab>
       <v-tab to="/news">News</v-tab>
       <v-tab to="/quiz">Quiz</v-tab>
@@ -25,8 +25,12 @@
 
 <script>
 export default {
-  name: "HomeHeader",
-};
+  name: "HomeHeader"
+}
 </script>
 
-<style></style>
+<style scoped>
+.menu {
+  font-family: Roboto;
+}
+</style>

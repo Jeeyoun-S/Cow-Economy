@@ -1,5 +1,5 @@
 <template>
-  <v-btn depressed dark color="var(--main-col-1)" to="/my-page">
+  <v-btn depressed dark color="var(--main-col-1)">
     LOGIN
   </v-btn>
 </template>

@@ -8,8 +8,8 @@
       <v-toolbar-title>News</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- 공유 아이콘 -->
-      <v-btn class="mr-0" icon color="grey darken-1" disabled>
-        <!-- <v-icon>mdi-share-variant</v-icon> -->
+      <v-btn class="mr-0" icon color="grey darken-1">
+        <v-icon>mdi-share-variant</v-icon>
       </v-btn>
     </v-toolbar>
     <v-divider></v-divider>
@@ -17,14 +17,16 @@
 </template>
 
 <script>
-import BackIcon from "@/common/component/BackIcon.vue";
+import BackIcon from "@/common/component/BackIcon.vue"
 
 export default {
   name: "NewsHeader",
   components: {
-    BackIcon,
-  },
-};
+    BackIcon
+  }
+}
 </script>
 
-<style></style>
+<style>
+
+</style>
