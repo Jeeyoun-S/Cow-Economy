@@ -23,5 +23,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        System.out.println("여기는 지나 가시는가");
     }
 }

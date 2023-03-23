@@ -41,12 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .sessionManagement() //(4)
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
-//                // UsernamePasswordAuthenticationFilter보다 JwtAuthenticationFilter를 먼저 수행
+                // UsernamePasswordAuthenticationFilter보다 JwtAuthenticationFilter를 먼저 수행
 //                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
                 .antMatchers("/api/**").permitAll()		// 모두 허용
-                .anyRequest().authenticated()			// 그 외의 요청은 모두 JWT 인증 필요
 
                 // 로그인할 때 permitAll
 //                .antMatchers("/auth/login/kakao/**")
@@ -66,8 +65,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOrigin("*");
+//        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        configuration.addAllowedHeader("*");
+//        configuration.setAllowCredentials(true);
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/", configuration);
+//        return source;
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));    // !! 추후 배포서버 추가 (yml에서 가져올 예정)
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -80,8 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //비밀번호 암호화를 위한 Encoder 설정
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
