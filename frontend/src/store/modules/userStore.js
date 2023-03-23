@@ -46,7 +46,7 @@ const userStore = {
     },
 
     // 로그아웃
-    async exceuteLogOut({ commit }) {
+    async executeLogOut({ commit }) {
       await logOut(
         ({data}) => {
           if (data.statusCode == 200) {

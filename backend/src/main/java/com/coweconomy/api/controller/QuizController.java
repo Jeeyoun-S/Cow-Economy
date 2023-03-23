@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localshot:3000")
 @RequestMapping("/quiz")
 public class QuizController {
 

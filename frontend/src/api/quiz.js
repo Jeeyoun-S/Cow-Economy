@@ -8,8 +8,9 @@ async function getQuizWords(userId, success, fail) {
 
   await api
     .post(
-      `${process.env.VUE_APP_API_BASE_URL}/api/quiz/`,
+      `/api/quiz`,
       JSON.stringify(userId)
+      // {userId: userId}
     )
     .then(success)
     .catch(fail);
