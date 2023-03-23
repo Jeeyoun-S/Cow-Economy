@@ -139,7 +139,7 @@ export default {
         this.correctFlag = false;
         this.timerVisiFlag = false;
       }
-      console.log("#21# 정답/오답 확인: ", this.correctFlag);
+      // console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
       // setTimeout(this.nextQuestion, 5000); // 5초 후 다음 문제로 넘어감
@@ -186,7 +186,7 @@ export default {
     // [@Method] Alert 창 노출
     showAlert() {
       this.moveTry = !this.moveTry;
-      console.log("#21# alert창 닫기: ", this.moveTry);
+      // console.log("#21# alert창 닫기: ", this.moveTry);
     },
   },
 };

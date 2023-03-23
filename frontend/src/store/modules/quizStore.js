@@ -57,7 +57,7 @@ const quizStore = {
     },
     SET_SELECT_QUIZ_ARTICLE: (state, selectQuizArticle) => {
       state.selectQuizArticle = selectQuizArticle;
-      console.log("#21# 출제한 기사 확인: ", state.selectQuizArticle);
+      // console.log("#21# 출제한 기사 확인: ", state.selectQuizArticle);
     },
   },
   actions: {

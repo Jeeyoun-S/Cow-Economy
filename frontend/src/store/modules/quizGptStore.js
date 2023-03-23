@@ -21,7 +21,7 @@ const quizGptStore = {
       //   console.log("#21# chatGPT 질문 동작 word: ", word);
       const message =
         "경제용어 " + word + "와 유사한 경제용어 3개 설명없이 단어만 알려줘";
-      console.log("#21# chatGPT 질문 동작 message: ", message);
+      // console.log("#21# chatGPT 질문 동작 message: ", message);
 
       await sendMessageWord(
         message,
