@@ -8,9 +8,6 @@ import javax.validation.constraints.NotNull;
 public class MemoRequestDto {
 
     @NotNull
-    private Long articleId;
-
-    @NotNull
     private String memoContent;
 
     // 메모 시작 구간

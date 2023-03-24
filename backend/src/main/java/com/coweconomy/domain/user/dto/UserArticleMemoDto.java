@@ -4,6 +4,7 @@ import com.coweconomy.domain.user.entity.UserArticleMemo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class UserArticleMemoDto {
@@ -12,7 +13,7 @@ public class UserArticleMemoDto {
     private Long memoId;
 
     // 메모 등록 시간
-    private LocalDateTime regtime;
+    private String regtime;
 
     // 메모 내용
     private String memoContent;
@@ -37,7 +38,7 @@ public class UserArticleMemoDto {
 
     public UserArticleMemoDto(UserArticleMemo userArticleMemo) {
         this.memoId = userArticleMemo.getMemoId();
-        this.regtime = userArticleMemo.getRegtime();
+        this.regtime = userArticleMemo.getRegtime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.memoContent = userArticleMemo.getMemoContent();
         this.memoStartRange = userArticleMemo.getMemoStartRange();
         this.memoEndRange = userArticleMemo.getMemoEndRange();

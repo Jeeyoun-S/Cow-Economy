@@ -17,8 +17,8 @@ public class MemoController {
     MemoService memoService;
 
     @ApiOperation(value = "메모 등록", notes = "새로운 메모를 등록한다.")
-    @PostMapping("")
-    public BaseResponse<UserArticleMemoDto> addMemo(@RequestBody MemoRequestDto memoRequestDto) {
+    @PostMapping("/{articleId}")
+    public BaseResponse<UserArticleMemoDto> addMemo(@PathVariable Long articleId, @RequestBody MemoRequestDto memoRequestDto) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
         Long userId = 1L;
@@ -26,7 +26,7 @@ public class MemoController {
         // 입력 받은 request 값이 유효한지 확인
         if (memoService.isValidMemoRequest(memoRequestDto)) {
             // 유효하다면 DB에 저장하기
-            UserArticleMemo memo = memoService.addMemo(memoRequestDto, userId);
+            UserArticleMemo memo = memoService.addMemo(memoRequestDto, userId, articleId);
             if (memo != null) {
                 return BaseResponse.success(new UserArticleMemoDto(memo));
             }
@@ -36,8 +36,8 @@ public class MemoController {
     }
 
     @ApiOperation(value = "메모 수정", notes = "기존 메모를 수정한다.")
-    @PutMapping("")
-    public BaseResponse modifyMemo(@RequestParam(name = "memoId", required = true) Long memoId, @RequestBody MemoRequestDto memoRequestDto) {
+    @PutMapping("/{memoId}")
+    public BaseResponse modifyMemo(@PathVariable Long memoId, @RequestBody MemoRequestDto memoRequestDto) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
         Long userId = 1L;
