@@ -52,8 +52,8 @@ export default {
     // [@Method] Modal 닫고 마이페이지로 이동
     closeModal() {
       this.dialog = false;
-      this.initQuiz();
       location.href = `${process.env.VUE_APP_BASE_URL}/my-page`;
+      this.initQuiz();
     },
   },
 };

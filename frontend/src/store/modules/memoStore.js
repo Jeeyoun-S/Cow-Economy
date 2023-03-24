@@ -4,6 +4,7 @@ const memoStore = {
   namespaced: true,
   state: {
     memoBtn: false,
+    done: false,
     selectionText: null,
     selectionResult: {
       startIndex: null,
@@ -24,7 +25,7 @@ const memoStore = {
       endRange: null
     },
     otherMemoList: [],
-    myMemoList: []
+    myMemoList: [],
   },
   getters: {
 

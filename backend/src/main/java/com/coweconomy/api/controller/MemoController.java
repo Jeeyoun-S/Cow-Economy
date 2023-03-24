@@ -2,66 +2,71 @@ package com.coweconomy.api.controller;
 
 import com.coweconomy.api.request.MemoRequestDto;
 import com.coweconomy.api.response.BaseResponse;
+import com.coweconomy.domain.user.dto.UserArticleMemoDto;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
-import com.coweconomy.repository.UserArticleMemoRepository;
 import com.coweconomy.service.MemoService;
-import com.fasterxml.jackson.databind.ser.Serializers;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-@Controller
+@RestController
 @RequestMapping("/memo")
 public class MemoController {
 
     @Autowired
     MemoService memoService;
 
-    @Autowired
-    UserArticleMemoRepository userArticleMemoRepository;
+    @ApiOperation(value = "메모 등록", notes = "새로운 메모를 등록한다.")
+    @PostMapping("/{articleId}")
+    public BaseResponse<UserArticleMemoDto> addMemo(@PathVariable Long articleId, @RequestBody MemoRequestDto memoRequestDto) {
 
-    @GetMapping("")
-    public int getUserMemo() {
-        return 0;
-    }
+        // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
+        Long userId = 1L;
 
-    @PostMapping("")
-    public BaseResponse addMemo(MemoRequestDto memoRequestDto) {
-
-        // 입력 받은 request가 유효한 값인지 확인
+        // 입력 받은 request 값이 유효한지 확인
         if (memoService.isValidMemoRequest(memoRequestDto)) {
-
-            // reqeust를 entity로 변경
-            UserArticleMemo userArticleMemo = memoService.changeMemoRequestToEntity(memoRequestDto);
-            
-            // entity가 null이 아닌 경우
-            if (userArticleMemo != null) {
-
-                // DB에 넣기
-                UserArticleMemo resultMemo = userArticleMemoRepository.save(userArticleMemo);
-
-                return BaseResponse.success(resultMemo);
+            // 유효하다면 DB에 저장하기
+            UserArticleMemo memo = memoService.addMemo(memoRequestDto, userId, articleId);
+            if (memo != null) {
+                return BaseResponse.success(new UserArticleMemoDto(memo));
             }
         }
 
         return BaseResponse.fail();
     }
 
-    @PutMapping("")
-    public BaseResponse modifyMemo() {
+    @ApiOperation(value = "메모 수정", notes = "기존 메모를 수정한다.")
+    @PutMapping("/{memoId}")
+    public BaseResponse modifyMemo(@PathVariable Long memoId, @RequestBody MemoRequestDto memoRequestDto) {
 
+        // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
+        Long userId = 1L;
+        
+        // userId가 작성한 메모가 맞는지 확인
+        if (memoService.checkMemoWriter(memoId, userId)) {
+            // 메모 내용이 유효한지 확인
+            if (memoService.isValidMemoRequest(memoRequestDto)) {
+                // 유효하다면 수정 진행
+                UserArticleMemo memo = memoService.modifyMemo(memoRequestDto, memoId);
+                if (memo != null) {
+                    return BaseResponse.success(new UserArticleMemoDto(memo));
+                }
+            }
+        }
 
         return BaseResponse.fail();
     }
 
+    @ApiOperation(value = "메모 삭제", notes = "기존 메모를 삭제한다.")
     @DeleteMapping("")
     public BaseResponse deleteMemo(Long memoId) {
 
-        Optional<UserArticleMemo> optionalUserArticleMemo = userArticleMemoRepository.findByMemoId(memoId);
-        if (optionalUserArticleMemo.isPresent()) {
-            userArticleMemoRepository.delete(optionalUserArticleMemo.get());
+        // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
+        Long userId = 1L;
+        
+        // memoId의 작성자가 userId가 맞는지 확인
+        if (memoService.checkMemoWriter(memoId, userId)) {
+            memoService.deleteMemo(memoId);
             return BaseResponse.success(null);
         }
 

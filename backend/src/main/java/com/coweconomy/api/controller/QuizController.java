@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localshot:3000")
+@CrossOrigin()
 @RequestMapping("/quiz")
 public class QuizController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
 
     @Autowired
     QuizService quizService;
@@ -46,7 +46,11 @@ public class QuizController {
         }
 //        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
         List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
-//        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
+        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
+        // 2-1) 만약, 경제 단어가 7개 이하일 경우 전체 기사 중 최근 일주일 기사로 선택
+//        if (wordList.size() < 7) {
+//
+//        }
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
         // - 7개 단어 선정 (Random)
@@ -66,7 +70,7 @@ public class QuizController {
      */
     @PostMapping("/getExp")
     public BaseResponse<?> getExperience(@RequestBody QuizRequestDto info) {
-//        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
+        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
 
         // 1) 해당 user 경험치 +100 적용
         User user = quizService.getUserExperience(info.getUserId());
