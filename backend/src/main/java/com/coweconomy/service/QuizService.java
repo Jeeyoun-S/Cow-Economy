@@ -1,15 +1,21 @@
 package com.coweconomy.service;
 
 import com.coweconomy.api.controller.UserController;
+import com.coweconomy.api.request.QuizResultRequestDto;
+import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
+import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
+import com.coweconomy.repository.ArticleRepository;
 import com.coweconomy.repository.UserArticleRepository;
 import com.coweconomy.repository.UserRepository;
+import com.coweconomy.repository.UserTestResultRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +42,12 @@ public class QuizService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserTestResultRepository userTestResultRepository;
+
+    @Autowired
+    ArticleRepository articleRepository;
 
     /**
      * 회원이 일주일 이내에 읽은 기사 조회
@@ -86,19 +98,27 @@ public class QuizService {
     }
 
     /**
-     * Quiz 결과 저장
-     * @param userId 회원 ID
+     * Quiz 성공/실패 결과 저장
+     * @param Long 회원 ID, Boolean 성공/실패 여부
      * @return UserTestResult
      * **/
-//    public UserTestResult saveQuizResult(Long userId) {
-//        // 1) 회원정보 가져오기
-//        Optional<User> user = userRepository.findByUserId(userId);
-//
-//        if (user.isPresent()) {
-//            // 2) Quiz 결과 저장
-//            UserTestResult userTestResult = new UserTestResult();
-//        }
-//
-//    }
+    public UserTestResult quizResultSave(QuizResultRequestDto quizResult) {
+        // 1) 회원정보 가져오기
+        Optional<User> user = userRepository.findByUserId(quizResult.getUserId());
+        // 2) 기사 정보 > ! 나중에 고치기
+        Article article = articleRepository.findByArticleId(Long.valueOf(1));
+
+        if (user.isPresent()) {
+            // 2) Quiz 결과 저장
+            UserTestResult result = userTestResultRepository.save(new UserTestResult(user.get(), article, quizResult));
+
+            if (result != null) {
+                return result;
+            }
+        }
+
+        // F) 없을 경우 null return
+        return null;
+    }
 
 }

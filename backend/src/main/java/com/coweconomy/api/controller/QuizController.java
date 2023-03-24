@@ -1,10 +1,12 @@
 package com.coweconomy.api.controller;
 
 import com.coweconomy.api.request.QuizRequestDto;
+import com.coweconomy.api.request.QuizResultRequestDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.util.RandomSelect;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.User;
+import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.service.QuizService;
 import org.slf4j.Logger;
@@ -65,22 +67,36 @@ public class QuizController {
         return BaseResponse.success(quizWord);
     }
 
-    /**
-     * Quiz 성공 시 - 경험치 획득 (+100)
-     */
-    @PostMapping("/getExp")
-    public BaseResponse<?> getExperience(@RequestBody QuizRequestDto info) {
-        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
 
-        // 1) 해당 user 경험치 +100 적용
-        User user = quizService.getUserExperience(info.getUserId());
-        if (user != null) {
-            // S) user 현재 경험치 정보 return
-//            logger.info("#21# 경험치 적용 user 확인: {}", user);
-            return BaseResponse.success(user.getUserExperience());
+    /**
+     * Quiz 성공/실패 여부 저장 + 성공 시 경험치 획득(+100)
+     */
+    @PostMapping("/setResult")
+    public BaseResponse<?> setQuizResult(@RequestBody QuizResultRequestDto quizResult) {
+        logger.info("#[QuizController]# Quiz 결과 - info: {}", quizResult);
+
+        // 성공 ↔ 실패 여부에 따라 다른 로직 처리
+        // 1) 성공/실패 결과 저장
+        UserTestResult userTestResult = quizService.quizResultSave(quizResult);
+//        logger.info("#21# 성공/실패 결과 저장 확인: {}", userTestResult);
+        if (userTestResult == null) {
+            // F) 성공/실패 결과 저장 Fail
+            return BaseResponse.fail();
         }
 
-        // F) fail
-        return BaseResponse.fail();
+        // 2) Quiz 성공 시 경험치 부여
+        if (quizResult.getIsPassFlag()) {
+            // i) 해당 user 경험치 +100 적용
+            User user = quizService.getUserExperience(quizResult.getUserId());
+            if (user != null) {
+                // S) 경험치 적용 성공 > 현 user 경험치 return
+                return BaseResponse.success(user.getUserExperience());
+            }
+            // F) 경험치 +100 적용 Fail
+            return BaseResponse.fail();
+        }
+
+        // S) 결과 저장 성공
+        return BaseResponse.success(null);
     }
 }
