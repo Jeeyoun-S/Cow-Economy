@@ -7,12 +7,19 @@ async function getQuizWords(userId, success, fail) {
   // console.log("#user - getQuizWords# params - userId: ", userId);
 
   await api
-    .post(
-      `${process.env.VUE_APP_API_BASE_URL}/api/quiz/`,
-      JSON.stringify(userId)
-    )
+    .post(`/api/quiz/`, JSON.stringify(userId))
     .then(success)
     .catch(fail);
 }
 
-export { getQuizWords };
+// [POST] 경험치 획득
+async function getExp(userId, success, fail) {
+  console.log("#user - getExp# params - userId: ", userId);
+
+  await api
+    .post(`/api/quiz/getExp`, JSON.stringify(userId))
+    .then(success)
+    .catch(fail);
+}
+
+export { getQuizWords, getExp };

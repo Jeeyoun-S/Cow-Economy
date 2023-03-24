@@ -5,6 +5,21 @@
     <div></div>
     <div></div>
   </div>
+</template> -->
+<!-- !#! 임시로 해둠 -->
+<template>
+  <div class="main-loading-mask" v-if="loading">
+    <v-card class="main-wrapper">
+      <v-card-text class="main-wrapper-text">
+        <p class="main-exp-title">Loading</p>
+      </v-card-text>
+      <v-card-text class="main-wrapper-img">
+        <img
+          :src="require('@/assets/images/mypage/quiz/quiz_loading_spinner.gif')"
+        />
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -18,7 +33,7 @@ export default {
 };
 </script>
 
-<style>
+<!-- <style>
 .lds-facebook {
   display: inline-block;
   position: fixed;
@@ -65,66 +80,49 @@ export default {
   }
 }
 </style> -->
-<template>
-  <div class="modal-mask" v-if="loading">
-    <vue-circle
-      :progress="50"
-      :size="100"
-      :reverse="false"
-      line-cap="round"
-      :fill="fill"
-      empty-fill="rgba(0, 0, 0, .1)"
-      :animation-start-value="0.0"
-      :start-angle="0"
-      insert-mode="append"
-      :thickness="5"
-      :show-percent="true"
-      @vue-circle-progress="progress"
-      @vue-circle-end="progress_end"
-    >
-      <p>Slot!</p>
-    </vue-circle>
-  </div>
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
-  <!-- <div class="loading" v-if="loading">
-    <v-progress-circular
-      :size="70"
-      :width="7"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-  </div> -->
-</template>
+<style>
+.main-loading-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
 
-<script>
-export default {
-  name: "TheLoading",
-  data() {
-    return {
-      loading: false,
-    };
-  },
-};
-</script>
+.main-wrapper {
+  width: 70%;
+  height: 30%;
 
-<style scoped>
-.loading {
+  margin-left: 15%;
+  margin-top: 70%;
+}
+.main-wrapper-text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 600px;
-  padding: 20px;
+
+  font-family: var(--main-font-2);
+  color: black;
 }
-.loading span {
-  font-size: 50px;
-  font-weight: 800;
+
+.main-exp-title {
+  font-size: larger;
+  font-weight: 600;
+  color: black;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 5%;
+}
+
+.main-wrapper-img img {
+  width: 250px;
+  height: 100px;
 }
 </style>

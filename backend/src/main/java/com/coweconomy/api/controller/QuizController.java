@@ -4,6 +4,7 @@ import com.coweconomy.api.request.QuizRequestDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.util.RandomSelect;
 import com.coweconomy.domain.user.dto.UserArticleDto;
+import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.service.QuizService;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localshot:3000")
 @RequestMapping("/quiz")
 public class QuizController {
 
@@ -32,7 +33,7 @@ public class QuizController {
      */
     @PostMapping("")
     public BaseResponse<?> getTodayQuizQuestion(@RequestBody QuizRequestDto info) {
-        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
+//        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
 
         // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
         List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
@@ -48,8 +49,7 @@ public class QuizController {
 //        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
         // 3) 가져온 경제 단어를 토대로 문제 출제
-        // i) 7개 단어 선정 (Random)
-        // ii) chatGPT API 사용해서 유사한 단어
+        // - 7개 단어 선정 (Random)
         List<Integer> random = randomSelect.getRandomSelect(wordList.size());
 //        logger.info("#21# 랜덤 선택 확인: {}", random);
         List<ArticleWordQuizDto> quizWord = new ArrayList<>();
@@ -59,5 +59,24 @@ public class QuizController {
 //        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
+    }
+
+    /**
+     * Quiz 성공 시 - 경험치 획득 (+100)
+     */
+    @PostMapping("/getExp")
+    public BaseResponse<?> getExperience(@RequestBody QuizRequestDto info) {
+//        logger.info("#[QuizController]# 경험치 획득 (+100)- info: {}", info);
+
+        // 1) 해당 user 경험치 +100 적용
+        User user = quizService.getUserExperience(info.getUserId());
+        if (user != null) {
+            // S) user 현재 경험치 정보 return
+//            logger.info("#21# 경험치 적용 user 확인: {}", user);
+            return BaseResponse.success(user.getUserExperience());
+        }
+
+        // F) fail
+        return BaseResponse.fail();
     }
 }

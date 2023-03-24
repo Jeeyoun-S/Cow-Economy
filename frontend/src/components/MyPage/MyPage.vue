@@ -1,5 +1,14 @@
 <template>
   <v-sheet color="transparent">
+    <!-- 로그인 -->
+    <div v-if="loaded">
+      <div v-if="isLoggedIn">마이페이지</div>
+      <div v-else>
+        <kakaoLogin></kakaoLogin>
+        로그인 페이지
+      </div>
+    </div>
+    <div v-else>Loading...</div>
     <!-- level profile -->
     <MyPageProfile class="justify-center"></MyPageProfile>
     <!-- username & logout btn -->
@@ -55,16 +64,15 @@ import MyPageLogoutBtn from "./MyPageLogoutBtn.vue";
 import MyPageInfo from "./MyPageInfo/MyPageInfo.vue";
 import MyPageMemo from "./MyPageMemo/MyPageMemo.vue";
 
+import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "MyPage",
-  components: {
-    MyPageProfile,
-    MyPageLogoutBtn,
-    MyPageMemo,
-    MyPageInfo,
-  },
   data() {
     return {
+      kakaoCode: null,
+      loaded: false,
       swiperOptionMain: {
         spaceBetween: 10,
         navigation: {
@@ -74,6 +82,39 @@ export default {
       },
       selectedBtn: "my-memo",
     };
+  },
+  watch: {
+    isLoggedIn() {
+      this.loaded = true;
+    },
+  },
+  created() {
+    this.loaded = false;
+    // 인가 코드 추출
+    this.kakaoCode = this.$route.query.code;
+    if (this.kakaoCode != null) {
+      this.kakao();
+    }
+    this.loaded = true;
+  },
+  components: {
+    MyPageProfile,
+    MyPageLogoutBtn,
+    MyPageMemo,
+    MyPageInfo,
+    kakaoLogin,
+  },
+  computed: {
+    ...mapGetters("userStore", ["isLoggedIn"]),
+  },
+  methods: {
+    ...mapActions("userStore", ["executeToken"]),
+    // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
+    async kakao() {
+      await this.executeToken();
+      // 받은 인가 코드 초기화
+      this.kakaoCode = null;
+    },
   },
 };
 </script>

@@ -37,13 +37,13 @@ export default new Vuex.Store({
     mainStore: mainStore,
     mypageStore: mypageStore,
     userStore: userStore,
-    memoStore: memoStore,
     quizStore: quizStore,
+    memoStore: memoStore,
   },
   plugins: [
     createPersistedState({
       // ! localStorage에 저장할 store만을 path에 등록
-      paths: ["quizStore"],
+      paths: ["userStore", "quizStore"],
     }),
   ],
-})
+});

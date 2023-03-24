@@ -120,7 +120,7 @@ export default {
 
   width: 327px;
   height: 518px;
-  background-color: var(--quiz-1-col-6);
+  background-color: white;
 
   margin-left: 7%;
   margin-top: 10%;

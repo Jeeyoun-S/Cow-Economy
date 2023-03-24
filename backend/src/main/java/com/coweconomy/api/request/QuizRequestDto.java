@@ -11,6 +11,6 @@ import org.hibernate.annotations.Comment;
 @Data
 public class QuizRequestDto {
 
-    @Comment("회원 ID")
+    // 회원 ID
     private Long userId;
 }

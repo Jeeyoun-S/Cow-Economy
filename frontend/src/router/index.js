@@ -8,6 +8,8 @@ import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
 
+import store from "@/store";
+
 Vue.use(VueRouter);
 
 const routes = [...main, ...home, ...news, ...quiz, ...myPage, ...search];
@@ -18,4 +20,15 @@ const router = new VueRouter({
   routes,
 });
 
+// # for. 로그인 token 검증 후 로그인 안되었다면 my-page로 이동
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = store.state.userStore.isLoggedIn;
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (requiresAuth && !isLoggedIn) {
+    next("/my-page");
+  } else {
+    next();
+  }
+});
 export default router;
