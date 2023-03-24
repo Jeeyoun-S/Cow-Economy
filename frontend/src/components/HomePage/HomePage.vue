@@ -1,13 +1,16 @@
 <template>
-  <div>home</div>
+  <div>
+    <hot-trends></hot-trends>
+  </div>
 </template>
 
 <script>
+import HotTrends from "./HotTrends.vue";
 export default {
-
-}
+  components: { HotTrends },
+};
 </script>
 
-<style>
+<style></style>
 
-</style>
+HotTrends

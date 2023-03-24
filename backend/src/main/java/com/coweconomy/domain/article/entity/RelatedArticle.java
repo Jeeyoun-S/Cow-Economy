@@ -17,14 +17,17 @@ import javax.validation.constraints.NotNull;
 public class RelatedArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Comment("관련 기사 ID")
     private Long relatedArticleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
+    @Comment("기사 ID")
     private Article article;
 
-
-    @Comment("관련 기사 추천도")
+    @Column(columnDefinition = "MEDIUMTEXT")
     @NotNull
-    private int recommend;
+    @Comment("관련 기사 ID 6개 : 1,2,3,4,5,6")
+    private String subArticleId;
+
 }
