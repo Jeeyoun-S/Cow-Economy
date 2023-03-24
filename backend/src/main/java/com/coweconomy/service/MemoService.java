@@ -41,11 +41,11 @@ public class MemoService {
     }
 
     /**
-     * 입력 받은 Memo Request 값을 Memo Entity로 변경
+     * 입력 받은 Memo Request 값을 DB에 저장
      * @param memoRequestDto 전달 받은 메모 Request
      * @return memo Entity
      * **/
-    public UserArticleMemo saveMemoRequestDto(MemoRequestDto memoRequestDto, Long userId) {
+    public UserArticleMemo addMemo(MemoRequestDto memoRequestDto, Long userId) {
         
         // User 가져오기
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -68,12 +68,41 @@ public class MemoService {
                         .build();
 
                 // DB에 저장
-                userArticleMemoRepository.save(userArticleMemo);
+                UserArticleMemo returnMemo =  userArticleMemoRepository.save(userArticleMemo);
 
-                return userArticleMemo;
+                return returnMemo;
             }
         }
 
+        return null;
+    }
+
+    /**
+     * 입력 받은 Memo Request 값을 DB에 저장
+     * @param memoRequestDto 전달 받은 메모 Request
+     * @param memoId 메모 ID
+     * @return memo Entity
+     * **/
+    public UserArticleMemo modifyMemo(MemoRequestDto memoRequestDto, Long memoId) {
+        
+        // memoId로 memo 가져오기
+        Optional<UserArticleMemo> optionalMemo = userArticleMemoRepository.findById(memoId);
+        if (optionalMemo.isPresent()) {
+            UserArticleMemo existingMemo = optionalMemo.get();
+            UserArticleMemo memo = existingMemo.builder()
+                    .memoContent(memoRequestDto.getMemoContent())
+                    .memoStartRange(memoRequestDto.getMemoStartRange())
+                    .memoEndRange(memoRequestDto.getMemoEndRange())
+                    .memoStartIndex(memoRequestDto.getMemoStartIndex())
+                    .memoEndIndex(memoRequestDto.getMemoEndIndex())
+                    .memoPublicScope(memoRequestDto.isMemoPublicScope())
+                    .build();
+
+            // DB에 저장
+            userArticleMemoRepository.save(memo);
+
+            return memo;
+        }
         return null;
     }
 
@@ -83,11 +112,15 @@ public class MemoService {
      * @param userId 사용자 ID
      * @return 맞다면 true, 아니면 false
      * **/
-    public boolean checkMemoWriter(Long memoId, long userId) {
-        Long correctUserId = userArticleMemoRepository.findUserIdByMemoId(memoId);
+    public boolean checkMemoWriter(Long memoId, Long userId) {
+        Optional<UserArticleMemo> memo = userArticleMemoRepository.findById(memoId);
 
-        if (correctUserId == userId) return true;
-        else return false;
+        if (memo.isPresent()) {
+            Long correctId = memo.get().getUser().getUserId();
+            if (correctId == userId) return true;
+        }
+
+        return false;
     }
 
     /**

@@ -32,9 +32,6 @@ public class UserArticleMemoDto {
     // 메모 공개 여부
     private boolean memoPublicScope;
 
-    // 사용자 ID
-    private Long userId;
-
     // 기사 ID
     private Long articleId;
 
@@ -47,7 +44,6 @@ public class UserArticleMemoDto {
         this.memoStartIndex = userArticleMemo.getMemoStartIndex();
         this.memoEndIndex = userArticleMemo.getMemoEndIndex();
         this.memoPublicScope = userArticleMemo.getMemoPublicScope();
-        this.userId = userArticleMemo.getUser().getUserId();
         this.articleId = userArticleMemo.getArticle().getArticleId();
     }
 

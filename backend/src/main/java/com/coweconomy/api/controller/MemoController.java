@@ -3,7 +3,6 @@ package com.coweconomy.api.controller;
 import com.coweconomy.api.request.MemoRequestDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
-import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.service.MemoService;
 import io.swagger.annotations.ApiOperation;
@@ -22,19 +21,14 @@ public class MemoController {
     public BaseResponse<UserArticleMemoDto> addMemo(@RequestBody MemoRequestDto memoRequestDto) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
-        long userId = 1;
+        Long userId = 1L;
 
         // 입력 받은 request 값이 유효한지 확인
         if (memoService.isValidMemoRequest(memoRequestDto)) {
-            
-            // DB에 저장하기
-            UserArticleMemo memo = memoService.saveMemoRequestDto(memoRequestDto, userId);
-            
+            // 유효하다면 DB에 저장하기
+            UserArticleMemo memo = memoService.addMemo(memoRequestDto, userId);
             if (memo != null) {
-                
-                // memo Entity를 UserArticleMemoDto로 변경
-                UserArticleMemoDto userArticleMemoDto = new UserArticleMemoDto(memo);
-                return BaseResponse.success(userArticleMemoDto);
+                return BaseResponse.success(new UserArticleMemoDto(memo));
             }
         }
 
@@ -43,12 +37,22 @@ public class MemoController {
 
     @ApiOperation(value = "메모 수정", notes = "기존 메모를 수정한다.")
     @PutMapping("")
-    public BaseResponse modifyMemo(@RequestParam(name = "memoId") Long memoId, @RequestBody MemoRequestDto memoRequestDto) {
+    public BaseResponse modifyMemo(@RequestParam(name = "memoId", required = true) Long memoId, @RequestBody MemoRequestDto memoRequestDto) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
-        long userId = 1;
-
-//        if (memoService.checkMemoWriter(memoId))
+        Long userId = 1L;
+        
+        // userId가 작성한 메모가 맞는지 확인
+        if (memoService.checkMemoWriter(memoId, userId)) {
+            // 메모 내용이 유효한지 확인
+            if (memoService.isValidMemoRequest(memoRequestDto)) {
+                // 유효하다면 수정 진행
+                UserArticleMemo memo = memoService.modifyMemo(memoRequestDto, memoId);
+                if (memo != null) {
+                    return BaseResponse.success(new UserArticleMemoDto(memo));
+                }
+            }
+        }
 
         return BaseResponse.fail();
     }
@@ -58,13 +62,13 @@ public class MemoController {
     public BaseResponse deleteMemo(Long memoId) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
-        long userId = 1;
+        Long userId = 1L;
         
         // memoId의 작성자가 userId가 맞는지 확인
-//        if (memoService.checkMemoWriter(memoId, userId)) {
-//            memoService.deleteMemo(memoId);
-//            return BaseResponse.success(null);
-//        }
+        if (memoService.checkMemoWriter(memoId, userId)) {
+            memoService.deleteMemo(memoId);
+            return BaseResponse.success(null);
+        }
 
         return BaseResponse.fail();
     }

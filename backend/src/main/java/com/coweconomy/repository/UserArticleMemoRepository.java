@@ -1,9 +1,11 @@
 package com.coweconomy.repository;
 
+import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserArticleMemoRepository extends JpaRepository<UserArticleMemo, Long> {
 
@@ -13,11 +15,4 @@ public interface UserArticleMemoRepository extends JpaRepository<UserArticleMemo
      * @return List<UserArticleMemo> 사용자의 모든 메모 리스트
      * **/
     List<UserArticleMemo> findAllByUser_UserId(Long userId);
-
-    /**
-     * memoId의 작성자 userId 가져오기
-     * @param memoId 메모 ID
-     * @return Long userID 사용자 ID
-     * **/
-    Long findUserIdByMemoId(Long memoId);
 }
