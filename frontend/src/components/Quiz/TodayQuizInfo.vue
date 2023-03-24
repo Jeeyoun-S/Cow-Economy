@@ -78,7 +78,6 @@ export default {
   data() {
     return {
       alertQuizFlag: false, // 오늘의 Quiz 진행 여부에 따른 alert창
-      isLoading: false, // 오늘의 Quiz가 준비될 동안 보여줄 Loading
     };
   },
   components: {
@@ -97,7 +96,7 @@ export default {
     // [@Method] Quiz 페이지로 이동
     moveQuiz() {
       if (this.todayQuizFlag == false) {
-        this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
+        this.setExamQuestions(); // [@Method] Quiz 문제 출제
       } else {
         // ! 오늘 Quiz 다 했다고 alert 창 띄우기
         this.alertQuizFlag = true;

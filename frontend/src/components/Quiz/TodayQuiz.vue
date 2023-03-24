@@ -35,6 +35,19 @@
         class="d-flex flex-row justify-space-between flex-wrap"
       >
         <!-- 정답 후보 [4지선다] -->
+        <!-- <v-btn
+          class="quiz spacing-all"
+          elevation="0"
+          width="47%"
+          height="150px"
+          v-for="(answer, key) in this.questions[this.index]['answers']"
+          color="white"
+          :key="key"
+          :id="key"
+          :value="key"
+          :disabled="this.buttonFlag"
+          @click="checkAnswer(key)"
+        > -->
         <v-btn
           class="quiz spacing-all"
           elevation="0"
@@ -86,13 +99,12 @@ export default {
       count: 7, // 문제 수
       audio: null, // Audio 객체 (BGM)
       moveTry: false, // 다른 페이지로 이동 시도 여부
+      // #21#
+      // buttonFlag: false, // 4지선다 버튼 disabled 처리 여부
     };
   },
-  watch: {
-    moveTry: {},
-  },
   created() {
-    // this.timer = setInterval(this.timeOut, this.time);
+    this.timer = setInterval(this.timeOut, this.time);
 
     // BGM 실행
     if (this.index == 0) this.play();
@@ -139,13 +151,11 @@ export default {
         this.correctFlag = false;
         this.timerVisiFlag = false;
       }
-      // console.log("#21# 정답/오답 확인: ", this.correctFlag);
 
       clearInterval(this.timer);
-      // setTimeout(this.nextQuestion, 5000); // 5초 후 다음 문제로 넘어감
       setTimeout(this.nextQuestion, 2000); // 2초 후 다음 문제로 넘어감
     },
-    // [@Method] 다음 문제로 이동
+    // [@Method] 다음 문제로 이동 + 결과 반영
     nextQuestion() {
       this.increaseIndex(this.index); // [@Method] quizStore - index 증가
       this.correctFlag = null;
@@ -157,7 +167,7 @@ export default {
       if (this.index == 7) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
-        clearInterval(this.timer);
+        // clearInterval(this.timer);
 
         // [@Method] Quiz 결과 저장 (quizStore)
         this.setQuizResult(this.correctAnswer);
@@ -183,10 +193,9 @@ export default {
       this.audio.volume = 0.3;
       this.audio.play();
     },
-    // [@Method] Alert 창 노출
+    // [@Method] Alert 창 노출 여부
     showAlert() {
       this.moveTry = !this.moveTry;
-      // console.log("#21# alert창 닫기: ", this.moveTry);
     },
   },
 };

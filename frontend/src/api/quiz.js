@@ -22,4 +22,14 @@ async function getExper(userId, success, fail) {
     .catch(fail);
 }
 
-export { getQuizWords, getExper };
+// [POST] chatGPT에게 유사 경제단어 질문
+async function sendMessageWord(message, success, fail) {
+  const info = { message: message };
+
+  await api
+    .post(`/api/chatGPT/askChatGPT`, JSON.stringify(info))
+    .then(success)
+    .catch(fail);
+}
+
+export { getQuizWords, getExper, sendMessageWord };
