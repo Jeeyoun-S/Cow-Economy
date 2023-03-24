@@ -9,8 +9,6 @@ const quizStore = {
     similarityWord: [], // 경제단어와 유사한 단어 3개
     todayQuizFlag: false, // 금일 오늘의 Quiz 진행 여부
     index: 0, // Quiz index
-    // #21#
-    // answerResultFlag: false, // 현재 정답/오답 결과 출력 여부
     isPass: false, // Quiz 통과 여부
     experience: 0, // 사용자 경험치
     correctCount: 0, // 맞은 Quiz 개수
@@ -43,10 +41,6 @@ const quizStore = {
     SET_INDEX: (state, index) => {
       state.index = index;
     },
-    // #21# answerResultFlag
-    // SET_ANSWER_RESULT_FLAG: (state, answerResultFlag) => {
-    //   state.answerResultFlag = answerResultFlag;
-    // },
     SET_TODAY_QUIZ_FLAG: (state, todayQuizFlag) => {
       state.todayQuizFlag = todayQuizFlag;
     },
