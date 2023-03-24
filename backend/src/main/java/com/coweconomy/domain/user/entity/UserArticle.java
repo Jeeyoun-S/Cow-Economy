@@ -3,9 +3,11 @@ package com.coweconomy.domain.user.entity;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -19,6 +21,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Builder
 public class UserArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +38,8 @@ public class UserArticle {
     @Comment("기사 ID")
     private Article article;
 
-    @NotNull
-    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     @Comment("기사를 읽은 시간 : yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regtime;
 }

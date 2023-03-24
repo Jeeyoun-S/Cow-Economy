@@ -29,7 +29,7 @@ public class UserInfoController {
     public BaseResponse getUserInfo() {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
-        long userId = 1;
+        Long userId = 1L;
 
         // 리턴할 Data 값은 Map 형식으로 지정
         Map<String, Object> returnMap = new HashMap<>();

@@ -1,5 +1,7 @@
 package com.coweconomy.repository;
 
+import com.coweconomy.domain.article.entity.Article;
+import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserArticleRepository extends JpaRepository<UserArticle, Long> {
@@ -32,4 +35,11 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
     @Query("select aw from ArticleWord aw where aw.article.articleId in :articleId")
     List<ArticleWord> findByArticleIn(@Param("articleId") List<Long> articleId);
 
+    /**
+     * 사용자 ID와 기사 ID에 해당하는 컬럼 조회
+     * @param user 사용자 Entity
+     * @param article 기사 Entity
+     * @return Optional<UserArticle> 사용자 읽은 기사 컬럼
+     * **/
+    Optional<UserArticle> findByUserAndArticle(User user, Article article);
 }
