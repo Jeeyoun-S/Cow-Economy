@@ -91,15 +91,19 @@ export default {
       location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
     },
   },
+  created() {
+    // [@Method] Quiz 진행 여부 판단
+    this.checkTodayQuiz();
+    console.log("#21# Quiz 진행 여부 판단: ", this.todayQuizFlag);
+  },
   methods: {
-    ...mapActions(quizStore, ["setExamQuestions"]),
-    // [@Method] Quiz 페이지로 이동
+    ...mapActions(quizStore, ["setExamQuestions", "checkTodayQuiz"]),
+    // [@Method] Quiz 페이지로 이동 or 알림창 출력
     moveQuiz() {
-      if (this.todayQuizFlag == false) {
+      if (this.todayQuizFlag == true) {
         this.setExamQuestions(); // [@Method] Quiz 문제 출제
       } else {
-        // ! 오늘 Quiz 다 했다고 alert 창 띄우기
-        this.alertQuizFlag = true;
+        this.alertQuizFlag = true; // ! 오늘 Quiz 다 했다고 alert 창 띄우기
       }
     },
   },

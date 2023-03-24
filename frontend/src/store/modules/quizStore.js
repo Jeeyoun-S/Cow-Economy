@@ -1,4 +1,9 @@
-import { getQuizWords, setQuizResult, sendMessageWord } from "@/api/quiz";
+import {
+  checkTodayQuizDone,
+  getQuizWords,
+  setQuizResult,
+  sendMessageWord,
+} from "@/api/quiz";
 import { encrypt } from "@/store/js/crypto.js";
 
 import store from "@/store/index.js";
@@ -59,6 +64,19 @@ const quizStore = {
     },
   },
   actions: {
+    // [@Method] Quiz 도전 가능/불가능 판단
+    async checkTodayQuiz({ commit }) {
+      await checkTodayQuizDone(
+        async ({ data }) => {
+          if (data.statusCode == 200) {
+            commit("SET_TODAY_QUIZ_FLAG", data.data);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
     // [@Method] Quiz 문제 출제
     async setExamQuestions({ commit, state }) {
       // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
@@ -198,7 +216,7 @@ const quizStore = {
     initQuiz({ commit }) {
       commit("SET_QUESTIONS", []);
       commit("SET_INDEX", 0);
-      commit("SET_TODAY_QUIZ_FLAG", true);
+      // commit("SET_TODAY_QUIZ_FLAG", true);
       commit("SET_ISPASS", false);
       commit("SET_EXPERIENCE", 0);
       commit("SET_CORRECTCOUNT", 0);

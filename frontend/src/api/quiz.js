@@ -2,6 +2,11 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
+// [GET] 오늘의 Quiz 도전 가능/불가능 여부 조회
+async function checkTodayQuizDone(success, fail) {
+  await api.get(`/api/quiz/`).then(success).catch(fail);
+}
+
 // [POST] 오늘의 Quiz로 출제할 경제 단어 가져오기
 async function getQuizWords(userId, success, fail) {
   // console.log("#user - getQuizWords# params - userId: ", userId);
@@ -30,4 +35,4 @@ async function setQuizResult(info, success, fail) {
     .catch(fail);
 }
 
-export { getQuizWords, sendMessageWord, setQuizResult };
+export { checkTodayQuizDone, getQuizWords, sendMessageWord, setQuizResult };
