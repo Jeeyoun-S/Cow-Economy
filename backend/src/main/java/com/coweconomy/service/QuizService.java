@@ -130,12 +130,19 @@ public class QuizService {
             LocalDateTime today = LocalDateTime.now();
             List<UserTestResult> result =
                     userTestResultRepository.findByUserUserIdAndRegtime(
-                            userId, today.withHour(00).withMinute(00).withSecond(00), today.withHour(23).withMinute(00).withSecond(00));
+                            userId,
+                            today.withHour(00).withMinute(00).withSecond(00),
+                            today.withHour(23).withMinute(59).withSecond(59));
+            logger.info("#21# result 확인: {}, start-{}, end-{}", result, today.withHour(00).withMinute(00).withSecond(00), today.withHour(23).withMinute(00).withSecond(00));
 
             // Quiz 도전 가능
-            if (result.size() == 0) return true;
-            // 불가능
-            return false;
+            if (result.size() == 0) {
+                return true;
+            }
+            else {
+                // 불가능
+                return false;
+            }
         } catch (Exception exception) {
             logger.error(exception.toString());
             return false;

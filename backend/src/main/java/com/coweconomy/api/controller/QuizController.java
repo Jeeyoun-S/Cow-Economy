@@ -106,7 +106,7 @@ public class QuizController {
      * - 회원이 오늘 Quiz를 진행했는지 안했는지 조회
      */
     @GetMapping("/")
-    public BaseResponse<?> setQuizResult() {
+    public BaseResponse<?> checkQuizDone() {
         logger.info("#[QuizController]# Quiz 수행 여부 확인");
 
         // # !FIX! 나중에 userId 반영해서 고치기
@@ -119,6 +119,8 @@ public class QuizController {
             // Quiz 도전 가능 (true)
             if (result) return BaseResponse.success(result);
             // Quiz 불가능 (false)
+            else if (result == false) return BaseResponse.success(result);
+
             return BaseResponse.fail();
         } catch (Exception exception) {
             logger.error(exception.toString());
