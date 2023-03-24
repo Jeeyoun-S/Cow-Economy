@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -36,8 +37,8 @@ public class UserArticleMemo {
     @Comment("기사 ID")
     private Article article;
 
-    @NotNull
-    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     @Comment("메모 작성 시간 : yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regtime;
 

@@ -1,5 +1,5 @@
 <template>
-  <v-btn icon text color="var(--main-col-3)">
+  <v-btn icon text :color="color">
     <v-icon v-if="!memoPublicScope" @click="changeOpen()"> mdi-lock </v-icon>
     <v-icon v-else @click="changeOpen()"> mdi-lock-open-outline </v-icon>
   </v-btn>
@@ -16,6 +16,8 @@ export default {
   props: {
     memoPublicScope: Boolean,
     index: Number,
+    color: String,
+    small: Boolean,
   },
   methods: {
     ...mapActions(memoStore, ["updatePublicScope"]),
