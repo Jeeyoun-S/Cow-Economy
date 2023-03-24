@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
 
-    @ApiModelProperty(value = "회원 ID(seq)", example="1")
+    // 회원 ID(seq)
     private Long userId;
 }

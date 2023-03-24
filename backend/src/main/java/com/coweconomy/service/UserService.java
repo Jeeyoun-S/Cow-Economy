@@ -1,5 +1,6 @@
 package com.coweconomy.service;
 
+import com.coweconomy.api.request.UserRegisterPostReq;
 import com.coweconomy.domain.user.entity.User;
 
 /**
@@ -8,9 +9,23 @@ import com.coweconomy.domain.user.entity.User;
 public interface UserService {
 
     /**
-     * ID에 해당되는 User 정보 조회(가져오기)
-     * @param userId 조회할 회원 ID
+     * 회원가입
+     * @param userRegisterInfo 회원가입 할 회원의 정보
      * @return User 회원 Entity
      * **/
-    User getUserByUserId(String userId);
+    User createUser(UserRegisterPostReq userRegisterInfo);
+
+    /**
+     * email에 해당되는 User 정보 조회
+     * @param userEmail 회원 email
+     * @return User 회원 Entity
+     * **/
+    User getUserByUserEmail(String userEmail);
+
+    /**
+     * email에 해당되는 User - 로그인 refrash_token 저장
+     * @param userEmail 회원 email, token 리프레쉬 토큰
+     * @return boolean [false 실패, true 성공]
+     * **/
+    boolean isTokenSaved(String userEmail, String token);
 }
