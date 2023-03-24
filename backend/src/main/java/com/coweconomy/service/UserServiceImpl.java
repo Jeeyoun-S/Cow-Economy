@@ -3,6 +3,7 @@ package com.coweconomy.service;
 import com.coweconomy.api.request.UserRegisterPostReq;
 import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
+import com.coweconomy.domain.user.entity.UserAuthority;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ import org.springframework.stereotype.Service;
 //@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = userRepository.findByUserEmail(userRegisterInfo.getUserEmail());
-        if(user != null) {
+        if (user != null) {
             return null;
         }
         System.out.println("유저를 저장하겠습니다.");
@@ -58,11 +60,4 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto(user);
         return userDto;
     }
-
-
-    /**
-     * ID에 해당되는 User 정보 조회(가져오기)
-     * @param userId 조회할 회원 ID
-     * @return User 회원 Entity
-     * **/
 }

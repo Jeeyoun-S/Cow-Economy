@@ -1,72 +1,67 @@
 package com.coweconomy.common.jwt;
 
-import java.io.IOException;
+// JWT를 위한 커스텀 필터
+import com.coweconomy.common.jwt.JwtTokenUtil;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.GenericFilterBean;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.web.filter.OncePerRequestFilter;
+@RequiredArgsConstructor
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
-@Slf4j
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    /**    모든 메소드 요청에서 실행됨
-    *      요청의 URI를 로깅하고 토큰 검증 및 인증 수행
-    */
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    public static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    private JwtTokenUtil jwtTokenUtil;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-
-        log.info(request.getRequestURI());
-        if((!request.getRequestURI().contains("my-page") || !request.getRequestURI().contains("login")) && !request.getRequestURI().contains("favicon")) {
-            log.info("토큰 체크");
-            try {
-                System.out.println("##!!@@##");
-                String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
-                log.info(jwt);
-                if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
-                    String userId = jwtTokenProvider.getUserIdFromJWT(jwt); //jwt에서 사용자 id를 꺼낸다.
-                    log.info("userId : " + userId);
-                    log.info("#3");
-
-                    UserAuthentication authentication = new UserAuthentication(userId, null, null); //id를 인증한다.
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); //기본적으로 제공한 details 세팅
-                    log.info("#1");
-                    SecurityContextHolder.getContext()
-                            .setAuthentication(authentication); //세션에서 계속 사용하기 위해 securityContext에 Authentication 등록
-                    log.info("#2");
-                } else {
-                    if (StringUtils.isEmpty(jwt)) {
-                        request.setAttribute("unauthorization", "401 인증키 없음.");
-                    }
-
-                    if (jwtTokenProvider.validateToken(jwt)) {
-                        request.setAttribute("unauthorization", "401-001 인증키 만료.");
-                    }
-                }
-            } catch (Exception ex) {
-                logger.error("Could not set user authentication in security context", ex);
-                ex.printStackTrace(); // Add this line to print the exception stack trace
-            }
-        }
-
-        filterChain.doFilter(request, response);
+    public JwtAuthenticationFilter(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        log.info("bearerToken : " + bearerToken);
+    /**
+     * Token의 인증 정보를 SecurityContext에 저장
+     */
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+        throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        // i) request에서 token 정보 받기
+        String token = resolveToken(httpServletRequest);
+        String requestURI = httpServletRequest.getRequestURI();
+
+        System.out.println("token 정보 : " + token);
+        System.out.println("validateToken : " + jwtTokenUtil.validateToken(token));
+
+        // ii)
+        if (StringUtils.hasText(token) && jwtTokenUtil.validateToken(token)) {
+            // success) 정상 토큰이라면 SecurityContext에 저장
+            Authentication authentication = jwtTokenUtil.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        else {
+            logger.info("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private String resolveToken(HttpServletRequest httpServletRequest) {
+        String bearerToken = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
+
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            log.info("Bearer exist");
-            return bearerToken.substring("Bearer ".length());
+            System.out.println("여기가 어디게? " + bearerToken.substring(7));
+            return bearerToken.substring(7);
         }
         return null;
     }

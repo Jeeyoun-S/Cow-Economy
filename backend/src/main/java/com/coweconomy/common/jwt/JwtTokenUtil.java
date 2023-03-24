@@ -1,25 +1,34 @@
 package com.coweconomy.common.jwt;
 
-import com.coweconomy.domain.user.entity.User;
 import com.nimbusds.jwt.JWT;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class JwtTokenUtil {
+    public static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
+    private static final String AUTHORITIES_KEY = "auth";
     private static String secretKey1;
     private static String secretKey2;
     private static Integer expirationTime;
@@ -34,17 +43,6 @@ public class JwtTokenUtil {
         this.secretKey2 = secretKey2;
         this.expirationTime = expirationTime;
         this.expirationRefreshTime = expirationRefreshTime;
-    }
-
-//    Authentication authentication = new UserAuthentication(email, null, null);
-//    String token = JwtTokenProvider.generateToken(authentication);
-//        System.out.println("#123# : " + token);
-//    public static final Key JWT_SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
-    public static String getVerifier() {
-        return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, secretKey1.getBytes())
-                .compact();
     }
 
     public static String getAccessToken(String userEmail, Long userId) {
@@ -76,23 +74,62 @@ public class JwtTokenUtil {
         Date now = new Date();
         return new Date(now.getTime() + expirationTime);
     }
+    /**
+     * Token에 담겨있는 정보(권한)를 사용하여 Authentication 객체 반환
+     * @param String
+     * @return UsernamePasswordAuthenticationToken
+     */
+    public Authentication getAuthentication(String token) {
+        // i) token을 사용하여 claims 생성
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(secretKey1)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
-    // Jwt 토큰 유효성 검사
-//    public static boolean validateToken(String token) {
-//        try {
-//            Jwts.parser().setSigningKey(secretKey2.getBytes()).parseClaimsJws(token);
-//            return true;
-//        } catch (SignatureException e) {
-//            log.error("Invalid JWT signature", e);
-//        } catch (MalformedJwtException e) {
-//            log.error("Invalid JWT token", e);
-//        } catch (ExpiredJwtException e) {
-//            log.error("Expired JWT token", e);
-//        } catch (UnsupportedJwtException e) {
-//            log.error("Unsupported JWT token", e);
-//        } catch (IllegalArgumentException e) {
-//            log.error("JWT claims string is empty.", e);
-//        }
-//        return false;
-//    }
+//        // ii) claims에 있는 권한 추출
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        String userEmail = claims.get("userEmail", String.class);
+        Long userId = claims.get("userId", Long.class);
+
+        // iii) DB를 거치지 않고 token에서 값(권한 정보)을 사용하여 user 객체 생성
+//        org.springframework.security.core.userdetails.User principal = new User(claims.getSubject(), "", new ArrayList<>());
+        UserDetails principal = User.withUsername(userEmail)
+                .password("")
+                .authorities(Collections.emptyList())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
+
+        // iv) user 객체, 토큰, 권한정보를 사용하여 최종적으로 Authentication(인증) 객체를 반환
+        return new UsernamePasswordAuthenticationToken(principal, token, new ArrayList<>());
+    }
+    /**
+     * Token의 유효성 검증 수행
+     * @param String
+     * @return boolean
+     */
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(secretKey1).build().parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            logger.info("잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            logger.info("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            logger.info("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            logger.info("JWT 토큰이 잘못되었습니다.");
+        }
+
+        return false;
+    }
 }
