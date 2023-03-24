@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -97,7 +98,7 @@ public class QuizService {
     /**
      * Quiz 성공/실패 결과 저장
      * @param Long 회원 ID, Boolean 성공/실패 여부 [QuizResultRequestDto(userId=1, isPassFlag=true, selectArticleId=[1, 1, 2, 3, 3, 3, 3])]
-     * @return UserTestResult
+     * @return boolean
      * **/
     public boolean quizResultSave(QuizResultRequestDto quizResult) {
         try {
@@ -113,6 +114,28 @@ public class QuizService {
             }
             return true;
 
+        } catch (Exception exception) {
+            logger.error(exception.toString());
+            return false;
+        }
+    }
+
+    /**
+     * 오늘의 Quiz 수행 여부 확인
+     * @param Long 회원 ID(seq)
+     * @return boolean
+     * **/
+    public boolean checkQuizToday(Long userId) {
+        try {
+            LocalDateTime today = LocalDateTime.now();
+            List<UserTestResult> result =
+                    userTestResultRepository.findByUserUserIdAndRegtime(
+                            userId, today.withHour(00).withMinute(00).withSecond(00), today.withHour(23).withMinute(00).withSecond(00));
+
+            // Quiz 도전 가능
+            if (result.size() == 0) return true;
+            // 불가능
+            return false;
         } catch (Exception exception) {
             logger.error(exception.toString());
             return false;

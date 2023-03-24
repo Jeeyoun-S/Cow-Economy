@@ -100,4 +100,30 @@ public class QuizController {
         // S) 결과 저장 성공
         return BaseResponse.success(null);
     }
+
+    /**
+     * 오늘의 Quiz 수행 여부 확인
+     * - 회원이 오늘 Quiz를 진행했는지 안했는지 조회
+     */
+    @GetMapping("/")
+    public BaseResponse<?> setQuizResult() {
+        logger.info("#[QuizController]# Quiz 수행 여부 확인");
+
+        // # !FIX! 나중에 userId 반영해서 고치기
+        Long userId = Long.valueOf(1);
+
+        try {
+            boolean result = quizService.checkQuizToday(userId);
+//            logger.info("#21# Quiz 도전 가능/불가능 확인: {}", result);
+
+            // Quiz 도전 가능 (true)
+            if (result) return BaseResponse.success(result);
+            // Quiz 불가능 (false)
+            return BaseResponse.fail();
+        } catch (Exception exception) {
+            logger.error(exception.toString());
+            return BaseResponse.fail();
+        }
+    }
+
 }
