@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin()
@@ -48,8 +50,9 @@ public class QuizController {
         }
 //        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
         List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
-        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
-        // 2-1) 만약, 경제 단어가 7개 이하일 경우 전체 기사 중 최근 일주일 기사로 선택
+//        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
+
+        // 2-1) 만약, 경제 단어가 7개 이하일 경우 > ?? > 오늘의 Quiz 접근 제한
 //        if (wordList.size() < 7) {
 //
 //        }
@@ -77,23 +80,21 @@ public class QuizController {
 
         // 성공 ↔ 실패 여부에 따라 다른 로직 처리
         // 1) 성공/실패 결과 저장
-        UserTestResult userTestResult = quizService.quizResultSave(quizResult);
-//        logger.info("#21# 성공/실패 결과 저장 확인: {}", userTestResult);
-        if (userTestResult == null) {
-            // F) 성공/실패 결과 저장 Fail
-            return BaseResponse.fail();
-        }
+        boolean userTestResult = quizService.quizResultSave(quizResult);
+        // F) 성공/실패 결과 저장 Fail
+        if (userTestResult == false) return BaseResponse.fail();
 
         // 2) Quiz 성공 시 경험치 부여
         if (quizResult.getIsPassFlag()) {
             // i) 해당 user 경험치 +100 적용
             User user = quizService.getUserExperience(quizResult.getUserId());
-            if (user != null) {
-                // S) 경험치 적용 성공 > 현 user 경험치 return
-                return BaseResponse.success(user.getUserExperience());
-            }
+//            logger.info("#21# 경험치 획득 확인: {}", user);
+
             // F) 경험치 +100 적용 Fail
-            return BaseResponse.fail();
+            if (user == null) return BaseResponse.fail();
+
+            // S) 경험치 적용 성공 > 현 user 경험치 return
+            return BaseResponse.success(user.getUserExperience());
         }
 
         // S) 결과 저장 성공

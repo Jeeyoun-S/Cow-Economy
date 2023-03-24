@@ -8,6 +8,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,4 +33,6 @@ public class ArticleWord {
 
     @Comment("기사 내 단어 시작 위치")
     private Long wordIndex;
+
+
 }

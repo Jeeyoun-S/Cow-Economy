@@ -25,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,6 +67,7 @@ public class QuizService {
     public List<ArticleWordQuizDto> getEconomyWord(List<Long> articleIdList) {
         List<ArticleWord> articleWords = userArticleRepository.findByArticleIn(articleIdList);
 
+        // ! 중복 단어 제거
         List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
         return result;
     }
@@ -88,7 +86,6 @@ public class QuizService {
             User originUser = user.get();
             originUser.setUserExperience(originUser.getUserExperience() + 100);
 //            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
-            // ! 연관된 user_test_result 테이블도 데이터 저장해야함
 
             userRepository.save(originUser);
             return originUser;
@@ -99,26 +96,27 @@ public class QuizService {
 
     /**
      * Quiz 성공/실패 결과 저장
-     * @param Long 회원 ID, Boolean 성공/실패 여부
+     * @param Long 회원 ID, Boolean 성공/실패 여부 [QuizResultRequestDto(userId=1, isPassFlag=true, selectArticleId=[1, 1, 2, 3, 3, 3, 3])]
      * @return UserTestResult
      * **/
-    public UserTestResult quizResultSave(QuizResultRequestDto quizResult) {
-        // 1) 회원정보 가져오기
-        Optional<User> user = userRepository.findByUserId(quizResult.getUserId());
-        // 2) 기사 정보 > ! 나중에 고치기
-        Article article = articleRepository.findByArticleId(Long.valueOf(1));
+    public boolean quizResultSave(QuizResultRequestDto quizResult) {
+        try {
+            // 1) 회원정보 가져오기
+            Optional<User> user = userRepository.findByUserId(quizResult.getUserId());
+            // F) 회원이 없을 경우 return null
+            if (user == null) return false;
 
-        if (user.isPresent()) {
-            // 2) Quiz 결과 저장
-            UserTestResult result = userTestResultRepository.save(new UserTestResult(user.get(), article, quizResult));
-
-            if (result != null) {
-                return result;
+            for (Long atId: quizResult.getSelectArticleId()) {
+                // 2) Quiz 결과 저장
+                UserTestResult result = userTestResultRepository.save(new UserTestResult(user.get(), articleRepository.findByArticleId(atId), quizResult));
+                if (result == null) return false;
             }
-        }
+            return true;
 
-        // F) 없을 경우 null return
-        return null;
+        } catch (Exception exception) {
+            logger.error(exception.toString());
+            return false;
+        }
     }
 
 }

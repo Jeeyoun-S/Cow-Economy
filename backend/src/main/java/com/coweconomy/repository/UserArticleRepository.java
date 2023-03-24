@@ -31,5 +31,4 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
      * **/
     @Query("select aw from ArticleWord aw where aw.article.articleId in :articleId")
     List<ArticleWord> findByArticleIn(@Param("articleId") List<Long> articleId);
-
 }
