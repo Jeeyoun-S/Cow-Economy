@@ -1,4 +1,4 @@
-import { getQuizWords, getExper, sendMessageWord } from "@/api/quiz";
+import { getQuizWords, setQuizResult, sendMessageWord } from "@/api/quiz";
 import { encrypt } from "@/store/js/crypto.js";
 
 import store from "@/store/index.js";
@@ -13,7 +13,7 @@ const quizStore = {
     isPass: false, // Quiz 통과 여부
     experience: 0, // 사용자 경험치
     correctCount: 0, // 맞은 Quiz 개수
-    // selectQuizArticle: [], // Quiz로 출제하기 위해 선정한 기사 및 경제용어 List (Quiz 완료 후 back-end로 보낼 예정)
+    selectQuizArticle: [], // Quiz로 출제하기 위해 선정한 기사 및 경제용어 List (Quiz 완료 후 back-end로 보낼 예정)
   },
   getters: {
     getQuestions: (state) => {
@@ -54,9 +54,9 @@ const quizStore = {
     SET_CORRECTCOUNT: (state, correctCount) => {
       state.correctCount = correctCount;
     },
-    // SET_SELECT_QUIZ_ARTICLE: (state, selectQuizArticle) => {
-    //   state.selectQuizArticle = selectQuizArticle;
-    // },
+    SET_SELECT_QUIZ_ARTICLE: (state, selectQuizArticle) => {
+      state.selectQuizArticle = selectQuizArticle;
+    },
   },
   actions: {
     // [@Method] Quiz 문제 출제
@@ -69,7 +69,6 @@ const quizStore = {
       await getQuizWords(
         info,
         async ({ data }) => {
-          // console.log("#21# getQuizWords 실행결과: ", data);
           // i) 성공
           if (data.statusCode == 200) {
             // console.log("#21# Quiz 단어 가져오기 성공: ", data);
@@ -78,6 +77,7 @@ const quizStore = {
 
             // Quiz 제작
             const quiz = []; // Quiz
+            const articleList = []; // Quiz 출제 시 선정한 기사 ID
             // 1) 가져온 경제용어로 문제 만들기
             for (const word of data.data) {
               const quizItem = new Object();
@@ -86,8 +86,6 @@ const quizStore = {
 
               // i) 문제, 정답 번호 setting
               quizItem.question = word.wordExpl;
-              // quizItem.correctAnswer = String.fromCharCode(randomNum);
-              // #21#
               quizItem.correctAnswer = encrypt(
                 String.fromCharCode(randomNum),
                 process.env.VUE_APP_CRYPT_KEY
@@ -115,9 +113,13 @@ const quizStore = {
               }
               quizItem.answers = answers;
               quiz.push(quizItem);
+
+              articleList.push(word.articleId);
             }
             // console.log("#21# quiz 확인: ", quiz);
+            // console.log("#21# articleList 확인: ", articleList);
             await commit("SET_QUESTIONS", quiz);
+            await commit("SET_SELECT_QUIZ_ARTICLE", articleList);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
           }
         },
@@ -161,35 +163,36 @@ const quizStore = {
       commit("SET_INDEX", value + 1);
     },
     // [@Method] Quiz 통과 여부 반영
-    async setQuizResult({ commit }, correctAnswerCount) {
+    async setQuizResult({ commit, state }, correctAnswerCount) {
       //   console.log("#21# Quiz 통과 여부 확인: ", correctAnswerCount);
       commit("SET_CORRECTCOUNT", correctAnswerCount);
 
       // i) 통과
       if (correctAnswerCount >= 5) {
         commit("SET_ISPASS", true);
-
-        // [@Method] 경험치 획득
-        // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
-        const info = {
-          userId: 1,
-        };
-
-        await getExper(
-          info,
-          async ({ data }) => {
-            // console.log("#21# 경험치 획득 성공: ", data);
-            commit("SET_EXPERIENCE", data.data);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
       }
       // ii) 실패
       else {
         commit("SET_ISPASS", false);
       }
+
+      // [@Method] Quiz 결과 저장 & 성공 시 경험치 획득
+      // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
+      const info = {
+        userId: 1,
+        isPassFlag: state.isPass,
+        selectArticleId: state.selectQuizArticle,
+      };
+
+      await setQuizResult(
+        info,
+        async ({ data }) => {
+          if (data.data != null) commit("SET_EXPERIENCE", data.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
     // [@Method] Quiz 끝 + 초기화
     initQuiz({ commit }) {

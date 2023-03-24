@@ -12,16 +12,6 @@ async function getQuizWords(userId, success, fail) {
     .catch(fail);
 }
 
-// [POST] 경험치 획득
-async function getExper(userId, success, fail) {
-  // console.log("#user - getExp# params - userId: ", userId);
-
-  await api
-    .post(`/api/quiz/getExp`, JSON.stringify(userId))
-    .then(success)
-    .catch(fail);
-}
-
 // [POST] chatGPT에게 유사 경제단어 질문
 async function sendMessageWord(message, success, fail) {
   const info = { message: message };
@@ -32,4 +22,12 @@ async function sendMessageWord(message, success, fail) {
     .catch(fail);
 }
 
-export { getQuizWords, getExper, sendMessageWord };
+// [POST] Quiz 결과 저장 & 성공 시 경험치 획득
+async function setQuizResult(info, success, fail) {
+  await api
+    .post(`/api/quiz/setResult`, JSON.stringify(info))
+    .then(success)
+    .catch(fail);
+}
+
+export { getQuizWords, sendMessageWord, setQuizResult };
