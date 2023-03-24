@@ -1,5 +1,6 @@
 package com.coweconomy.domain.user.entity;
 
+import com.coweconomy.api.request.MemoRequestDto;
 import com.coweconomy.domain.article.entity.Article;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +38,7 @@ public class UserArticleMemo {
     @Comment("기사 ID")
     private Article article;
 
-    @Column(nullable = false, insertable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable = false, updatable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
     @Comment("메모 작성 시간 : yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regtime;
@@ -67,4 +68,15 @@ public class UserArticleMemo {
     @Comment("메모 공개 여부 : true-공개, false-비공개")
     private Boolean memoPublicScope;
 
+    public void updateMemo(MemoRequestDto memoRequestDto) {
+        this.memoContent = memoRequestDto.getMemoContent();
+        this.memoStartRange = memoRequestDto.getMemoStartRange();
+        this.memoEndRange = memoRequestDto.getMemoEndRange();
+        this.memoStartIndex = memoRequestDto.getMemoStartIndex();
+        this.memoEndIndex = memoRequestDto.getMemoEndIndex();
+    }
+
+    public void updateMemoScope() {
+        this.memoPublicScope = !this.memoPublicScope;
+    }
 }

@@ -33,9 +33,6 @@ public class UserArticleMemoDto {
     // 메모 공개 여부
     private boolean memoPublicScope;
 
-    // 기사 ID
-    private Long articleId;
-
     public UserArticleMemoDto(UserArticleMemo userArticleMemo) {
         this.memoId = userArticleMemo.getMemoId();
         this.regtime = userArticleMemo.getRegtime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -45,7 +42,5 @@ public class UserArticleMemoDto {
         this.memoStartIndex = userArticleMemo.getMemoStartIndex();
         this.memoEndIndex = userArticleMemo.getMemoEndIndex();
         this.memoPublicScope = userArticleMemo.getMemoPublicScope();
-        this.articleId = userArticleMemo.getArticle().getArticleId();
     }
-
 }
