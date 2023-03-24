@@ -70,6 +70,8 @@ import TestResultModal from "./element/TestResultModal.vue";
 
 import bgm from "@/assets/images/mypage/quiz/quiz_bgm.mp3";
 
+import { decrypt } from "@/store/js/crypto.js";
+
 const quizStore = "quizStore";
 
 export default {
@@ -95,6 +97,9 @@ export default {
     // BGM 실행
     if (this.index == 0) this.play();
   },
+  mounted() {
+    decrypt;
+  },
   components: {
     StepProgress,
     StopWatch,
@@ -117,8 +122,8 @@ export default {
     ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
-      // console.log("#21# 선택한 정답 번호: ", key);
       this.answerResultFlag = true;
+      // console.log("#21# 선택한 정답 번호: ", key);
 
       // i) 시간 초과
       if (this.timeoutFlag == true) {
@@ -128,7 +133,13 @@ export default {
         this.timerVisiFlag = false;
       }
       // ii) 정답
-      else if (key == this.questions[this.index]["correctAnswer"]) {
+      else if (
+        key ==
+        decrypt(
+          this.questions[this.index]["correctAnswer"],
+          process.env.VUE_APP_CRYPT_KEY
+        )
+      ) {
         this.correctAnswer++;
         this.correctFlag = true;
         this.timerVisiFlag = false;

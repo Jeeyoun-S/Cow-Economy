@@ -1,4 +1,5 @@
 import { getQuizWords, getExper, sendMessageWord } from "@/api/quiz";
+import { encrypt } from "@/store/js/crypto.js";
 
 import store from "@/store/index.js";
 
@@ -85,7 +86,13 @@ const quizStore = {
 
               // i) 문제, 정답 번호 setting
               quizItem.question = word.wordExpl;
-              quizItem.correctAnswer = String.fromCharCode(randomNum);
+              // quizItem.correctAnswer = String.fromCharCode(randomNum);
+              // #21#
+              quizItem.correctAnswer = encrypt(
+                String.fromCharCode(randomNum),
+                process.env.VUE_APP_CRYPT_KEY
+              );
+              //
               // ii) 4지선다
               // - [호출] chatGPT로 유사한 단어 3개 가져오기
               await store.dispatch("quizStore/excuteSendMessage", word.word, {
@@ -96,7 +103,7 @@ const quizStore = {
               //   state.similarityWord
               // );
               // - 4지선다 setting
-              console.log("#21# similarityWord: ", state.similarityWord);
+              // console.log("#21# similarityWord: ", state.similarityWord);
               let cnt = 0;
               for (let i = 97; i <= 100; i++) {
                 if (i == randomNum) {
