@@ -32,12 +32,39 @@ public class QuizController {
     RandomSelect randomSelect = new RandomSelect();
 
     /**
+     * 오늘의 Quiz 수행 여부 확인
+     * - 회원이 오늘 Quiz를 진행했는지 안했는지 조회
+     */
+    @GetMapping("/")
+    public BaseResponse<?> checkQuizDone() {
+        logger.info("#[QuizController]# Quiz 수행 여부 확인");
+
+        // # !FIX! 나중에 userId 반영해서 고치기
+        Long userId = Long.valueOf(1);
+
+        try {
+            boolean result = quizService.checkQuizToday(userId);
+//            logger.info("#21# Quiz 도전 가능/불가능 확인: {}", result);
+
+            // Quiz 도전 가능 (true)
+            if (result) return BaseResponse.success(result);
+                // Quiz 불가능 (false)
+            else if (result == false) return BaseResponse.success(result);
+
+            return BaseResponse.fail();
+        } catch (Exception exception) {
+            logger.error(exception.toString());
+            return BaseResponse.fail();
+        }
+    }
+
+    /**
      * 오늘의 Quiz 문제 출제
      * - 회원이 일주일 내에 읽은 기사에서 > 해당 기사에 들어있는 경제 단어 가져오기
      */
     @PostMapping("")
     public BaseResponse<?> getTodayQuizQuestion(@RequestBody QuizRequestDto info) {
-//        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
+        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
 
         // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
         List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
@@ -67,7 +94,7 @@ public class QuizController {
         for (Integer idx: random) {
             quizWord.add(wordList.get(idx));
         }
-        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+//        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
     }
@@ -101,33 +128,6 @@ public class QuizController {
 
         // S) 결과 저장 성공
         return BaseResponse.success(null);
-    }
-
-    /**
-     * 오늘의 Quiz 수행 여부 확인
-     * - 회원이 오늘 Quiz를 진행했는지 안했는지 조회
-     */
-    @GetMapping("/")
-    public BaseResponse<?> checkQuizDone() {
-        logger.info("#[QuizController]# Quiz 수행 여부 확인");
-
-        // # !FIX! 나중에 userId 반영해서 고치기
-        Long userId = Long.valueOf(1);
-
-        try {
-            boolean result = quizService.checkQuizToday(userId);
-//            logger.info("#21# Quiz 도전 가능/불가능 확인: {}", result);
-
-            // Quiz 도전 가능 (true)
-            if (result) return BaseResponse.success(result);
-            // Quiz 불가능 (false)
-            else if (result == false) return BaseResponse.success(result);
-
-            return BaseResponse.fail();
-        } catch (Exception exception) {
-            logger.error(exception.toString());
-            return BaseResponse.fail();
-        }
     }
 
 }

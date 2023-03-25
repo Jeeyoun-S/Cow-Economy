@@ -120,9 +120,13 @@ public class QuizService {
             // F) 회원이 없을 경우 return null
             if (user == null) return false;
 
-            for (Long atId: quizResult.getSelectArticleId()) {
+            // * (전처리) 기사 ID 중복제거
+            HashSet<Long> set = new HashSet<>(quizResult.getSelectArticleId());
+            List<Long> selectArticleList = new ArrayList<>(set);
+//            logger.info("#21# 기사 ID 중복제거: {}", selectArticleList);
+            for (Long articleId: selectArticleList) {
                 // 2) Quiz 결과 저장
-                UserTestResult result = userTestResultRepository.save(new UserTestResult(user.get(), articleRepository.findByArticleId(atId), quizResult));
+                UserTestResult result = userTestResultRepository.save(new UserTestResult(user.get(), articleRepository.findByArticleId(articleId), quizResult));
                 if (result == null) return false;
             }
             return true;
