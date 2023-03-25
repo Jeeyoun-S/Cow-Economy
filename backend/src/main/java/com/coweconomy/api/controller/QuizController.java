@@ -44,11 +44,13 @@ public class QuizController {
 //        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
 
         // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
+        // - 회원이 읽은 기사 ID 추출
         List<Long> articleIdList = new ArrayList<>();
         for (UserArticleDto ra: userReadArticle) {
             articleIdList.add(ra.getArticle());
         }
 //        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
+        // - 읽은 기사 내 경제 용어 추출
         List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
 //        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
@@ -65,7 +67,7 @@ public class QuizController {
         for (Integer idx: random) {
             quizWord.add(wordList.get(idx));
         }
-//        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
+        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
         return BaseResponse.success(quizWord);
     }

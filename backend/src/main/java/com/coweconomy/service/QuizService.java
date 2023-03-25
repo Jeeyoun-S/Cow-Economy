@@ -27,6 +27,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,8 +72,18 @@ public class QuizService {
         List<ArticleWord> articleWords = userArticleRepository.findByArticleIn(articleIdList);
 
         // ! 중복 단어 제거
-        List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
+        //List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
+        // #21#
+        List<ArticleWordQuizDto> result = articleWords.stream()
+                .filter(distinctByKey(a->a.getEconomyWord().getWordId()))
+                .map(ArticleWordQuizDto::new).collect(Collectors.toList());
+
         return result;
+    }
+
+    public static <T>Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
     /**
@@ -133,7 +146,7 @@ public class QuizService {
                             userId,
                             today.withHour(00).withMinute(00).withSecond(00),
                             today.withHour(23).withMinute(59).withSecond(59));
-            logger.info("#21# result 확인: {}, start-{}, end-{}", result, today.withHour(00).withMinute(00).withSecond(00), today.withHour(23).withMinute(00).withSecond(00));
+//            logger.info("#21# result 확인: {}, start-{}, end-{}", result, today.withHour(00).withMinute(00).withSecond(00), today.withHour(23).withMinute(00).withSecond(00));
 
             // Quiz 도전 가능
             if (result.size() == 0) {
