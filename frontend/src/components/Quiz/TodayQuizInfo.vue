@@ -103,7 +103,7 @@ export default {
   created() {
     // [@Method] Quiz 진행 여부 판단
     this.checkTodayQuiz();
-    console.log("#21# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
+    // console.log("#21# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
   },
   methods: {
     ...mapActions(quizStore, ["setExamQuestions", "checkTodayQuiz"]),
