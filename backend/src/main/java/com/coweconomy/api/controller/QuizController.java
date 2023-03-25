@@ -66,37 +66,41 @@ public class QuizController {
     public BaseResponse<?> getTodayQuizQuestion(@RequestBody QuizRequestDto info) {
         logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
 
-        // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
-        List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
+        try {
+            // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
+            List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
 //        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
 
-        // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
-        // - 회원이 읽은 기사 ID 추출
-        List<Long> articleIdList = new ArrayList<>();
-        for (UserArticleDto ra: userReadArticle) {
-            articleIdList.add(ra.getArticle());
-        }
+            // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
+            // - 회원이 읽은 기사 ID 추출
+            List<Long> articleIdList = new ArrayList<>();
+            for (UserArticleDto ra: userReadArticle) {
+                articleIdList.add(ra.getArticle());
+            }
 //        logger.info("#21# 읽은 기사 ID _List 확인: {}", articleIdList);
-        // - 읽은 기사 내 경제 용어 추출
-        List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
+            // - 읽은 기사 내 경제 용어 추출
+            List<ArticleWordQuizDto> wordList = quizService.getEconomyWord(articleIdList);
 //        logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList);
 
-        // 2-1) 만약, 경제 단어가 7개 이하일 경우 > ?? > 오늘의 Quiz 접근 제한
-//        if (wordList.size() < 7) {
-//
-//        }
+            // 2-1) 만약, 경제 단어가 7개 이하일 경우 > ?? > 오늘의 Quiz 접근 제한
+            if (wordList.size() < 7) return BaseResponse.fail();
 
-        // 3) 가져온 경제 단어를 토대로 문제 출제
-        // - 7개 단어 선정 (Random)
-        List<Integer> random = randomSelect.getRandomSelect(wordList.size());
+            // 3) 가져온 경제 단어를 토대로 문제 출제
+            // - 7개 단어 선정 (Random)
+            List<Integer> random = randomSelect.getRandomSelect(wordList.size());
 //        logger.info("#21# 랜덤 선택 확인: {}", random);
-        List<ArticleWordQuizDto> quizWord = new ArrayList<>();
-        for (Integer idx: random) {
-            quizWord.add(wordList.get(idx));
-        }
+            List<ArticleWordQuizDto> quizWord = new ArrayList<>();
+            for (Integer idx: random) {
+                quizWord.add(wordList.get(idx));
+            }
 //        logger.info("#21# 7개의 Quiz 선정 확인: {}, {}개", quizWord, quizWord.size());
 
-        return BaseResponse.success(quizWord);
+            return BaseResponse.success(quizWord);
+        }
+        catch (Exception exception) {
+            logger.error(exception.toString());
+            return BaseResponse.fail();
+        }
     }
 
 

@@ -54,7 +54,7 @@
     </div>
     <!-- 최종 결과 -->
     <div v-if="this.index == 7">
-      <test-result-modal></test-result-modal>
+      <test-result-alert></test-result-alert>
     </div>
   </v-sheet>
 </template>
@@ -66,7 +66,7 @@ import StopWatch from "./element/StopWatch.vue";
 
 import AnswerCorrect from "./element/AnswerCorrect.vue";
 import AnswerWrong from "./element/AnswerWrong.vue";
-import TestResultModal from "./element/TestResultModal.vue";
+import TestResultAlert from "./element/TestResultAlert.vue";
 
 import bgm from "@/assets/images/mypage/quiz/quiz_bgm.mp3";
 
@@ -105,7 +105,7 @@ export default {
     StopWatch,
     AnswerCorrect,
     AnswerWrong,
-    TestResultModal,
+    TestResultAlert,
   },
   computed: {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),

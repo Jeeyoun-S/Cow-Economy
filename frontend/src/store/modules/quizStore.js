@@ -18,7 +18,7 @@ const quizStore = {
     isPass: false, // Quiz 통과 여부
     experience: 0, // 사용자 경험치
     correctCount: 0, // 맞은 Quiz 개수
-    selectQuizArticle: [], // Quiz로 출제하기 위해 선정한 기사 및 경제용어 List (Quiz 완료 후 back-end로 보낼 예정)
+    selectQuizArticle: [], // Quiz로 출제하기 위해 선정한 기사 List
   },
   getters: {
     getQuestions: (state) => {
@@ -81,7 +81,7 @@ const quizStore = {
     async setExamQuestions({ commit, state }) {
       // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
       const info = {
-        userId: 1,
+        userId: 2,
       };
 
       await getQuizWords(
@@ -139,6 +139,11 @@ const quizStore = {
             await commit("SET_QUESTIONS", quiz);
             await commit("SET_SELECT_QUIZ_ARTICLE", articleList);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
+          }
+          // ii) 사용자가 읽은 기사 내 경제 단어 7개 미만
+          else {
+            await commit("SET_QUESTIONS", [0]);
+            await commit("SET_SELECT_QUIZ_ARTICLE", [0]);
           }
         },
         (error) => {
@@ -216,7 +221,6 @@ const quizStore = {
     initQuiz({ commit }) {
       commit("SET_QUESTIONS", []);
       commit("SET_INDEX", 0);
-      // commit("SET_TODAY_QUIZ_FLAG", true);
       commit("SET_ISPASS", false);
       commit("SET_EXPERIENCE", 0);
       commit("SET_CORRECTCOUNT", 0);

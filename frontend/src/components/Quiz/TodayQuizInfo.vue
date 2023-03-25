@@ -61,7 +61,12 @@
       </div>
       <!-- 오늘의 Quiz 진입불가 Alert -->
       <div v-if="alertQuizFlag">
-        <today-not-enter-modal></today-not-enter-modal>
+        <!-- i) 하루에 한 번 기회 소진 -->
+        <today-not-enter-alert></today-not-enter-alert>
+      </div>
+      <div v-if="shortageWordFlag">
+        <!-- ii) Quiz 출제를 위한 경제단어 부족 -->
+        <shortage-word-alert></shortage-word-alert>
       </div>
     </v-sheet>
   </div>
@@ -69,7 +74,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import TodayNotEnterModal from "./element/TodayNotEnterModal.vue";
+import ShortageWordAlert from "./element/ShortageWordAlert.vue";
+import TodayNotEnterAlert from "./element/TodayNotEnterAlert.vue";
 
 const quizStore = "quizStore";
 
@@ -78,23 +84,26 @@ export default {
   data() {
     return {
       alertQuizFlag: false, // 오늘의 Quiz 진행 여부에 따른 alert창
+      shortageWordFlag: false, // Quiz 출제 경제단어 부족에 따른 alert창
     };
   },
   components: {
-    TodayNotEnterModal,
+    ShortageWordAlert,
+    TodayNotEnterAlert,
   },
   computed: {
     ...mapState(quizStore, ["questions", "todayQuizFlag"]),
   },
   watch: {
     questions() {
-      location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
+      if (this.questions.length < 7) this.shortageWordFlag = true;
+      else location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
     },
   },
   created() {
     // [@Method] Quiz 진행 여부 판단
     this.checkTodayQuiz();
-    console.log("#21# Quiz 진행 여부 판단: ", this.todayQuizFlag);
+    console.log("#21# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
   },
   methods: {
     ...mapActions(quizStore, ["setExamQuestions", "checkTodayQuiz"]),
