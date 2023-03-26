@@ -1,6 +1,5 @@
 package com.coweconomy.common.jwt;
 
-import com.nimbusds.jwt.JWT;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -54,7 +53,7 @@ public class JwtTokenUtil {
                 .setExpiration(expires)
                 .claim("userId", userId)
                 .claim("userEmail", userEmail)
-                .signWith(SignatureAlgorithm.HS512, secretKey1.getBytes())     // 사용할 암호화 알고리즘
+                .signWith(SignatureAlgorithm.HS512, secretKey1)     // 사용할 암호화 알고리즘
                 .compact();
     }
 
@@ -76,7 +75,7 @@ public class JwtTokenUtil {
     }
     /**
      * Token에 담겨있는 정보(권한)를 사용하여 Authentication 객체 반환
-     * @param String
+     * @param token
      * @return UsernamePasswordAuthenticationToken
      */
     public Authentication getAuthentication(String token) {
@@ -87,12 +86,6 @@ public class JwtTokenUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
-//        // ii) claims에 있는 권한 추출
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
 
         String userEmail = claims.get("userEmail", String.class);
         Long userId = claims.get("userId", Long.class);
@@ -111,14 +104,62 @@ public class JwtTokenUtil {
         // iv) user 객체, 토큰, 권한정보를 사용하여 최종적으로 Authentication(인증) 객체를 반환
         return new UsernamePasswordAuthenticationToken(principal, token, new ArrayList<>());
     }
+
     /**
-     * Token의 유효성 검증 수행
+     * accessToken 만료시 refreshToken을 확인해 재발급
+     * @param refreshToken
+     * @return
+     */
+    public String refreshToken(String refreshToken) {
+        if (!validateRefreshToken(refreshToken)) {
+            throw new IllegalArgumentException("Invalid refresh token");
+        }
+        Claims claims = getClaims(refreshToken, secretKey2);
+        Long userId = claims.get("userId", Long.class);
+        String userEmail = claims.get("userEmail", String.class);
+
+        return getAccessToken(userEmail, userId);
+    }
+
+    public boolean validateRefreshToken(String token) {
+        System.out.println(secretKey2);
+        try {
+            Jwts
+                    .parserBuilder()
+                    .setSigningKey(secretKey2)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            logger.info("잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            logger.info("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            logger.info("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            logger.info("JWT 토큰이 잘못되었습니다.");
+        }
+
+        return false;
+    }
+
+    private Claims getClaims(String token, String secretKey) {
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+    }
+
+    /**
+     * Access Token의 유효성 검증 수행
      * @param String
      * @return boolean
      */
     public boolean validateToken(String token) {
+        System.out.println(secretKey1);
         try {
-            Jwts.parserBuilder().setSigningKey(secretKey1).build().parseClaimsJws(token);
+            Jwts
+                    .parserBuilder()
+                    .setSigningKey(secretKey1)
+                    .build()
+                    .parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             logger.info("잘못된 JWT 서명입니다.");

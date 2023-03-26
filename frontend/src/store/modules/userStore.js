@@ -25,7 +25,10 @@ const userStore = {
           // jwt acces-token localstorage에 저장
           if (data.statusCode == 200) {
             const ACCESS_TOKEN = data.data.accessToken;
+            const REFRESH_TOKEN = data.data.refreshToken;
+
             localStorage.setItem("access-token", ACCESS_TOKEN);
+            localStorage.setItem("refresh-token", REFRESH_TOKEN);
             
             // vuex 로그인 처리
             commit("SET_IS_LOGGED_IN", true);
