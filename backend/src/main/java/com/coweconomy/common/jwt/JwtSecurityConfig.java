@@ -16,8 +16,6 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
     /**
      * JwtAuthenticationFilter를 Security 로직에 필터로 등록
-     * @param HttpSecurity
-     * @return void
      */
     @Override
     public void configure(HttpSecurity http) {

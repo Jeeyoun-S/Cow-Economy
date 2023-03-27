@@ -51,15 +51,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         // ii) token이 유효할 때
 //        if (StringUtils.hasText(token) && jwtTokenUtil.validateToken(token)) {
-        try {
+//        try {
             if (jwtTokenUtil.validateToken(accessToken)) {
                 // success) 정상 토큰이라면 SecurityContext에 저장
                 Authentication authentication = jwtTokenUtil.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                logger.info("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
             }
-        } catch(ExpiredJwtException e) {
+//            else {
+//                logger.info("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
+//            }
+         else {
             System.out.println("#465");
             if (jwtTokenUtil.validateRefreshToken(refreshToken)) {
                 String newAccessToken = jwtTokenUtil.refreshToken(refreshToken);

@@ -66,7 +66,7 @@ public class JwtTokenUtil {
                 .setExpiration(expires)
                 .claim("userId", userId)
                 .claim("userEmail", userEmail)
-                .signWith(SignatureAlgorithm.HS512, secretKey2.getBytes())
+                .signWith(SignatureAlgorithm.HS512, secretKey2)
                 .compact();
     }
     public static Date getTokenExpiration(int expirationTime) {
@@ -115,8 +115,13 @@ public class JwtTokenUtil {
             throw new IllegalArgumentException("Invalid refresh token");
         }
         Claims claims = getClaims(refreshToken, secretKey2);
+
         Long userId = claims.get("userId", Long.class);
         String userEmail = claims.get("userEmail", String.class);
+
+        System.out.println("userId: " + userId);
+        System.out.println("userEmail: " + userEmail);
+
 
         return getAccessToken(userEmail, userId);
     }
@@ -172,5 +177,14 @@ public class JwtTokenUtil {
         }
 
         return false;
+    }
+
+    public String getUserEmailFromToken(String token) {
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(secretKey1)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
     }
 }
