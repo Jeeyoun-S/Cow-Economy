@@ -10,6 +10,7 @@ import mypageStore from "@/store/modules/mypageStore.js";
 import userStore from "@/store/modules/userStore.js";
 import memoStore from "@/store/modules/memoStore.js";
 import quizStore from "@/store/modules/quizStore.js";
+import newsStore from "@/store/modules/newsStore.js";
 
 Vue.use(Vuex);
 
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     userStore: userStore,
     quizStore: quizStore,
     memoStore: memoStore,
+    newsStore: newsStore,
   },
   plugins: [
     createPersistedState({

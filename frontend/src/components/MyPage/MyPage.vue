@@ -64,7 +64,7 @@ import MyPageLogoutBtn from "./MyPageLogoutBtn.vue";
 import MyPageInfo from "./MyPageInfo/MyPageInfo.vue";
 import MyPageMemo from "./MyPageMemo/MyPageMemo.vue";
 
-import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
+import KakaoLogin from "@/components/MyPage/KakaoLogin.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -102,7 +102,7 @@ export default {
     MyPageLogoutBtn,
     MyPageMemo,
     MyPageInfo,
-    kakaoLogin,
+    KakaoLogin,
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),

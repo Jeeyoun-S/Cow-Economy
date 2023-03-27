@@ -8,7 +8,7 @@
 <script>
 
 export default {
-	name: "kakaoLogin",
+	name: "KakaoLogin",
 	components: {},
 	computed: {},
 	methods: {
