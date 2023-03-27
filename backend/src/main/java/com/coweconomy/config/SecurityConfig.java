@@ -66,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 로그인할 때는 검증 X
 //                .antMatchers("/auth/login/**")
-                .antMatchers("/auth/**")
+//                .antMatchers("/auth/**")
+                .antMatchers("/**")
                 .permitAll()
 
 //                 나머지는 전부 인증 필요

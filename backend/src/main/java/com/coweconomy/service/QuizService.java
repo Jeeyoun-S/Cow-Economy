@@ -11,10 +11,8 @@ import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
-import com.coweconomy.repository.ArticleRepository;
-import com.coweconomy.repository.UserArticleRepository;
-import com.coweconomy.repository.UserRepository;
-import com.coweconomy.repository.UserTestResultRepository;
+import com.coweconomy.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,22 +31,24 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class QuizService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    UserArticleRepository userArticleRepository;
+    private final UserArticleRepository userArticleRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    UserTestResultRepository userTestResultRepository;
+    private final UserTestResultRepository userTestResultRepository;
 
-    @Autowired
-    ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
+
+    private final EconomyWordRepository economyWordRepository;
+
+    // #21#
+    private final ArticleWordRepository articleWordRepository;
 
     /**
      * 회원이 일주일 이내에 읽은 기사 조회
@@ -68,16 +68,31 @@ public class QuizService {
      * @param List<Long> 읽은 기사 ID _List
      * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
      * **/
-    public List<ArticleWordQuizDto> getEconomyWord(List<Long> articleIdList) {
-        List<ArticleWord> articleWords = userArticleRepository.findByArticleIn(articleIdList);
+    public List<ArticleWordDto> getEconomyWord(List<Long> articleIdList) {
+        List<ArticleWord> articleWords = articleWordRepository.findByArticleIn(articleIdList);
+//        logger.info("#21# 기사 안에 있는 경제 단어 조회:{}", articleWords.size() );
 
-        // ! 중복 단어 제거
-        //List<ArticleWordQuizDto> result = articleWords.stream().map(a->new ArticleWordQuizDto(a)).collect(Collectors.toList());
-        // #21#
-        List<ArticleWordQuizDto> result = articleWords.stream()
-                .filter(distinctByKey(a->a.getEconomyWord().getWordId()))
-                .map(ArticleWordQuizDto::new).collect(Collectors.toList());
+        List<ArticleWordDto> result = new ArrayList<>();
+        Map<Long, String> map = new HashMap<>();
 
+        for (ArticleWord articleWord:articleWords) {
+            String[] subwordList = articleWord.getSubWordId().split(",");
+
+            for (String id:subwordList) {
+                EconomyWord word = economyWordRepository.findByWordId(Long.parseLong(id));
+                if(map.containsKey(word.getWordId())) continue;
+                map.put(word.getWordId(), word.getWord());
+                ArticleWordDto dto = new ArticleWordDto(articleWord.getArticle().getArticleId(), word);
+                result.add(dto);
+            }
+
+        }
+        // * 단어 확인용
+        for(ArticleWordDto a: result){
+            logger.info("### {}",a.getEconomyWord().getWord());
+        }
+
+        if (result.size() < 7) return null; // 경제단어 7개 이하 > Quiz 출제 불가
         return result;
     }
 
