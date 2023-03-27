@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "@/store";
+// import store from "@/store";
 
 function apiInstance() {
   const instance = axios.create({
@@ -22,21 +22,22 @@ function apiInstance() {
   //   }
   // );
 
-  instance.interceptors.request.use(function (config) {
-    // # axios 통신 시 loading 창 출력
-    store.commit("LOADING_STATUS", true);
+  // instance.interceptors.request.use(function (config) {
 
-    // 나중에 TOKEN 넣는 CODE 추가
+  //   // # axios 통신 시 loading 창 출력
+  //   store.commit("LOADING_STATUS", true);
 
-    return config;
-  });
+  //   // 나중에 TOKEN 넣는 CODE 추가
 
-  instance.interceptors.response.use(function (config) {
-    // # axios 통신 시 loading 창 숨김
-    store.commit("LOADING_STATUS", false);
+  //   return config;
+  // });
 
-    return config;
-  });
+  // instance.interceptors.response.use(function (config) {
+  //   // # axios 통신 시 loading 창 숨김
+  //   store.commit("LOADING_STATUS", false);
+
+  //   return config;
+  // });
 
   return instance;
 }

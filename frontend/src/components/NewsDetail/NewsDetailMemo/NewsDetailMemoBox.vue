@@ -15,18 +15,26 @@
           }}</v-chip>
           <v-divider v-if="!isMine" class="mx-2"></v-divider>
           <!-- memo date -->
-          <span class="sm-font">{{ memo.regtime }}</span>
+          <v-chip color="var(--main-col-3)" dark small>{{
+            memo.regtime
+          }}</v-chip>
           <v-divider v-if="isMine" class="mx-2"></v-divider>
           <!-- memo update -->
           <div v-if="isMine">
             <!-- memo open status button -->
             <NewsDetailMemoBtnLock
+              :memoId="memo.memoId"
               :memoPublicScope="memo.memoPublicScope"
               :index="index"
+              @modifyPublicScope="modifyPublicScope"
               color="var(--main-col-3)"
             ></NewsDetailMemoBtnLock>
             <!-- memo modify button : 보류 -->
-            <v-btn icon text color="var(--main-col-3)" @click="checkRegister()"
+            <v-btn
+              icon
+              text
+              color="var(--main-col-3)"
+              @click="checkRegisterContent()"
               ><v-icon> mdi-pencil </v-icon></v-btn
             >
             <!-- memo delete button -->
@@ -113,17 +121,28 @@ export default {
   },
   methods: {
     ...mapActions(memoStore, ["updateNewMemo", "updateSelectionText"]),
+    // 메모 삭제하기
     deleteMemoItem() {
       this.$emit("deleteMemoItem", this.index);
     },
-    checkRegister() {
+    // 메모 수정하기
+    modifyPublicScope(index, res) {
+      this.$emit("modifyPublicScope", index, res);
+    },
+    // 메모 등록창에 내용이 있는지 확인
+    checkRegisterContent() {
+      // 내용이 있거나, 인용문이 있다면
       if (this.newMemo.memoContent != null || this.selectionText != null) {
         this.dialog = true;
-      } else {
+      }
+      // 등록창에 내용이 없다면 메모 등록창을 수정 창으로 변경
+      else {
         this.modifyMemo();
       }
     },
+    // 메모 등록창을 수정창으로 변경하기
     modifyMemo() {
+      // 메모 등록창 데이터에 수정할 기존 메모 넣기
       this.updateNewMemo({
         memoContent: this.memo.memoContent,
         memoPublicScope: this.memo.memoPublicScope,
@@ -131,6 +150,7 @@ export default {
         memoId: this.memo.memoId,
         index: this.index,
       });
+      // 메모 등록창 데이터에 수정할 기존 인용문 넣기
       this.updateSelectionText({
         text: this.memo.referenceText,
         startIndex: this.memo.memoStartIndex,
@@ -138,7 +158,9 @@ export default {
         startRange: this.memo.memoStartRange,
         endRange: this.memo.memoEndRange,
       });
+      // 메모 등록창으로 스크롤 이동
       scrollTo(0, document.getElementById("memo-register").offsetTop);
+      // 경고문 닫기
       this.dialog = false;
     },
   },

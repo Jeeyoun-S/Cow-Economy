@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     moveScroll() {
+      // 인용문 위치로 스크롤 이동 & 인용문 형광펜 표시
       moveReference(
         this.startRange,
         this.endRange,

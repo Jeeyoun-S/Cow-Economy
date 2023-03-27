@@ -44,7 +44,7 @@ public class ArticleService {
                 // 사용자 ID로 사용자 Entity Select
                 Optional<User> optionalUser = userRepository.findById(userId);
                 if (optionalUser.isPresent()) {
-                    
+
                     // 읽은 기사 Table에서 사용자, 기사로 컬럼 가져오기
                     Optional<UserArticle> optionalUserArticle = userArticleRepository.findByUserAndArticle(optionalUser.get(), article);
                     articleDetailDto.setReading(optionalUserArticle.isPresent());
