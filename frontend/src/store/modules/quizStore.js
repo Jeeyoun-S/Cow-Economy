@@ -1,5 +1,4 @@
-import { getQuizWords } from "@/api/quiz";
-import { sendMessageWord } from "@/api/chatGPT";
+import { getQuizWords, getExper, sendMessageWord } from "@/api/quiz";
 
 import store from "@/store/index.js";
 
@@ -19,7 +18,6 @@ const quizStore = {
     getQuestions: (state) => {
       return state.questions;
     },
-    // #21#
     getSimilarityWord: (state) => {
       return state.similarityWord;
     },
@@ -34,7 +32,7 @@ const quizStore = {
     SET_QUESTIONS: (state, questions) => {
       state.questions = questions;
 
-      // # for. quiz Loading 창
+      // # for. quiz Loading 창 닫기
       store.commit("QUIZ_LOADING_STATUS", false);
     },
     SET_SIMILARITY_WORD: (state, similarityWord) => {
@@ -57,7 +55,6 @@ const quizStore = {
     },
     SET_SELECT_QUIZ_ARTICLE: (state, selectQuizArticle) => {
       state.selectQuizArticle = selectQuizArticle;
-      // console.log("#21# 출제한 기사 확인: ", state.selectQuizArticle);
     },
   },
   actions: {
@@ -99,6 +96,7 @@ const quizStore = {
               //   state.similarityWord
               // );
               // - 4지선다 setting
+              console.log("#21# similarityWord: ", state.similarityWord);
               let cnt = 0;
               for (let i = 97; i <= 100; i++) {
                 if (i == randomNum) {
@@ -126,7 +124,6 @@ const quizStore = {
       // # for. quiz Loading 창
       store.commit("QUIZ_LOADING_STATUS", true);
 
-      // console.log("#21# chatGPT 질문 동작 word: ", word);
       const message =
         "경제용어 " +
         word +
@@ -135,21 +132,15 @@ const quizStore = {
       await sendMessageWord(
         message,
         async ({ data }) => {
-          // console.log(
-          //   "#21# chatGPT 질문 실행결과: ",
-          //   data.choices[0].message.content
-          // );
+          // console.log("#21# chatGPT 질문 실행결과: ", data.data);
           // 경제단어 추출 [정규식 사용]
-          // const regex = /(?:\d\. )(.+?)(?=\(\n\d|\n|$)/g; // 영어 포함 버전
           const regex = /(?:\d\. )(.+?)(?=\(|\n|$)/g;
           var similarityWord = [];
           let match;
-          while (
-            (match = regex.exec(data.choices[0].message.content)) !== null
-          ) {
-            // console.log("#21# 단어 추출 확인: ", match[1]);
+          while ((match = regex.exec(data.data)) !== null) {
             similarityWord.push(match[1]);
           }
+          // 조회한 유사 경제단어 SET
           commit("SET_SIMILARITY_WORD", similarityWord);
         },
         (error) => {
@@ -173,27 +164,26 @@ const quizStore = {
 
         // [@Method] 경험치 획득
         // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
-        // const info = {
-        //   userId: 1,
-        // };
+        const info = {
+          userId: 1,
+        };
 
-        // await getExp(
-        //   info,
-        //   async ({ data }) => {
-        //     console.log("#21# 경험치 획득 성공: ", data);
-        //   },
-        //   (error) => {
-        //     console.log(error);
-        //   }
-        // );
+        await getExper(
+          info,
+          async ({ data }) => {
+            // console.log("#21# 경험치 획득 성공: ", data);
+            commit("SET_EXPERIENCE", data.data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
       // ii) 실패
       else {
         commit("SET_ISPASS", false);
       }
     },
-    // [@Method] 경험치 획득
-    excuteGetExp() {},
     // [@Method] Quiz 끝 + 초기화
     initQuiz({ commit }) {
       commit("SET_QUESTIONS", []);
