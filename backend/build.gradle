@@ -66,6 +66,10 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // ChatGPT - openai
+    implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 //querydsl

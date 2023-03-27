@@ -21,7 +21,7 @@ public class UserController {
      */
     @GetMapping("/")
     public ResponseEntity<?> getExcute() {
-        logger.info("## [Controller]: 동작 TEST용 실행-");
+//        logger.info("## [Controller]: 동작 TEST용 실행-");
 
         return ResponseEntity.ok(BaseResponse.success(null));
     }

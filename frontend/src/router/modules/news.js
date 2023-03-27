@@ -13,6 +13,7 @@ const news = [
       default: NewsList,
       footer: TheFooter
     },
+    meta: { requireAuth: true },
   },
   {
     path: "/news/:id",
@@ -22,6 +23,7 @@ const news = [
       default: NewsDetail,
       footer: TheFooter
     },
+    meta: { requireAuth: true },
   },
 ]
 
