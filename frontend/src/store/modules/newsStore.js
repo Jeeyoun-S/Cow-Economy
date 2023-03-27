@@ -13,7 +13,7 @@ const newsStore = {
           article_title: "기사 제목", 
           article_content: "기사 내용", 
           article_thumbnail: require("@/assets/images/mypage/quiz/book.png"),
-          article_hits: 33,
+          article_hits: 1,
         },
         {
           articleId: 2, 
@@ -24,7 +24,7 @@ const newsStore = {
           article_title: "기사 제목2", 
           article_content: "기사 내용2", 
           article_thumbnail: require("@/assets/images/mypage/quiz/pencil.png"),
-          article_hits: 22,
+          article_hits: 2,
         },
         {
           articleId: 3, 
@@ -35,7 +35,7 @@ const newsStore = {
           article_title: "기사 제목3", 
           article_content: "기사 내용3", 
           article_thumbnail: null,
-          article_hits: 11,
+          article_hits: 3,
         },
         {
           articleId: 4, 
@@ -46,7 +46,7 @@ const newsStore = {
           article_title: "기사 제목3", 
           article_content: "기사 내용3", 
           article_thumbnail: null,
-          article_hits: 11,
+          article_hits: 2,
         },
         {
           articleId: 4, 
@@ -57,7 +57,7 @@ const newsStore = {
           article_title: "기사 제목3", 
           article_content: "기사 내용3", 
           article_thumbnail: null,
-          article_hits: 11,
+          article_hits: 1,
         },
       ],
     },

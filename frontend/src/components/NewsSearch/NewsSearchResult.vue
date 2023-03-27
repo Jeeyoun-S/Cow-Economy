@@ -21,13 +21,13 @@
         <!-- 지윤님 토글 물어봐서 바꾸기 -->
         <v-select
           class="md-r-font main-col-3"
-          v-model="sort"
+          :value="sortKey"
           :items="['정렬', '최신순', '인기순']"
           dense
           rounded
           outlined
           hide-details
-          @change="sortNews"
+          @change="sortNews($event)"
         ></v-select>
       </v-sheet>
     </v-sheet>
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       selectedCategory: null,
-      sort: '정렬',
+      sortKey: '정렬',
     };
   },
   computed: {
@@ -73,9 +73,9 @@ export default {
         ? this.newsList.filter((news) => news.article_category === this.selectedCategory)
         : this.newsList;
 
-      if (this.sort === '최신순') {
-        filtered.sort((a, b) => new Date(b.article_regtime) - new Date(a.article_regtime));
-      } else if (this.sort === '인기순') {
+      if (this.sortKey === '최신순') {
+        filtered.sort((a, b) => new Date(a.article_regtime) - new Date(b.article_regtime));
+      } else if (this.sortKey === '인기순') {
         filtered.sort((a, b) => b.article_hits - a.article_hits);
       }
 
@@ -89,9 +89,9 @@ export default {
     resetFilter() {
       this.selectedCategory = null;
     },
-    sortNews() {
-      // 필터링된 뉴스를 정렬하면 filteredNews computed 속성이 다시 실행됩니다.
-    },
+    sortNews(newSortKey) {
+    this.sortKey = newSortKey;
+  },
   },
 };
 </script>
