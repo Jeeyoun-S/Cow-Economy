@@ -8,6 +8,16 @@ const userStore = {
   namespaced: true,
   state: {
     isLoggedIn: false,
+    readNews: {
+      '2022-08': 8,
+      '2022-09': 2,
+      '2022-10': 3,
+      '2022-11': 5,
+      '2022-12': 5,
+      '2023-01': 8,
+      '2023-02': 3,
+      '2023-03': 9,
+    }
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,

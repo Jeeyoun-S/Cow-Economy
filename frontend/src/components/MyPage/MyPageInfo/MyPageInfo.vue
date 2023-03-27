@@ -1,9 +1,16 @@
 <template>
-  <div class="swiper-item">MyPageInfo</div>
+  <ReadNews></ReadNews>
 </template>
 
 <script>
-export default {};
+import ReadNews from "@/components/MyPage/MyPageInfo/ReadNews.vue"
+
+export default {
+  name: "MyPageInfo",
+  components: {
+    ReadNews,
+  }
+};
 </script>
 
 <style></style>
