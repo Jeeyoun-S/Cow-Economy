@@ -1,7 +1,9 @@
 package com.coweconomy.service;
 
 import com.coweconomy.api.request.UserRegisterPostReq;
+import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
+import com.coweconomy.domain.user.entity.UserAuthority;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = userRepository.findByUserEmail(userRegisterInfo.getUserEmail());
-        if(user != null) {
+        if (user != null) {
             return null;
         }
 //        System.out.println("유저를 저장하겠습니다.");
@@ -67,4 +69,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+//    @Override
+//    public UserDto getUserInfoByEmail(String userEmail) {
+//        User user = userRepository.findByUserEmail(userEmail);
+//        UserDto userDto = new UserDto(user);
+//        return userDto;
+//    }
 }
