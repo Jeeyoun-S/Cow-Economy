@@ -36,7 +36,7 @@ public class ArticleController {
     public BaseResponse addUserArticle(@PathVariable("articleId") Long articleId) {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
-        Long userId = 1L;
+        Long userId = 2L;
         boolean result = articleService.addUserArticle(articleId, userId);
 
         return BaseResponse.success(result);

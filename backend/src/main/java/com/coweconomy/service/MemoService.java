@@ -59,7 +59,6 @@ public class MemoService {
                 UserArticleMemo userArticleMemo = UserArticleMemo.builder()
                     .user(optionalUser.get())
                     .article(optionalArticle.get())
-                    .memoPublicScope(memoRequestDto.isMemoPublicScope())
                     .build();
 
                 // memoRequestDto에 받아온 값 넣기

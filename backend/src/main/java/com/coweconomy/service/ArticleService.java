@@ -44,6 +44,7 @@ public class ArticleService {
                 // 사용자 ID로 사용자 Entity Select
                 Optional<User> optionalUser = userRepository.findById(userId);
                 if (optionalUser.isPresent()) {
+                    System.out.println(optionalUser.isPresent());
                     // 읽은 기사 Table에서 사용자, 기사로 컬럼 가져오기
                     Optional<UserArticle> optionalUserArticle = userArticleRepository.findByUserAndArticle(optionalUser.get(), article);
                     articleDetailDto.setReading(optionalUserArticle.isPresent());
@@ -71,11 +72,11 @@ public class ArticleService {
             // 사용자 ID로 사용자 정보 가져오기
             Optional<User> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()) {
-                
+
                 // 이미 DB에 존재하는지 확인
                 Optional<UserArticle> userArticleOptional = userArticleRepository.findByUserAndArticle(optionalUser.get(), optionalArticle.get());
-
                 if (!userArticleOptional.isPresent()) {
+
                     // userArticle Entity 생성
                     UserArticle userArticle = UserArticle.builder()
                             .user(optionalUser.get())

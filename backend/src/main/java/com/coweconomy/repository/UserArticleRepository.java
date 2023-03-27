@@ -9,6 +9,7 @@ import com.coweconomy.domain.word.entity.EconomyWord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -41,5 +42,5 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
      * @param article 기사 Entity
      * @return Optional<UserArticle> 사용자 읽은 기사 컬럼
      * **/
-    Optional<UserArticle> findByUserAndArticle(User user, Article article);
+    Optional<UserArticle> findByUserAndArticle(@Param("user") User user, @Param("article") Article article);
 }

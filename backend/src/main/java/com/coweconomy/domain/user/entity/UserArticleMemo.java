@@ -74,6 +74,7 @@ public class UserArticleMemo {
         this.memoEndRange = memoRequestDto.getMemoEndRange();
         this.memoStartIndex = memoRequestDto.getMemoStartIndex();
         this.memoEndIndex = memoRequestDto.getMemoEndIndex();
+        this.memoPublicScope = memoRequestDto.isMemoPublicScope();
     }
 
     public void updateMemoScope() {
