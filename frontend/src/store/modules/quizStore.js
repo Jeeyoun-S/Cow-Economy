@@ -81,7 +81,7 @@ const quizStore = {
     async setExamQuestions({ commit, state }) {
       // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
       const info = {
-        userId: 2,
+        userId: 1,
       };
 
       await getQuizWords(
@@ -103,7 +103,9 @@ const quizStore = {
               const randomNum = Math.floor(Math.random() * (102 - 98) + 97); // 97-100 중 Random 숫자 뽑기 (for. 정답 자리), [a:97, b:98, c:99, d:100]
 
               // i) 문제, 정답 번호 setting
-              quizItem.question = word.wordExpl;
+              // ! 문제 설명에 답 제거
+              // quizItem.question = word.wordExpl;
+              quizItem.question = word.wordExpl.replaceAll(word.word, "[ ]");
               quizItem.correctAnswer = encrypt(
                 String.fromCharCode(randomNum),
                 process.env.VUE_APP_CRYPT_KEY
