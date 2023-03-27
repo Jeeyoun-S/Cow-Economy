@@ -1,11 +1,11 @@
 package com.coweconomy.domain.user.dto;
 
 import com.coweconomy.domain.user.entity.UserArticleMemo;
-import lombok.Data;
+import lombok.Getter;
 
+@Getter
 public class UserArticleMemoSimpleDto extends UserArticleMemoDto {
 
-    // 미완성
     // 메모 ID
     private Long memoId;
 

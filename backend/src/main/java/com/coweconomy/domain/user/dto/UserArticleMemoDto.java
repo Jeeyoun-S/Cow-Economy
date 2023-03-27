@@ -9,9 +9,6 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class UserArticleMemoDto {
 
-    // 메모 ID
-    private Long memoId;
-
     // 메모 등록 시간
     private String regtime;
 
@@ -30,17 +27,12 @@ public class UserArticleMemoDto {
     // memoEndRange 내 메모 종료 위치
     private int memoEndIndex;
 
-    // 메모 공개 여부
-    private boolean memoPublicScope;
-
     public UserArticleMemoDto(UserArticleMemo userArticleMemo) {
-        this.memoId = userArticleMemo.getMemoId();
         this.regtime = userArticleMemo.getRegtime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.memoContent = userArticleMemo.getMemoContent();
         this.memoStartRange = userArticleMemo.getMemoStartRange();
         this.memoEndRange = userArticleMemo.getMemoEndRange();
         this.memoStartIndex = userArticleMemo.getMemoStartIndex();
         this.memoEndIndex = userArticleMemo.getMemoEndIndex();
-        this.memoPublicScope = userArticleMemo.getMemoPublicScope();
     }
 }
