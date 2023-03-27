@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ public class ArticleDto {
     private Long articleId;
     
     // 기사 작성일
-    private LocalDateTime articleRegtime;
+    private String articleRegtime;
 
     // 언론사
     private String articlePress;
@@ -24,7 +25,7 @@ public class ArticleDto {
 
     public ArticleDto(Article article) {
         this.articleId = article.getArticleId();
-        this.articleRegtime = article.getArticleRegtime();
+        this.articleRegtime = article.getArticleRegtime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));;
         this.articlePress = article.getArticlePress();
         this.articleTitle = article.getArticleTitle();
     }

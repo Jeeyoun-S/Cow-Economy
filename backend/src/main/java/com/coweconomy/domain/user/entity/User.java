@@ -50,4 +50,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTestResult>  userTestResultList = new ArrayList<>();
+
+    public void increaseExperience() {
+        this.userExperience = this.userExperience + 1;
+    }
 }

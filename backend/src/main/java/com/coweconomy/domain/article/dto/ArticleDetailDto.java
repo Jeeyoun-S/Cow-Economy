@@ -3,6 +3,7 @@ package com.coweconomy.domain.article.dto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.dto.UserArticleMemoDetailDto;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
+import com.coweconomy.domain.user.dto.UserArticleMemoSimpleDto;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
 import lombok.Data;
@@ -39,17 +40,18 @@ public class ArticleDetailDto extends ArticleDto {
     private List<RelatedArticleDto> relatedArticleList;
 
     // 기사를 읽었는지 확인
-    private boolean isReading;
+    private boolean isReading = true;
 
     public ArticleDetailDto(Article article, Long userId) {
         super(article);
         this.articleEditor = article.getArticleEditor();
         this.articleUrl = article.getArticleUrl();
         this.articleContent = article.getArticleContent();
+        this.articleCategory = article.getArticleCategory();
 
         List<UserArticleMemo> memoList = article.getUserArticleMemoList();
         if (userId >= 0) {
-            this.userArticleMemoListMine = memoList.stream().filter(m -> m.getUser().getUserId() == userId).map(m -> new UserArticleMemoDto(m)).collect(Collectors.toList());
+            this.userArticleMemoListMine = memoList.stream().filter(m -> m.getUser().getUserId() == userId).map(m -> new UserArticleMemoSimpleDto(m)).collect(Collectors.toList());
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getUser().getUserId() != userId && m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());
         } else {
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());

@@ -84,6 +84,12 @@ public class ArticleService {
 
                     // DB에 insert
                     userArticleRepository.save(userArticle);
+
+                    // 경험치 증가
+                    User user = optionalUser.get();
+                    user.increaseExperience();
+                    userRepository.save(user);
+
                     return true;
                 }
             }
