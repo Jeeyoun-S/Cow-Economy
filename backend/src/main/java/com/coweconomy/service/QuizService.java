@@ -2,28 +2,21 @@ package com.coweconomy.service;
 
 import com.coweconomy.api.controller.UserController;
 import com.coweconomy.api.request.QuizResultRequestDto;
-import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.user.entity.UserTestResult;
 import com.coweconomy.domain.word.dto.ArticleWordDto;
-import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -106,6 +99,7 @@ public class QuizService {
      * @param userId 경험치 획득한 회원 ID
      * @return User 회원 정보
      * **/
+    @Transactional
     public User getUserExperience(Long userId) {
         // 1) 회원정보 가져오기
         Optional<User> user = userRepository.findByUserId(userId);
@@ -114,7 +108,7 @@ public class QuizService {
             // 2) 경험치 획득 적용
             User originUser = user.get();
             originUser.setUserExperience(originUser.getUserExperience() + 100);
-//            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
+            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
 
             userRepository.save(originUser);
             return originUser;
@@ -128,6 +122,7 @@ public class QuizService {
      * @param Long 회원 ID, Boolean 성공/실패 여부 [QuizResultRequestDto(userId=1, isPassFlag=true, selectArticleId=[1, 1, 2, 3, 3, 3, 3])]
      * @return boolean
      * **/
+    @Transactional
     public boolean quizResultSave(QuizResultRequestDto quizResult) {
         try {
             // 1) 회원정보 가져오기

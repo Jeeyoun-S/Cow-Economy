@@ -89,23 +89,21 @@ const quizStore = {
         async ({ data }) => {
           // i) 성공
           if (data.statusCode == 200) {
-            // console.log("#21# Quiz 단어 가져오기 성공: ", data);
-            // console.log("#21# Quiz 단어 가져오기 성공: ", data.data[0]);
-            commit("SET_SELECT_QUIZ_ARTICLE", data.data[0]);
-
             // Quiz 제작
             const quiz = []; // Quiz
             const articleList = []; // Quiz 출제 시 선정한 기사 ID
+
             // 1) 가져온 경제용어로 문제 만들기
             for (const word of data.data) {
               const quizItem = new Object();
               const answers = new Object();
               const randomNum = Math.floor(Math.random() * (102 - 98) + 97); // 97-100 중 Random 숫자 뽑기 (for. 정답 자리), [a:97, b:98, c:99, d:100]
-
               // i) 문제, 정답 번호 setting
               // ! 문제 설명에 답 제거
-              // quizItem.question = word.wordExpl;
-              quizItem.question = word.wordExpl.replaceAll(word.word, "[ ]");
+              quizItem.question = word.economyWord.wordExpl.replaceAll(
+                word.economyWord.word,
+                "[ ]"
+              );
               quizItem.correctAnswer = encrypt(
                 String.fromCharCode(randomNum),
                 process.env.VUE_APP_CRYPT_KEY
@@ -113,19 +111,19 @@ const quizStore = {
               //
               // ii) 4지선다
               // - [호출] chatGPT로 유사한 단어 3개 가져오기
-              await store.dispatch("quizStore/excuteSendMessage", word.word, {
-                root: true,
-              });
-              // console.log(
-              //   "#21# store에 있는 유사단어 확인: ",
-              //   state.similarityWord
-              // );
+              await store.dispatch(
+                "quizStore/excuteSendMessage",
+                word.economyWord.word,
+                {
+                  root: true,
+                }
+              );
               // - 4지선다 setting
-              // console.log("#21# similarityWord: ", state.similarityWord);
               let cnt = 0;
               for (let i = 97; i <= 100; i++) {
                 if (i == randomNum) {
-                  answers[String.fromCharCode(randomNum)] = word.word + "+";
+                  answers[String.fromCharCode(randomNum)] =
+                    word.economyWord.word + "+";
                 } else {
                   answers[String.fromCharCode(i)] = state.similarityWord[cnt];
                   cnt++;
@@ -184,12 +182,10 @@ const quizStore = {
     },
     // [@Method] index 증가 (Quiz index)
     increaseIndex({ commit }, value) {
-      //   console.log("#21# index 확인: ", value);
       commit("SET_INDEX", value + 1);
     },
     // [@Method] Quiz 통과 여부 반영
     async setQuizResult({ commit, state }, correctAnswerCount) {
-      //   console.log("#21# Quiz 통과 여부 확인: ", correctAnswerCount);
       commit("SET_CORRECTCOUNT", correctAnswerCount);
 
       // i) 통과
