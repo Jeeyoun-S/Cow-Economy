@@ -1,5 +1,4 @@
 import data_sub
-import related_news
 
 from pyspark.context import SparkContext
 from pyspark.sql.session import SparkSession
@@ -7,54 +6,57 @@ from pyspark.sql.session import SparkSession
 sc = SparkContext.getOrCreate()
 spark = SparkSession(sc)
 
-hdfs_path = 'hdfs://localhost:9000/user/hadoop/news/'
+# ----------- 경로 설정 ----------
+server = "hdfs://localhost:9000" # 로컬
+# server = "hdfs://cluster.p.ssafy.io:9000" # 서버
+path = "/user/hadoop/news/" # 로컬
+# path = "/user/j8a509/news/" # 서버
+hdfs_path = server + path # hdfs 폴더 저장 경로
 
-# 뉴스 전체 기사 불러오기 -> spark df
-todayTotal = related_news.getToadyNews(hdfs_path+'/daily_news/', sc, spark)
-# todayTotal.show()
-# print(todayTotal.count())
-todayTotal = todayTotal.repartition(50)
+daily_news = 'daily-news/'
+word_cloud = 'word-cloud/'
+
+stop_word_path = './stopword.txt'
+related_id_path = './related_last.txt'
+font_path = './assets/NotoSansKR-Black.otf'
+
+# 로컬
+db_connection_str = 'mysql+pymysql://root:root@localhost:3306/ssafy_cow_db'
+# 서버
+# db_connection_str = 'mysql+pymysql://root:ssafy@j8a509.p.ssafy.io:3306/ssafy_cow_db'
+# ----------- 경로 설정 끝 ----------
+
+# 뉴스 전체 기사, 오늘 전체 기사 불러오기 -> spark df
+week_total, today_total = data_sub.getToadyNews(server, path, daily_news, sc, spark)
 
 # 뉴스 기사에서 불용어 제거하기
-todayTotal = related_news.removeStopWords(todayTotal, './stopword.txt')
+week_total = data_sub.removeStopWords(week_total, stop_word_path)
 
 # 마지막 관련기사 아이디 불러오기
-path_str = './related_last.txt'
-last_idx = related_news.readArticleId(path_str)[0]
+last_idx = data_sub.readArticleId(related_id_path)[0]
 
-# 오늘자료, 전체뉴스로 분리
-nowDf, todayTotal = related_news.getNowCrawlNews(todayTotal, last_idx)
-print('파티션수 재조정')
-todayTotal = todayTotal.repartition(50)
-nowDf = nowDf.repartition(50)
-# nowDf.show()
-# todayTotal.show()
+# 방금 크롤링한 자료, 일주일치 전체뉴스로 분리
+nowDf, week_total = data_sub.getNowCrawlNews(week_total, last_idx)
 
-# 전체 뉴스 TF-IDF
-nowTfidf = related_news.getTFIDF(nowDf)
-totalTfidf = related_news.getTFIDF(todayTotal)
+# ---------- 관련 기사 ----------
+# 방금 크롤링, 전체 뉴스 TF-IDF
+nowTfidf = data_sub.getTFIDF(nowDf)
+totalTfidf = data_sub.getTFIDF(week_total)
 
 # 방금 크롤링에 대해서 전체 유사도 검사
-print('유사도 검사중')
-related_df = related_news.getCosineSimilarity(nowTfidf, totalTfidf)
-# related_df.show()
-
-# 테스트 출력
-# joined_df = nowDf.join(related_df, on=['article_id'], how='inner')
-# joined_df.select('article_id', 'text').show()
+related_df = data_sub.getCosineSimilarity(nowTfidf, totalTfidf)
 
 # DB에 저장
-last_idx = related_news.saveToDB(related_df)
-path_str = './related_last.txt'
-related_news.writeArticleId(path_str, last_idx)
+last_idx = data_sub.saveToDB(related_df, db_connection_str)
 
-# 불용어 제거한 todayTotal를 가지고 Mecab 돌려서 워드클라우드 저장
+# 관련 기사 마지막 아이디 파일에 저장
+data_sub.writeArticleId(related_id_path, last_idx)
 
-# 명사 추출
-data_nouns = data_sub.getNounsByOneNews(todayTotal)
-# print(data_nouns.collect())
+# ---------- word cloud ----------
+# 오늘 뉴스 불용어 제거
+today_total = data_sub.removeStopWords(today_total, stop_word_path)
+# 오늘 뉴스 명사 추출
+data_nouns = data_sub.getNounsByOneNews(today_total, sc, spark)
 
 # word cloud 생성, hdfs에 word cloud dict 적재
-font_path = './assets/NotoSansKR-Black.otf'
-hdfs_path = hdfs_path + 'word-cloud/'
-str = data_sub.setWordCloud(data_nouns, font_path, hdfs_path)
+str = data_sub.setWordCloud(data_nouns, font_path, hdfs_path + word_cloud, spark)
