@@ -1,8 +1,8 @@
 package com.coweconomy.domain.article.dto;
 
 import com.coweconomy.domain.article.entity.Article;
-import com.coweconomy.domain.user.dto.UserArticleDto;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
+import com.coweconomy.domain.user.dto.UserArticleMemoSimpleDto;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import lombok.Data;
 
@@ -20,14 +20,18 @@ public class ArticleMemoDto {
     
     // 기사 제목
     private String articleTitle;
-    
+
+    // 기사 내용
+    private String articleContent;
+
     // 기사에 해당하는 메모 리스트
     List<UserArticleMemoDto> memoList;
 
     public ArticleMemoDto(Article article, List<UserArticleMemo> userArticleMemoList) {
         this.articleId = article.getArticleId();
         this.articleCategory = article.getArticleCategory();
+        this.articleContent = article.getArticleContent();
         this.articleTitle = article.getArticleTitle();
-        this.memoList = userArticleMemoList.stream().map(m -> new UserArticleMemoDto(m)).collect(Collectors.toList());
+        this.memoList = userArticleMemoList.stream().map(m -> new UserArticleMemoSimpleDto(m)).collect(Collectors.toList());
     }
 }
