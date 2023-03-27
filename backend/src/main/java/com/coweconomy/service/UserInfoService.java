@@ -1,13 +1,19 @@
 package com.coweconomy.service;
 
+import com.coweconomy.api.controller.UserController;
 import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
+import com.coweconomy.domain.user.entity.UserArticle;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.repository.UserArticleMemoRepository;
+import com.coweconomy.repository.UserArticleRepository;
 import com.coweconomy.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +22,16 @@ import java.util.Optional;
 @Service
 public class UserInfoService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserInfoService.class);
+
     @Autowired
     UserArticleMemoRepository userArticleMemoRepository;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserArticleRepository userArticleRepository;
     
     /**
      * userId에 해당하는 모든 memo 가져오기
@@ -56,4 +67,21 @@ public class UserInfoService {
         // F)
         return null;
     }
+
+    /**
+     * userId에 해당되는 6개월 간 읽은 기사 수 조회
+     * @param Long 회원 id(seq)
+     * @return List<Integer>
+     * **/
+    public List<Object[]> getReadArticleCount(Long userId) {
+        try {
+            LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(6);
+            return userArticleRepository.findByUserUserIdAndRegtimeBefore(userId, sixMonthAgo);
+        }
+        catch (Exception exception) {
+            logger.error(exception.toString());
+            return null;
+        }
+    }
+
 }

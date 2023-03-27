@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,9 @@ public class UserInfoController {
     UserInfoService userInfoService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     JwtTokenUtil jwtTokenUtil;
 
     /**
@@ -41,9 +45,8 @@ public class UserInfoController {
     public BaseResponse getUserInfo(HttpServletRequest request) {
 
         // 0) 현재 login 한 유저 아이디 추출
-//        String accessToken = request.getHeader("Authorization").substring(7);
-//        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
-        Long userId = Long.parseLong("1");
+        String accessToken = request.getHeader("Authorization").substring(7);
+        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
 
         // 1) user info 조회 (레벨, 경험치, 이름)
         UserDto user = userInfoService.getUserByUserId(userId);
@@ -56,13 +59,22 @@ public class UserInfoController {
             memoDtoList.add(new UserArticleMemoDto(userArticleMemo));
         }
 
-        // 3) 그래프 정보 조회
-        // i) 6개월 간 읽은 기사 수
-
-        // ii) 지금까지 읽은 기사 카테고리
-        // iii) Quiz에 맞춘 > 경제용어 카테고리 (=기사 카테고리)
-
-
-        return BaseResponse.success(new UserInfoResponseDto(user, memoDtoList));
+        // 3) 그래프 정보 조회 - 6개월 간 읽은 기사 수
+        List<Object[]> articleCntList = userInfoService.getReadArticleCount(userId);
+//        logger.info("#21# 6개월 간 읽은 기사 수 확인: {}", articleCntList);
+//        for (Object[] obj : articleCntList) {
+//            System.out.println(Arrays.toString(obj));
+//        }
+        return BaseResponse.success(new UserInfoResponseDto(user, memoDtoList, articleCntList));
     }
+
+    /**
+     * [그래프] 마이페이지 - 읽은 기사의 카테고리 조회
+     * - 연 별 데이터 조회 가능
+     */
+
+    /**
+     * [그래프] 마이페이지 - 경제 용어의 카테고리
+     * - 월 별 데이터 조회 가능
+     */
 }

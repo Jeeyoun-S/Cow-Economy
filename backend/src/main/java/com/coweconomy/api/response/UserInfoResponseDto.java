@@ -19,11 +19,12 @@ public class UserInfoResponseDto {
     // 회원이 작성한 memo
     List<UserArticleMemoDto> memoDtoList;
 
-    // 회원 그래프 정보
+    // 6개월 간 읽은 기사 수 정보
+    List<Object[]> articleCntList;
 
-
-    public UserInfoResponseDto(UserDto user, List<UserArticleMemoDto> memoDtoList) {
+    public UserInfoResponseDto(UserDto user, List<UserArticleMemoDto> memoDtoList, List<Object[]> articleCntList) {
         this.user = user;
         this.memoDtoList = memoDtoList;
+        this.articleCntList = articleCntList;
     }
 }
