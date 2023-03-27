@@ -1,6 +1,7 @@
 package com.coweconomy.service;
 
 import com.coweconomy.api.request.UserRegisterPostReq;
+import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserAuthority;
 import com.coweconomy.repository.UserRepository;
@@ -69,10 +70,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public UserDto getUserInfoByEmail(String userEmail) {
-        User user = userRepository.findByUserEmail(userEmail);
-        UserDto userDto = new UserDto(user);
-        return userDto;
-    }
+//    @Override
+//    public UserDto getUserInfoByEmail(String userEmail) {
+//        User user = userRepository.findByUserEmail(userEmail);
+//        UserDto userDto = new UserDto(user);
+//        return userDto;
+//    }
 }

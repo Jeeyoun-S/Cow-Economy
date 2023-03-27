@@ -79,7 +79,7 @@ const quizStore = {
     },
     // [@Method] Quiz 문제 출제
     async setExamQuestions({ commit, state }) {
-      // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
+      // # Back-end에서 현재 로그인 한 userId 사용함
       const info = {
         userId: 1,
       };
@@ -202,7 +202,7 @@ const quizStore = {
       }
 
       // [@Method] Quiz 결과 저장 & 성공 시 경험치 획득
-      // #!FIX!# 나중에 로그인 완료되면 현 login ID 붙이기
+      // # Back-end에서 현재 로그인한 userId로 사용함
       const info = {
         userId: 1,
         isPassFlag: state.isPass,

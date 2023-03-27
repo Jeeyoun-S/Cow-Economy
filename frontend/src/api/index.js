@@ -30,7 +30,7 @@ function apiInstance() {
     const token = localStorage.getItem("access-token");
     const refreshToken = localStorage.getItem("refresh-token");
     if (token) {
-      // console.log("#21# token 넣기 확인: ", token);
+      console.log("#21# token 넣기 확인: ", token);
       config.headers["Authorization"] = "Bearer " + token;
     }
 
