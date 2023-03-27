@@ -211,14 +211,14 @@ def writeArticleId(path_str, id) :
 
 # 뉴스 파일 명사 추출
 def getNounsByOneNews(data, sc, spark):
-  print("### 오늘 뉴스 명사 추출 ###")
   data = data.select('text').toPandas()
   data = pd.DataFrame(data)
   df = spark.createDataFrame(data)
   
-  # Mecab
-  from konlpy.tag import Mecab
-  mecab = Mecab()
+  print("### 오늘 뉴스 명사 추출 ###")
+  
+  from konlpy.tag import Komoran
+  komoran = Komoran()
   
   # 하나의 리스트로 만들기
   news_list = df.rdd.flatMap(lambda x: x).collect()
@@ -227,14 +227,17 @@ def getNounsByOneNews(data, sc, spark):
   
   news_word_list = list()
   for val in news_list:
-    news_word_list.append(mecab.nouns(val))
+    temp = komoran.nouns(val)
+    for word in temp:
+      # 한글자 이상만 넣음
+      if len(word) > 1:
+        news_word_list.append(word)
   
   # 1글자 제거 후 하나의 리스트
-  news_word_list_except_one = [word for word_list in news_word_list for word in word_list if len(word) > 1]
   print(f">> 명사 추출 소요 시간 : {time.time() - start:.5f} 초")
   
   # RDD 변환
-  news_word_list_rdd = sc.parallelize(news_word_list_except_one)
+  news_word_list_rdd = sc.parallelize(news_word_list)
   return news_word_list_rdd
 
 # word counting & word cloud
@@ -257,7 +260,7 @@ def setWordCloud(data, font_path, hdfs_path, spark):
                  width=1000,
                  max_words=400,
                  max_font_size=100,
-                 colormap='Set3_r')
+                 colormap='Set2')
   cloud = wc.generate_from_frequencies(data2_dict)
   
   # 파일 저장

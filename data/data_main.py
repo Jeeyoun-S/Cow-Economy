@@ -13,7 +13,7 @@ path = "/user/hadoop/news/" # 로컬
 # path = "/user/j8a509/news/" # 서버
 hdfs_path = server + path # hdfs 폴더 저장 경로
 
-daily_news = 'daily-news/'
+daily_news = 'daily_news/'
 word_cloud = 'word-cloud/'
 
 stop_word_path = './stopword.txt'
