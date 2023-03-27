@@ -36,7 +36,7 @@ function apiInstance() {
 
     // refresh-token도 포함 시키기
     if (refreshToken) {
-      config.headers["Refresh"] = "Refrsh " + refreshToken;
+      config.headers["Refresh"] = "Refresh " + refreshToken;
     }
 
     return config;

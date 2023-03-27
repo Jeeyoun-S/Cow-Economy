@@ -11,12 +11,24 @@ import java.util.Optional;
  */
 public interface UserService {
     /**
-     * ID에 해당되는 User 정보 조회(가져오기)
-     * @param userId 조회할 회원 ID
-     * @return User 회원 Entity
-     * **/
+     * DB에 회원이 없을 경우 새로운 회원 생성
+     * @param userRegisterInfo
+     * @return
+     */
     User createUser(UserRegisterPostReq userRegisterInfo);
+
+    /**
+     * 회원 Email로 User 객체 가져오기
+     * @param userEmail
+     * @return
+     */
     User getUserByUserEmail(String userEmail);
+
+    /**
+     * RefreshToken DB 저장
+     * @param userEmail
+     * @param token
+     * @return
+     */
     boolean isTokenSaved(String userEmail, String token);
-    UserDto getUserInfoByEmail(String userId);
 }

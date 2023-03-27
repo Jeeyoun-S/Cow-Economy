@@ -18,13 +18,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * 새로운 User 생성
+     * @param userRegisterInfo
+     * @return
+     */
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = userRepository.findByUserEmail(userRegisterInfo.getUserEmail());
         if (user != null) {
             return null;
         }
-        System.out.println("유저를 저장하겠습니다.");
 
         user = new User();
         user.setUserEmail(userRegisterInfo.getUserEmail());
@@ -32,16 +36,26 @@ public class UserServiceImpl implements UserService {
         user.setUserLevel(1);
         user.setUserExperience(0);
         userRepository.save(user);
-        System.out.println("네 유저를 저장했습니다.");
         return user;
     }
 
+    /**
+     * 사용자 Email로 User 객체 반환
+     * @param userEmail
+     * @return
+     */
     @Override
     public User getUserByUserEmail(String userEmail) {
         User user = userRepository.findByUserEmail(userEmail);
         return user;
     }
 
+    /**
+     * DB에 RefreshToken 저장
+     * @param userEmail
+     * @param token
+     * @return
+     */
     @Override
     public boolean isTokenSaved(String userEmail, String token) {
         User user = userRepository.findByUserEmail(userEmail);
@@ -52,12 +66,5 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    @Override
-    public UserDto getUserInfoByEmail(String userEmail) {
-        User user = userRepository.findByUserEmail(userEmail);
-        UserDto userDto = new UserDto(user);
-        return userDto;
     }
 }
