@@ -21,10 +21,12 @@ public class ArticleController {
 
         // 임시로 사용자 ID를 1로 설정 (로그인 구현 완료 후, 수정 예정)
         Long userId = 2L;
-
+        
+        // 기사 정보 가져오기
         ArticleDetailDto articleDetailDto = articleService.getArticleDetail(articleId, userId);
 
-        // 기사 조회수 증가 시켜줘야 함
+        // 기사 조회수 증가
+        articleService.increaseHits(articleId);
 
         return BaseResponse.success(articleDetailDto);
     }

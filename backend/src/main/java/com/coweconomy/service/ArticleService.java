@@ -1,12 +1,9 @@
 package com.coweconomy.service;
 
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
-import com.coweconomy.domain.article.dto.ArticleDto;
 import com.coweconomy.domain.article.entity.Article;
-import com.coweconomy.domain.user.dto.UserArticleMemoDetailDto;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
-import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.repository.ArticleRepository;
 import com.coweconomy.repository.UserArticleMemoRepository;
 import com.coweconomy.repository.UserArticleRepository;
@@ -14,9 +11,7 @@ import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -77,18 +72,34 @@ public class ArticleService {
             Optional<User> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()) {
                 
-                // userArticle Entity 생성
-                UserArticle userArticle = UserArticle.builder()
-                    .user(optionalUser.get())
-                    .article(optionalArticle.get())
-                    .build();
+                // 이미 DB에 존재하는지 확인
+                Optional<UserArticle> userArticleOptional = userArticleRepository.findByUserAndArticle(optionalUser.get(), optionalArticle.get());
 
-                // DB에 insert
-                userArticleRepository.save(userArticle);
+                if (!userArticleOptional.isPresent()) {
+                    // userArticle Entity 생성
+                    UserArticle userArticle = UserArticle.builder()
+                            .user(optionalUser.get())
+                            .article(optionalArticle.get())
+                            .build();
 
-                return true;
+                    // DB에 insert
+                    userArticleRepository.save(userArticle);
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    public void increaseHits(Long articleId) {  
+        // DB에서 articleId로 article 가져오기
+        Optional<Article> optionalArticle = articleRepository.findById(articleId);
+        if (optionalArticle.isPresent()) {
+            Article article = optionalArticle.get();
+            // 조회수 +1 증가시키기
+            article.increaseHits();
+            // 증가시킨 조회수 DB에 반영하기
+            articleRepository.save(article);
+        }
     }
 }
