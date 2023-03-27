@@ -108,7 +108,7 @@ public class QuizService {
             // 2) 경험치 획득 적용
             User originUser = user.get();
             originUser.setUserExperience(originUser.getUserExperience() + 100);
-            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
+//            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
 
             userRepository.save(originUser);
             return originUser;

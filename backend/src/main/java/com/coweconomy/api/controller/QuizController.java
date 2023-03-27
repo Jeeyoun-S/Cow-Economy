@@ -123,7 +123,6 @@ public class QuizController {
         // 0) 현재 login 한 유저 아이디 추출
         String accessToken = request.getHeader("Authorization").substring(7);
         quizResult.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
-        logger.info("#21# 현재 login 한 userId: {}", quizResult.getUserId());
 
         // * 성공 ↔ 실패 여부에 따라 다른 로직 처리
         // 1) 성공/실패 결과 저장
