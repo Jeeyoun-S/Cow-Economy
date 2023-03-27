@@ -1,6 +1,6 @@
 <template>
-  <NewsSearchBeforeSearch v-if="!searched"></NewsSearchBeforeSearch>
-  <div v-else>
+  <NewsSearchBeforeSearch class="main-container" v-if="!searched"></NewsSearchBeforeSearch>
+  <div :class="{'main-container': isNoResult}" v-else>
     <NewsSearchNoResult v-if="isNoResult"></NewsSearchNoResult>
     <NewsSearchResult v-else :newsList="news"></NewsSearchResult>
   </div>
@@ -29,5 +29,16 @@ export default {
 </script>
 
 <style>
-
+.main-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.no-result-container {
+  height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
 </style>

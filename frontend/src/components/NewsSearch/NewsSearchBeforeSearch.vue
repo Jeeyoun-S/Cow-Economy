@@ -1,5 +1,5 @@
 <template>
-	<div class="pa-10 main-container">
+	<div class="pa-10">
 		<div class="py-2 d-flex flex-row align-center justify-center">
 			<img
 				class="mr-2"
@@ -23,11 +23,5 @@ export default {
 	font-family: var(--main-font-3);
 	color: var(--main-col-4);
 	font-size: 24px;
-}
-.main-container {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 }
 </style>
