@@ -50,6 +50,7 @@ public class ArticleDetailDto extends ArticleDto {
         this.articleCategory = article.getArticleCategory();
 
         List<UserArticleMemo> memoList = article.getUserArticleMemoList();
+
         if (userId >= 0) {
             this.userArticleMemoListMine = memoList.stream().filter(m -> m.getUser().getUserId() == userId).map(m -> new UserArticleMemoSimpleDto(m)).collect(Collectors.toList());
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getUser().getUserId() != userId && m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());

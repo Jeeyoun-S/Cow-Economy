@@ -2,6 +2,7 @@ package com.coweconomy.api.controller;
 
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
+import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
