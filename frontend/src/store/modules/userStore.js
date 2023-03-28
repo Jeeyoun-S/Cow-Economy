@@ -8,19 +8,27 @@ const userStore = {
   namespaced: true,
   state: {
     isLoggedIn: false,
-    readNews: {
-      '2022-08': 8,
-      '2022-09': 2,
-      '2022-10': 3,
-      '2022-11': 5,
-      '2022-12': 5,
-      '2023-01': 8,
-      '2023-02': 3,
-      '2023-03': 9,
-    }
+    readNews: [
+      ['2022-08', 8],
+      ['2022-09', 20],
+      ['2022-10', 14],
+      ['2022-11', 9],
+      ['2022-12', 12],
+      ['2023-01', 5],
+      ['2023-02', 12],
+      ['2023-03', 23],
+    ]
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
+    getLastSixMonthsReadNews: (state) => {
+      const currentDate = new Date();
+      const sixMonthsAgo = new Date(currentDate.setMonth(currentDate.getMonth() - 6));
+      return state.readNews.filter(([month]) => {
+        const date = new Date(`${month}-01`);
+        return date >= sixMonthsAgo;
+      });
+    },
   },
   mutations: {
     SET_IS_LOGGED_IN(state, value) {
@@ -75,9 +83,3 @@ const userStore = {
 };
 
 export default userStore;
-    //   try {
-    //     const accessToken = localStorage.getItem("access-token");
-
-    //     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
-    //     const response = await this.$
-    //   }
