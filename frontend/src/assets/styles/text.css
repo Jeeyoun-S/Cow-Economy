@@ -20,6 +20,9 @@
 .xxxl-font {
   font-size: 24px;
 }
+.xxxxl-font {
+  font-size: 26px;
+}
 /* 폰트 색상 */
 .main-col-1 {
   color: var(--main-col-1);
@@ -93,4 +96,7 @@
   font-size: 12px;
   font-family: var(--main-font-2);
   color: grey;
+}
+.white-shadow {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
