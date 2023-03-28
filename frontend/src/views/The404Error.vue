@@ -1,13 +1,11 @@
 <template>
-  <div></div>
+  <div>
+    <img :src="require('@/assets/images/error-404.gif')" />
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

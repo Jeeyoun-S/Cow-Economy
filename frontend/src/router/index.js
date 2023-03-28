@@ -7,12 +7,21 @@ import news from "@/router/modules/news";
 import quiz from "@/router/modules/quiz";
 import myPage from "@/router/modules/myPage";
 import search from "@/router/modules/search";
+import error from "@/router/modules/error";
 
 import store from "@/store";
 
 Vue.use(VueRouter);
 
-const routes = [...main, ...home, ...news, ...quiz, ...myPage, ...search];
+const routes = [
+  ...main,
+  ...home,
+  ...news,
+  ...quiz,
+  ...myPage,
+  ...search,
+  ...error,
+];
 
 const router = new VueRouter({
   mode: "history",
