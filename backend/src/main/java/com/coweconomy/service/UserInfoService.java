@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +79,27 @@ public class UserInfoService {
         try {
             LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(6);
             return userArticleRepository.findByUserUserIdAndRegtimeBefore(userId, sixMonthAgo);
+        }
+        catch (Exception exception) {
+            logger.error(exception.toString());
+            return null;
+        }
+    }
+
+    /**
+     * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회
+     * @param Long 회원 id(seq)
+     * @return List<String>
+     * **/
+    public List<Object[]> getReadArticleCategory(Long userId, String year) {
+        try {
+            // 올해
+            LocalDateTime startOfYear = LocalDateTime.of(Integer.parseInt(year), Month.JANUARY, 1, 0, 0, 0);
+            // 내년
+            LocalDateTime startOfNextYear = LocalDateTime.of(Integer.parseInt(year)+1, Month.JANUARY, 1, 0, 0, 0);
+//            logger.info("#21# 읽은 기사 카테고리 조회 시 올해, 내년 확인: {} - {}", startOfYear, startOfNextYear);
+
+            return userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
         }
         catch (Exception exception) {
             logger.error(exception.toString());

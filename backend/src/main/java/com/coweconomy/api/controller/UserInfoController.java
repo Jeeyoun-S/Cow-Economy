@@ -10,14 +10,17 @@ import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.service.UserInfoService;
 import com.coweconomy.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +75,19 @@ public class UserInfoController {
      * [그래프] 마이페이지 - 읽은 기사의 카테고리 조회
      * - 연 별 데이터 조회 가능
      */
+    @ApiOperation(value = "회원의 읽은 기사의 카테고리 조회", notes = "사용자가 읽은 기사의 카테고리를 조회한다. (연 단위로 조회 가능)")
+    @GetMapping("/user/graph/article")
+    public BaseResponse getUserReadArticle(@RequestParam("year") String year, HttpServletRequest request) {
+        logger.info("#[UserInfoController]# 회원의 읽은 기사의 카테고리 조회- year: {}", year);
+
+        // 0) 현재 login 한 유저 아이디 추출
+        String accessToken = request.getHeader("Authorization").substring(7);
+        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+        if (userId == null) return BaseResponse.fail();
+
+        // 회원이 읽은 기사의 카테고리 별 기사 수 return  ex) [["경제", 2], ["금융", 1]]
+        return BaseResponse.success(userInfoService.getReadArticleCategory(userId, year));
+    }
 
     /**
      * [그래프] 마이페이지 - 경제 용어의 카테고리

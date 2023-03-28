@@ -33,4 +33,15 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
             "order by date_format(ua.regtime, '%Y-%m') asc")
     List<Object[]> findByUserUserIdAndRegtimeBefore(@Param("userId") Long userId, @Param("regtime") LocalDateTime regtime);
 
+    /**
+     * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회
+     * @param Long 회원 id(seq)
+     * @return List<Object[]>
+     * **/
+    @Query("select distinct ua.article.articleCategory, count(*) " +
+            "from UserArticle ua " +
+            "where ua.user.userId= :userId " +
+            "and ua.regtime >= :startOfYear and ua.regtime < :startOfNextYear " +
+            "group by ua.article.articleCategory")
+    List<Object[]> findArticleCategoryByUserIdAndYear(@Param("userId") Long userId, @Param("startOfYear") LocalDateTime startOfYear, @Param("startOfNextYear") LocalDateTime startOfNextYear);
 }
