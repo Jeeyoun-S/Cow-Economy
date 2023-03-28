@@ -3,6 +3,8 @@ package com.coweconomy.api.controller;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.api.response.UserInfoResponseDto;
 import com.coweconomy.common.jwt.JwtTokenUtil;
+import com.coweconomy.domain.article.dto.ArticleMemoDto;
+import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
 import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
@@ -59,10 +61,8 @@ public class UserInfoController {
 
         // 2) memo List 조회
         List<UserArticleMemo> memoList = userInfoService.getUserMemo(userId);
-        List<UserArticleMemoDto> memoDtoList = new ArrayList<>();
-        for (UserArticleMemo userArticleMemo : memoList) {
-            memoDtoList.add(new UserArticleMemoDto(userArticleMemo));
-        }
+        Map<Article, List<UserArticleMemo>> memoListByGroup = memoList.stream().collect(Collectors.groupingBy(UserArticleMemo::getArticle));
+        List<ArticleMemoDto> articleMemoDtoList = memoListByGroup.entrySet().stream().map(entry -> new ArticleMemoDto(entry.getKey(), entry.getValue())).collect(Collectors.toList());
 
         // 3) 그래프 정보 조회 - 6개월 간 읽은 기사 수
         List<Object[]> articleCntList = userInfoService.getReadArticleCount(userId);
@@ -70,7 +70,7 @@ public class UserInfoController {
 //        for (Object[] obj : articleCntList) {
 //            System.out.println(Arrays.toString(obj));
 //        }
-        return BaseResponse.success(new UserInfoResponseDto(user, memoDtoList, articleCntList));
+        return BaseResponse.success(new UserInfoResponseDto(user, articleMemoDtoList, articleCntList));
     }
 
     /**

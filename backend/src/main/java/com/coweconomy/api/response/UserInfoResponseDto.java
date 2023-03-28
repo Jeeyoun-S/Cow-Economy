@@ -1,5 +1,6 @@
 package com.coweconomy.api.response;
 
+import com.coweconomy.domain.article.dto.ArticleMemoDto;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
 import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
@@ -17,12 +18,12 @@ public class UserInfoResponseDto {
     UserDto user;
 
     // 회원이 작성한 memo
-    List<UserArticleMemoDto> memoDtoList;
+    List<ArticleMemoDto> memoDtoList;
 
     // 6개월 간 읽은 기사 수 정보
     List<Object[]> articleCntList;
 
-    public UserInfoResponseDto(UserDto user, List<UserArticleMemoDto> memoDtoList, List<Object[]> articleCntList) {
+    public UserInfoResponseDto(UserDto user, List<ArticleMemoDto> memoDtoList, List<Object[]> articleCntList) {
         this.user = user;
         this.memoDtoList = memoDtoList;
         this.articleCntList = articleCntList;

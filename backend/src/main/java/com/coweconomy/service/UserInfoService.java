@@ -55,13 +55,13 @@ public class UserInfoService {
         if (user.isPresent()) {
             // Level에 따라 F ~ S 중 하나로 mapping (ASCII CODE)
             Map<Integer, Integer> levelMap = new HashMap<>();
-            levelMap.put(1, 46); // F
-            levelMap.put(2, 45); // E
-            levelMap.put(3, 44); // D
-            levelMap.put(4, 43); // C
-            levelMap.put(5, 42); // B
-            levelMap.put(6, 41); // A
-            levelMap.put(7, 53); // S
+            levelMap.put(1, 70); // F
+            levelMap.put(2, 68); // D
+            levelMap.put(3, 67); // C
+            levelMap.put(4, 66); // B
+            levelMap.put(5, 66); // A
+            levelMap.put(6, 83); // F
+//            levelMap.put(7, 83); // S
             user.get().setUserLevel(levelMap.getOrDefault(user.get().getUserLevel(), 0));
 
             return new UserDto(user.get());
