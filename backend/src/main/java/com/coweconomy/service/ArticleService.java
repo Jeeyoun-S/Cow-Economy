@@ -4,14 +4,14 @@ import com.coweconomy.domain.article.dto.ArticleDetailDto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
-import com.coweconomy.repository.ArticleRepository;
-import com.coweconomy.repository.UserArticleMemoRepository;
-import com.coweconomy.repository.UserArticleRepository;
-import com.coweconomy.repository.UserRepository;
+import com.coweconomy.domain.word.dto.EconomyWordDto;
+import com.coweconomy.domain.word.entity.ArticleWord;
+import com.coweconomy.domain.word.entity.EconomyWord;
+import com.coweconomy.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ArticleService {
@@ -28,6 +28,9 @@ public class ArticleService {
     @Autowired
     UserArticleMemoRepository userArticleMemoRepository;
 
+    @Autowired
+    EconomyWordRepository economyWordRepository;
+
     /**
      * @param articleId 기사 ID
      * **/
@@ -38,7 +41,25 @@ public class ArticleService {
         if (optionalArticle.isPresent()) {
             Article article = optionalArticle.get();
             ArticleDetailDto articleDetailDto = new ArticleDetailDto(article, userId);
-            
+
+            // 기사에 있는 단어 뜻 가져오기
+            Map<String, EconomyWordDto> economyWordMap = new HashMap<>();
+            List<ArticleWord> articleWordList = article.getArticleWordList();
+            for (ArticleWord articleWord : articleWordList) {
+                String subWordIds = articleWord.getSubWordId();
+                if (!subWordIds.isEmpty()) {
+                    String[] subwordList = articleWord.getSubWordId().split(",", -1);
+                    for (String id : subwordList) {
+                        Optional<EconomyWord> optionalEconomyWord = economyWordRepository.findById(Long.parseLong(id));
+                        if (optionalEconomyWord.isPresent()) {
+                            EconomyWord economyWord = optionalEconomyWord.get();
+                            economyWordMap.put(economyWord.getWord(), new EconomyWordDto(economyWord));
+                        }
+                    }
+                }
+            }
+            articleDetailDto.updateArticleWord(economyWordMap);
+
             // 사용자가 로그인한 상태라면
             if (userId >= 0) {
                 // 사용자 ID로 사용자 Entity Select

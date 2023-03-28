@@ -25,25 +25,23 @@ function apiInstance() {
       config.headers["Refresh"] = "Refrsh " + refreshToken;
     }
 
-    //   // 나중에 TOKEN 넣는 CODE 추가
+    return config;
+  });
 
-    instance.interceptors.response.use(function (config) {
-      // # axios 통신 시 loading 창 숨김
-      // store.commit("LOADING_STATUS", false);
+  instance.interceptors.response.use(function (config) {
+    // # axios 통신 시 loading 창 숨김
+    // store.commit("LOADING_STATUS", false);
 
-      // 새로 발급된 access-token이 있다면 로컬 스토리지에 저장
-      if (config.headers["access-token"]) {
-        localStorage.setItem("access-token", config.headers["access-token"]);
-      }
-
-      // instance.interceptors.response.use(function (config) {
-      //   // # axios 통신 시 loading 창 숨김
-      //   store.commit("LOADING_STATUS", false);
-
-      //   return config;
-      // });
-
-      return instance;
+    // 새로 발급된 access-token이 있다면 로컬 스토리지에 저장
+    if (config.headers["access-token"]) {
+      localStorage.setItem("access-token", config.headers["access-token"]);
     }
 
+    return config;
+  });
+
+  return instance;
+}
+
 export { apiInstance };
+

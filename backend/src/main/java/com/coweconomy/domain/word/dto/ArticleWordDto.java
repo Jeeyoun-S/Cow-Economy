@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Data
 @DynamicInsert
 public class ArticleWordDto {
-    private Long articleId;s
+    private Long articleId;
     private EconomyWord economyWord;
 
     public ArticleWordDto(Long articleId, EconomyWord word) {

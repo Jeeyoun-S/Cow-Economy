@@ -1,4 +1,4 @@
-import { apiInstance } from "../index";
+import { apiInstance } from "@/api/index.js";
 import { getReferenceHTML } from "@/common/function/textSelection.js";
 
 // api instance 가져오기
@@ -11,15 +11,19 @@ async function getNewsDetail(articleId) {
     .then((res) => {
       if (res.data.statusCode == 200) {
         result = res.data.data;
-        for (var i = 0; i < result.userArticleMemoListMine.length; i++) {
-          const target = result.userArticleMemoListMine[i];
-          const startRange = target.memoStartRange;
-          const endRange = target.memoEndRange;
-          const startIndex = target.memoStartIndex;
-          const endIndex = target.memoEndIndex;
+        if (result.userArticleMemoListMine) {
+          for (var i = 0; i < result.userArticleMemoListMine.length; i++) {
+            const target = result.userArticleMemoListMine[i];
+            const startRange = target.memoStartRange;
+            const endRange = target.memoEndRange;
+            const startIndex = target.memoStartIndex;
+            const endIndex = target.memoEndIndex;
 
-          if (startRange == 0 && endRange == 0 && startIndex == 0 && endIndex == 0) continue;
-          result.userArticleMemoListMine[i].referenceText = getReferenceHTML(startRange, endRange, startIndex, endIndex, result.articleContent).split("@@@");
+            if (startRange == 0 && endRange == 0 && startIndex == 0 && endIndex == 0) continue;
+            result.userArticleMemoListMine[i].referenceText = getReferenceHTML(startRange, endRange, startIndex, endIndex, result.articleContent).split("@@@");
+          }
+        } else {
+          result.userArticleMemoListMine = [];
         }
 
         for (var j = 0; j < result.userArticleMemoListOther.length; j++) {

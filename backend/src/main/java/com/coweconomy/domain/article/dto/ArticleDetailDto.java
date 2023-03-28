@@ -5,7 +5,7 @@ import com.coweconomy.domain.user.dto.UserArticleMemoDetailDto;
 import com.coweconomy.domain.user.dto.UserArticleMemoDto;
 import com.coweconomy.domain.user.dto.UserArticleMemoSimpleDto;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
-import com.coweconomy.domain.word.dto.ArticleWordDto;
+import com.coweconomy.domain.word.dto.EconomyWordDto;
 import lombok.Data;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class ArticleDetailDto extends ArticleDto {
     private List<UserArticleMemoDto> userArticleMemoListOther;
 
     // 기사에 해당하는 모든 단어 리스트
-    private Map<String, ArticleWordDto> articleWordList;
+    private Map<String, EconomyWordDto> articleWordList;
 
     // 기사에 해당하는 모든 관련 기사 리스트
     private List<RelatedArticleDto> relatedArticleList;
@@ -44,23 +44,25 @@ public class ArticleDetailDto extends ArticleDto {
 
     public ArticleDetailDto(Article article, Long userId) {
         super(article);
+
         this.articleEditor = article.getArticleEditor();
         this.articleUrl = article.getArticleUrl();
         this.articleContent = article.getArticleContent();
         this.articleCategory = article.getArticleCategory();
 
         List<UserArticleMemo> memoList = article.getUserArticleMemoList();
-
-        if (userId >= 0) {
+        if (userId > 0) {
             this.userArticleMemoListMine = memoList.stream().filter(m -> m.getUser().getUserId() == userId).map(m -> new UserArticleMemoSimpleDto(m)).collect(Collectors.toList());
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getUser().getUserId() != userId && m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());
         } else {
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());
         }
 
-        this.articleWordList = article.getArticleWordList().stream().collect(Collectors.toMap(m -> m.getEconomyWord().getWord(), m-> new ArticleWordDto(m)));
-        
         // 관련 기사 구현 필요한 곳
         // this.relatedArticleList
+    }
+
+    public void updateArticleWord(Map<String, EconomyWordDto> articleWordList) {
+        this.articleWordList = articleWordList;
     }
 }
