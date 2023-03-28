@@ -8,6 +8,7 @@ import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.repository.UserArticleMemoRepository;
 import com.coweconomy.repository.UserArticleRepository;
 import com.coweconomy.repository.UserRepository;
+import com.coweconomy.repository.UserTestResultRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserInfoService {
@@ -34,6 +32,9 @@ public class UserInfoService {
 
     @Autowired
     UserArticleRepository userArticleRepository;
+
+    @Autowired
+    UserTestResultRepository userTestResultRepository;
     
     /**
      * userId에 해당하는 모든 memo 가져오기
@@ -45,7 +46,7 @@ public class UserInfoService {
 
     /**
      * userId에 해당되는 User 정보 조회
-     * @param Long 회원 id(seq)
+     * @param userId 회원 id(seq)
      * @return User 회원 Entity
      * **/
     public UserDto getUserByUserId(Long userId) {
@@ -72,7 +73,7 @@ public class UserInfoService {
 
     /**
      * userId에 해당되는 6개월 간 읽은 기사 수 조회
-     * @param Long 회원 id(seq)
+     * @param userId 회원 id(seq)
      * @return List<Integer>
      * **/
     public List<Object[]> getReadArticleCount(Long userId) {
@@ -88,7 +89,7 @@ public class UserInfoService {
 
     /**
      * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회
-     * @param Long 회원 id(seq)
+     * @param userId 회원 id(seq), year 연
      * @return List<String>
      * **/
     public List<Object[]> getReadArticleCategory(Long userId, String year) {
@@ -100,6 +101,21 @@ public class UserInfoService {
 //            logger.info("#21# 읽은 기사 카테고리 조회 시 올해, 내년 확인: {} - {}", startOfYear, startOfNextYear);
 
             return userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
+        }
+        catch (Exception exception) {
+            logger.error(exception.toString());
+            return null;
+        }
+    }
+
+    /**
+     * userId에 해당되는 연-월 Quiz에서 맞춘 경제용어 카테고리 조회
+     * @param userId 회원 id(seq), year 연, month 월
+     * @return List<Object[]>
+     * **/
+    public List<Object[]> getQuizPassWordCategory(Long userId, String year, String month) {
+        try {
+            return userTestResultRepository.findArticleCategoryByUserIdAndYearAndMonth(userId, Integer.parseInt(year), Integer.parseInt(month));
         }
         catch (Exception exception) {
             logger.error(exception.toString());

@@ -93,4 +93,18 @@ public class UserInfoController {
      * [그래프] 마이페이지 - 경제 용어의 카테고리
      * - 월 별 데이터 조회 가능
      */
+    @ApiOperation(value = "회원이 Quiz에서 맞춘 경제용어 카테고리 조회", notes = "사용자가 오늘의 Quiz에서 맞춘 경제용어의 기사 카테고리를 조회한다. (월 단위로 조회 가능)")
+    @GetMapping("/user/graph/word")
+    public BaseResponse getUserPassQuizWord(@RequestParam("year") String year, @RequestParam("month") String month, HttpServletRequest request) {
+        logger.info("#[UserInfoController]# 회원이 Quiz에서 맞춘 경제용어 카테고리 조회- year-month: {}-{}", year, month);
+
+        // 0) 현재 login 한 유저 아이디 추출
+        String accessToken = request.getHeader("Authorization").substring(7);
+        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+        if (userId == null) return BaseResponse.fail();
+//        Long userId = Long.parseLong("1");
+
+        // 회원이 Quiz에서 맞춘 경제용어 카테고리 조회
+        return BaseResponse.success(userInfoService.getQuizPassWordCategory(userId, year, month));
+    }
 }
