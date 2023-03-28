@@ -38,7 +38,7 @@ import { mapActions, mapState } from "vuex";
 const quizStore = "quizStore";
 
 export default {
-  name: "TestResultModal",
+  name: "TestResultAlert",
   data() {
     return {
       dialog: true,
