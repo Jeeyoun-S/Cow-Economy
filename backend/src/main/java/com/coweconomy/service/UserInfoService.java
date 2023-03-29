@@ -59,8 +59,8 @@ public class UserInfoService {
             levelMap.put(2, 68); // D
             levelMap.put(3, 67); // C
             levelMap.put(4, 66); // B
-            levelMap.put(5, 66); // A
-            levelMap.put(6, 83); // F
+            levelMap.put(5, 65); // A
+            levelMap.put(6, 83); // S
 //            levelMap.put(7, 83); // S
             user.get().setUserLevel(levelMap.getOrDefault(user.get().getUserLevel(), 0));
 
