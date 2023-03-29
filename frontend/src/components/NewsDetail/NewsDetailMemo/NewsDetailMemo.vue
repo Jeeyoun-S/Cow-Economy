@@ -47,9 +47,17 @@
       </v-col>
     </v-row>
     <!-- my memo list -->
-    <NewsDetailMemoMine v-if="isListMine" :sort="sort"></NewsDetailMemoMine>
+    <NewsDetailMemoMine
+      v-if="isListMine"
+      :sort="sort"
+      :memoMine="memoMine"
+    ></NewsDetailMemoMine>
     <!-- others memo list -->
-    <NewsDetailMemoOther v-else :sort="sort"></NewsDetailMemoOther>
+    <NewsDetailMemoOther
+      v-else
+      :sort="sort"
+      :memoOther="memoOther"
+    ></NewsDetailMemoOther>
   </v-sheet>
 </template>
 
@@ -59,16 +67,21 @@ import NewsDetailMemoMine from "./NewsDetailMemoMine.vue";
 
 export default {
   name: "NewsDetail",
+  props: {
+    memoMine: Array,
+    memoOther: Array,
+  },
   components: {
     NewsDetailMemoMine,
     NewsDetailMemoOther,
   },
   data() {
     return {
-      sort: "최신순",
-      isListMine: true,
+      sort: "최신순", // 정렬 방식
+      isListMine: true, // true면 나의 메모, false면 전체 메모
     };
   },
+  // 나의 메모 or 전체 메모로 바꾸면 sort도 함께 초기화
   watch: {
     isListMine() {
       this.sort = "최신순";

@@ -50,4 +50,15 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTestResult>  userTestResultList = new ArrayList<>();
+
+    public void increaseExperience() {
+        this.userExperience = this.userExperience + 5;
+        
+        // 경험치 증가에 따른 레벨 조절
+        if (this.userExperience > 500) this.userLevel = 2;
+        else if (this.userExperience > 1000) this.userLevel = 3;
+        else if (this.userExperience > 1500) this.userLevel = 4;
+        else if (this.userExperience > 2500) this.userLevel = 5;
+        else if (this.userExperience > 4000) this.userLevel = 6;
+    }
 }

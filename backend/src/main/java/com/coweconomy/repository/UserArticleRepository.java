@@ -1,5 +1,7 @@
 package com.coweconomy.repository;
 
+import com.coweconomy.domain.article.entity.Article;
+import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
 import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserArticleRepository extends JpaRepository<UserArticle, Long> {
@@ -22,7 +25,15 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
     List<UserArticle> findByArticle(@Param("userId") Long userId, @Param("regtime") LocalDateTime regtime);
 
     /**
-     * userId에 해당되는 6개월 간 읽은 기사 수 조회
+     * 사용자 ID와 기사 ID에 해당하는 컬럼 조회
+     * @param user 사용자 Entity
+     * @param article 기사 Entity
+     * @return Optional<UserArticle> 사용자 읽은 기사 컬럼
+     * **/
+    Optional<UserArticle> findByUserAndArticle(@Param("user") User user, @Param("article") Article article);
+    
+
+     /** userId에 해당되는 6개월 간 읽은 기사 수 조회
      * @param userId 회원 id(seq)
      * @return List<Object[]>
      * **/

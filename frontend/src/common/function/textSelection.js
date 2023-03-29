@@ -87,20 +87,25 @@ function insertBefore(parentElement, newNode, referenceNode) {
  * @param {*} startIndex 시작 element 내의 시작 index
  * @param {*} endIndex 종료 element 내의 종료 index
  */
-function getReferenceHTML(startRange, endRange, startIndex, endIndex) {
+function getReferenceHTML(startRange, endRange, startIndex, endIndex, text) {
 
   // truncate를 위해 100자 넘어가는 경우
   var going = true;
 
   // 기사 내용 내의 자식 요소들 가져오기
-  var contents = document.getElementById("article").childNodes;
+  var contents = null;
+  if (text) {
+    var newOne = document.createElement("div");
+    newOne.innerHTML = text;
+    contents = newOne.childNodes;
+  }
+  else contents = document.getElementById("article").childNodes;
 
   // 인용문의 outerHTML 가져오기
   var reference = "";
 
   // element 범위 반복하기
   for (var i = startRange; i <= endRange; i++) {
-
     // k 인덱스의 element 가져오기
     var item = contents[i];
 
@@ -247,6 +252,9 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
   }
 }
 
+/**
+ * 기사 속 형광펜 표시 삭제하기
+ */
 function removeHighlightReference() {
 
   // 기사 내용 내의 자식 요소들 가져오기
@@ -257,7 +265,7 @@ function removeHighlightReference() {
   var endRange = memoStore.state.highlightReference.endRange;
   var endNode = memoStore.state.highlightReference.endNode;
 
-  if (!!startRange && !!endRange && !!endNode) {
+  if (startRange >= 0 && endRange >= 0 && !!endNode) {
 
     // startRange부터 endRange까지 범위 반복하기
     for (var i = startRange; i <= endRange; i++) {

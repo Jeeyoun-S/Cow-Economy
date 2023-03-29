@@ -1,5 +1,6 @@
 <template>
   <div class="pa-1 memo">
+    {{ articles_all.length }}
     <v-row class="pb-5">
       <v-col cols="4"
         ><v-select
@@ -18,47 +19,71 @@
       ></v-col>
     </v-row>
     <v-expansion-panels class="swiper-item" accordion multiple tile flat>
-      <v-expansion-panel v-for="(article, i) in articles" :key="i">
-        <v-expansion-panel-header>
-          <v-row class="align-center"
-            ><v-col cols="10">{{ article.title }}</v-col
-            ><v-col cols="1"
-              ><v-btn icon text color="var(--main-col-3)" small
-                ><v-icon small> mdi-link-variant </v-icon></v-btn
-              ></v-col
-            >
-          </v-row>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-sheet class="py-1" v-for="(m, i) in article.memo" :key="i">
-            <!-- header -->
-            <v-sheet
-              class="px-4 sm-font d-flex align-center justify-space-between flex-row"
-              color="var(--main-col-3)"
-              dark
-              small
-              block
-              rounded="xl"
-            >
-              <span>{{ m.regtime }}</span>
-              <div>
-                <NewsDetailMemoBtnLock color="white"></NewsDetailMemoBtnLock>
-                <NewsDetailMemoBtnDelete
-                  color="white"
-                ></NewsDetailMemoBtnDelete>
+      <v-virtual-scroll>
+        <v-expansion-panel v-for="(memoDto, i) in articles" :key="i">
+          <v-expansion-panel-header>
+            <v-row class="align-center"
+              ><v-col cols="10">{{ memoDto.articleTitle }}</v-col
+              ><v-col cols="1"
+                ><v-btn
+                  icon
+                  text
+                  color="var(--main-col-3)"
+                  small
+                  @click="moveNewsDetail(memoDto.articleId)"
+                  ><v-icon small> mdi-link-variant </v-icon></v-btn
+                ></v-col
+              >
+            </v-row>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-sheet class="py-1" v-for="(m, i) in memoDto.memoList" :key="i">
+              <!-- header -->
+              <v-sheet
+                class="px-4 sm-font d-flex align-center justify-space-between flex-row"
+                color="var(--main-col-3)"
+                dark
+                small
+                block
+                rounded="xl"
+              >
+                <span>{{ m.regtime }}</span>
+                <div>
+                  <NewsDetailMemoBtnLock
+                    :memoPublicScope="m.memoPublicScope"
+                    :index="i"
+                    color="white"
+                    :memoId="m.memoId"
+                  ></NewsDetailMemoBtnLock>
+                  <NewsDetailMemoBtnDelete
+                    :memoId="m.memoId"
+                    :index="i"
+                    color="white"
+                  ></NewsDetailMemoBtnDelete>
+                </div>
+              </v-sheet>
+              <!-- reference -->
+              <div
+                v-if="m.referenceText"
+                class="ma-2 pa-2 border-left font-italic xs-font"
+              >
+                <div>{{ m.referenceText }}</div>
               </div>
+              <!-- content -->
+              <div class="ma-2 sm-font">{{ m.memoContent }}</div>
             </v-sheet>
-            <!-- reference -->
-            <div class="ma-2 pa-2 border-left font-italic xs-font">
-              <div>{{ m.referenceText }}</div>
-            </div>
-            <!-- content -->
-            <div class="ma-2 sm-font">{{ m.memoContent }}</div>
-          </v-sheet>
-          <v-divider class="mt-2"></v-divider>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+            <v-divider class="mt-2"></v-divider>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-virtual-scroll>
     </v-expansion-panels>
+    <!-- scroll loading -->
+    <v-sheet
+      v-if="articles.length === 0 && articles_all.length > 0"
+      class="d-flex justify-center"
+    >
+      <v-progress-circular indeterminate color="primary" class="bottom" />
+    </v-sheet>
   </div>
 </template>
 
@@ -72,34 +97,55 @@ export default {
     NewsDetailMemoBtnDelete,
     NewsDetailMemoBtnLock,
   },
+  props: {
+    memoDtoList: Array,
+  },
   data() {
     return {
       range: "전체",
-      articles: [
-        {
-          title:
-            "비트코인, 빅스텝 우려에 주춤…3100만원도 '아슬'비트코인, 빅스텝 우려에 주춤…3100만원도 '아슬'",
-          memo: [
-            {
-              memoId: 1,
-              memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-              regtime: "2023.03.02 20:00",
-              referenceText:
-                "“코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.”",
-            },
-            {
-              memoId: 1,
-              memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-              regtime: "2023.03.02 20:00",
-              referenceText:
-                "“코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.”",
-            },
-          ],
-        },
-        { title: "비트코인, 빅스텝 우려에 주춤…3100만원도 '아슬'", memo: [] },
-        { title: "비트코인, 빅스텝 우려에 주춤…3100만원도 '아슬'", memo: [] },
-      ],
+      articles: [],
+      articles_all: [],
+      articleIndex: 0,
+      bottom: false,
     };
+  },
+  methods: {
+    moveNewsDetail(articleId) {
+      this.$router.push(`/news/${articleId}`);
+    },
+    // 보여지는 리스트에 메모 추가하기
+    addMemo() {
+      if (this.articles.length < this.articles_all.length) {
+        // +10과 최대 Index 중 최솟값 구하기
+        const maxIndex = Math.min(
+          this.articles_all.length,
+          this.articleIndex + 10
+        );
+        // 전체 메모 리스트에서 slice해서 memos에 추가
+        this.articles.push(
+          ...this.articles_all.slice(this.articleIndex, maxIndex)
+        );
+        // 이미 보여준 마지막 memoIndex 업데이트
+        this.articleIndex = maxIndex;
+      }
+    },
+    bottomVisible() {
+      const scrollY = window.scrollY;
+      const visible = document.documentElement.clientHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      // + 73은 Footer의 높이
+      const bottomOfPage = visible + scrollY + 73 >= pageHeight;
+      return bottomOfPage || pageHeight < visible;
+    },
+  },
+  created() {
+    // 스크롤 이동할 때 bottom 변화 확인
+    window.addEventListener("scroll", () => {
+      this.bottom = this.bottomVisible();
+    });
+
+    this.articles_all = this.memoDtoList;
+    this.addMemo();
   },
 };
 </script>
