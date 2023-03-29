@@ -84,4 +84,7 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<RelatedArticle> relatedArticleList = new ArrayList<>();
 
+    public void increaseHits() {
+        this.articleHits = this.articleHits + 1;
+    }
 }

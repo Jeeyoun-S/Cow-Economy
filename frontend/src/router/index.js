@@ -25,10 +25,12 @@ router.beforeEach((to, from, next) => {
   const isLoggedIn = store.state.userStore.isLoggedIn;
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
+  // 로그인 해야하는데 로그인 안되어 있을 시 my-page로 이동
   if (requiresAuth && !isLoggedIn) {
     next("/my-page");
   } else {
     next();
   }
 });
+
 export default router;
