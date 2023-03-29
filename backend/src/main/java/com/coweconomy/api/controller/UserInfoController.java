@@ -54,10 +54,10 @@ public class UserInfoController {
         // 0) 현재 login 한 유저 아이디 추출
         String accessToken = request.getHeader("Authorization").substring(7);
         Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+//        Long userId = Long.valueOf("1");
 
         // 1) user info 조회 (레벨, 경험치, 이름)
         UserDto user = userInfoService.getUserByUserId(userId);
-//        logger.info("#21# 마이페이지 - user info 조회: {}", user);
 
         // 2) memo List 조회
         List<UserArticleMemo> memoList = userInfoService.getUserMemo(userId);
@@ -86,6 +86,7 @@ public class UserInfoController {
         String accessToken = request.getHeader("Authorization").substring(7);
         Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
         if (userId == null) return BaseResponse.fail();
+//        Long userId = Long.valueOf("1");
 
         // 회원이 읽은 기사의 카테고리 별 기사 수 return  ex) [["경제", 2], ["금융", 1]]
         return BaseResponse.success(userInfoService.getReadArticleCategory(userId, year));
