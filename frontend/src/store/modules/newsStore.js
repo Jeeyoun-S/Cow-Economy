@@ -60,6 +60,16 @@ const newsStore = {
           article_hits: 1,
         },
       ],
+      category: [
+        ["금융", 2],
+        ["증권", 12],
+        ["산업/재계", 9],
+        ["중기/벤처", 7],
+        ["부동산", 2],
+        // ["글로벌 경제", 2],
+        // ["생활경제", 3],
+        // ["경제 일반", 5],
+      ]
     },
     mutations: {
       setSearchText(state, payload) {
