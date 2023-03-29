@@ -68,7 +68,7 @@ public class QuizService {
         Map<Long, String> map = new HashMap<>();
 
         for (ArticleWord articleWord:articleWords) {
-            String[] subwordList = articleWord.getSubWordId().split(",");
+            String[] subwordList = articleWord.getSubWordId().split(", ");
 
             for (String id:subwordList) {
                 EconomyWord word = economyWordRepository.findByWordId(Long.parseLong(id));
