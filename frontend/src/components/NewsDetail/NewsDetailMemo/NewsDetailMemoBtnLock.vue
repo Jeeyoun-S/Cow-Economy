@@ -17,7 +17,6 @@ export default {
     memoPublicScope: Boolean,
     index: Number,
     color: String,
-    small: Boolean,
     memoId: Number,
   },
   methods: {
