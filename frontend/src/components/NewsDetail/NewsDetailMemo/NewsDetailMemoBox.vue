@@ -23,13 +23,14 @@
           <div v-if="isMine">
             <!-- memo open status button -->
             <NewsDetailMemoBtnLock
-              :memoId="memo.memoId"
               :memoPublicScope="memo.memoPublicScope"
               :index="index"
-              @modifyPublicScope="modifyPublicScope"
               color="var(--main-col-3)"
+              :memoId="memo.memoId"
+              :isSmall="true"
+              @modifyPublicScope="modifyPublicScope"
             ></NewsDetailMemoBtnLock>
-            <!-- memo modify button : 보류 -->
+            <!-- memo modify button -->
             <v-btn
               icon
               text
@@ -42,6 +43,7 @@
               :memoId="memo.memoId"
               :index="index"
               color="var(--main-col-3)"
+              :isSmall="false"
               @deleteMemoItem="deleteMemoItem"
             ></NewsDetailMemoBtnDelete>
           </div>
