@@ -6,7 +6,7 @@ const api = apiInstance();
 async function getToken(success, fail) {
   var code = new URL(window.location.href).searchParams.get("code");
 
-  await api.get(`/api/auth/login/kakao?code=${code}`).then(success).catch(fail);
+  await api.get(`/auth/login/kakao?code=${code}`).then(success).catch(fail);
   //   await api.get(`/auth/login/kakao?code=${code}`).then(success).catch(fail);
 }
 
