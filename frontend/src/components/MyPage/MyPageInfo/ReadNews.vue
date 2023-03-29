@@ -1,7 +1,13 @@
 <template>
   <div class="px-5">
-    <div class="main-title-font">읽은 기사 수</div>
-    <div class="main-subtitle-font">최근 6개월 동안 읽은 기사 수를 보여드려요.</div>
+    <div class="d-flex align-center">
+      <span class="xxl-font">읽은 기사 수</span>
+      <div class="horizontal-divider">
+        <v-divider class="mx-2"></v-divider>
+      </div>
+      <span class="xxl-font th-font">01</span>
+    </div>
+    <div class="th-font">최근 6개월 동안 읽은 기사 수를 보여드려요.</div>
     <div>
       <canvas ref="barChart" height="300"></canvas>
     </div>
@@ -146,4 +152,8 @@ export default {
 </script>
 
 <style>
+  .horizontal-divider {
+    flex-grow: 1;
+    align-self: center;
+  }
 </style>
