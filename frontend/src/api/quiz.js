@@ -4,7 +4,7 @@ const api = apiInstance();
 
 // [GET] 오늘의 Quiz 도전 가능/불가능 여부 조회
 async function checkTodayQuizDone(success, fail) {
-  await api.get(`quiz/check`).then(success).catch(fail);
+  await api.get(`/quiz/check`).then(success).catch(fail);
 }
 
 // [POST] 오늘의 Quiz로 출제할 경제 단어 가져오기
