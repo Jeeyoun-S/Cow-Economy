@@ -73,8 +73,9 @@ public class QuizController {
 
         try {
             // 0) 현재 login 한 유저 아이디 추출
-            String accessToken = request.getHeader("Authorization").substring(7);
-            info.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+//            String accessToken = request.getHeader("Authorization").substring(7);
+//            info.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+            Long userId = Long.valueOf("1");
 
             // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
             List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());

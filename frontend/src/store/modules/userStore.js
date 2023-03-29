@@ -29,7 +29,7 @@ const userStore = {
 
             localStorage.setItem("access-token", ACCESS_TOKEN);
             localStorage.setItem("refresh-token", REFRESH_TOKEN);
-            
+
             // vuex 로그인 처리
             commit("SET_IS_LOGGED_IN", true);
             console.log("토큰 발급 성공!");
@@ -46,7 +46,7 @@ const userStore = {
     },
 
     logout({ commit }) {
-      localStorage.removeItem('access-token');
+      localStorage.removeItem("access-token");
       window.location.replace("/home");
       commit("SET_IS_LOGGED_IN", false);
     },
@@ -55,9 +55,9 @@ const userStore = {
 };
 
 export default userStore;
-    //   try {
-    //     const accessToken = localStorage.getItem("access-token");
+//   try {
+//     const accessToken = localStorage.getItem("access-token");
 
-    //     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
-    //     const response = await this.$
-    //   }
+//     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
+//     const response = await this.$
+//   }
