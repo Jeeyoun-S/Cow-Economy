@@ -17,20 +17,22 @@
 <script>
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
+    ...mapState("newsStore", ["articleCntList"]),
   },
   mounted() {
     this.createChart();
   },
   methods: {
     createChart() {
-      const chartData = this.getLastSixMonthsReadNews;
+      console.log("##1 ", this.articleCntList);
+      const chartData = this.articleCntList;
       const labels = chartData.map(([month]) => {
         const date = new Date(`${month}-01`);
         return `${date.getMonth() + 1}월`;

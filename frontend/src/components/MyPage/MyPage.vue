@@ -86,7 +86,7 @@ export default {
         },
       },
       selectedBtn: "my-memo",
-      articleCntList: [],
+      // articleCntList: [],
       memoDtoList: [],
       user: {},
       loading: false,
@@ -109,7 +109,8 @@ export default {
     if (this.isLoggedIn) {
       this.loading = true;
       getUserInfo().then((res) => {
-        this.articleCntList = res.articleCntList;
+        // this.articleCntList = res.articleCntList; 
+        this.setUserReadArticleCount(res.articleCntList);
         this.memoDtoList = res.memoDtoList;
         this.user = res.user;
         this.loading = false;
@@ -129,6 +130,7 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["executeToken"]),
+    ...mapActions("newsStore", ["setUserReadArticleCount"]),
     // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
     async kakao() {
       await this.executeToken();

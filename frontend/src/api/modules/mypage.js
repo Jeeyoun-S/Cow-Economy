@@ -13,6 +13,7 @@ async function getUserInfo() {
         result = res.data.data;
 
         const articleList = result.memoDtoList;
+        console.log(result);
         if (articleList) {
           for (var i = 0; i < articleList.length; i++) {
             var memoList = articleList[i].memoList;

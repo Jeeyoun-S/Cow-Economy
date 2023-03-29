@@ -3,6 +3,7 @@ const newsStore = {
     state: {
       searchText: "",
       searched: false,
+      articleCntList: [], // 6개월 간 읽은 기사 수
       news: [
         {
           articleId: 1, 
@@ -77,6 +78,9 @@ const newsStore = {
       },
       setSearched(state, payload) {
         state.searched = payload;
+      },
+      SET_ARTICLE_CNT_LIST(state, articleCntList) {
+        state.articleCntList = articleCntList; 
       }
     },
     actions: {
@@ -86,6 +90,11 @@ const newsStore = {
       setSearched({ commit }, payload) {
         commit("setSearched", payload);
       },
+      // [@Method] 회원이 6개월 간 읽은 기사 개수 저장(set)
+      setUserReadArticleCount({ commit }, articleList) {
+        // console.log("#21# 읽은 기사 개수 SET: ", articleList)
+        commit("SET_ARTICLE_CNT_LIST", articleList);
+      }
     },
   };
 
