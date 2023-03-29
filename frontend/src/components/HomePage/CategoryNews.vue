@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-6" color="white">
+  <v-sheet class="pa-6" color="transparent">
     <div class="main-title-font align-center">
       <img height="19.47" :src="require('@/assets/images/color-tags.png')" />
       카테고리별 뉴스
@@ -9,20 +9,35 @@
     </div>
     <div class="pa-4">
       <span>분류</span>
+      <!-- <swiper class="swiper mt-4">
+        <v-chip-group selected-class="text-primary" column>
+          <v-chip
+            filter
+            style="background-color: white !important"
+            v-for="tag in tags"
+            :key="tag"
+            color="var(--main-col-2)"
+            outlined
+          >
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
+      </swiper> -->
       <v-slide-group>
-            <v-chip-group
-              selected-class="text-primary"
-              column
-            >
-              <v-chip filter
-                v-for="tag in tags"
-                :key="tag"
-                color="var(--main-col-2)" outlined>
-                {{ tag }}
-              </v-chip>
-            </v-chip-group>
-          </v-slide-group>
-          </div>
+        <v-chip-group selected-class="text-primary" column>
+          <v-chip
+            filter
+            style="background-color: white !important"
+            v-for="tag in tags"
+            :key="tag"
+            color="var(--main-col-2)"
+            outlined
+          >
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
+      </v-slide-group>
+    </div>
   </v-sheet>
 </template>
 
@@ -32,20 +47,18 @@ export default {
   data() {
     return {
       tags: [
-      '금융',
-      '증권',
-      '산업/재계',
-      '중기/벤처',
-      '부동산',
-      '글로벌경제',
-      '생활경제',
-      '경제일반'
-    ],
+        "금융",
+        "증권",
+        "산업/재계",
+        "중기/벤처",
+        "부동산",
+        "글로벌경제",
+        "생활경제",
+        "경제일반",
+      ],
     };
   },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
