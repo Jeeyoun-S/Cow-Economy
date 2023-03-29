@@ -40,7 +40,6 @@ public class QuizService {
 
     private final EconomyWordRepository economyWordRepository;
 
-    // #21#
     private final ArticleWordRepository articleWordRepository;
 
     /**
@@ -58,7 +57,7 @@ public class QuizService {
 
     /**
      * 읽은 기사에 있는 경제 단어 List 조회
-     * @param List<Long> 읽은 기사 ID _List
+     * @param articleIdList 읽은 기사 ID _List
      * @return List<ArticleWordQuizDto> 읽은 기사 안에 있는 경제 단어
      * **/
     public List<ArticleWordDto> getEconomyWord(List<Long> articleIdList) {
@@ -107,7 +106,7 @@ public class QuizService {
         if (user.isPresent()) {
             // 2) 경험치 획득 적용
             User originUser = user.get();
-            originUser.setUserExperience(originUser.getUserExperience() + 100);
+            originUser.increaseExperience(100); // 경험치 조정 + 올라간 경험치에 따라 Level 조정
 //            logger.info("#[QuizService]# 경험치 획득 적용 user 확인: {}", originUser);
 
             userRepository.save(originUser);
@@ -119,7 +118,7 @@ public class QuizService {
 
     /**
      * Quiz 성공/실패 결과 저장
-     * @param Long 회원 ID, Boolean 성공/실패 여부 [QuizResultRequestDto(userId=1, isPassFlag=true, selectArticleId=[1, 1, 2, 3, 3, 3, 3])]
+     * @param quizResult 회원 ID, Boolean 성공/실패 여부 [QuizResultRequestDto(userId=1, isPassFlag=true, selectArticleId=[1, 1, 2, 3, 3, 3, 3])]
      * @return boolean
      * **/
     @Transactional
@@ -149,7 +148,7 @@ public class QuizService {
 
     /**
      * 오늘의 Quiz 수행 여부 확인
-     * @param Long 회원 ID(seq)
+     * @param userId 회원 ID(seq)
      * @return boolean
      * **/
     public boolean checkQuizToday(Long userId) {

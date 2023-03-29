@@ -108,7 +108,7 @@ public class ArticleService {
 
                     // 경험치 증가
                     User user = optionalUser.get();
-                    user.increaseExperience();
+                    user.increaseExperience(5);
                     userRepository.save(user);
 
                     return true;
