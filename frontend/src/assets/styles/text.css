@@ -77,6 +77,12 @@
 .point-b {
   font-family: var(--point-font-3);
 }
+.logo-th {
+  font-family: var(--logo-font-1);
+}
+.logo-b {
+  font-family: var(--logo-font-2);
+}
 /* 폰트 스타일 */
 .underline {
   text-decoration: underline;
