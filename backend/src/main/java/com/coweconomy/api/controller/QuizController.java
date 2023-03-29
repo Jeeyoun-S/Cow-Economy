@@ -40,7 +40,7 @@ public class QuizController {
      * 오늘의 Quiz 수행 여부 확인
      * - 회원이 오늘 Quiz를 진행했는지 안했는지 조회
      */
-    @GetMapping("/")
+    @GetMapping("/check")
     public BaseResponse<?> checkQuizDone(HttpServletRequest request) {
         logger.info("#[QuizController]# Quiz 수행 여부 확인");
 
@@ -116,7 +116,7 @@ public class QuizController {
     /**
      * Quiz 성공/실패 여부 저장 + 성공 시 경험치 획득(+100)
      */
-    @PostMapping("/setResult")
+    @PostMapping("/set-result")
     public BaseResponse<?> setQuizResult(@RequestBody QuizResultRequestDto quizResult, HttpServletRequest request) {
         logger.info("#[QuizController]# Quiz 결과 - info: {}", quizResult);
 

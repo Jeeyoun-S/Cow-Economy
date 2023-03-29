@@ -1,13 +1,10 @@
 package com.coweconomy.service;
 
 import com.coweconomy.api.request.UserRegisterPostReq;
-import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
-import com.coweconomy.domain.user.entity.UserAuthority;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *	User 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.

@@ -11,3 +11,6 @@
 .pointer {
   cursor: pointer;
 }
+.blue-shadow {
+  box-shadow: 0px 0px 3px 0px lightgray !important;
+}

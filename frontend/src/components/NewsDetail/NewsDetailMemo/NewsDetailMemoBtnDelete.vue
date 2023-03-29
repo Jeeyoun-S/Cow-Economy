@@ -47,19 +47,20 @@ export default {
     color: String,
   },
   methods: {
-    ...mapActions("memoStore", [
-      "deleteMemo",
-      "updateNewMemo",
-      "removeSelectionText",
-    ]),
+    ...mapActions("memoStore", ["updateNewMemo", "removeSelectionText"]),
+    // 메모 삭제하기
     deleteMemoItem() {
+      // 메모 삭제 API 요청 보내기
       deleteMemo(this.memoId).then((res) => {
+        // 삭제 성공
         if (res) {
-          // 삭제 성공
-          this.deleteMemo(this.index);
+          // 경고창 닫기
           this.dialog = false;
+          // 만약 현재 수정 중이었던 메모를 삭제했다면
           if (this.newMemo.memoId == this.memoId) {
+            // 등록창 인용문 삭제
             this.removeSelectionText();
+            // 등록창 메모 내용 삭제
             this.updateNewMemo({
               isModify: false,
               memoId: null,
@@ -68,6 +69,7 @@ export default {
               index: null,
             });
           }
+          // 메모 리스트에서 삭제하기
           this.$emit("deleteMemoItem");
         } else {
           // 삭제 실패
