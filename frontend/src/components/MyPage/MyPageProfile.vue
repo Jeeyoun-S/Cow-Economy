@@ -18,7 +18,7 @@
           >LEVEL {{ String.fromCharCode(user.userLevel) }}</span
         >
         <!-- Level Info -->
-        <v-dialog v-model="levelInfoDialog" max-width="400">
+        <v-dialog v-model="levelInfoDialog" max-width="370">
           <template v-slot:activator="{ on, attrs }">
             <v-icon color="grey lighten-1" v-bind="attrs" v-on="on"
               >mdi-information-outline</v-icon

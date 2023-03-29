@@ -72,9 +72,11 @@ export default {
             });
           }
           // 메모 리스트에서 삭제하기
-          if (this.isSmall)
+          if (this.isSmall) {
             this.$emit("deleteMemoItem", this.index, this.indexDetail);
-          else this.$emit("deleteMemoItem");
+          } else {
+            this.$emit("deleteMemoItem");
+          }
         } else {
           // 삭제 실패
         }

@@ -29,9 +29,11 @@ export default {
       updateMemoPublicScope(this.memoId).then((res) => {
         if (res != null) {
           // 메모 리스트의 공개 상태 변경하기
-          if (this.isSmall)
+          if (this.isSmall) {
             this.$emit("modifyPublicScope", this.index, this.indexDetail, res);
-          else this.$emit("modifyPublicScope", this.index, res);
+          } else {
+            this.$emit("modifyPublicScope", this.index, res);
+          }
         }
       });
     },
