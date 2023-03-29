@@ -61,13 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
 //                 HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
-                .antMatchers("/api/**")
+//                .antMatchers("/api/**")
 //                .permitAll()		// 모두 허용
 
                 // 로그인할 때는 검증 X
 //                .antMatchers("/auth/login/**")
 //                .antMatchers("/auth/**")
-//                .antMatchers("/**")
+                .antMatchers("/**")
                 .permitAll()
 
 //                 나머지는 전부 인증 필요
