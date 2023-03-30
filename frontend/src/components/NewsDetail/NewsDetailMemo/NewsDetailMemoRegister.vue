@@ -24,19 +24,22 @@
           :text-color="publicScope ? 'white' : 'grey darken-1'"
           @click="publicScope = false"
           small
-          ><v-icon left small> mdi-lock-outline </v-icon>비공개</v-chip
+          ><v-icon left small> mdi-lock </v-icon>비공개</v-chip
         >
       </v-card>
       <!-- right -->
       <div class="d-flex align-center">
         <!-- is modifying -->
         <v-btn
-          class="sm-font"
+          class="mr-1 sm-font"
           v-if="newMemo.isModify"
           @click="deleteMemoInfo()"
-          text
+          elevation="0"
           rounded
           small
+          dark
+          outlined
+          color="grey darken-1"
           >수정 취소</v-btn
         >
         <!-- register button -->
@@ -126,20 +129,16 @@ export default {
           (!!v && v.length > 0 && v.length <= 500) ||
           "500자 이하로 내용을 입력해 주세요.",
       ], // 메모 내용 유효성
-      successBar: false,
-      failureBar: false,
-      barOption: false,
+      successBar: false, // 메모 등록 또는 수정 성공
+      failureBar: false, // 메모 등록 또는 수정 실패
+      barOption: false, // true이면 수정, false면 등록
     };
   },
   computed: {
     ...mapState(memoStore, ["selectionResult", "selectionText", "newMemo"]),
   },
   methods: {
-    ...mapActions(memoStore, [
-      "removeSelectionText",
-      "updateNewMemo",
-      "modifyMyMemo",
-    ]),
+    ...mapActions(memoStore, ["removeSelectionText", "updateNewMemo"]),
     async registerMemo() {
       // 메모 등록하기
       const valid = this.$refs.form.validate();
@@ -148,7 +147,8 @@ export default {
         await updateMemo(
           this.newMemo,
           this.selectionResult,
-          this.selectionText
+          this.selectionText,
+          this.$route.params.id
         ).then((res) => {
           if (res != null) {
             new Promise(() => {
@@ -159,11 +159,6 @@ export default {
               this.$refs.form.reset();
               // 수정인 경우
               if (this.newMemo.isModify) {
-                // vuex 전체 메모 리스트에서 수정
-                this.modifyMyMemo({
-                  newMemo: res,
-                  index: this.newMemo.index,
-                });
                 // 지금 보여지고 있는 메모 리스트에서 수정
                 this.$emit("updateMemo", res, this.newMemo.index);
               }

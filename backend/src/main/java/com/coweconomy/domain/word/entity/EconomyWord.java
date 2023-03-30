@@ -35,7 +35,7 @@ public class EconomyWord {
     @NotNull
     @Comment("경제 단어 설명")
     private String wordExpl;
-
-    @OneToMany(mappedBy = "economyWord", cascade = CascadeType.ALL)
-    private List<ArticleWord> articleWordList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "economyWord", cascade = CascadeType.ALL)
+//    private List<ArticleWord> articleWordList = new ArrayList<>();
 }

@@ -5,7 +5,6 @@ import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *	User 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -18,17 +17,16 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     /**
-     * 회원가입
-     * @param userRegisterInfo 회원가입 할 회원의 정보
-     * @return User 회원 Entity
-     * **/
+     * 새로운 User 생성
+     * @param userRegisterInfo
+     * @return
+     */
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = userRepository.findByUserEmail(userRegisterInfo.getUserEmail());
-        if(user != null) {
+        if (user != null) {
             return null;
         }
-//        System.out.println("유저를 저장하겠습니다.");
 
         user = new User();
         user.setUserEmail(userRegisterInfo.getUserEmail());
@@ -36,15 +34,14 @@ public class UserServiceImpl implements UserService {
         user.setUserLevel(1);
         user.setUserExperience(0);
         userRepository.save(user);
-//        System.out.println("네 유저를 저장했습니다.");
         return user;
     }
 
     /**
-     * email에 해당되는 User 정보 조회
-     * @param userEmail 회원 email
-     * @return User 회원 Entity
-     * **/
+     * 사용자 Email로 User 객체 반환
+     * @param userEmail
+     * @return
+     */
     @Override
     public User getUserByUserEmail(String userEmail) {
         User user = userRepository.findByUserEmail(userEmail);
@@ -52,10 +49,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * email에 해당되는 User - 로그인 refrash_token 저장
-     * @param userEmail 회원 email, token 리프레쉬 토큰
-     * @return boolean [false 실패, true 성공]
-     * **/
+     * DB에 RefreshToken 저장
+     * @param userEmail
+     * @param token
+     * @return
+     */
     @Override
     public boolean isTokenSaved(String userEmail, String token) {
         User user = userRepository.findByUserEmail(userEmail);

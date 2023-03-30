@@ -35,19 +35,6 @@
         class="d-flex flex-row justify-space-between flex-wrap"
       >
         <!-- 정답 후보 [4지선다] -->
-        <!-- <v-btn
-          class="quiz spacing-all"
-          elevation="0"
-          width="47%"
-          height="150px"
-          v-for="(answer, key) in this.questions[this.index]['answers']"
-          color="white"
-          :key="key"
-          :id="key"
-          :value="key"
-          :disabled="this.buttonFlag"
-          @click="checkAnswer(key)"
-        > -->
         <v-btn
           class="quiz spacing-all"
           elevation="0"
@@ -58,6 +45,7 @@
           :key="key"
           :id="key"
           :value="key"
+          :disabled="answerResultFlag"
           @click="checkAnswer(key)"
         >
           {{ answer }}
@@ -66,7 +54,7 @@
     </div>
     <!-- 최종 결과 -->
     <div v-if="this.index == 7">
-      <test-result-modal></test-result-modal>
+      <test-result-alert></test-result-alert>
     </div>
   </v-sheet>
 </template>
@@ -78,9 +66,11 @@ import StopWatch from "./element/StopWatch.vue";
 
 import AnswerCorrect from "./element/AnswerCorrect.vue";
 import AnswerWrong from "./element/AnswerWrong.vue";
-import TestResultModal from "./element/TestResultModal.vue";
+import TestResultAlert from "./element/TestResultAlert.vue";
 
 import bgm from "@/assets/images/mypage/quiz/quiz_bgm.mp3";
+
+import { decrypt } from "@/store/js/crypto.js";
 
 const quizStore = "quizStore";
 
@@ -91,16 +81,14 @@ export default {
       time: 10000, // 문제 풀이 시간, 10초(10000)
       timer: null, // 타이머 interval
       timerVisiFlag: true, // 타이머 Front 표시 판별 Flag
+      answerResultFlag: false, // 4지선다 버튼 disabled 판별 Flag
       correctFlag: null, // 현재 문제 정답/오답 판별 Flag
       timeoutFlag: null, // timeout 판별 Flag
-      endFlag: false, // TEST 종료 판별 Flag
       correctAnswer: 0, // 정답 개수
       wrongAnswer: 0, // 오답 개수
       count: 7, // 문제 수
       audio: null, // Audio 객체 (BGM)
       moveTry: false, // 다른 페이지로 이동 시도 여부
-      // #21#
-      // buttonFlag: false, // 4지선다 버튼 disabled 처리 여부
     };
   },
   created() {
@@ -109,16 +97,20 @@ export default {
     // BGM 실행
     if (this.index == 0) this.play();
   },
+  mounted() {
+    decrypt;
+  },
   components: {
     StepProgress,
     StopWatch,
     AnswerCorrect,
     AnswerWrong,
-    TestResultModal,
+    TestResultAlert,
   },
   computed: {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
   },
+  // Quiz를 도전하던 도중 나갈려고 할 경우 막기
   beforeRouteLeave(next) {
     if (this.todayQuizFlag == true) {
       next();
@@ -131,7 +123,9 @@ export default {
     ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
+      this.answerResultFlag = true;
       // console.log("#21# 선택한 정답 번호: ", key);
+
       // i) 시간 초과
       if (this.timeoutFlag == true) {
         this.timeoutFlag = true;
@@ -140,7 +134,13 @@ export default {
         this.timerVisiFlag = false;
       }
       // ii) 정답
-      else if (key == this.questions[this.index]["correctAnswer"]) {
+      else if (
+        key ==
+        decrypt(
+          this.questions[this.index]["correctAnswer"],
+          process.env.VUE_APP_CRYPT_KEY
+        )
+      ) {
         this.correctAnswer++;
         this.correctFlag = true;
         this.timerVisiFlag = false;
@@ -161,20 +161,19 @@ export default {
       this.correctFlag = null;
       this.timeoutFlag = false;
       this.timerVisiFlag = true;
+      this.answerResultFlag = false;
 
       this.timer = setInterval(this.timeOut, this.time);
       // 문제 끝 > 결과 출력
       if (this.index == 7) {
         this.timerVisiFlag = false;
         this.timeoutFlag = false;
-        // clearInterval(this.timer);
 
         // [@Method] Quiz 결과 저장 (quizStore)
         this.setQuizResult(this.correctAnswer);
 
         // timer stop
         clearInterval(this.timer);
-        this.endFlag = true;
       }
     },
     // [@Method] TimeOut에 따른 Data 값 변경
