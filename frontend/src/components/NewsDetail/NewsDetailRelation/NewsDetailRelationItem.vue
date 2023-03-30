@@ -1,5 +1,10 @@
 <template>
-  <v-card width="100%" :height="cardHeight" elevation="1" rounded="default">
+  <v-card
+    class="blue-shadow"
+    width="100%"
+    :height="cardHeight"
+    rounded="default"
+  >
     <!-- thumbnail -->
     <img
       class="swiper-lazy"

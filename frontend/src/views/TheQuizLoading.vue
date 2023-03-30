@@ -1,82 +1,34 @@
 <!-- # for. quiz Loading 창 -->
-<!-- <template>
-  <div class="modal-mask" v-if="loading">
-    <div class="lds-facebook">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-</template> -->
 <template>
-  <div class="quiz-loading-mask" v-if="loading">
-    <v-card class="quiz-wrapper">
-      <v-card-text class="quiz-wrapper-text">
-        <p class="quiz-exp-title">Quiz 만드는 중</p>
-      </v-card-text>
-      <v-card-text class="quiz-wrapper-img">
-        <img
-          :src="require('@/assets/images/mypage/quiz/quiz_loading_spinner.gif')"
-        />
-      </v-card-text>
-    </v-card>
-  </div>
+  <v-dialog max-width="300" persistent v-model="dialog">
+    <v-sheet class="pa-8 d-flex flex-column align-center">
+      <div class="mb-3 b-font xl-font">Quiz 만드는 중</div>
+      <img
+        :src="require('@/assets/images/mypage/quiz/quiz_loading_spinner.gif')"
+      />
+    </v-sheet>
+  </v-dialog>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      dialog: false,
+    };
+  },
   props: {
     loading: {
       type: Boolean,
       required: true,
     },
   },
+  watch: {
+    loading() {
+      this.dialog = this.loading;
+    },
+  },
 };
 </script>
 
-<style>
-.quiz-loading-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-}
-
-.quiz-wrapper {
-  width: 70%;
-  height: 30%;
-
-  margin-left: 15%;
-  margin-top: 70%;
-}
-.quiz-wrapper-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  font-family: var(--main-font-2);
-  color: black;
-}
-
-.quiz-exp-title {
-  font-size: larger;
-  font-weight: 600;
-  color: black;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-top: 5%;
-}
-
-.quiz-wrapper-img img {
-  width: 250px;
-  height: 100px;
-}
-</style>
+<style></style>

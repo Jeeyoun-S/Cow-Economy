@@ -1,9 +1,11 @@
 package com.coweconomy.domain.user.entity;
 
+import com.coweconomy.api.request.QuizResultRequestDto;
 import com.coweconomy.domain.article.entity.Article;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -37,5 +39,26 @@ public class UserTestResult {
     @NotNull
     @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     @Comment("Quiz를 푼 시간 [YYYY-mm-DD HH:mm:ss]")
+//    private LocalDateTime regtime;
     private LocalDateTime regtime;
+
+    @NotNull
+    @Column(columnDefinition = "Boolean default false")
+    @Comment("Quiz 결과 : true-성공(1), false-실패(0)")
+    private Boolean testResultFlag;
+
+    public UserTestResult(User user, Article article, QuizResultRequestDto quizResultRequestDto) {
+        this.user = user;
+        this.article = article;
+        this.testResultFlag = quizResultRequestDto.getIsPassFlag();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (this.regtime == null) {
+            this.regtime = LocalDateTime.now();
+        }
+    }
+
+
 }
