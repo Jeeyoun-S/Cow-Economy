@@ -38,6 +38,7 @@
           rounded
           small
           dark
+          outlined
           color="grey darken-1"
           >수정 취소</v-btn
         >

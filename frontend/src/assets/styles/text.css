@@ -42,6 +42,9 @@
 .error-col-5 {
   color: var(--error-col-1);
 }
+.black-col-1 {
+  color: black !important;
+}
 /* 폰트 굵기 */
 .th-font {
   font-family: var(--main-font-0);
@@ -76,6 +79,12 @@
 }
 .point-b {
   font-family: var(--point-font-3);
+}
+.logo-th {
+  font-family: var(--logo-font-1);
+}
+.logo-b {
+  font-family: var(--logo-font-2);
 }
 /* 폰트 스타일 */
 .underline {

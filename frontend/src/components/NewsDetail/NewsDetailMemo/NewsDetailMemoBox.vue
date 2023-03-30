@@ -56,11 +56,11 @@
               @deleteMemoItem="deleteMemoItem"
             ></NewsDetailMemoBtnDelete>
           </div>
-          <div class="ml-1" v-else>
+          <!-- <div class="ml-1" v-else>
             <v-btn small icon text color="var(--main-col-3)"
               ><v-icon small> mdi-thumb-up </v-icon></v-btn
             >
-          </div>
+          </div> -->
         </v-sheet>
         <!-- memo reference box -->
         <NewsDetailMemoReference

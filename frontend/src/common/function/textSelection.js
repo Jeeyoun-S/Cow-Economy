@@ -29,11 +29,18 @@ function getSelection() {
     var article = document.getElementById("article")
     var contents = article.childNodes;
 
+    if (result.startNode.parentElement.tagName == "SPAN") {
+      result.startNode = result.startNode.parentElement;
+    }
+    if (result.endNode.parentElement.tagName == "SPAN") {
+      result.endNode = result.endNode.parentElement;
+    }
+
     // 요소를 반복하며 마지막 node와 시작 node 인덱스 값 저장
     for (var i = 0; i < contents.length; i++) {
       var node = contents[i];
-      if (node === result.startNode) result.startRange = i;
-      if (node === result.endNode) result.endRange = i;
+      if (!result.startRange && node === result.startNode) result.startRange = i;
+      if (!result.endRange && node === result.endNode) result.endRange = i;
     }
 
     // <br> 또는 공백이 시작 node로 선택된 경우
@@ -110,7 +117,7 @@ function getReferenceHTML(startRange, endRange, startIndex, endIndex, text) {
     var item = contents[i];
 
     // 해당 element가 text만 있는 경우
-    if (item.nodeType === 3) {
+    if (item.nodeType === 3 || item.nodeName == "SPAN") {
       // 시작 위치인 경우
       if (i == startRange) {
         // 시작 위치이면 끝 위치인 경우 : startIndex ~ endIndex
@@ -139,8 +146,10 @@ function getReferenceHTML(startRange, endRange, startIndex, endIndex, text) {
     // 그 외의 경우
     else {
       // HTML 그대로 문자열 변환 후 추가
-      reference += String(item.outerHTML);
-
+      if (item.nodeName == "BR") {
+        // reference += "<br />";
+        reference += String(item.outerHTML);
+      }
       if (going && reference.length > 80) {
         reference += "@@@";
         going = false;
@@ -200,12 +209,12 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
   for (var i = endRange; i >= startRange; i--) {
     var node = contents[i];
 
+    // hightlight가 될 요소 생성
+    var highlight = document.createElement("b");
+    highlight.id = "highlight-pointer";
+
     // node가 텍스트로만 이뤄져 있는 경우
     if (node.nodeType === 3) {
-
-      // hightlight가 될 요소 생성
-      var highlight = document.createElement("span");
-      highlight.id = "highlight-pointer";
 
       // 시작 element인 경우
       if (i == startRange) {
@@ -229,7 +238,7 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
           insertBefore(node.parentElement, highlight, node);
         }
       }
-      // 마지막 element인 경우
+      // 종료 element인 경우
       else if (i == endRange) {
         // vuex에 마지막 노드 저장
         memoStore.state.highlightReference.endNode = node;
@@ -248,6 +257,45 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
 
       // 새로 넣어줬으니, 기존 node는 삭제
       node.remove();
+    } else if (node.nodeName == 'SPAN') {
+      const text = node.textContent;
+      node.innerText = '';
+
+      // 시작 element인 경우
+      if (i == startRange) {
+
+        // 종료 element인 경우
+        if (i == endRange) {
+          // vuex에 마지막 노드 저장
+          memoStore.state.highlightReference.endNode = node;
+          // 0 ~ startIndex까지 넣고,
+          node.innerHTML += text.slice(0, startIndex);
+          // startIndex ~ endIndex까지 highlight해서 넣고,
+          highlight.innerText = text.slice(startIndex, endIndex);
+          node.appendChild(highlight);
+          // endIndex부터 끝까지 넣기
+          node.innerHTML += text.slice(endIndex);
+        } else {
+          // 0 ~ startIndex까지 넣고,
+          node.innerHTML += text.slice(0, startIndex);
+          // startIndex부터 끝까지 highlight해서 넣기
+          highlight.innerText = text.slice(startIndex);
+          node.appendChild(highlight);
+        }
+      }
+      // 종료 element인 경우
+      else if (i == endRange) {
+        // vuex에 마지막 노드 저장
+        memoStore.state.highlightReference.endNode = node;
+        // 0 ~ endIndex까지 highlight해서 넣고,
+        highlight.innerText = text.slice(0, endIndex);
+        node.appendChild(highlight);
+        // endIndex부터 끝까지 넣기
+        node.innerHTML += text.slice(endIndex);
+      } else {
+        highlight.innerText = text;
+        node.appendChild(highlight);
+      }
     }
   }
 }
@@ -288,12 +336,18 @@ function removeHighlightReference() {
       else {
         var tag = target.tagName;
         // highlight된 태그인 경우
-        if (tag == 'SPAN') {
+        if (tag == 'B') {
           // 일반 text로 바꿔서 넣기
           insertBefore(target.parentElement, document.createTextNode(target.textContent), target);
           // highlight 삭제
           target.remove();
-
+        } else if (tag == 'SPAN') {
+          var text = '';
+          const children = target.childNodes;
+          for (var j = 0; j < children.length; j++) {
+            text += children[j].textContent;
+          }
+          target.innerText = text;
         }
       }
 

@@ -5,38 +5,39 @@ const api = apiInstance();
 
 // [POST /memo/{articleId} & PUT /memo/{memoId}] 메모 작성
 async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
-
   var memo = {
     memoContent: newMemo.memoContent,
     memoPublicScope: newMemo.memoPublicScope,
     memoStartIndex: selectionResult.startIndex,
     memoEndIndex: selectionResult.endIndex,
     memoStartRange: selectionResult.startRange,
-    memoEndRange: selectionResult.endRange
+    memoEndRange: selectionResult.endRange,
   };
   var result = null;
 
   // 수정 상태인 경우
   if (newMemo.isModify) {
     // 수정 요청 API 요청
-    await api.put(`/memo/${newMemo.memoId}`, JSON.stringify(memo))
+    await api
+      .put(`memo/${newMemo.memoId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
           result.referenceText = selectionText;
         }
       })
-      .catch()
+      .catch();
   } else {
     // 그 외에는 등록 요청 API 요청
-    await api.post(`/memo/${articleId}`, JSON.stringify(memo))
+    await api
+      .post(`memo/${articleId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
           result.referenceText = selectionText;
         }
       })
-      .catch()
+      .catch();
   }
 
   return await Promise.resolve(result);
@@ -46,12 +47,11 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
 async function updateMemoPublicScope(memoId) {
   var result = null;
   // 메모 공개 여부 수정 API 요청
-  await api.post(`/memo?memoId=${memoId}`)
-    .then((res) => {
-      if (res.data.statusCode == 200) {
-        result = res.data.data;
-      }
-    })
+  await api.post(`memo?memoId=${memoId}`).then((res) => {
+    if (res.data.statusCode == 200) {
+      result = res.data.data;
+    }
+  });
   return await Promise.resolve(result);
 }
 
@@ -59,12 +59,11 @@ async function updateMemoPublicScope(memoId) {
 async function deleteMemo(memoId) {
   var result = false;
   // 메모 삭제 API 요청
-  await api.delete(`memo?memoId=${memoId}`)
-    .then((res) => {
-      if (res.data.statusCode == 200) {
-        result = true;
-      }
-    })
+  await api.delete(`memo?memoId=${memoId}`).then((res) => {
+    if (res.data.statusCode == 200) {
+      result = true;
+    }
+  });
   return await Promise.resolve(result);
 }
 
