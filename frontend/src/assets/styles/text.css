@@ -42,6 +42,9 @@
 .error-col-5 {
   color: var(--error-col-1);
 }
+.black-col-1 {
+  color: black !important;
+}
 /* 폰트 굵기 */
 .th-font {
   font-family: var(--main-font-0);

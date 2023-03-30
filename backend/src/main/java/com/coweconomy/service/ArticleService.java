@@ -50,7 +50,7 @@ public class ArticleService {
                 if (!subWordIds.isEmpty()) {
                     String[] subwordList = articleWord.getSubWordId().split(",", -1);
                     for (String id : subwordList) {
-                        Optional<EconomyWord> optionalEconomyWord = economyWordRepository.findById(Long.parseLong(id));
+                        Optional<EconomyWord> optionalEconomyWord = economyWordRepository.findById(Long.parseLong(id.strip()));
                         if (optionalEconomyWord.isPresent()) {
                             EconomyWord economyWord = optionalEconomyWord.get();
                             economyWordMap.put(economyWord.getWord(), new EconomyWordDto(economyWord));

@@ -5,7 +5,7 @@
         <v-col cols="4"
           ><v-select
             v-model="range"
-            :items="['기사 제목', '기사 내용', '메모 내용', '인용구']"
+            :items="['전체', '기사 제목', '기사 내용', '메모 내용', '인용구']"
             dense
             hide-details
           ></v-select
@@ -27,7 +27,8 @@
           small
           dark
           rounded
-          @click="keyword = ''"
+          outlined
+          @click="refreshSearch()"
           ><v-icon class="mr-1" small>mdi-refresh</v-icon>검색 초기화</v-btn
         >
       </div>
@@ -53,9 +54,15 @@ export default {
   },
   data() {
     return {
-      range: "기사 제목",
+      range: "전체",
       keyword: "",
     };
+  },
+  methods: {
+    refreshSearch() {
+      this.keyword = "";
+      this.range = "전체";
+    },
   },
 };
 </script>

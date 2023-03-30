@@ -19,7 +19,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
   // 수정 상태인 경우
   if (newMemo.isModify) {
     // 수정 요청 API 요청
-    await api.put(`/memo/${newMemo.memoId}`, JSON.stringify(memo))
+    await api.put(`memo/${newMemo.memoId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
@@ -29,7 +29,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
       .catch()
   } else {
     // 그 외에는 등록 요청 API 요청
-    await api.post(`/memo/${articleId}`, JSON.stringify(memo))
+    await api.post(`memo/${articleId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
@@ -46,7 +46,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
 async function updateMemoPublicScope(memoId) {
   var result = null;
   // 메모 공개 여부 수정 API 요청
-  await api.post(`/memo?memoId=${memoId}`)
+  await api.post(`memo?memoId=${memoId}`)
     .then((res) => {
       if (res.data.statusCode == 200) {
         result = res.data.data;
