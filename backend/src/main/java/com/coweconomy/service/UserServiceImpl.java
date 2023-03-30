@@ -5,7 +5,6 @@ import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *	User 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = userRepository.findByUserEmail(userRegisterInfo.getUserEmail());
-        if(user != null) {
+        if (user != null) {
             return null;
         }
 //        System.out.println("유저를 저장하겠습니다.");
@@ -67,4 +66,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+//    @Override
+//    public UserDto getUserInfoByEmail(String userEmail) {
+//        User user = userRepository.findByUserEmail(userEmail);
+//        UserDto userDto = new UserDto(user);
+//        return userDto;
+//    }
 }
