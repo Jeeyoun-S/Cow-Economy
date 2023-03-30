@@ -135,6 +135,8 @@ export default {
 }
 </style> -->
 <style lang="scss">
+$green: #00ff00;
+
 .error-page {
   display: flex;
   align-items: center;
