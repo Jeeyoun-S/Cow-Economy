@@ -110,6 +110,7 @@ export default {
   computed: {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
   },
+  // Quiz를 도전하던 도중 나갈려고 할 경우 막기
   beforeRouteLeave(next) {
     if (this.todayQuizFlag == true) {
       next();

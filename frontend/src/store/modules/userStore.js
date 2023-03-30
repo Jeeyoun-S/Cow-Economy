@@ -75,9 +75,3 @@ const userStore = {
 };
 
 export default userStore;
-//   try {
-//     const accessToken = localStorage.getItem("access-token");
-
-//     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
-//     const response = await this.$
-//   }

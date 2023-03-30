@@ -12,18 +12,26 @@
   -webkit-user-select: text;
   user-select: text;
 }
-/* #article strong {
+#article span {
   -ms-user-select: text;
   -moz-user-select: -moz-text;
   -khtml-user-select: text;
   -webkit-user-select: text;
   user-select: text;
-} */
+}
 #article::-moz-selection {
   color: white;
-  background: var(--main-col-4);
+  background: var(--main-col-3);
 }
 #article::selection {
   color: white;
-  background: var(--main-col-4);
+  background: var(--main-col-3);
+}
+#article span::selection {
+  color: white;
+  background: var(--main-col-3);
+}
+#article span::-moz-selection {
+  color: white;
+  background: var(--main-col-3);
 }
