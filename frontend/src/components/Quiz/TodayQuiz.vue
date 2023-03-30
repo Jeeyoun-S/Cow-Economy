@@ -92,7 +92,7 @@ export default {
     };
   },
   created() {
-    this.timer = setInterval(this.timeOut, this.time);
+    // this.timer = setInterval(this.timeOut, this.time);
 
     // BGM 실행
     if (this.index == 0) this.play();
@@ -163,7 +163,7 @@ export default {
       this.timerVisiFlag = true;
       this.answerResultFlag = false;
 
-      this.timer = setInterval(this.timeOut, this.time);
+      // this.timer = setInterval(this.timeOut, this.time);
       // 문제 끝 > 결과 출력
       if (this.index == 7) {
         this.timerVisiFlag = false;

@@ -109,3 +109,12 @@
 .white-shadow {
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
+.blue-gredient {
+  background: linear-gradient(
+    to right,
+    var(--graph-1-col-1),
+    var(--graph-1-col-6)
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+}
