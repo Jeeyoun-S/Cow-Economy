@@ -62,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
                 // 로그인할 때는 검증 하지 않음
-                .antMatchers("/auth/**")
+//                .antMatchers("/auth/**")
+                .antMatchers("/**")
                 .permitAll()
 
                 // 나머지는 전부 인증 필요

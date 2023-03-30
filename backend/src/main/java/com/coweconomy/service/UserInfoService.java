@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -78,7 +79,30 @@ public class UserInfoService {
     public List<Object[]> getReadArticleCount(Long userId) {
         try {
             LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(6);
-            return userArticleRepository.findByUserUserIdAndRegtimeBefore(userId, sixMonthAgo);
+            List<Object[]> articleCntList = userArticleRepository.findByUserUserIdAndRegtimeBefore(userId, sixMonthAgo);
+
+            List<Object[]> articleList = new ArrayList<>();
+            YearMonth startDate = YearMonth.now().minusMonths(5);
+            YearMonth endDate = YearMonth.now();
+            for (YearMonth date = startDate; date.isBefore(endDate.plusMonths(1)); date = date.plusMonths(1)) {
+                String yearMonthStr = date.toString();
+                boolean hasDate = false;
+
+                // 만약 현재 날짜(YY-mm)의 count 수가 있다면 articleList에 넣기
+                for (Object[] article: articleCntList) {
+                    if (article[0].equals(yearMonthStr)) {
+                        articleList.add(new Object[] { article[0], article[1] });
+                        hasDate = true;
+                        break;
+                    }
+                }
+                // 없다면, 0으로 넣기
+                if (!hasDate) {
+                    articleList.add(new Object[]{ yearMonthStr, 0 });
+                }
+            }
+
+            return articleList;
         }
         catch (Exception exception) {
             logger.error(exception.toString());
