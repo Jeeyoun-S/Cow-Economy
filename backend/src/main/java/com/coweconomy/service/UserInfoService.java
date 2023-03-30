@@ -87,16 +87,16 @@ public class UserInfoService {
     }
 
     /**
-     * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회
-     * @param userId 회원 id(seq), year 연
+     * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회 (올해 기준)
+     * @param userId 회원 id(seq)
      * @return List<String>
      * **/
-    public List<Object[]> getReadArticleCategory(Long userId, String year) {
+    public List<Object[]> getReadArticleCategory(Long userId) {
         try {
             // 올해
-            LocalDateTime startOfYear = LocalDateTime.of(Integer.parseInt(year), Month.JANUARY, 1, 0, 0, 0);
+            LocalDateTime startOfYear = LocalDateTime.of(LocalDateTime.now().getYear(), Month.JANUARY, 1, 0, 0, 0);
             // 내년
-            LocalDateTime startOfNextYear = LocalDateTime.of(Integer.parseInt(year)+1, Month.JANUARY, 1, 0, 0, 0);
+            LocalDateTime startOfNextYear = LocalDateTime.of(LocalDateTime.now().getYear()+1, Month.JANUARY, 1, 0, 0, 0);
 //            logger.info("#21# 읽은 기사 카테고리 조회 시 올해, 내년 확인: {} - {}", startOfYear, startOfNextYear);
 
             return userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
@@ -109,12 +109,13 @@ public class UserInfoService {
 
     /**
      * userId에 해당되는 연-월 Quiz에서 맞춘 경제용어 카테고리 조회
-     * @param userId 회원 id(seq), year 연, month 월
+     * @param userId 회원 id(seq)
      * @return List<Object[]>
      * **/
-    public List<Object[]> getQuizPassWordCategory(Long userId, String year, String month) {
+    public List<Object[]> getQuizPassWordCategory(Long userId) {
         try {
-            return userTestResultRepository.findArticleCategoryByUserIdAndYearAndMonth(userId, Integer.parseInt(year), Integer.parseInt(month));
+//            logger.info("#21# 현재 년-월 확인: {}-{}", LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue());
+            return userTestResultRepository.findArticleCategoryByUserIdAndYearAndMonth(userId, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue());
         }
         catch (Exception exception) {
             logger.error(exception.toString());

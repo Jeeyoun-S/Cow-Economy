@@ -80,9 +80,9 @@ public class QuizService {
 
         }
         // * 단어 확인용
-        for(ArticleWordDto a: result){
-            logger.info("### {}",a.getEconomyWord().getWord());
-        }
+//        for(ArticleWordDto a: result){
+//            logger.info("### {}",a.getEconomyWord().getWord());
+//        }
 
         if (result.size() < 7) return null; // 경제단어 7개 이하 > Quiz 출제 불가
         return result;
