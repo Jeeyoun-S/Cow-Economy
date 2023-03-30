@@ -8,11 +8,20 @@
     <router-view name="footer" />
   </v-app>
 </template> -->
-<template>
+<!-- <template>
   <v-sheet>
     <home-header />
     <div class="img">
       <img :src="require('@/assets/images/error-404.gif')" />
+    </div>
+  </v-sheet>
+</template> -->
+<template>
+  <v-sheet>
+    <home-header />
+    <div class="error-page">
+      <h1 data-h1="404">404</h1>
+      <p data-p="NOT FOUND">NOT FOUND</p>
     </div>
   </v-sheet>
 </template>
@@ -31,7 +40,12 @@ export default {
 </script>
 
 <style>
-.img {
-  margin-left: 15%;
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  /* font-family: Arial,"Helvetica Neue",Helvetica,sans-serif; */
 }
 </style>
