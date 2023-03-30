@@ -12,17 +12,18 @@ function apiInstance() {
     // # axios 통신 시 loading 창 출력
     // store.commit("LOADING_STATUS", true);
 
-    // # JWT Token Header 추가
     const token = localStorage.getItem("access-token");
     const refreshToken = localStorage.getItem("refresh-token");
+
+    // access 토큰이 localStroage에 있으면 header에 포함시켜 전송
     if (token) {
       // console.log("#21# token 넣기 확인: ", token);
       config.headers["Authorization"] = "Bearer " + token;
     }
 
-    // refresh-token도 포함 시키기
+    // refresh 토큰도 함께 보내기
     if (refreshToken) {
-      config.headers["Refresh"] = "Refrsh " + refreshToken;
+      config.headers["Refresh"] = "Refresh " + refreshToken;
     }
 
     return config;

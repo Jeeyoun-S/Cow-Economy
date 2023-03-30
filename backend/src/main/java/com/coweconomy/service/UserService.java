@@ -16,16 +16,24 @@ public interface UserService {
     User createUser(UserRegisterPostReq userRegisterInfo);
 
     /**
-     * email에 해당되는 User 정보 조회
-     * @param userEmail 회원 email
-     * @return User 회원 Entity
-     * **/
+     * 회원 Email로 User 객체 가져오기
+     * @param userEmail
+     * @return
+     */
     User getUserByUserEmail(String userEmail);
 
+    /** 
+     * DB에 회원이 없을 경우 새로운 회원 생성
+     * @param userRegisterInfo
+     * @return
+     */
+    User createUser(UserRegisterPostReq userRegisterInfo);
+
     /**
-     * email에 해당되는 User - 로그인 refrash_token 저장
-     * @param userEmail 회원 email, token 리프레쉬 토큰
-     * @return boolean [false 실패, true 성공]
-     * **/
+     * RefreshToken DB 저장
+     * @param userEmail
+     * @param token
+     * @return
+     */
     boolean isTokenSaved(String userEmail, String token);
 }
