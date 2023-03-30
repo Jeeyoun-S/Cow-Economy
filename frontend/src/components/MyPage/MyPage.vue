@@ -71,7 +71,7 @@ import MyPageLoading from "./MyPageLoading.vue";
 
 import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
 import { mapGetters, mapActions } from "vuex";
-import { getUserInfo, getReadCategory } from "@/api/modules/mypage.js";
+import { getUserInfo } from "@/api/modules/mypage.js";
 
 export default {
   name: "MyPage",
@@ -115,23 +115,23 @@ export default {
         this.user = res.user;
         this.loading = false;
       });
-      const year = 2023;
+      // const year = 2023;
       // console.log("여기는 지나가니");
-      getReadCategory(year)
-        .then(() => {
-          this.fetchReadCategory(year);
-          // console.log(
-          //   "store state after fetchReadCategory:",
-          //   this.$store.state.readCategoryList
-          // );
-        })
-        .catch((error) => {
-          console.error(
-            "Error in getReadCategory:",
-            error.message,
-            error.response
-          );
-        });
+      // getReadCategory(year)
+      //   .then(() => {
+      //     this.fetchReadCategory(year);
+      //     // console.log(
+      //     //   "store state after fetchReadCategory:",
+      //     //   this.$store.state.readCategoryList
+      //     // );
+      //   })
+      //   .catch((error) => {
+      //     console.error(
+      //       "Error in getReadCategory:",
+      //       error.message,
+      //       error.response
+      //     );
+      //   });
     }
   },
   components: {

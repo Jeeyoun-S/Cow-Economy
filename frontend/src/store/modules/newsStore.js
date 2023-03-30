@@ -1,4 +1,4 @@
-import { getReadCategory } from "@/api/modules/mypage";
+// import { getReadCategory } from "@/api/modules/mypage";
 
 const newsStore = {
   namespaced: true,
@@ -105,17 +105,17 @@ const newsStore = {
       commit("SET_ARTICLE_CNT_LIST", articleList);
     },
     // [@Method] 경제 용어 카테고리 불러오기
-    async fetchReadCategory({ commit }, year) {
-      // console.log("그럼 여기는");
-      try {
-        const data = await getReadCategory(year);
-        // console.log("성공 했니?");
-        // console.log(data.data);
-        commit("SET_READ_CATEGORY", data.data);
-      } catch (error) {
-        console.error("Error in fetchReadCategory:", error);
-      }
-    },
+    // async fetchReadCategory({ commit }, year) {
+    //   // console.log("그럼 여기는");
+    //   try {
+    //     const data = await getReadCategory(year);
+    //     // console.log("성공 했니?");
+    //     // console.log(data.data);
+    //     commit("SET_READ_CATEGORY", data.data);
+    //   } catch (error) {
+    //     console.error("Error in fetchReadCategory:", error);
+    //   }
+    // },
   },
 };
 
