@@ -1,24 +1,31 @@
 <template>
-  <v-dialog v-model="dialog" max-width="390">
-    <v-sheet class="pa-7 d-flex flex-column align-center">
-      <div class="b-font xl-font d-flex flex-row align-center">
-        <img height="25" src="@/assets/images/emoji/no.png" />
-        <span class="mx-3">오늘의 Quiz 끝</span>
-        <img height="25" src="@/assets/images/emoji/no.png" />
-      </div>
-      <img :src="require('@/assets/images/mypage/quiz/fail.gif')" />
-      <div class="py-5 d-flex flex-column align-center">
-        <div>오늘의 Quiz</div>
+  <v-dialog v-model="dialog" max-width="350">
+    <v-sheet class="pa-3 d-flex flex-column align-center">
+      <v-btn class="align-self-end" icon @click="dialog = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <img
+        width="40%"
+        :src="require('@/assets/images/illustration/calendar.png')"
+      />
+      <div class="mx-3 mt-4 point-md xl-font">오늘의 Quiz 끝</div>
+      <div class="mx-3 my-2 d-flex flex-column align-center sm-font">
         <div>도전 기회가 소진되었습니다.</div>
+        <div>오늘의 Quiz는 하루에 한 번만</div>
+        <div>풀 수 있습니다!</div>
       </div>
-      <v-btn
-        block
-        dark
-        color="var(--main-col-2)"
-        @click="dialog = false"
-        elevation="0"
-        >돌아가기</v-btn
-      >
+      <div class="mx-3 my-2 mb-4">
+        <v-btn
+          block
+          dark
+          color="var(--main-col-2)"
+          @click="dialog = false"
+          elevation="0"
+          class="px-10"
+          rounded
+          >돌아가기</v-btn
+        >
+      </div>
     </v-sheet>
   </v-dialog>
 </template>

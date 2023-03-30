@@ -6,24 +6,21 @@
       </v-btn>
       <img
         width="40%"
-        :src="require('@/assets/images/illustration/page_not_found.png')"
+        :src="require('@/assets/images/illustration/no_results_found.png')"
       />
-      <div class="mx-3 mt-4 point-md xl-font">Quiz 출제 불가</div>
-      <div class="mx-3 my-2 d-flex flex-column align-center sm-font">
-        <div>읽은 기사가 부족해</div>
-        <div>Quiz를 출제할 수 없습니다.</div>
-        <div>기사를 많이 읽어주세요!</div>
-      </div>
+      <div class="mx-3 mt-4 point-md xl-font">비회원 이용 불가</div>
+      <div class="mx-3 my-2">로그인 후 이용 가능합니다.</div>
       <div class="mx-3 my-2 mb-4">
         <v-btn
           dark
           color="var(--main-col-2)"
-          @click="closeModal()"
+          @click="moveLogin()"
           elevation="0"
           rounded
-          class="mr-2"
-          >기사 읽으러 가기</v-btn
-        ><v-btn
+          class="mr-2 px-10"
+          >로그인</v-btn
+        >
+        <v-btn
           dark
           color="var(--main-col-2)"
           @click="dialog = false"
@@ -39,20 +36,19 @@
 
 <script>
 export default {
-  name: "TodayNotEnterAlert",
+  name: "TodayQuizNotUser",
   data() {
     return {
       dialog: false,
     };
   },
   methods: {
-    // [@Method] Modal 닫고 Article 페이지로 이동
-    closeModal() {
-      this.dialog = false;
-      this.$router.push("/news");
-    },
     openDialog() {
       this.dialog = true;
+    },
+    moveLogin() {
+      this.openDialog();
+      this.$router.push("/my-page");
     },
   },
 };

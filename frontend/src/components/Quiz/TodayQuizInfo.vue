@@ -64,14 +64,17 @@
       <today-not-enter-alert ref="todaynot"></today-not-enter-alert>
       <!-- ii) Quiz 출제를 위한 경제단어 부족 -->
       <shortage-word-alert ref="shortage"></shortage-word-alert>
+      <!-- iii) 로그인 안 된 상태 -->
+      <today-quiz-not-user ref="notuser"></today-quiz-not-user>
     </v-sheet>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import ShortageWordAlert from "./element/ShortageWordAlert.vue";
 import TodayNotEnterAlert from "./element/TodayNotEnterAlert.vue";
+import TodayQuizNotUser from "./element/TodayQuizNotUser.vue";
 
 const quizStore = "quizStore";
 
@@ -80,9 +83,11 @@ export default {
   components: {
     ShortageWordAlert,
     TodayNotEnterAlert,
+    TodayQuizNotUser,
   },
   computed: {
     ...mapState(quizStore, ["questions", "todayQuizFlag"]),
+    ...mapGetters("userStore", ["isLoggedIn"]),
   },
   watch: {
     questions() {
@@ -95,18 +100,26 @@ export default {
     },
   },
   created() {
-    // [@Method] Quiz 진행 여부 판단
-    this.checkTodayQuiz();
+    // 로그인된 상태라면
+    if (this.isLoggedIn) {
+      // [@Method] Quiz 진행 여부 판단
+      this.checkTodayQuiz();
+    }
+
     // console.log("#21# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
   },
   methods: {
     ...mapActions(quizStore, ["setExamQuestions", "checkTodayQuiz"]),
     // [@Method] Quiz 페이지로 이동 or 알림창 출력
     moveQuiz() {
-      if (this.todayQuizFlag == true) {
-        this.setExamQuestions(); // [@Method] Quiz 문제 출제
+      if (this.isLoggedIn) {
+        if (this.todayQuizFlag == true) {
+          this.setExamQuestions(); // [@Method] Quiz 문제 출제
+        } else {
+          this.$refs.todaynot.openDialog(); // ! 오늘 Quiz 다 했다고 alert 창 띄우기
+        }
       } else {
-        this.$refs.todaynot.openDialog(); // ! 오늘 Quiz 다 했다고 alert 창 띄우기
+        this.$refs.notuser.openDialog(); // 로그인 안 한 상태라고 창 띄우기
       }
     },
   },
