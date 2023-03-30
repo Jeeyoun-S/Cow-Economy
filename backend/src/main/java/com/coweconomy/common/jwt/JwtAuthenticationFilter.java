@@ -79,7 +79,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             logger.info("Token found {}", token);
             return token;
         } else {
-            logger.info("트콘 없음");
+            logger.info("토큰 없음");
         }
         return null;
     }

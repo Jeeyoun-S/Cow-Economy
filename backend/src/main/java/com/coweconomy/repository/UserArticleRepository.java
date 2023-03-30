@@ -18,7 +18,7 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
 
     /**
      * 회원이 일주일 이내에 읽은 기사 조회
-     * @param userId 조회할 회원 ID
+     * @param userId 회원 id(seq)
      * @return List<UserArticle> 회원이 읽은 기사 List
      * **/
     @Query("select ua from UserArticle ua where ua.user.userId= :userId and ua.regtime>= :regtime")
@@ -31,9 +31,10 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
      * @return Optional<UserArticle> 사용자 읽은 기사 컬럼
      * **/
     Optional<UserArticle> findByUserAndArticle(@Param("user") User user, @Param("article") Article article);
+    
 
      /** userId에 해당되는 6개월 간 읽은 기사 수 조회
-     * @param userId 회원 id(seq)
+     * @param userId 회원 id(seq), regtime 일주일 전 날짜
      * @return List<Object[]>
      * **/
     @Query("select date_format(ua.regtime, '%Y-%m'), count(ua) " +
@@ -45,7 +46,7 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
 
     /**
      * userId에 해당되는 1년 간 읽은 기사의 카테고리 조회
-     * @param userId 회원 id(seq)
+     * @param userId 회원 id(seq), startOfYear 올해, startOfNextYear 내년
      * @return List<Object[]>
      * **/
     @Query("select distinct ua.article.articleCategory, count(*) " +
@@ -54,4 +55,5 @@ public interface UserArticleRepository extends JpaRepository<UserArticle, Long> 
             "and ua.regtime >= :startOfYear and ua.regtime < :startOfNextYear " +
             "group by ua.article.articleCategory")
     List<Object[]> findArticleCategoryByUserIdAndYear(@Param("userId") Long userId, @Param("startOfYear") LocalDateTime startOfYear, @Param("startOfNextYear") LocalDateTime startOfNextYear);
+
 }
