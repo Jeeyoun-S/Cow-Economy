@@ -97,7 +97,7 @@ export default {
   //     this.loaded = true;
   //   },
   // },
-  created() {
+  async created() {
     // this.loaded = false;
     // 인가 코드 추출
     this.kakaoCode = this.$route.query.code;
@@ -108,11 +108,12 @@ export default {
 
     if (this.isLoggedIn) {
       this.loading = true;
-      getUserInfo().then((res) => {
+      await getUserInfo().then(async (res) => {
         // this.articleCntList = res.articleCntList;
-        this.setUserReadArticleCount(res.articleCntList);
-        this.memoDtoList = res.memoDtoList;
-        this.user = res.user;
+        console.log(res);
+        await this.setUserGraphData(res);
+        this.memoDtoList = await res.memoDtoList;
+        this.user = await res.user;
         this.loading = false;
       });
       // const year = 2023;
@@ -147,8 +148,7 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["executeToken"]),
-    ...mapActions("newsStore", ["setUserReadArticleCount"]),
-    ...mapActions("newsStore", ["fetchReadCategory"]),
+    ...mapActions("newsStore", ["setUserGraphData"]),
     // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
     async kakao() {
       await this.executeToken();

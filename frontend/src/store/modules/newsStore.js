@@ -5,8 +5,13 @@ const newsStore = {
   state: {
     searchText: "",
     searched: false,
-    articleCntList: [], // 6개월 간 읽은 기사 수
-    readCategoryList: [], // 경제 용어 카테고리
+    // articleCntList: [], // 6개월 간 읽은 기사 수
+    // readCategoryList: [], // 경제 용어 카테고리
+    articleList: {
+      articleCntList: [],
+      readCategoryList: [],
+      wordCategoryList: [],
+    },
     news: [
       {
         articsleId: 1,
@@ -64,16 +69,16 @@ const newsStore = {
         article_hits: 1,
       },
     ],
-    category: [
-      ["금융", 2],
-      ["증권", 12],
-      ["산업/재계", 9],
-      ["중기/벤처", 7],
-      ["부동산", 2],
-      ["글로벌 경제", 2],
-      ["생활경제", 3],
-      ["경제 일반", 5],
-    ],
+    // category: [
+    //   ["금융", 2],
+    //   ["증권", 12],
+    //   ["산업/재계", 9],
+    //   ["중기/벤처", 7],
+    //   ["부동산", 2],
+    //   ["글로벌 경제", 2],
+    //   ["생활경제", 3],
+    //   ["경제 일반", 5],
+    // ],
   },
   mutations: {
     setSearchText(state, payload) {
@@ -82,15 +87,21 @@ const newsStore = {
     setSearched(state, payload) {
       state.searched = payload;
     },
-    SET_ARTICLE_CNT_LIST(state, articleCntList) {
-      state.articleCntList = articleCntList;
-    },
-    SET_READ_CATEGORY(state, readCategoryList) {
-      // console.log(readCategoryList)
-      state.readCategoryList = readCategoryList;
-      // console.log("저장하니?");
-      // console.log(state.readCategoryList);
-    },
+    // SET_ARTICLE_CNT_LIST(state, articleCntList) {
+    //   state.articleCntList = articleCntList;
+    // },
+    // SET_READ_CATEGORY(state, readCategoryList) {
+    //   // console.log(readCategoryList)
+    //   state.readCategoryList = readCategoryList;
+    //   // console.log("저장하니?");
+    //   // console.log(state.readCategoryList);
+    // },
+    SET_ARTICLE_LIST(state, articleList) {
+      state.articleList.articleCntList = articleList.articleCntList;
+      state.articleList.readCategoryList = articleList.articleCategoryCnt;
+      state.articleList.wordCategoryList = articleList.quizPassWordCategoryCnt;
+      console.log("articleList 저장확인", state.articleList.articleCntList)
+    }
   },
   actions: {
     setSearchText({ commit }, payload) {
@@ -100,10 +111,17 @@ const newsStore = {
       commit("setSearched", payload);
     },
     // [@Method] 회원이 6개월 간 읽은 기사 개수 저장(set)
-    setUserReadArticleCount({ commit }, articleList) {
-      // console.log("#21# 읽은 기사 개수 SET: ", articleList)
-      commit("SET_ARTICLE_CNT_LIST", articleList);
-    },
+    // setUserReadArticleCount({ commit }, articleList) {
+    //   // console.log("#21# 읽은 기사 개수 SET: ", articleList)
+    //   commit("SET_ARTICLE_CNT_LIST", articleList);
+    // },
+    // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
+    setUserGraphData({ commit }, articleList) {
+      console.log("articleList : ", articleList);
+      commit("SET_ARTICLE_LIST", articleList);
+    }
+
+
     // [@Method] 경제 용어 카테고리 불러오기
     // async fetchReadCategory({ commit }, year) {
     //   // console.log("그럼 여기는");

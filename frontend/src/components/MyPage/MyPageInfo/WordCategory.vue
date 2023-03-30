@@ -28,14 +28,14 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 export default {
-computed: mapState("newsStore", ["category"]),
+computed: mapState("newsStore", ["articleList"]),
 mounted() {
 	this.drawRadarChart();
 },
 methods: {
 	drawRadarChart() {
 		const ctx = this.$refs.radarChart.getContext("2d");
-		
+		this.category = this.articleList.wordCategoryList;
 		const labels = this.category.map(item => item[0]);
 		const data = this.category.map(item => item[1]);
 

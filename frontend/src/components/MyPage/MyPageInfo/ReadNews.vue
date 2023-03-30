@@ -24,15 +24,28 @@ export default {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
-    ...mapState("newsStore", ["articleCntList"]),
+    ...mapState("newsStore", ["articleList"]),
   },
   mounted() {
     this.createChart();
   },
+  // watch: {
+  //   // Watch for changes in readCategoryList
+  //   readCategoryList: {
+  //     handler() {
+  //       this.$nextTick(() => {
+  //         if (this.$refs.barChart) {
+  //           this.createChart();
+  //         }
+  //       });
+  //     },
+  //     immediate: true, // Run the handler immediately after the watcher is created
+  //   },
+  // },
   methods: {
     createChart() {
       // console.log("##1 ", this.articleCntList);
-      const chartData = this.articleCntList;
+      const chartData = this.articleList.articleCntList;
       const labels = chartData.map(([month]) => {
         const date = new Date(`${month}-01`);
         return `${date.getMonth() + 1}월`;
