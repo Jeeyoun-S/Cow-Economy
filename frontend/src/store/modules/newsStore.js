@@ -1,12 +1,17 @@
+import {
+  getReadCategory,
+} from "@/api/modules/mypage";
+
 const newsStore = {
     namespaced: true,
     state: {
       searchText: "",
       searched: false,
       articleCntList: [], // 6개월 간 읽은 기사 수
+      readCategoryList: [], // 경제 용어 카테고리
       news: [
         {
-          articleId: 1, 
+          articsleId: 1, 
           article_category: "부동산", 
           article_regtime: "2023-10-24 12:12:12",
           article_editor: "김싸피 기사", 
@@ -81,7 +86,13 @@ const newsStore = {
       },
       SET_ARTICLE_CNT_LIST(state, articleCntList) {
         state.articleCntList = articleCntList; 
-      }
+      },
+      SET_READ_CATEGORY(state, readCategoryList) {
+        console.log(readCategoryList)
+        state.readCategoryList = readCategoryList;
+        console.log("저장하니?")
+        console.log(state.readCategoryList)
+      },
     },
     actions: {
       setSearchText({ commit }, payload) {
@@ -94,6 +105,18 @@ const newsStore = {
       setUserReadArticleCount({ commit }, articleList) {
         // console.log("#21# 읽은 기사 개수 SET: ", articleList)
         commit("SET_ARTICLE_CNT_LIST", articleList);
+      },
+      // [@Method] 경제 용어 카테고리 불러오기
+      async fetchReadCategory({ commit }, year) {
+        console.log("그럼 여기는");
+        try {
+          const data = await getReadCategory(year);
+          console.log("성공 했니?");
+          console.log(data.data);
+          commit("SET_READ_CATEGORY", data.data);
+        } catch (error) {
+          console.error("Error in fetchReadCategory:", error);
+        }
       }
     },
   };

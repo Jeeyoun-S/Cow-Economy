@@ -85,9 +85,11 @@ public class UserInfoController {
         // 0) 현재 login 한 유저 아이디 추출
         String accessToken = request.getHeader("Authorization").substring(7);
         Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+        System.out.println("안녕~" + userInfoService.getReadArticleCategory(userId, year));
+        System.out.println(userId);
         if (userId == null) return BaseResponse.fail();
-
         // 회원이 읽은 기사의 카테고리 별 기사 수 return  ex) [["경제", 2], ["금융", 1]]
+        System.out.println("손승환"+ userInfoService.getReadArticleCategory(userId, year));
         return BaseResponse.success(userInfoService.getReadArticleCategory(userId, year));
     }
 

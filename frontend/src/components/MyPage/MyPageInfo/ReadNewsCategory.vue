@@ -36,17 +36,33 @@ export default {
       chart: null,
     };
   },
-  computed: mapState("newsStore", ["category"]),
+  computed: mapState("newsStore", ["readCategoryList"]),
   mounted() {
-    this.drawChart();
+    // this.drawChart();
+  },
+  watch: {
+    // Watch for changes in readCategoryList
+    readCategoryList: {
+      handler() {
+        this.$nextTick(() => {
+          if (this.$refs.barChart) {
+            this.drawChart();
+          }
+        });
+      },
+      immediate: true, // Run the handler immediately after the watcher is created
+    },
   },
   methods: {
     drawChart() {
+      if (this.chart) {
+        this.chart.destroy();
+      }
       const ctx = this.$refs.barChart.getContext("2d");
 
-      const labels = this.category.map((item) => item[0]);
-      const data = this.category.map((item) => item[1]);
-
+      const labels = this.readCategoryList.map((item) => item[0]);
+      const data = this.readCategoryList.map((item) => item[1]);
+      console.log("##23 ", data)
       this.chart = new Chart(ctx, {
         type: "doughnut",
         data: {
