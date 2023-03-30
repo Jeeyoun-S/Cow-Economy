@@ -20,7 +20,7 @@
       </v-sheet>
     </v-sheet>
     <!-- list buttons -->
-    <v-row class="mx-7 py-5 pt-7">
+    <v-row v-if="isLoggedIn" class="mx-7 py-5 pt-7">
       <v-col class="pa-0">
         <v-btn
           elevation="0"
@@ -46,6 +46,25 @@
         >
       </v-col>
     </v-row>
+    <!-- Login Guide -->
+    <v-row v-else class="mx-7 py-5 pt-7">
+      <v-sheet
+        class="pa-1 px-5 d-flex flex-row align-center"
+        color="var(--main-col-2)"
+        dark
+        width="100%"
+        rounded="xl"
+        ><span class="sm-font">메모 작성은 로그인 후에 가능합니다.</span>
+        <v-btn
+          class="ml-auto"
+          @click="moveLogin()"
+          elevation="0"
+          color="var(--main-col-2)"
+          rounded
+          ><v-icon small>mdi-account</v-icon>로그인</v-btn
+        ></v-sheet
+      >
+    </v-row>
     <!-- my memo list -->
     <NewsDetailMemoMine
       v-if="isListMine"
@@ -64,6 +83,7 @@
 <script>
 import NewsDetailMemoOther from "./NewsDetailMemoOther.vue";
 import NewsDetailMemoMine from "./NewsDetailMemoMine.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "NewsDetail",
@@ -75,17 +95,28 @@ export default {
     NewsDetailMemoMine,
     NewsDetailMemoOther,
   },
+  computed: {
+    ...mapGetters("userStore", ["isLoggedIn"]),
+  },
   data() {
     return {
       sort: "최신순", // 정렬 방식
       isListMine: true, // true면 나의 메모, false면 전체 메모
     };
   },
+  methods: {
+    moveLogin() {
+      this.$router.push("/my-page");
+    },
+  },
   // 나의 메모 or 전체 메모로 바꾸면 sort도 함께 초기화
   watch: {
     isListMine() {
       this.sort = "최신순";
     },
+  },
+  created() {
+    if (!this.isLoggedIn) this.isListMine = false;
   },
 };
 </script>

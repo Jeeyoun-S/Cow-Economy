@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="300">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" icon text :color="color"
+      <v-btn v-bind="attrs" v-on="on" icon text :color="color" :small="isSmall"
         ><v-icon> mdi-delete-forever </v-icon></v-btn
       >
     </template>
@@ -45,6 +45,8 @@ export default {
     memoId: Number,
     index: Number,
     color: String,
+    isSmall: Boolean,
+    indexDetail: Number,
   },
   methods: {
     ...mapActions("memoStore", ["updateNewMemo", "removeSelectionText"]),
@@ -70,7 +72,11 @@ export default {
             });
           }
           // 메모 리스트에서 삭제하기
-          this.$emit("deleteMemoItem");
+          if (this.isSmall) {
+            this.$emit("deleteMemoItem", this.index, this.indexDetail);
+          } else {
+            this.$emit("deleteMemoItem");
+          }
         } else {
           // 삭제 실패
         }

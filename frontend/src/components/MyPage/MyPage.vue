@@ -71,7 +71,7 @@ import MyPageLoading from "./MyPageLoading.vue";
 
 import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
 import { mapGetters, mapActions } from "vuex";
-import { getUserInfo } from "@/api/modules/mypage.js";
+import { getUserInfo, getReadCategory } from "@/api/modules/mypage.js";
 
 export default {
   name: "MyPage",
@@ -86,7 +86,7 @@ export default {
         },
       },
       selectedBtn: "my-memo",
-      articleCntList: [],
+      // articleCntList: [],
       memoDtoList: [],
       user: {},
       loading: false,
@@ -109,10 +109,20 @@ export default {
     if (this.isLoggedIn) {
       this.loading = true;
       getUserInfo().then((res) => {
-        this.articleCntList = res.articleCntList;
+        // this.articleCntList = res.articleCntList; 
+        this.setUserReadArticleCount(res.articleCntList);
         this.memoDtoList = res.memoDtoList;
         this.user = res.user;
         this.loading = false;
+      });
+      const year = 2023;
+      console.log("여기는 지나가니");
+      getReadCategory(year).then(() => {
+        this.fetchReadCategory(year);
+        console.log('store state after fetchReadCategory:', this.$store.state.readCategoryList);
+      })
+      .catch((error) => {
+        console.error("Error in getReadCategory:", error.message, error.response);
       });
     }
   },
@@ -129,6 +139,8 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["executeToken"]),
+    ...mapActions("newsStore", ["setUserReadArticleCount"]),
+    ...mapActions("newsStore", ["fetchReadCategory"]),
     // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
     async kakao() {
       await this.executeToken();

@@ -98,7 +98,8 @@ public class UserInfoService {
             // 내년
             LocalDateTime startOfNextYear = LocalDateTime.of(LocalDateTime.now().getYear()+1, Month.JANUARY, 1, 0, 0, 0);
 //            logger.info("#21# 읽은 기사 카테고리 조회 시 올해, 내년 확인: {} - {}", startOfYear, startOfNextYear);
-
+            var a = userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
+            System.out.println("#### " + a.get(0));
             return userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
         }
         catch (Exception exception) {
