@@ -10,15 +10,19 @@
     <div class="th-font">지금까지 읽은 기사의 카테고리 비율을 보여드려요.</div>
     <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
       <v-btn x-large icon>
-        <v-icon x-large style="color: #BDBDBD">mdi-chevron-left</v-icon>
+        <v-icon x-large style="color: #bdbdbd">mdi-chevron-left</v-icon>
       </v-btn>
       <span style="color: #757575">2023년</span>
       <v-btn x-large icon>
-        <v-icon x-large style="color: #BDBDBD">mdi-chevron-right</v-icon>
+        <v-icon x-large style="color: #bdbdbd">mdi-chevron-right</v-icon>
       </v-btn>
     </div>
     <div class="d-flex justify-center">
-      <canvas class="chartjs-render-monitor" ref="barChart" height="400"></canvas>
+      <canvas
+        class="chartjs-render-monitor"
+        ref="barChart"
+        height="400"
+      ></canvas>
     </div>
   </div>
 </template>
@@ -31,7 +35,7 @@ Chart.register(...registerables);
 import { mapState } from "vuex";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       chart: null,
     };
@@ -62,7 +66,7 @@ export default {
 
       const labels = this.readCategoryList.map((item) => item[0]);
       const data = this.readCategoryList.map((item) => item[1]);
-      console.log("##23 ", data)
+      // console.log("##23 ", data)
       this.chart = new Chart(ctx, {
         type: "doughnut",
         data: {
@@ -100,29 +104,31 @@ export default {
                 borderRadius: "3",
                 font: {
                   size: 16,
-                  family: getComputedStyle(document.documentElement).getPropertyValue('--main-font-3').trim(),
+                  family: getComputedStyle(document.documentElement)
+                    .getPropertyValue("--main-font-3")
+                    .trim(),
                 },
-              }
+              },
             },
             tooltip: {
               enabled: true,
             },
           },
-          cutout: '60%',
+          cutout: "60%",
           animation: {
             animateScale: true,
             animateRotate: true,
           },
         },
       });
-    }
+    },
   },
 };
 </script>
 
 <style>
-  .horizontal-divider {
-    flex-grow: 1;
-    align-self: center;
-  }
+.horizontal-divider {
+  flex-grow: 1;
+  align-self: center;
+}
 </style>

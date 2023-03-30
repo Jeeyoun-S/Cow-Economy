@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     createChart() {
-      console.log("##1 ", this.articleCntList);
+      // console.log("##1 ", this.articleCntList);
       const chartData = this.articleCntList;
       const labels = chartData.map(([month]) => {
         const date = new Date(`${month}-01`);
@@ -66,7 +66,12 @@ export default {
               backgroundColor: (context) => {
                 const index = context.dataIndex;
                 const chart = context.chart;
-                const gradient = chart.ctx.createLinearGradient(0, chart.height, 0, 0);
+                const gradient = chart.ctx.createLinearGradient(
+                  0,
+                  chart.height,
+                  0,
+                  0
+                );
                 gradient.addColorStop(0, colors[index][0]);
                 gradient.addColorStop(1, colors[index][1]);
                 return gradient;
@@ -87,7 +92,12 @@ export default {
               backgroundColor: (context) => {
                 const index = context.dataIndex;
                 const chart = context.chart;
-                const gradient = chart.ctx.createLinearGradient(0, chart.height, 0, 0);
+                const gradient = chart.ctx.createLinearGradient(
+                  0,
+                  chart.height,
+                  0,
+                  0
+                );
                 gradient.addColorStop(0, bg_colors[index][0]);
                 gradient.addColorStop(1, bg_colors[index][1]);
                 return gradient;
@@ -144,7 +154,7 @@ export default {
           elements: {
             bar: {
               barPercentage: 0.5,
-            }
+            },
           },
         },
       });
@@ -154,8 +164,8 @@ export default {
 </script>
 
 <style>
-  .horizontal-divider {
-    flex-grow: 1;
-    align-self: center;
-  }
+.horizontal-divider {
+  flex-grow: 1;
+  align-self: center;
+}
 </style>
