@@ -45,9 +45,9 @@ public class UserController {
     public BaseResponse getUserInfo(HttpServletRequest request) {
 
         // 0) 현재 login 한 유저 아이디 추출
-//        String accessToken = request.getHeader("Authorization").substring(7);
-//        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
-        Long userId = Long.valueOf("1");
+        String accessToken = request.getHeader("Authorization").substring(7);
+        Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+//        Long userId = Long.valueOf("1");
 
         // 1) user info 조회 (레벨, 경험치, 이름) - userInfoService.getUserByUserId(userId)
 

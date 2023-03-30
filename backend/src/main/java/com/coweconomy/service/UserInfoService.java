@@ -117,14 +117,13 @@ public class UserInfoService {
      * **/
     public List<Object[]> getReadArticleCategory(Long userId) {
         try {
-            // 올해
-            LocalDateTime startOfYear = LocalDateTime.of(LocalDateTime.now().getYear(), Month.JANUARY, 1, 0, 0, 0);
-            // 내년
-            LocalDateTime startOfNextYear = LocalDateTime.of(LocalDateTime.now().getYear()+1, Month.JANUARY, 1, 0, 0, 0);
+            LocalDateTime startOfYear = LocalDateTime.of(LocalDateTime.now().getYear(), Month.JANUARY, 1, 0, 0, 0); // 올해
+            LocalDateTime startOfNextYear = LocalDateTime.of(LocalDateTime.now().getYear()+1, Month.JANUARY, 1, 0, 0, 0); // 내년
+            List<Object[]> readArticleCategoryList = userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
 //            logger.info("#21# 읽은 기사 카테고리 조회 시 올해, 내년 확인: {} - {}", startOfYear, startOfNextYear);
-            var a = userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
-            System.out.println("#### " + a.get(0));
-            return userArticleRepository.findArticleCategoryByUserIdAndYear(userId, startOfYear, startOfNextYear);
+
+            // * 카테고리 별 Count List 세팅
+            return setCategoryCountList(readArticleCategoryList);
         }
         catch (Exception exception) {
             logger.error(exception.toString());
@@ -140,12 +139,43 @@ public class UserInfoService {
     public List<Object[]> getQuizPassWordCategory(Long userId) {
         try {
 //            logger.info("#21# 현재 년-월 확인: {}-{}", LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue());
-            return userTestResultRepository.findArticleCategoryByUserIdAndYearAndMonth(userId, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue());
-        }
-        catch (Exception exception) {
+
+            // * 카테고리 별 Count List 세팅
+            return setCategoryCountList(userTestResultRepository.findArticleCategoryByUserIdAndYearAndMonth(userId, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue()));
+        } catch (Exception exception) {
             logger.error(exception.toString());
             return null;
         }
+    }
+
+    /**
+     * repository 결과로 받은 List를 통해 count 개수가 null인 카테고리는 0으로 세팅
+     * @param categoryCntList (repository 수행 결과) 카테고리 별 개수 List
+     * @return List<Object[]>
+     * **/
+    private List<Object[]> setCategoryCountList(List<Object[]> categoryCntList) {
+        List<String> category = new ArrayList<>(Arrays.asList("금융", "증권", "산업/재계", "중기/벤처", "부동산", "글로벌 경제", "생활경제", "경제 일반"));
+
+        List<Object[]> result = new ArrayList<>();
+        for (String categoryName: category) {
+            boolean hasCategory = false;
+
+            // 만약, 카테고리가 있다면 readArticleCntList에 넣기
+            for (Object[] categoryCnt : categoryCntList) {
+                if (categoryCnt[0].equals(categoryName)) {
+                    result.add(new Object[]{categoryCnt[0], categoryCnt[1]});
+                    hasCategory = true;
+                    break;
+                }
+            }
+
+            // 없다면 0으로 set
+            if (!hasCategory) {
+                result.add(new Object[]{categoryName, 0});
+            }
+        }
+
+        return result;
     }
 
 }
