@@ -31,13 +31,16 @@
 
     <!-- 4 : content -->
     <div id="content" class="py-2">
-      <div id="article" v-html="newsDetail.articleContent"></div>
+      <!-- <div id="article" v-html="newsDetail.articleContent"></div> -->
     </div>
 
     <!-- 5 : reference plus button -->
     <div class="py-2 ml-auto">{{ newsDetail.articleEditor }}</div>
     <v-snackbar v-model="memoBtn" color="var(--main-col-2)" rounded="pill">
-      <span>메모에 인용문으로 추가하기</span>
+      <div class="d-flex flex-row align-center">
+        <v-icon>mdi-plus-circle</v-icon>
+        <span class="ml-2">메모에 인용문으로 추가하기</span>
+      </div>
       <template v-slot:action="{ attrs }">
         <v-btn
           color="white"
@@ -93,6 +96,10 @@ export default {
     },
   },
   mounted() {
+    document
+      .getElementById("content")
+      .appendChild(this.newsDetail.articleContent);
+
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
     // document 전체에 적용 (div#article에만 하면 미작동)
     document.addEventListener("selectionchange", addSelectionEvent);

@@ -198,8 +198,26 @@ export default {
               };
             })
             .filter((m) => m.memoList.length > 0);
+        } else {
+          return this.memoDtoList
+            .map((element) => {
+              if (
+                element.articleTitle.includes(this.keyword) ||
+                element.articleContent.includes(this.keyword)
+              ) {
+                return element;
+              } else {
+                return {
+                  ...element,
+                  memoList: element.memoList.filter((v) =>
+                    v.memoContent.includes(this.keyword)
+                  ),
+                };
+              }
+            })
+            .filter((m) => m.memoList.length > 0);
         }
-        return this.memoDtoList;
+        // return this.memoDtoList;
       } else {
         return this.memoDtoList;
       }

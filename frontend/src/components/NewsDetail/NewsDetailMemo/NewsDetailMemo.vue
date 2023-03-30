@@ -54,13 +54,16 @@
         dark
         width="100%"
         rounded="xl"
-        ><span class="sm-font">메모 작성은 로그인 후에 가능합니다.</span>
+        ><span class="sm-font">메모 작성은 로그인 후 가능합니다.</span>
         <v-btn
-          class="ml-auto"
+          class="my-1 ml-auto"
           @click="moveLogin()"
           elevation="0"
           color="var(--main-col-2)"
           rounded
+          text
+          style="background-color: white"
+          small
           ><v-icon small>mdi-account</v-icon>로그인</v-btn
         ></v-sheet
       >

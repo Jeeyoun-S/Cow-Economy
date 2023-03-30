@@ -29,7 +29,7 @@
     <!-- image -->
     <v-skeleton-loader class="pb-3" type="image"></v-skeleton-loader>
     <!-- text -->
-    <v-skeleton-loader type="paragraph@2"></v-skeleton-loader>
+    <v-skeleton-loader type="paragraph@3"></v-skeleton-loader>
   </v-sheet>
 </template>
 
