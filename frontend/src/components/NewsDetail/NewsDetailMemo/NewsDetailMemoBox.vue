@@ -10,9 +10,18 @@
         <!-- memo header -->
         <v-sheet class="mb-2 d-flex align-center" color="transparent">
           <!-- memo editor -->
-          <v-chip v-if="!isMine" color="var(--main-col-3)" label dark small>{{
-            memo.userNickname
-          }}</v-chip>
+          <div v-if="!isMine" class="d-flex flex-row align-end">
+            <img
+              class="mr-1"
+              :src="
+                require('@/assets/images/level/' + levelImage[memo.userLevel])
+              "
+              height="25"
+            />
+            <v-chip color="var(--main-col-3)" label dark small>{{
+              memo.userNickname
+            }}</v-chip>
+          </div>
           <v-divider v-if="!isMine" class="mx-2"></v-divider>
           <!-- memo date -->
           <v-chip color="var(--main-col-3)" dark small>{{
@@ -23,13 +32,14 @@
           <div v-if="isMine">
             <!-- memo open status button -->
             <NewsDetailMemoBtnLock
-              :memoId="memo.memoId"
               :memoPublicScope="memo.memoPublicScope"
               :index="index"
-              @modifyPublicScope="modifyPublicScope"
               color="var(--main-col-3)"
+              :memoId="memo.memoId"
+              :isSmall="false"
+              @modifyPublicScope="modifyPublicScope"
             ></NewsDetailMemoBtnLock>
-            <!-- memo modify button : 보류 -->
+            <!-- memo modify button -->
             <v-btn
               icon
               text
@@ -42,6 +52,7 @@
               :memoId="memo.memoId"
               :index="index"
               color="var(--main-col-3)"
+              :isSmall="false"
               @deleteMemoItem="deleteMemoItem"
             ></NewsDetailMemoBtnDelete>
           </div>
@@ -114,6 +125,14 @@ export default {
   data() {
     return {
       dialog: false,
+      levelImage: {
+        1: "level_f.png",
+        2: "level_d.png",
+        3: "level_c.png",
+        4: "level_b.png",
+        5: "level_a.png",
+        6: "level_s.png",
+      },
     };
   },
   computed: {

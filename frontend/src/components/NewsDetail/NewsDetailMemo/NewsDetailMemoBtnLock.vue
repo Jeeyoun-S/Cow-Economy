@@ -1,5 +1,5 @@
 <template>
-  <v-btn icon text :color="color">
+  <v-btn icon text :color="color" :small="isSmall">
     <v-icon v-if="!memoPublicScope" @click="changeOpen()"> mdi-lock </v-icon>
     <v-icon v-else @click="changeOpen()"> mdi-lock-open-outline </v-icon>
   </v-btn>
@@ -18,6 +18,8 @@ export default {
     index: Number,
     color: String,
     memoId: Number,
+    isSmall: Boolean,
+    indexDetail: Number,
   },
   methods: {
     ...mapActions(memoStore, ["updatePublicScope"]),
@@ -27,7 +29,11 @@ export default {
       updateMemoPublicScope(this.memoId).then((res) => {
         if (res != null) {
           // 메모 리스트의 공개 상태 변경하기
-          this.$emit("modifyPublicScope", this.index, res);
+          if (this.isSmall) {
+            this.$emit("modifyPublicScope", this.index, this.indexDetail, res);
+          } else {
+            this.$emit("modifyPublicScope", this.index, res);
+          }
         }
       });
     },

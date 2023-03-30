@@ -18,7 +18,7 @@
           >LEVEL {{ String.fromCharCode(user.userLevel) }}</span
         >
         <!-- Level Info -->
-        <v-dialog v-model="levelInfoDialog" max-width="400">
+        <v-dialog v-model="levelInfoDialog" max-width="370">
           <template v-slot:activator="{ on, attrs }">
             <v-icon color="grey lighten-1" v-bind="attrs" v-on="on"
               >mdi-information-outline</v-icon
@@ -26,7 +26,12 @@
           </template>
           <!-- Level Info Modal -->
           <v-sheet class="xs-font pa-8 ma-0">
-            <div class="mb-3 xxl-font b-font">소귀경의 LEVEL</div>
+            <div class="d-flex">
+              <div class="mb-3 xxl-font b-font">소귀경의 LEVEL</div>
+              <v-btn class="ml-auto" icon @click="levelInfoDialog = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
             <div class="d-flex flex-row flex-wrap justify-space-between">
               <div
                 v-for="l in level"
@@ -38,63 +43,11 @@
                   height="45"
                   :src="require('@/assets/images/level/' + levelImage[l])"
                 />
-                <div>EXP {{ maxExperience[l] + 1 }}<br />이상 자동 승급</div>
+                <div>EXP {{ minExperience[l] }}<br />이상 자동 승급</div>
               </div>
-              <!-- <div class="d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_s.png"
-                />
-                <div>EXP 4001<br />자동 승급</div>
-              </div>
-              <div class="mr-3 d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_c.png"
-                />
-                <div>EXP 1001<br />이상 자동 승급</div>
-              </div>
-            </div>
-            <div class="pt-3 d-flex flex-row justify-space-between">
-              <div class="d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_a.png"
-                />
-                <div>EXP 2501<br />이상 자동 승급</div>
-              </div>
-              <div class="mr-3 d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_d.png"
-                />
-                <div>EXP 501<br />이상 자동 승급</div>
-              </div>
-            </div>
-            <div class="pt-3 d-flex flex-row justify-space-between">
-              <div class="d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_b.png"
-                />
-                <div>EXP 1501<br />이상 자동 승급</div>
-              </div>
-              <div class="mr-3 d-flex flex-row align-center">
-                <img
-                  class="mr-2"
-                  height="45"
-                  src="@/assets/images/level/level_f.png"
-                />
-                <div>EXP 0<br />이상 자동 승급</div>
-              </div> -->
             </div>
             <v-btn
-              class="mt-7 blue-shadow"
+              class="mt-5 blue-shadow"
               block
               dark
               color="var(--main-col-2)"
@@ -139,8 +92,16 @@ export default {
         68: 1000,
         67: 1500,
         66: 2500,
-        65: 5000,
-        83: 7000,
+        65: 4000,
+        83: 6000,
+      },
+      minExperience: {
+        70: 0,
+        68: 501,
+        67: 1001,
+        66: 1501,
+        65: 2501,
+        83: 4001,
       },
       levelImage: {
         70: "level_f.png",

@@ -1,4 +1,4 @@
-import The404Error from "@/views/The404Error.vue";
+import The404Error from "@/components/ErrorAndRending/The404Error.vue";
 
 const error = [
   {

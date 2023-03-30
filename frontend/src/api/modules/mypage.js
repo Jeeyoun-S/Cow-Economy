@@ -49,4 +49,19 @@ async function getUserInfo() {
   return Promise.resolve(result);
 }
 
+// [GET /user/graph/article 경제 용어 카테고리
+// async function getReadCategory(year) {
+//   try {
+//     const response = await api.get(`user/graph/article?year=${year}`);
+//     if (response.data.statusCode === 200) {
+//       return response.data;
+//     } else {
+//       throw new Error("Failed to fetch read category data");
+//     }
+//   } catch (error) {
+//     console.error("Error in getReadCategory:", error);
+//     throw error;
+//   }
+// }
+
 export { getUserInfo };

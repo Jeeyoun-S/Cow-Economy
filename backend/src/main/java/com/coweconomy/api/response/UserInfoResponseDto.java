@@ -23,9 +23,22 @@ public class UserInfoResponseDto {
     // 6개월 간 읽은 기사 수 정보
     List<Object[]> articleCntList;
 
-    public UserInfoResponseDto(UserDto user, List<ArticleMemoDto> memoDtoList, List<Object[]> articleCntList) {
+    // 회원이 읽은 기사의 카테고리 별 기사 수
+    List<Object[]> articleCategoryCnt;
+
+    // 회원이 Quiz에서 맞춘 경제용어 카테고리 별 개수 조회
+    List<Object[]> quizPassWordCategoryCnt;
+
+    public UserInfoResponseDto(
+            UserDto user,
+            List<ArticleMemoDto> memoDtoList,
+            List<Object[]> articleCntList,
+            List<Object[]> articleCategoryCnt,
+            List<Object[]> quizPassWordCategoryCnt) {
         this.user = user;
         this.memoDtoList = memoDtoList;
         this.articleCntList = articleCntList;
+        this.articleCategoryCnt = articleCategoryCnt;
+        this.quizPassWordCategoryCnt = quizPassWordCategoryCnt;
     }
 }
