@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/quiz")
+@RequestMapping("quiz")
 public class QuizController {
 
     private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
@@ -46,8 +46,9 @@ public class QuizController {
 
         try {
             // 0) 현재 login 한 유저 아이디 추출
-            String accessToken = request.getHeader("Authorization").substring(7);
-            Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+//            String accessToken = request.getHeader("Authorization").substring(7);
+//            Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+            Long userId = Long.valueOf("1");
 
             boolean result = quizService.checkQuizToday(userId);
 
@@ -73,8 +74,9 @@ public class QuizController {
 
         try {
             // 0) 현재 login 한 유저 아이디 추출
-            String accessToken = request.getHeader("Authorization").substring(7);
-            info.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+//            String accessToken = request.getHeader("Authorization").substring(7);
+//            info.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+            Long userId = Long.valueOf("1");
 
             // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
             List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
@@ -121,8 +123,9 @@ public class QuizController {
         logger.info("#[QuizController]# Quiz 결과 - info: {}", quizResult);
 
         // 0) 현재 login 한 유저 아이디 추출
-        String accessToken = request.getHeader("Authorization").substring(7);
-        quizResult.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+//        String accessToken = request.getHeader("Authorization").substring(7);
+//        quizResult.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+        Long userId = Long.valueOf("1");
 
         // * 성공 ↔ 실패 여부에 따라 다른 로직 처리
         // 1) 성공/실패 결과 저장

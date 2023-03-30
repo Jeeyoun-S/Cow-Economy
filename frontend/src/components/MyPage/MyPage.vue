@@ -109,21 +109,29 @@ export default {
     if (this.isLoggedIn) {
       this.loading = true;
       getUserInfo().then((res) => {
-        // this.articleCntList = res.articleCntList; 
+        // this.articleCntList = res.articleCntList;
         this.setUserReadArticleCount(res.articleCntList);
         this.memoDtoList = res.memoDtoList;
         this.user = res.user;
         this.loading = false;
       });
       const year = 2023;
-      console.log("여기는 지나가니");
-      getReadCategory(year).then(() => {
-        this.fetchReadCategory(year);
-        console.log('store state after fetchReadCategory:', this.$store.state.readCategoryList);
-      })
-      .catch((error) => {
-        console.error("Error in getReadCategory:", error.message, error.response);
-      });
+      // console.log("여기는 지나가니");
+      getReadCategory(year)
+        .then(() => {
+          this.fetchReadCategory(year);
+          // console.log(
+          //   "store state after fetchReadCategory:",
+          //   this.$store.state.readCategoryList
+          // );
+        })
+        .catch((error) => {
+          console.error(
+            "Error in getReadCategory:",
+            error.message,
+            error.response
+          );
+        });
     }
   },
   components: {

@@ -35,7 +35,7 @@ const userStore = {
   mutations: {
     SET_IS_LOGGED_IN(state, value) {
       state.isLoggedIn = value;
-      console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
+      // console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
     },
   },
   actions: {
@@ -52,7 +52,7 @@ const userStore = {
 
             // vuex 로그인 처리
             commit("SET_IS_LOGGED_IN", true);
-            console.log("토큰 발급 성공!");
+            // console.log("토큰 발급 성공!");
             // my-page로 이동
             window.location.replace("/my-page");
           } else {
