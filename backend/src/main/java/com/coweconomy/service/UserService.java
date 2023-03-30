@@ -22,13 +22,6 @@ public interface UserService {
      */
     User getUserByUserEmail(String userEmail);
 
-    /** 
-     * DB에 회원이 없을 경우 새로운 회원 생성
-     * @param userRegisterInfo
-     * @return
-     */
-    User createUser(UserRegisterPostReq userRegisterInfo);
-
     /**
      * RefreshToken DB 저장
      * @param userEmail
