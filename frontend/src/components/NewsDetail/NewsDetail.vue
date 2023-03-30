@@ -14,13 +14,16 @@
       ></NewsDetailMemo>
       <!-- finish reading snackbar -->
       <v-snackbar
-        :timeout="2000"
+        :timeout="2000000000000000"
+        class="mb-4"
         v-model="localDone"
         color="var(--main-col-4-1)"
         elevation="10"
         width="90%"
         min-width="0"
         max-width="450"
+        height="30"
+        bottom
       >
         <v-sheet
           color="transparent"
@@ -36,6 +39,8 @@
           >
         </v-sheet>
       </v-snackbar>
+      <!-- word explain modal -->
+      <NewsDetailContentWord></NewsDetailContentWord>
     </div>
   </v-sheet>
 </template>
@@ -45,9 +50,11 @@ import NewsDetailContent from "./NewsDetailContent.vue";
 import NewsDetailRelation from "./NewsDetailRelation/NewsDetailRelation.vue";
 import NewsDetailMemo from "./NewsDetailMemo/NewsDetailMemo.vue";
 import NewsDetailLoading from "./NewsDetailLoading.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import memoStore from "@/store/modules/memoStore";
 import { getNewsDetail, updateReading } from "@/api/modules/article.js";
+import wordStore from "@/store/modules/wordStore";
+import NewsDetailContentWord from "@/components/NewsDetail/NewsDetailContentWord.vue";
 
 export default {
   name: "NewsDetail",
@@ -67,6 +74,7 @@ export default {
     NewsDetailRelation,
     NewsDetailMemo,
     NewsDetailLoading,
+    NewsDetailContentWord,
   },
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
   watch: {
@@ -78,6 +86,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("wordStore", ["setWordInfo"]),
     addScrollEvent() {
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
@@ -106,11 +115,27 @@ export default {
     },
   },
   async created() {
+    function click() {
+      wordStore.state.wordModal = this.innerText;
+      wordStore.state.isWordModalOpen = true;
+    }
     // 기사 상세 정보 요청하는 API
     await getNewsDetail(this.$route.params.id).then((res) => {
       if (res) {
+        // 받아온 기사 내용은 HTML로 바꾸고 event 추가하기
+        var content = document.createElement("div");
+        content.setAttribute("id", "article");
+        content.innerHTML = res.articleContent;
+        var spans = content.querySelectorAll("#article span");
+        for (var i = 0; i < spans.length; i++) {
+          spans[i].addEventListener("click", click);
+        }
+        res.articleContent = content;
+
         // newsDetail에 받아온 상세 정보 넣기
         this.newsDetail = res;
+        this.setWordInfo(res.articleWordList);
+
         // 로딩 상태 변경
         this.loading = false;
       }

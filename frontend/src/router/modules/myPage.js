@@ -7,7 +7,7 @@ const myPage = [
     name: "myPage",
     components: {
       header: HomeHeader,
-      default: MyPage
+      default: MyPage,
     },
   },
 ]
