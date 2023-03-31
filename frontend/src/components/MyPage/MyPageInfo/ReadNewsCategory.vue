@@ -9,13 +9,11 @@
     </div>
     <div class="th-font">지금까지 읽은 기사의 카테고리 비율을 보여드려요.</div>
     <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-left</v-icon>
-      </v-btn>
-      <span style="color: #757575">2023년</span>
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-right</v-icon>
-      </v-btn>
+      <div x-large icon></div>
+      <span class="xxxxl-font" style="color: #757575"
+        >{{ this.currentYear }}년</span
+      >
+      <div x-large icon></div>
     </div>
     <div class="d-flex justify-center">
       <canvas
@@ -38,9 +36,13 @@ export default {
   data: function () {
     return {
       chart: null,
+      currentYear: null,
     };
   },
   computed: mapState("userStore", ["articleList"]),
+  created() {
+    this.currentYear = new Date().getFullYear();
+  },
   mounted() {
     // this.drawChart();
   },
