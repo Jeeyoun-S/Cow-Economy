@@ -29,7 +29,7 @@ const newsStore = {
         {
           articleId: 3, 
           article_category: "산업/재계", 
-          article_regtime: "2023-10-22 12:12:12",
+          article_regtime: "2023-10-21 12:12:12",
           article_editor: "김싸피 기사", 
           article_press: "지윤",
           article_title: "기사 제목3", 
@@ -40,7 +40,7 @@ const newsStore = {
         {
           articleId: 4, 
           article_category: "산업/재계", 
-          article_regtime: "2023-10-22 12:12:12",
+          article_regtime: "2023-10-28 12:12:12",
           article_editor: "김싸피 기사", 
           article_press: "동주",
           article_title: "기사 제목3", 
@@ -51,7 +51,7 @@ const newsStore = {
         {
           articleId: 5, 
           article_category: "산업/재계", 
-          article_regtime: "2023-10-22 12:12:12",
+          article_regtime: "2023-10-23 12:12:12",
           article_editor: "김싸피 기사", 
           article_press: "도연",
           article_title: "기사 제목3", 
@@ -80,6 +80,16 @@ const newsStore = {
     getters: {
       allNews(state) {
         return state.news;
+      },
+      searchNews(state) {
+        if (!state.searchText) {
+          return [];
+        }
+        const searchTextLowerCase = state.searchText.toLowerCase();
+        return state.news.filter((newsItem) =>
+          newsItem.article_title.toLowerCase().includes(searchTextLowerCase) ||
+          newsItem.article_content.toLowerCase().includes(searchTextLowerCase)
+        );
       },
     },
   };

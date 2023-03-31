@@ -2,7 +2,7 @@
   <NewsSearchBeforeSearch class="main-container" v-if="!searched"></NewsSearchBeforeSearch>
   <div :class="{'main-container': isNoResult}" v-else>
     <NewsSearchNoResult v-if="isNoResult"></NewsSearchNoResult>
-    <NewsSearchResult v-else :newsList="news"></NewsSearchResult>
+    <NewsSearchResult v-else :newsList="searchNews"></NewsSearchResult>
   </div>
 </template>
 
@@ -10,15 +10,16 @@
 import NewsSearchBeforeSearch from '@/components/NewsSearch/NewsSearchBeforeSearch.vue';
 import NewsSearchNoResult from './NewsSearchNoResult.vue';
 import NewsSearchResult from "./NewsSearchResult.vue"
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "NewsSearch",
   computed: {
     ...mapState("newsStore", ["searched", "news"]),
+    ...mapGetters("newsStore", ["searchNews"]),
     isNoResult() {
-      return this.news.length === 0;
-    }
+      return this.searchNews.length === 0;
+    },
   },
   components: {
     NewsSearchBeforeSearch,

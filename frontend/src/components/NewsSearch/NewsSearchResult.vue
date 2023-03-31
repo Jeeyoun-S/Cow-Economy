@@ -18,7 +18,6 @@
     <v-sheet class="mx-7 my-5 d-flex flex-row align-center" style="background-color: transparent">
       <h3 class="mr-auto main-title-font grey--text">{{ filteredNews.length }}개의 검색 결과</h3>
       <v-sheet width="110px" class="md-r-font" style="background-color: transparent">
-        <!-- 지윤님 토글 물어봐서 바꾸기 -->
         <v-select
           class="md-r-font main-col-3"
           :value="sortKey"
@@ -32,23 +31,32 @@
       </v-sheet>
     </v-sheet>
 
-    <v-card v-for="news in filteredNews" :key="news.articleId" class="news-item mx-7 my-2" outlined style="border-radius: 8px; height: 120px; overflow: hidden;">
-      <div class="news-content" style="display: flex; height: 100%;">
-        <!-- 이미지 -->
-        <div class="image-col" v-if="news.article_thumbnail" style="width: 100px; height: 100%; overflow: hidden; display: flex; align-items: center;">
-          <v-img :src="news.article_thumbnail" cover></v-img>
+    <v-card
+      v-for="news in filteredNews"
+      :key="news.articleId"
+      class="news-item mx-7 my-2 d-flex flex-row"
+      elevation="0"
+    >
+      <!-- 이미지 -->
+      <v-img width="5%" max-width="100" :src="news.article_thumbnail"></v-img>
+      <!-- 기사 텍스트 -->
+      <div
+        class="text-col ma-5 main-subtitle-font"
+        style="flex: 1; display: flex; flex-direction: column"
+      >
+        <!-- 언론사, 날짜 -->
+        <div
+          class="main-subtitle-font"
+          style="display: flex; justify-content: space-between"
+        >
+          <p class="my-1">{{ news.article_press }}</p>
+          <p class="my-1">{{ news.article_regtime }}</p>
         </div>
-        <!-- 기사 텍스트 -->
-        <div class="text-col ma-5 main-subtitle-font" style="flex: 1; display: flex; flex-direction: column;">
-          <!-- 언론사, 날짜 -->
-          <div class="main-subtitle-font" style="display: flex; justify-content: space-between;">
-            <p class="my-1">{{ news.article_press }}</p>
-            <p class="my-1">{{ news.article_regtime }}</p>
-          </div>
-          <!-- 제목 -->
-          <div class="title-row">
-            <v-card-title class="pa-0 main-title-font">{{ news.article_title }}</v-card-title>
-          </div>
+        <!-- 제목 -->
+        <div class="title-row">
+          <v-card-title class="pa-0 main-title-font">{{
+            news.article_title
+          }}</v-card-title>
         </div>
       </div>
     </v-card>
