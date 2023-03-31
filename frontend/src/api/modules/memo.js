@@ -19,7 +19,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
   if (newMemo.isModify) {
     // 수정 요청 API 요청
     await api
-      .put(`memo/${newMemo.memoId}`, JSON.stringify(memo))
+      .put(`/memo/${newMemo.memoId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
@@ -30,7 +30,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
   } else {
     // 그 외에는 등록 요청 API 요청
     await api
-      .post(`memo/${articleId}`, JSON.stringify(memo))
+      .post(`/memo/${articleId}`, JSON.stringify(memo))
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
@@ -47,7 +47,7 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
 async function updateMemoPublicScope(memoId) {
   var result = null;
   // 메모 공개 여부 수정 API 요청
-  await api.post(`memo?memoId=${memoId}`).then((res) => {
+  await api.post(`/memo?memoId=${memoId}`).then((res) => {
     if (res.data.statusCode == 200) {
       result = res.data.data;
     }
@@ -59,7 +59,7 @@ async function updateMemoPublicScope(memoId) {
 async function deleteMemo(memoId) {
   var result = false;
   // 메모 삭제 API 요청
-  await api.delete(`memo?memoId=${memoId}`).then((res) => {
+  await api.delete(`/memo?memoId=${memoId}`).then((res) => {
     if (res.data.statusCode == 200) {
       result = true;
     }
