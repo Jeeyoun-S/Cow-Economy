@@ -46,9 +46,9 @@ public class QuizController {
 
         try {
             // 0) 현재 login 한 유저 아이디 추출
-//            String accessToken = request.getHeader("Authorization").substring(7);
-//            Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
-            Long userId = Long.valueOf("1");
+            String accessToken = request.getHeader("Authorization").substring(7);
+            Long userId = userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId();
+//            Long userId = Long.valueOf("1");
 
             boolean result = quizService.checkQuizToday(userId);
 
@@ -69,18 +69,16 @@ public class QuizController {
      * - 회원이 일주일 내에 읽은 기사에서 > 해당 기사에 들어있는 경제 단어 가져오기
      */
     @PostMapping("")
-    public BaseResponse<?> getTodayQuizQuestion(@RequestBody QuizRequestDto info, HttpServletRequest request) {
-        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제- info: {}", info);
+    public BaseResponse<?> getTodayQuizQuestion(HttpServletRequest request) {
+        logger.info("#[QuizController]# 오늘의 Quiz 문제 출제");
 
         try {
             // 0) 현재 login 한 유저 아이디 추출
-//            String accessToken = request.getHeader("Authorization").substring(7);
-//            info.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
-            Long userId = Long.valueOf("1");
+            String accessToken = request.getHeader("Authorization").substring(7);
 
             // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
             // 98ms
-            List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
+            List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
     //        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
 
             // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
@@ -124,9 +122,9 @@ public class QuizController {
         logger.info("#[QuizController]# Quiz 결과 - info: {}", quizResult);
 
         // 0) 현재 login 한 유저 아이디 추출
-//        String accessToken = request.getHeader("Authorization").substring(7);
-//        quizResult.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
-        Long userId = Long.valueOf("1");
+        String accessToken = request.getHeader("Authorization").substring(7);
+        quizResult.setUserId(userService.getUserByUserEmail(jwtTokenUtil.getUserEmailFromToken(accessToken)).getUserId());
+//        Long userId = Long.valueOf("1");
 
         // * 성공 ↔ 실패 여부에 따라 다른 로직 처리
         // 1) 성공/실패 결과 저장
