@@ -86,20 +86,13 @@ export default {
         },
       },
       selectedBtn: "my-memo",
-      // articleCntList: [],
       memoDtoList: [],
       user: {},
       loading: false,
     };
   },
-  // watch: {
-  //   isLoggedIn() {
-  //     this.loaded = true;
-  //   },
-  // },
   async created() {
-    // this.loaded = false;
-    // 인가 코드 추출
+    // Kakao 인가 코드 추출
     this.kakaoCode = this.$route.query.code;
     if (this.kakaoCode != null) {
       this.kakao();
@@ -108,31 +101,16 @@ export default {
 
     if (this.isLoggedIn) {
       this.loading = true;
+
+      // [@Method] user info 가져오기
       await getUserInfo().then(async (res) => {
-        // this.articleCntList = res.articleCntList;
-        console.log(res);
+        // [@Method] 가져온 user info 중 graph 관련 data 저장
         await this.setUserGraphData(res);
+
         this.memoDtoList = await res.memoDtoList;
         this.user = await res.user;
         this.loading = false;
       });
-      // const year = 2023;
-      // console.log("여기는 지나가니");
-      // getReadCategory(year)
-      //   .then(() => {
-      //     this.fetchReadCategory(year);
-      //     // console.log(
-      //     //   "store state after fetchReadCategory:",
-      //     //   this.$store.state.readCategoryList
-      //     // );
-      //   })
-      //   .catch((error) => {
-      //     console.error(
-      //       "Error in getReadCategory:",
-      //       error.message,
-      //       error.response
-      //     );
-      //   });
     }
   },
   components: {
