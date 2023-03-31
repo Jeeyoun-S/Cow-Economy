@@ -24,7 +24,7 @@ export default {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
-    ...mapState("newsStore", ["articleList"]),
+    ...mapState("userStore", ["articleList"]),
   },
   mounted() {
     this.createChart();

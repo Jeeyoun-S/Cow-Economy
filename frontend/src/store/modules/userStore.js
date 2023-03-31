@@ -73,6 +73,7 @@ const userStore = {
     },
     // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
     setUserGraphData({ commit }, articleList) {
+      console.log("#21# 그래프 data 확인: ", articleList);
       commit("SET_ARTICLE_LIST", articleList);
     },
   },

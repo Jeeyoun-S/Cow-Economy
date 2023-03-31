@@ -40,7 +40,7 @@ export default {
       chart: null,
     };
   },
-  computed: mapState("newsStore", ["articleList"]),
+  computed: mapState("userStore", ["articleList"]),
   mounted() {
     // this.drawChart();
   },
