@@ -86,6 +86,7 @@ const quizStore = {
           let simiIndex = 0; // 4지선다 set 시 사용 (similarityWord index 번호)
 
           if (data.statusCode == 200) {
+            console.log(data.data)
             const quiz = []; // Quiz
             const articleList = []; // Quiz 출제 시 선정한 기사 ID
 

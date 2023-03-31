@@ -23,11 +23,14 @@
           height="180"
           elevation="0"
           class="mb-3 pa-3 d-flex flex-column justify-center align-center"
+          rounded="xl"
         >
           <img class="mb-5" :src="info.image" height="60" />
           <div class="sm-font">{{ info.message[0] }}</div>
           <div class="sm-font">{{ info.message[1] }}</div>
-          <div class="sm-font">{{ info.message[2] }}</div>
+          <div class="sm-font" v-if="info.message[2]">
+            {{ info.message[2] }}
+          </div>
         </v-card>
       </div>
       <v-btn
@@ -74,7 +77,7 @@ export default {
       loading: false, // 퀴즈 출제 시도 시 로딩 창 활성화 여부
       infos: [
         {
-          message: ["설명에 맞는", "단어를 찾는", "퀴즈"],
+          message: ["설명에 맞는", "단어를 찾는 퀴즈"],
           image: require("@/assets/images/emoji/question-mark.png"),
         },
         {
@@ -82,11 +85,11 @@ export default {
           image: require("@/assets/images/emoji/winking-emoji.gif"),
         },
         {
-          message: ["7뮨제 중 5개 이상", "맞추면 경험치", "100 EXP 증가"],
+          message: ["7문제 중 5개", "이상 맞추면", "경험치 100 증가"],
           image: require("@/assets/images/emoji/books.png"),
         },
         {
-          message: ["1일 1회", "도전 가능"],
+          message: ["1일 1회", "도전 가능", ""],
           image: require("@/assets/images/emoji/alarm_clock.png"),
         },
       ],
