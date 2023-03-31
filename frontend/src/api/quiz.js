@@ -15,8 +15,17 @@ async function getQuizWords(userId, success, fail) {
 }
 
 // [POST] chatGPT에게 유사 경제단어 질문
-async function sendMessageWord(message, success, fail) {
-  const info = { message: message };
+// async function sendMessageWord(message, success, fail) {
+//   const info = { message: message };
+
+//   await api
+//     .post(`chatGPT/ask-word`, JSON.stringify(info))
+//     .then(success)
+//     .catch(fail);
+// }
+async function sendMessageWord(words, success, fail) {
+  console.log("#21# chatGPT 요청 data: ", words[0]);
+  const info = { words: words };
 
   await api
     .post(`chatGPT/ask-word`, JSON.stringify(info))

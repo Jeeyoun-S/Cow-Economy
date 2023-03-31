@@ -2,6 +2,7 @@ package com.coweconomy.api.controller;
 
 import com.coweconomy.api.request.ChatGPTRequest;
 import com.coweconomy.api.response.BaseResponse;
+import com.coweconomy.domain.word.dto.ArticleWordDto;
 import com.coweconomy.service.MyChatGPTService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/chatGPT")
@@ -30,10 +33,9 @@ public class ChatGPTController {
      */
     @PostMapping("/ask-word")
     public BaseResponse<?> generateCompletion(@RequestBody ChatGPTRequest chatGPTRequest) {
-//        logger.info("#[Gpt3Controller]# 해당 경제용어와 유사한 경제용어 3개 조회 동작 - message: {}", chatGPTRequest);
-
+        logger.info("#[Gpt3Controller]# 해당 경제용어와 유사한 경제용어 3개 조회 동작 - articleWordDto: {}", chatGPTRequest);
         try {
-            String result = myChatGPTService.getChatResponse(chatGPTRequest.getMessage());
+            String result = myChatGPTService.getChatResponse("message");
             return BaseResponse.success(result);
         } catch (Exception exception) {
             logger.error(exception.toString());

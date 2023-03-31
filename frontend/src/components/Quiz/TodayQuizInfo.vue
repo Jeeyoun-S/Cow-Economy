@@ -95,7 +95,7 @@ export default {
         // Modal 창 열기
         this.$refs.shortage.openDialog();
       } else {
-        this.$router.push("/today-quiz");
+        // this.$router.push("/today-quiz");
       }
     },
   },

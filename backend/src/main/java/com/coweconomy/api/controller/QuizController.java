@@ -79,10 +79,12 @@ public class QuizController {
             Long userId = Long.valueOf("1");
 
             // 1) 회원이 읽은 기사 Table: 회원 id로 기사 id 리스트 조회 + 읽은 시간 일주일 이내
+            // 98ms
             List<UserArticleDto> userReadArticle = quizService.getUserReadArticle(info.getUserId());
     //        logger.info("#21# 회원이 읽은 기사 list 가져오기: {}", userReadArticle);
 
             // 2) 기사 내 경제 단어 Table: 읽은 기사에 있는 경제 단어 List 조회
+            // 3817ms
             // - 회원이 읽은 기사 ID 추출
             List<Long> articleIdList = new ArrayList<>();
             for (UserArticleDto ra: userReadArticle) {
