@@ -20,30 +20,8 @@
 .xxxl-font {
   font-size: 24px;
 }
-/* 폰트 크기 비율 */
-.xxs-r-font {
-  font-size: 1em;
-}
-.xs-r-font {
-  font-size: 3em;
-}
-.sm-r-font {
-  font-size: 5em;
-}
-.md-r-font {
-  font-size: 7em;
-}
-.lg-r-font {
-  font-size: 9em;
-}
-.xl-r-font {
-  font-size: 11em;
-}
-.xxl-r-font {
-  font-size: 13em;
-}
-.xxxl-r-font {
-  font-size: 15em;
+.xxxxl-font {
+  font-size: 26px;
 }
 /* 폰트 색상 */
 .main-col-1 {
@@ -63,6 +41,9 @@
 }
 .error-col-5 {
   color: var(--error-col-1);
+}
+.black-col-1 {
+  color: black !important;
 }
 /* 폰트 굵기 */
 .th-font {
@@ -99,6 +80,12 @@
 .point-b {
   font-family: var(--point-font-3);
 }
+.logo-th {
+  font-family: var(--logo-font-1);
+}
+.logo-b {
+  font-family: var(--logo-font-2);
+}
 /* 폰트 스타일 */
 .underline {
   text-decoration: underline;
@@ -118,4 +105,7 @@
   font-size: 12px;
   font-family: var(--main-font-2);
   color: grey;
+}
+.white-shadow {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }

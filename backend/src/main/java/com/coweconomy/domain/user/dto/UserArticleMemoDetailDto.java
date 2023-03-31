@@ -2,11 +2,10 @@ package com.coweconomy.domain.user.dto;
 
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
+import lombok.Getter;
 
+@Getter
 public class UserArticleMemoDetailDto extends UserArticleMemoDto {
-
-    // 사용자 ID
-    private Long userId;
 
     // 사용자 닉네임
     private String userNickname;
@@ -20,7 +19,6 @@ public class UserArticleMemoDetailDto extends UserArticleMemoDto {
     public UserArticleMemoDetailDto(UserArticleMemo userArticleMemo) {
         super(userArticleMemo);
         User user = userArticleMemo.getUser();
-        this.userId = user.getUserId();
         this.userNickname = user.getUserNickname();
         this.userLevel = user.getUserLevel();
         this.userExperience = user.getUserExperience();

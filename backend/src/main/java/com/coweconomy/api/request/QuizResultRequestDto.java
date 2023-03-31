@@ -1,6 +1,5 @@
 package com.coweconomy.api.request;
 
-import com.coweconomy.domain.word.dto.ArticleWordQuizDto;
 import lombok.Data;
 
 import java.util.List;
