@@ -1,18 +1,11 @@
-// import { getReadCategory } from "@/api/modules/mypage";
-
 const newsStore = {
   namespaced: true,
   state: {
     searchText: "",
     searched: false,
-    // articleList: {
-    //   articleCntList: [],
-    //   readCategoryList: [],
-    //   wordCategoryList: [],
-    // },
     news: [
       {
-        articsleId: 1,
+        articleId: 1,
         article_category: "부동산",
         article_regtime: "2023-10-24 12:12:12",
         article_editor: "김싸피 기사",
@@ -56,7 +49,7 @@ const newsStore = {
         article_hits: 2,
       },
       {
-        articleId: 5,
+        articleId: 4,
         article_category: "산업/재계",
         article_regtime: "2023-10-22 12:12:12",
         article_editor: "김싸피 기사",
@@ -75,12 +68,6 @@ const newsStore = {
     setSearched(state, payload) {
       state.searched = payload;
     },
-    // SET_ARTICLE_LIST(state, articleList) {
-    //   state.articleList.articleCntList = articleList.articleCntList;
-    //   state.articleList.readCategoryList = articleList.articleCategoryCnt;
-    //   state.articleList.wordCategoryList = articleList.quizPassWordCategoryCnt;
-    //   // console.log("articleList 저장확인", state.articleList.articleCntList);
-    // },
   },
   actions: {
     setSearchText({ commit }, payload) {
@@ -89,10 +76,6 @@ const newsStore = {
     setSearched({ commit }, payload) {
       commit("setSearched", payload);
     },
-    // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
-    // setUserGraphData({ commit }, articleList) {
-    //   commit("SET_ARTICLE_LIST", articleList);
-    // },
   },
 };
 

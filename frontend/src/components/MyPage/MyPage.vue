@@ -69,7 +69,6 @@ import MyPageInfo from "./MyPageInfo/MyPageInfo.vue";
 import MyPageMemo from "./MyPageMemo/MyPageMemo.vue";
 import MyPageLoading from "./MyPageLoading.vue";
 
-import kakaoLogin from "@/components/MyPage/KakaoLogin.vue";
 import { mapGetters, mapActions } from "vuex";
 import { getUserInfo } from "@/api/modules/mypage.js";
 
@@ -118,15 +117,13 @@ export default {
     MyPageLogoutBtn,
     MyPageMemo,
     MyPageInfo,
-    kakaoLogin,
     MyPageLoading,
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
   },
   methods: {
-    ...mapActions("userStore", ["executeToken"]),
-    ...mapActions("newsStore", ["setUserGraphData"]),
+    ...mapActions("userStore", ["executeToken", "setUserGraphData"]),
     // 받은 인가 코드를 사용하여 Kakao Token 발급 요청
     async kakao() {
       await this.executeToken();
