@@ -1,6 +1,6 @@
 <template>
-  <v-sheet class="py-7" id="memo">
-    <v-sheet class="mx-7 d-flex flex-row align-center">
+  <v-sheet class="py-5" id="memo">
+    <v-sheet class="mx-5 d-flex flex-row align-center">
       <!-- memo title -->
       <h3 class="mr-auto">메모</h3>
       <!-- memo sort select -->
@@ -20,7 +20,7 @@
       </v-sheet>
     </v-sheet>
     <!-- list buttons -->
-    <v-row v-if="isLoggedIn" class="mx-7 py-5 pt-7">
+    <v-row v-if="isLoggedIn" class="mx-5 py-5 pt-7">
       <v-col class="pa-0">
         <v-btn
           elevation="0"
@@ -47,7 +47,7 @@
       </v-col>
     </v-row>
     <!-- Login Guide -->
-    <v-row v-else class="mx-7 py-5 pt-7">
+    <v-row v-else class="mx-6 py-5 pt-7">
       <v-sheet
         class="pa-1 px-5 d-flex flex-row align-center"
         color="var(--main-col-2)"

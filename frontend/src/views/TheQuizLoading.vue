@@ -17,7 +17,6 @@ export default {
   data() {
     return {
       dialog: false,
-      typing: false,
     };
   },
   props: {

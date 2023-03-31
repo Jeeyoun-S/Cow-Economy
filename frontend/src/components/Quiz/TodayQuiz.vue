@@ -1,5 +1,15 @@
 <template>
-  <v-sheet class="pa-8" color="transparent">
+  <v-sheet class="pa-8 d-flex flex-column gradient" height="100vh">
+    <!-- Check going start -->
+    <TodayQuizStart></TodayQuizStart>
+    <!-- Title & Logo -->
+    <v-sheet
+      class="d-flex flex-row justify-space-between align-center"
+      color="transparent"
+      height="40px"
+      ><h2 class="align-self-center xxxxxxl-font point-b">Quiz</h2>
+      <img height="100%" :src="require('@/assets/images/logo.png')" />
+    </v-sheet>
     <!-- 프로그레스 바 -->
     <div><step-progress></step-progress></div>
     <!-- 페이지 이동 금지 알림 -->
@@ -66,7 +76,8 @@ import StopWatch from "./element/StopWatch.vue";
 
 import AnswerCorrect from "./element/AnswerCorrect.vue";
 import AnswerWrong from "./element/AnswerWrong.vue";
-import TestResultAlert from "./element/TestResultAlert.vue";
+import TestResultAlert from "./alert/TestResultAlert.vue";
+import TodayQuizStart from "./alert/TodayQuizStart.vue";
 
 import bgm from "@/assets/images/mypage/quiz/quiz_bgm.mp3";
 
@@ -106,6 +117,7 @@ export default {
     AnswerCorrect,
     AnswerWrong,
     TestResultAlert,
+    TodayQuizStart,
   },
   computed: {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
@@ -202,15 +214,15 @@ export default {
 
 <style>
 /* 퀴즈 */
-.quizBox {
+/* .quizBox {
   font-family: var(--main-font-2);
 
   margin-left: 8%;
   margin-right: 8%;
-}
+} */
 
 /* 퀴즈 문제 Txt */
-.questionTxt {
+/* .questionTxt {
   text-align: center;
   font-size: 20px;
   letter-spacing: normal;
@@ -218,14 +230,14 @@ export default {
 
   margin-top: 3%;
   margin-bottom: 10%;
-}
+} */
 
 /* 퀴즈 답변 Button (4지선다) */
-.answerBtn {
+/* .answerBtn {
   width: 150px;
   height: 150px;
 
   margin-left: 9%;
   margin-bottom: 9%;
-}
+} */
 </style>
