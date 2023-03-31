@@ -31,7 +31,6 @@ Chart.register(...registerables);
 
 export default {
   computed: {
-    ...mapState("newsStore", ["category"]),
     ...mapState("userStore", ["articleList"]),
   },
   mounted() {
