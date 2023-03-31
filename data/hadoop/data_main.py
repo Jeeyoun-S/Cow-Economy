@@ -1,15 +1,5 @@
 import data_sub
 
-# import os
-# import sys
-
-#os.environ['PYSPARK_PYTHON'] = sys.executable
-#os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
-
-#import findspark
-#findspark.init()
-#import pyspark
-
 from pyspark.context import SparkContext
 from pyspark.sql.session import SparkSession
 
@@ -20,9 +10,9 @@ spark = SparkSession(sc)
 # server = "hdfs://localhost:9000" # 로컬
 # server = "hdfs://cluster.p.ssafy.io:9000" # 서버
 # server = "hdfs://ip-172-26-0-222.ap-northeast-2.compute.internal:9000" # /usr/local/hadoop-3.3.1/etc/hadoop/core-site.xml이었나
-server = "hdfs://3.38.108.138:9000"
+server = "hdfs://localhost:9000"
 # path = "/user/hadoop/news/" # 로컬
-path = "/user/j8a509/news/" # 서버
+path = "/news/" # 서버
 hdfs_path = server + path # hdfs 폴더 저장 경로
 
 daily_news = 'daily-news/'
@@ -42,7 +32,7 @@ db_connection_str = 'mysql+pymysql://root:ssafy@j8a509.p.ssafy.io:3306/ssafy_cow
 week_total, today_total = data_sub.getTodayNews(db_connection_str, spark)
 
 # 뉴스 전체 기사, 오늘 전체 기사 불러오기 -> spark df
-# week_total, today_total = data_sub.getTodayNews(server, path, daily_news, sc, spark, db_connection_str)
+# week_total, today_total = data_sub.getTodayNews_hdfs(server, path, daily_news, sc, spark, db_connection_str)
 
 # 일주일 뉴스 기사에서 불용어 제거하기
 week_total = data_sub.removeStopWords(week_total, stop_word_path, 'week')
@@ -65,7 +55,7 @@ related_df = data_sub.getCosineSimilarity(nowTfidf, totalTfidf)
 last_idx = data_sub.saveToDB(related_df, db_connection_str, spark)
 
 # 관련 기사 마지막 아이디 파일에 저장
-# data_sub.writeArticleId(related_id_path, last_idx)
+data_sub.writeArticleId(related_id_path, last_idx)
 
 # ---------- word cloud ----------
 # 오늘 뉴스 불용어 제거
