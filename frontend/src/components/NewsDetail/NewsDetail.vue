@@ -88,6 +88,7 @@ export default {
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
     addScrollEvent() {
+      console.log("add");
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
       // 목표하는 스크롤 위치 (기사 맨 아래)
@@ -96,9 +97,11 @@ export default {
       var id = this.$route.params.id;
       // 스크롤 이벤트에 넣을 함수
       function finishReading() {
+        console.log("ddd");
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
         if (now > target) {
+          console.log("dd 넘어감");
           // 스크롤 이벤트 삭제
           document.removeEventListener("scroll", finishReading);
           // 기사 읽음 처리 API 요청
@@ -111,10 +114,10 @@ export default {
         }
       }
       // 스크롤 이벤트 추가
-      document.addEventListener("scroll", finishReading());
+      window.addEventListener("scroll", finishReading());
     },
   },
-  async created() {
+  async mounted() {
     function click() {
       wordStore.state.wordModal = this.innerText;
       wordStore.state.isWordModalOpen = true;
@@ -140,7 +143,7 @@ export default {
         this.loading = false;
       }
     });
-    // 기사를 아직 안 읽었다면 읽음 처리 Event 추기
+    // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
     if (this.newsDetail && !this.newsDetail.reading) this.addScrollEvent();
   },
 };

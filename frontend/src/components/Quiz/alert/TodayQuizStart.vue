@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" max-width="350">
+  <v-dialog v-model="dialog" max-width="350" persistent>
     <v-sheet class="pa-3 d-flex flex-column align-center">
-      <v-btn class="align-self-end" icon @click="dialog = false">
+      <v-btn class="align-self-end" icon @click="stopQuiz()">
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <img
@@ -19,7 +19,7 @@
         <v-btn
           dark
           color="var(--main-col-2)"
-          @click="moveLogin()"
+          @click="startQuiz()"
           elevation="0"
           rounded
           class="mr-2 px-10"
@@ -28,11 +28,11 @@
         <v-btn
           dark
           color="var(--main-col-2)"
-          @click="dialog = false"
+          @click="stopQuiz()"
           elevation="0"
           rounded
           outlined
-          >닫기</v-btn
+          >취소</v-btn
         >
       </div>
     </v-sheet>
@@ -44,8 +44,18 @@ export default {
   name: "TodayQuizStart",
   data() {
     return {
-      dialog: false,
+      dialog: true,
     };
+  },
+  methods: {
+    startQuiz() {
+      this.$emit("startQuiz");
+      this.dialog = false;
+    },
+    stopQuiz() {
+      this.$router.push("/quiz");
+      this.dialog = false;
+    },
   },
 };
 </script>

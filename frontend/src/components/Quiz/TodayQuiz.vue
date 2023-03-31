@@ -1,21 +1,20 @@
 <template>
-  <v-sheet class="pa-8 d-flex flex-column gradient" height="100vh">
+  <v-sheet v-if="going" class="pa-8 d-flex flex-column gradient" height="100vh">
     <!-- Check going start -->
-    <TodayQuizStart></TodayQuizStart>
+    <TodayQuizStart @startQuiz="startQuiz"></TodayQuizStart>
     <!-- Title & Logo -->
     <v-sheet
       class="d-flex flex-row justify-space-between align-center"
       color="transparent"
       height="40px"
-      ><h2 class="align-self-center xxxxxxl-font point-b">Quiz</h2>
+    >
+      <span class="align-self-center white-col-1 point-b xxxxl-font">
+        오늘의 Quiz
+      </span>
       <img height="100%" :src="require('@/assets/images/logo.png')" />
     </v-sheet>
     <!-- 프로그레스 바 -->
-    <div><step-progress></step-progress></div>
-    <!-- 페이지 이동 금지 알림 -->
-    <v-alert dense shaped type="error" v-show="moveTry"
-      >Quiz를 다 풀어주세요! •̀ㅅ•́</v-alert
-    >
+    <step-progress></step-progress>
     <!-- 정답/오답 결과 출력 -->
     <div v-if="this.correctFlag == true"><answer-correct></answer-correct></div>
     <div v-else-if="this.correctFlag == false && this.timeoutFlag == false">
@@ -27,39 +26,61 @@
     <!-- 문제 -->
     <div v-if="this.index < count">
       <v-sheet
-        color="transparent"
-        class="pa-5 b-font lg-font d-flex flex-row align-center justify-space-between"
+        rounded="xl"
+        elevation="10"
+        class="pa-5 d-flex flex-column justify-space-between flex-wrap"
       >
-        <!-- 스탑워치 -->
-        <div v-if="this.timerVisiFlag == true">
-          <stop-watch></stop-watch>
-        </div>
-        <!-- ! 현재는 잘라서 넣는 방식으로 수정 필요 ! -->
-        <v-sheet width="80%" color="transparent">{{
-          this.questions[this.index]["question"].split(".")[0]
-        }}</v-sheet>
-      </v-sheet>
-      <v-sheet
-        color="transparent"
-        height="350px"
-        class="d-flex flex-row justify-space-between flex-wrap"
-      >
-        <!-- 정답 후보 [4지선다] -->
+        <v-sheet width="100%" class="px-2">
+          <v-sheet
+            width="100%"
+            class="d-flex flex-row justify-space-between align-center"
+          >
+            <!-- 문제 번호 -->
+            <div class="black-font xxxxl-font">{{ this.index + 1 }}.</div>
+            <!-- 스탑워치 -->
+            <stop-watch></stop-watch>
+          </v-sheet>
+          <div class="my-2 b-font lg-font">
+            {{ this.questions[this.index]["question"].split(".")[0] }}
+          </div>
+        </v-sheet>
+        <v-sheet width="100%" color="transparent"
+          ><v-item-group>
+            <!-- 정답 후보 [4지선다] -->
+            <div
+              v-for="(answer, key) in this.questions[this.index]['answers']"
+              :key="key"
+              class="py-2"
+            >
+              <v-item v-slot="{ active, toggle }">
+                <v-btn
+                  class="d-flex justify-start px-8"
+                  :color="active ? 'var(--graph-1-col-5)' : ''"
+                  :dark="active ? true : false"
+                  :outlined="active ? false : true"
+                  elevation="0"
+                  @click="toggle"
+                  width="100%"
+                  height="50"
+                  rounded
+                  :id="key"
+                  :value="key"
+                  :disabled="answerResultFlag"
+                >
+                  <span class="mr-2 black-font">{{ key }}.</span>
+                  <span>{{ answer }}</span>
+                </v-btn>
+              </v-item>
+            </div>
+          </v-item-group>
+        </v-sheet>
         <v-btn
-          class="quiz spacing-all"
+          class="px-6 mt-2 gradient-2 align-self-end"
+          rounded
           elevation="0"
-          width="47%"
-          height="150px"
-          v-for="(answer, key) in this.questions[this.index]['answers']"
-          color="white"
-          :key="key"
-          :id="key"
-          :value="key"
-          :disabled="answerResultFlag"
-          @click="checkAnswer(key)"
+          dark
+          >다음</v-btn
         >
-          {{ answer }}
-        </v-btn>
       </v-sheet>
     </div>
     <!-- 최종 결과 -->
@@ -99,14 +120,18 @@ export default {
       wrongAnswer: 0, // 오답 개수
       count: 7, // 문제 수
       audio: null, // Audio 객체 (BGM)
-      moveTry: false, // 다른 페이지로 이동 시도 여부
+      going: false, // 퀴즈 진행 여부
     };
   },
-  created() {
-    // this.timer = setInterval(this.timeOut, this.time);
-
-    // BGM 실행
-    if (this.index == 0) this.play();
+  async created() {
+    // 새로 고침 또는 시작 버튼이 아닌 경로로 접근 시
+    if (this.questions.length < 7) this.$router.push("/quiz");
+    // 정상 접근 시, 페이지 로드
+    else this.going = true;
+  },
+  destroyed() {
+    // vuex에 저장된 값 초기화
+    this.initQuiz();
   },
   mounted() {
     decrypt;
@@ -122,17 +147,16 @@ export default {
   computed: {
     ...mapState(quizStore, ["index", "questions", "todayQuizFlag"]),
   },
-  // Quiz를 도전하던 도중 나갈려고 할 경우 막기
-  beforeRouteLeave(next) {
-    if (this.todayQuizFlag == true) {
-      next();
-    } else {
-      this.moveTry = true;
-      setTimeout(this.showAlert, 2000);
-    }
-  },
   methods: {
-    ...mapActions(quizStore, ["increaseIndex", "setQuizResult"]),
+    ...mapActions(quizStore, ["increaseIndex", "setQuizResult", "initQuiz"]),
+    startQuiz() {
+      // 퀴즈 시작
+
+      // this.timer = setInterval(this.timeOut, this.time);
+
+      // BGM 실행
+      if (this.index == 0) this.play();
+    },
     // [@Method] 선택한 답변 정답 확인
     checkAnswer(key) {
       this.answerResultFlag = true;
@@ -165,7 +189,7 @@ export default {
       }
 
       clearInterval(this.timer);
-      setTimeout(this.nextQuestion, 2000); // 2초 후 다음 문제로 넘어감
+      // setTimeout(this.nextQuestion, 2000); // 2초 후 다음 문제로 넘어감
     },
     // [@Method] 다음 문제로 이동 + 결과 반영
     nextQuestion() {
@@ -205,9 +229,9 @@ export default {
       this.audio.play();
     },
     // [@Method] Alert 창 노출 여부
-    showAlert() {
-      this.moveTry = !this.moveTry;
-    },
+    // showAlert() {
+    //   this.moveTry = !this.moveTry;
+    // },
   },
 };
 </script>

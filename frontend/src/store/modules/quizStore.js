@@ -4,7 +4,7 @@ import {
   setQuizResult,
   sendMessageWord,
 } from "@/api/quiz";
-import { encrypt } from "@/store/js/crypto.js";
+// import { encrypt } from "@/store/js/crypto.js";
 
 import store from "@/store/index.js";
 
@@ -39,7 +39,7 @@ const quizStore = {
       state.questions = questions;
 
       // # for. quiz Loading 창 닫기
-      store.commit("QUIZ_LOADING_STATUS", false);
+      // store.commit("QUIZ_LOADING_STATUS", false);
     },
     SET_SIMILARITY_WORD: (state, similarityWord) => {
       state.similarityWord = similarityWord;
@@ -79,14 +79,15 @@ const quizStore = {
     },
     // [@Method] Quiz 문제 출제
     async setExamQuestions({ commit, state }) {
-      //
+      // Quiz 문제 가져오기
       await getQuizWords(
         async ({ data }) => {
+
           // i) 성공
           let simiIndex = 0; // 4지선다 set 시 사용 (similarityWord index 번호)
 
           if (data.statusCode == 200) {
-            console.log(data.data)
+            console.log("# 문제 가져오기 #", data.data);
             const quiz = []; // Quiz
             const articleList = []; // Quiz 출제 시 선정한 기사 ID
 
@@ -109,10 +110,11 @@ const quizStore = {
                 "[ ]"
               );
               // - 문제 답 저장 시 user가 봐도 모르도록 암호화
-              quizItem.correctAnswer = encrypt(
-                String.fromCharCode(randomNum),
-                process.env.VUE_APP_CRYPT_KEY
-              );
+              // quizItem.correctAnswer = encrypt(
+              //   String.fromCharCode(randomNum),
+              //   process.env.VUE_APP_CRYPT_KEY
+              // );
+              quizItem.correctAnswer = randomNum;
 
               // ii) 4지선다 set
               for (let i = 97; i <= 100; i++) {
@@ -138,22 +140,29 @@ const quizStore = {
             await commit("SET_QUESTIONS", quiz);
             await commit("SET_SELECT_QUIZ_ARTICLE", articleList);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
+            console.log("# index", state.index)
+            console.log("# questions", state.questions)
+
+            return Promise.resolve(true);
           }
           // ii) 사용자가 읽은 기사 내 경제 단어 7개 미만
           else {
             await commit("SET_QUESTIONS", [0]);
             await commit("SET_SELECT_QUIZ_ARTICLE", [0]);
+
+            return Promise.resolve(false);
           }
         },
         (error) => {
           console.log(error);
         }
       );
+
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
     async excuteSendMessage({ commit }, words) {
       // # for. quiz Loading 창
-      store.commit("QUIZ_LOADING_STATUS", true);
+      // store.commit("QUIZ_LOADING_STATUS", true);
 
       // Quiz로 출제할 경제용어 List
       const quizWord = [];
@@ -167,6 +176,7 @@ const quizStore = {
       await sendMessageWord(
         info,
         async ({ data }) => {
+          console.log(data.data);
           // S) 경제용어와 유사한 단어 similarityWord에 저장
           commit("SET_SIMILARITY_WORD", data.data);
         },

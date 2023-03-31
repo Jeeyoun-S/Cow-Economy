@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "TodayNotEnterAlert",
+  name: "ShortageWordAlert",
   data() {
     return {
       dialog: false,

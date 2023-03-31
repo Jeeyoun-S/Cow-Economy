@@ -3,8 +3,8 @@
     <v-sheet class="pa-2" rounded="lg" color="transparent">
       <div class="pb-2 d-flex flex-row justify-space-between">
         <div class="d-flex flex-column narrow white-col-1">
-          <span class="black-font xxl-font blue-gredient">오늘의</span
-          ><span class="blue-gredient black-font x-big-large-font"
+          <span class="xxl-font blue-gredient point-b">오늘의</span
+          ><span class="point-b blue-gredient x-big-large-font"
             >경제 용어 Quiz</span
           >
         </div>
@@ -22,7 +22,7 @@
           width="47%"
           height="180"
           elevation="0"
-          class="mb-3 pa-3 d-flex flex-column justify-center align-center"
+          class="point-th mb-3 pa-3 d-flex flex-column justify-center align-center"
           rounded="xl"
         >
           <img class="mb-5" :src="info.image" height="60" />
@@ -77,7 +77,7 @@ export default {
       loading: false, // 퀴즈 출제 시도 시 로딩 창 활성화 여부
       infos: [
         {
-          message: ["설명에 맞는", "단어를 찾는 퀴즈"],
+          message: ["읽었던 기사 속", "단어를", "맞추는 퀴즈"],
           image: require("@/assets/images/emoji/question-mark.png"),
         },
         {
@@ -101,7 +101,7 @@ export default {
   },
   watch: {
     questions() {
-      if (this.questions.length < 7) {
+      if (0 < this.questions.length < 7) {
         // Modal 창 열기
         this.$refs.shortage.openDialog();
       } else {
@@ -109,28 +109,41 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
     // 로그인된 상태라면
     if (this.isLoggedIn) {
       // [@Method] Quiz 진행 여부 판단
-      this.checkTodayQuiz();
+      await this.checkTodayQuiz();
     }
     // console.log("# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
   },
   methods: {
     ...mapActions(quizStore, ["setExamQuestions", "checkTodayQuiz"]),
     // [@Method] Quiz 페이지로 이동 or 알림창 출력
-    moveQuiz() {
+    async moveQuiz() {
+      // 로그인 된 상태인 경우
       if (this.isLoggedIn) {
+        // 퀴즈를 푼 적이 없는 경우
         if (this.todayQuizFlag == true) {
-          this.loading = true;
-          this.setExamQuestions().then(() => {
-            this.loading = false;
+          // 퀴즈 출제
+          await this.setExamQuestions().then((res) => {
+            // 퀴즈 출제가 가능한 경우
+            if (res) {
+              this.loading = true;
+            }
+            // 퀴즈 출제가 불가능한 경우
+            else {
+              this.$refs.shortage.openDialog();
+            }
           }); // [@Method] Quiz 문제 출제
-        } else {
+        }
+        // 퀴즈는 푼 적이 있는 경우
+        else {
           this.$refs.todaynot.openDialog(); // ! 오늘 Quiz 다 했다고 alert 창 띄우기
         }
-      } else {
+      }
+      // 로그인 안 된 상태인 경우
+      else {
         this.$refs.notuser.openDialog(); // 로그인 안 한 상태라고 창 띄우기
       }
     },
