@@ -11,6 +11,7 @@ import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.*;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.ShiftRight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -66,18 +67,16 @@ public class QuizService {
 
         List<ArticleWordDto> result = new ArrayList<>();
         Map<Long, String> map = new HashMap<>();
+        for (ArticleWord articleWord: articleWords) {
+            String[] subwordList = articleWord.getSubWordId().split(", ");  // 경제단어 ID
 
-        for (ArticleWord articleWord:articleWords) {
-            String[] subwordList = articleWord.getSubWordId().split(", ");
-
-            for (String id:subwordList) {
+            for (String id: subwordList) {
                 EconomyWord word = economyWordRepository.findByWordId(Long.parseLong(id));
                 if(map.containsKey(word.getWordId())) continue;
                 map.put(word.getWordId(), word.getWord());
                 ArticleWordDto dto = new ArticleWordDto(articleWord.getArticle().getArticleId(), word);
                 result.add(dto);
             }
-
         }
         // * 단어 확인용
 //        for(ArticleWordDto a: result){
@@ -86,11 +85,6 @@ public class QuizService {
 
         if (result.size() < 7) return null; // 경제단어 7개 이하 > Quiz 출제 불가
         return result;
-    }
-
-    public static <T>Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
     /**

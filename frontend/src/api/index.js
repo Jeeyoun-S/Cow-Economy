@@ -17,7 +17,6 @@ function apiInstance() {
 
     // access 토큰이 localStroage에 있으면 header에 포함시켜 전송
     if (token) {
-      // console.log("#21# token 넣기 확인: ", token);
       config.headers["Authorization"] = "Bearer " + token;
     }
 
