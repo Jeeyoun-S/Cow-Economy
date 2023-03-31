@@ -93,8 +93,7 @@ public class QuizController {
             List<ArticleWordDto> wordList = quizService.getEconomyWord(articleIdList);
 //            logger.info("#21# 읽은 기사 내 경제 단어 List 확인: {}", wordList.size());
 
-            // 2-1) 만약, 경제 단어가 7개 이하일 경우 > ?? > 오늘의 Quiz 접근 제한
-//            if (wordList.size() < 7) return BaseResponse.fail();
+            // 2-1) 만약, 경제 단어가 7개 이하일 경우 > 오늘의 Quiz 접근 제한
             if (wordList == null) return BaseResponse.fail();
 
             // 3) 가져온 경제 단어를 토대로 문제 출제
