@@ -7,7 +7,7 @@
     <NewsDetailLoading v-if="loading"></NewsDetailLoading>
     <div v-else>
       <NewsDetailContent :newsDetail="newsDetail"></NewsDetailContent>
-      <NewsDetailRelation></NewsDetailRelation>
+      <NewsDetailRelation :newsRelated="newsRelated"></NewsDetailRelation>
       <NewsDetailMemo
         :memoMine="newsDetail.userArticleMemoListMine"
         :memoOther="newsDetail.userArticleMemoListOther"
@@ -63,6 +63,7 @@ export default {
       localDone: false, // 기사 읽음 snackbar 활성화
       loading: true, // 로딩 중일 경우 true
       newsDetail: null, // 기사 상세 정보
+      newsRelated: null, //관련 기사 리스트
     };
   },
   computed: {
@@ -135,6 +136,13 @@ export default {
         // newsDetail에 받아온 상세 정보 넣기
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
+
+        console.log("지금 뉴스");
+        console.log(this.newsDetail);
+
+        // newsDetail에 받아온 관련 기사 아이디 넣기
+        this.newsRelated = this.newsDetail.relatedArticleList;
+        console.log(this.newsRelated);
 
         // 로딩 상태 변경
         this.loading = false;

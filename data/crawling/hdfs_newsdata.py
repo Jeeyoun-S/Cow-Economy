@@ -15,9 +15,9 @@ def put_data(news_df) :
 
     # 경로
 #     server = "hdfs://localhost:9000" # 로컬
-    server = "hdfs://cluster.p.ssafy.io:9000" # 서버
+    server = "hdfs://localhost:9000" # 서버
 #     path = "/user/hadoop/test" # 로컬
-    path = "/user/j8a509/news/daily-news/" # 서버
+    path = "/news/daily-news/" # 서버
     hdfs_path = server + path # hdfs 폴더 저장 경로
 
     file_date = dt.datetime.today().astimezone(timezone('Asia/Seoul')).strftime("%Y%m%d") # 오늘 날짜 ex) 20230320
