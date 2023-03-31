@@ -32,7 +32,7 @@ public class ChatGPTController {
      * - Quiz 문제 출제 시 사용
      */
     @PostMapping("/ask-word")
-    public BaseResponse<?> generateCompletion(@RequestBody ChatGPTRequest chatGPTRequest) {
+    public BaseResponse<?> generateCompletion(@RequestBody List<ChatGPTRequest> chatGPTRequest) {
         logger.info("#[Gpt3Controller]# 해당 경제용어와 유사한 경제용어 3개 조회 동작 - articleWordDto: {}", chatGPTRequest);
         try {
             String result = myChatGPTService.getChatResponse("message");

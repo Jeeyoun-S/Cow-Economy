@@ -24,7 +24,7 @@ async function getQuizWords(userId, success, fail) {
 //     .catch(fail);
 // }
 async function sendMessageWord(words, success, fail) {
-  console.log("#21# chatGPT 요청 data: ", words[0]);
+  console.log("#21# chatGPT 요청 data: ", words);
   const info = { words: words };
 
   await api
