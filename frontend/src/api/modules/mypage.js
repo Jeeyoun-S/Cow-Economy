@@ -7,7 +7,7 @@ const api = apiInstance();
 // [GET /user/info] 기사 상세정보 조회
 async function getUserInfo() {
   var result = null;
-  await api.get(`user/info`).then((res) => {
+  await api.get(`/user/info`).then((res) => {
     if (res.data.statusCode == 200) {
       result = res.data.data;
 
