@@ -23,6 +23,9 @@
 .xxxxl-font {
   font-size: 26px;
 }
+.x-big-large-font {
+  font-size: 35px;
+}
 /* 폰트 색상 */
 .main-col-1 {
   color: var(--main-col-1);
@@ -44,6 +47,9 @@
 }
 .black-col-1 {
   color: black !important;
+}
+.white-col-1 {
+  color: white !important;
 }
 /* 폰트 굵기 */
 .th-font {
@@ -92,6 +98,10 @@
 }
 .italic {
   font-style: italic;
+}
+/* 줄 너비 */
+.narrow {
+  line-height: 1.1;
 }
 /* 기타 */
 .spacing-all {

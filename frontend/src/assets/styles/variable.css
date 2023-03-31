@@ -30,6 +30,13 @@
   --graph-2-col-7: #9ba6fa;
   --graph-2-col-8: #cdd2fd;
 
+  --quiz-1-col-1: #c9d4f8;
+  --quiz-1-col-2: #c1c5fa;
+  --quiz-1-col-3: #c3bdf5;
+  --quiz-1-col-4: #d2c4fc;
+  --quiz-1-col-5: #dac6f5;
+  --quiz-1-col-6: #d9bde7;
+
   /* 글씨체 */
   /* 숫자가 클수록 두꺼워집니다. */
   --main-font-0: "MinSans-Thin";

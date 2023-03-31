@@ -81,7 +81,7 @@ const quizStore = {
     async setExamQuestions({ commit, state }) {
       // # Back-end에서 현재 로그인 한 userId 사용함
       const info = {
-        userId: 1,
+        userId: 4,
       };
 
       await getQuizWords(
