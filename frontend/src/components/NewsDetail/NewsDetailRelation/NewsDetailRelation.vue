@@ -1,7 +1,7 @@
 <template>
-  <v-sheet id="relation-article" class="pa-7" color="var(--main-col-5)">
-    <h3 class="mb-4">관련 기사</h3>
-    <v-slide-group class="pt-10 pa-1">
+  <v-sheet id="relation-article" class="py-7" color="var(--main-col-5)">
+    <h3 class="mb-4 pl-7">관련 기사</h3>
+    <v-slide-group class="pt-10" show-arrows>
       <v-slide-item
         class="mx-2"
         style="height: auto"
