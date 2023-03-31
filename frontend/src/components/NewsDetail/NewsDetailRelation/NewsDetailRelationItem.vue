@@ -1,5 +1,5 @@
 <template>
-  <v-sheet height="100%">
+  <v-sheet @click="goNewsDetail" width="130" height="100%">
     <v-card
       v-if="relation.articleThumbnail != 'NaN'"
       class="blue-shadow"
@@ -23,12 +23,11 @@
               : relation.articleTitle.slice(0, 30) + "···"
           }}
         </div>
-      </div> </v-card
-    ><v-sheet height="100%" v-else>
-      <div class="pt-1 pa-2 sm-font">
-        {{ relation.articleTitle }}
       </div>
-    </v-sheet>
+    </v-card>
+    <v-card height="100%" class="pt-1 pa-2 sm-font" v-else>
+      {{ relation.articleTitle }}
+    </v-card>
   </v-sheet>
 </template>
 
@@ -38,6 +37,12 @@ export default {
   props: {
     relation: Object,
     index: Number,
+  },
+  methods: {
+    goNewsDetail() {
+      // this.$router.replace(`/news/${this.relation.articleId}`);
+      location.href = `/news/${this.relation.articleId}`;
+    },
   },
 };
 </script>

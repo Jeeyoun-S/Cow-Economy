@@ -1,9 +1,9 @@
 <template>
   <v-sheet id="relation-article" class="pa-7" color="var(--main-col-5)">
     <h3 class="mb-4">관련 기사</h3>
-    <swiper class="swiper pt-10 pa-1" :options="swiperOption">
-      <div class="swiper-pagination" slot="pagination"></div>
-      <swiper-slide
+    <v-slide-group class="pt-10 pa-1">
+      <v-slide-item
+        class="mx-2"
         style="height: auto"
         v-for="(relation, index) in newsRelated"
         :key="index"
@@ -12,8 +12,8 @@
           :index="index"
           :relation="relation"
         ></NewsDetailRelationItem>
-      </swiper-slide>
-    </swiper>
+      </v-slide-item>
+    </v-slide-group>
   </v-sheet>
 </template>
 
@@ -28,22 +28,9 @@ export default {
     NewsDetailRelationItem,
   },
   data() {
-    return {
-      swiperOption: {
-        slidesPerView: 2,
-        spaceBetween: 25,
-        slidesPerGroup: 2,
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        lazy: {
-          loadPrevNext: true,
-        },
-      },
-    };
+    return {};
   },
+  methods: {},
 };
 </script>
 
