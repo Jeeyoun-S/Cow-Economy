@@ -1,20 +1,10 @@
-<!-- <template>
-  <v-app>
-    <router-view name="header" />
-    <div>
-      <p>이거 맞아?</p>
-      <img :src="require('@/assets/images/error-404.gif')" />
-    </div>
-    <router-view name="footer" />
-  </v-app>
-</template> -->
 <template>
-  <v-sheet>
+  <div>
     <home-header />
-    <div class="img">
+    <div class="error-image">
       <img :src="require('@/assets/images/error-404.gif')" />
     </div>
-  </v-sheet>
+  </div>
 </template>
 
 <script>
@@ -22,16 +12,12 @@ import HomeHeader from "@/views/Header/HomeHeader.vue";
 
 export default {
   components: { HomeHeader },
-  name: "The404Error",
-  data: () => ({
-    isShowHeader: true,
-    scrollPosition: 0,
-  }),
 };
 </script>
 
 <style>
-.img {
-  margin-left: 15%;
+.error-image {
+  margin-top: 0%;
+  margin-left: 20%;
 }
 </style>
