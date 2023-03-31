@@ -68,6 +68,7 @@ import MyPageLogoutBtn from "./MyPageLogoutBtn.vue";
 import MyPageInfo from "./MyPageInfo/MyPageInfo.vue";
 import MyPageMemo from "./MyPageMemo/MyPageMemo.vue";
 import MyPageLoading from "./MyPageLoading.vue";
+import KakaoLogin from "./KakaoLogin.vue";
 
 import { mapGetters, mapActions } from "vuex";
 import { getUserInfo } from "@/api/modules/mypage.js";
@@ -118,6 +119,7 @@ export default {
     MyPageMemo,
     MyPageInfo,
     MyPageLoading,
+    KakaoLogin,
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
