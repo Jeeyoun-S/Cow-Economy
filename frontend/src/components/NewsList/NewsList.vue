@@ -1,7 +1,7 @@
 <template>
   <v-sheet id="news-list">
     <!-- sort select -->
-    <v-sheet class="mx-7 d-flex flex-row align-center">
+    <v-sheet class="mx-7 d-flex flex-row align-center mt-2 mb-5">
       <!-- i) news sort select -->
       <v-sheet width="160px"
         ><v-select
@@ -77,6 +77,6 @@ export default {
 
 <style>
 #news-list {
-  background-color: var(--main-col-5);
+  background-color: var(white);
 }
 </style>
