@@ -36,7 +36,8 @@ const newsStore = {
         article_regtime: "2023-10-22 12:12:12",
         article_editor: "김싸피 기사",
         article_press: "지윤",
-        article_title: "작년에 태어난 아기, 100명중 63명은 첫째",
+        article_title:
+          "AI투자 플랫폼 ‘탱고픽’ 운영사 알파브릿지, ChatGPT 연동 ‘탱고픽 AI Chat’ 서비스 출시…AI와의 대화를 통한 투자 종목 탐색",
         article_content: "기사 내용3",
         article_thumbnail: null,
         article_hits: 3,

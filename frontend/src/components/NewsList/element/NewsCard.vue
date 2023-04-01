@@ -1,53 +1,38 @@
-<!-- <template>
-  <v-card>
-    <div class="d-flex flex-nowrap justify-space-between">
-      <div>
-        <v-card-actions>
-          <v-img
-            v-if="this.article.article_thumbnail"
-            class="ml-2 mt-3"
-            fab
-            height="40px"
-            right
-            width="40px"
-          ></v-img>
-        </v-card-actions>
-        <v-card-title classd="text-h7">{{
-          this.article.article_title
-        }}</v-card-title>
-      </div>
-    </div>
-  </v-card>
-</template> -->
 <template>
-  <v-card max-width="400" class="mx-auto">
-    <v-container>
-      <v-row dense>
-        <v-col v-for="(item, i) in items" :key="i" cols="12">
-          <v-card>
-            <div class="d-flex flex-no-wrap">
-              <v-avatar class="ma-0" size="125" tile>
-                <v-img :src="item.src"></v-img>
-              </v-avatar>
-              <div>
-                <v-card-title
-                  class="text-h7 mt-5"
-                  v-text="item.title"
-                ></v-card-title>
-                <div class="d-flex ml-3">
-                  <v-chip outlined>언론사</v-chip>
-                  <v-chip outlined>날짜</v-chip>
-                </div>
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-card max-width="100%" class="mx-auto mt-3 rounded">
+    <v-card>
+      <div class="d-flex flex-nowrap">
+        <!-- article thumbnail -->
+        <div v-if="this.article.article_thumbnail">
+          <v-avatar class="custom-avatar" size="125" tile>
+            <v-img :src="this.article.article_thumbnail" />
+          </v-avatar>
+        </div>
+        <div class="ml-3 mt-5 mr-2">
+          <!-- article title -->
+          <!-- - 글자수가 60 이상일 경우 ... 처리 (2줄)-->
+          <v-card-content
+            v-if="this.article.article_title.length > 65"
+            class="text-h7"
+            >{{ this.article.article_title.slice(0, 65) }} ...
+          </v-card-content>
+          <v-card-content v-else class="text-h7">{{
+            this.article.article_title
+          }}</v-card-content>
+          <!-- article press & regtime -->
+          <div class="d-flex mt-4">
+            <v-chip outlined>{{ this.article.article_press }}</v-chip>
+            <v-chip outlined>{{
+              this.article.article_regtime.slice(0, 10)
+            }}</v-chip>
+          </div>
+        </div>
+      </div>
+    </v-card>
   </v-card>
 </template>
 
-<!-- <script>
+<script>
 export default {
   name: "NewsCard",
   props: {
@@ -66,26 +51,11 @@ export default {
     },
   },
 };
-</script> -->
-<script>
-export default {
-  data: () => ({
-    items: [
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        title: "Supermodel",
-        artist: "Foster the People",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        artist: "Ellie Goulding",
-      },
-    ],
-  }),
-};
 </script>
 
-<style></style>
+<style>
+.custom-avatar {
+  border-top-left-radius: 3;
+  border-bottom-left-radius: 3;
+}
+</style>
