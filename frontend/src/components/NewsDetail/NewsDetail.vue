@@ -14,7 +14,7 @@
       ></NewsDetailMemo>
       <!-- finish reading snackbar -->
       <v-snackbar
-        :timeout="2000000000000000"
+        :timeout="5000"
         class="mb-4"
         v-model="localDone"
         color="var(--main-col-4-1)"
@@ -31,7 +31,7 @@
         >
           <span class="main-col-1"
             >기사를 읽어,
-            <span class="b-font">경험치가 1 EXP 증가</span>했습니다.</span
+            <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -88,7 +88,6 @@ export default {
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
     addScrollEvent() {
-      console.log("add");
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
       // 목표하는 스크롤 위치 (기사 맨 아래)
@@ -97,11 +96,9 @@ export default {
       var id = this.$route.params.id;
       // 스크롤 이벤트에 넣을 함수
       function finishReading() {
-        console.log("ddd");
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
         if (now > target) {
-          console.log("dd 넘어감");
           // 스크롤 이벤트 삭제
           document.removeEventListener("scroll", finishReading);
           // 기사 읽음 처리 API 요청
@@ -114,7 +111,7 @@ export default {
         }
       }
       // 스크롤 이벤트 추가
-      window.addEventListener("scroll", finishReading());
+      window.addEventListener("scroll", finishReading);
     },
   },
   async mounted() {
@@ -141,6 +138,7 @@ export default {
 
         // 로딩 상태 변경
         this.loading = false;
+
       }
     });
     // 기사를 아직 안 읽었다면 읽음 처리 Event 추가

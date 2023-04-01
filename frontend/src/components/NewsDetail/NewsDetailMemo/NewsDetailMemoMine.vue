@@ -1,5 +1,5 @@
 <template>
-  <v-sheet @scroll="this.bottom = this.bottomVisible()">
+  <v-sheet>
     <!-- register -->
     <NewsDetailMemoRegister
       @addNewMemo="addNewMemo"
@@ -140,9 +140,9 @@ export default {
   },
   created() {
     // 스크롤 이동할 때 bottom 변화 확인
-    // window.addEventListener("scroll", () => {
-    //   this.bottom = this.bottomVisible();
-    // });
+    window.addEventListener("scroll", () => {
+      this.bottom = this.bottomVisible();
+    });
     // memo 리스트 초기화
     this.memos_all = this.memoMine;
     this.sortMemoList();

@@ -61,7 +61,7 @@ async function getNewsDetail(articleId) {
           ).split("@@@");
         }
       }
-    });
+    }).catch();
   return await Promise.resolve(result);
 }
 
@@ -71,7 +71,7 @@ async function updateReading(articleId) {
   await api.post(`article/${articleId}`)
     .then((res) => {
       result = res.data.data;
-    })
+    }).catch();
   return await Promise.resolve(result);
 }
 

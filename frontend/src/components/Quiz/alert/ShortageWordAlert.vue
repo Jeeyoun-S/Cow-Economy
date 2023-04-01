@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="350">
+  <v-dialog v-model="dialog" max-width="300">
     <v-sheet class="pa-3 d-flex flex-column align-center">
       <v-btn class="align-self-end" icon @click="dialog = false">
         <v-icon>mdi-close</v-icon>
