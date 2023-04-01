@@ -2,9 +2,11 @@ package com.coweconomy.service;
 
 import com.coweconomy.api.request.MemoRequestDto;
 import com.coweconomy.domain.article.entity.Article;
+import com.coweconomy.domain.article.entity.MemoHeart;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.repository.ArticleRepository;
+import com.coweconomy.repository.UserArticleMemoHeartRepository;
 import com.coweconomy.repository.UserArticleMemoRepository;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,44 @@ public class MemoService {
 
     @Autowired
     UserArticleMemoRepository userArticleMemoRepository;
+
+    @Autowired
+    UserArticleMemoHeartRepository memoHeartRepository;
+
+    public MemoHeart addHeart(Long userId, Long memoId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserArticleMemo> memoOptional = userArticleMemoRepository.findById(memoId);
+
+        if (userOptional.isPresent() && memoOptional.isPresent()) {
+            User user = userOptional.get();
+            UserArticleMemo memo = memoOptional.get();
+
+            MemoHeart memoHeart = MemoHeart.builder()
+                    .user(user)
+                    .userArticleMemo(memo)
+                    .build();
+
+            return memoHeartRepository.save(memoHeart);
+        }
+
+        return null;
+    }
+
+    public void removeHeart(Long userId, Long memoId) {
+        Optional<MemoHeart> memoHeartOptional = memoHeartRepository.findAll().stream()
+                .filter(memoHeart -> memoHeart.getUser().getUserId().equals(userId) && memoHeart.getUserArticleMemo().getMemoId().equals(memoId))
+                .findFirst();
+
+        if (memoHeartOptional.isPresent()) {
+            memoHeartRepository.delete(memoHeartOptional.get());
+        }
+    }
+
+    public int countHearts(Long memoId) {
+        return (int) memoHeartRepository.findAll().stream()
+                .filter(memoHeart -> memoHeart.getUserArticleMemo().getMemoId().equals(memoId))
+                .count();
+    }
 
     /**
      * 입력 받은 메모 Request가 유요한 값인지 확인
