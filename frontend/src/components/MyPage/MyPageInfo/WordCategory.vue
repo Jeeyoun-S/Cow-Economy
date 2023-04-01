@@ -1,18 +1,18 @@
 <template>
-  <div class="pa-5">
+  <div class="px-1 mt-6">
     <div class="d-flex align-center">
-      <span class="xxl-font">경제 용어의 카테고리</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
-      </div>
-      <span class="xxl-font th-font">03</span>
+      <span class="xl-font">경제 용어의 카테고리</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">03</span>
     </div>
-    <div class="th-font">
-      오늘의 Quiz에서 맞췄던 용어의 카테고리를 보여드립니다.
+    <div class="mb-3 th-font sm-font">
+      오늘의 Quiz에서 맞춘 용어의 카테고리를 보여드립니다.
     </div>
-    <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
+    <div class="d-flex justify-space-between align-center pt-2 px-3 xxxl-font">
       <div x-large icon></div>
-      <span class="xxxxl-font" style="color: #757575"
+      <span class="xxl-font" style="color: #757575"
         >{{ this.currentYear }}년 {{ this.currentMonth }}월</span
       >
       <div x-large icon></div>
@@ -26,6 +26,7 @@ import { mapState } from "vuex";
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 
 export default {
   data: function () {
@@ -96,7 +97,7 @@ export default {
                 font: {
                   size: 14, // 항목 글씨 크기 변경
                   family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-3")
+                    .getPropertyValue("--main-font-1")
                     .trim(),
                 },
               },

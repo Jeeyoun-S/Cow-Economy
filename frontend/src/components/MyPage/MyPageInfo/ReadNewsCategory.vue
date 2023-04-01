@@ -1,16 +1,18 @@
 <template>
-  <div class="pa-5">
+  <div class="px-1 mt-6">
     <div class="d-flex align-center">
-      <span class="xxl-font">읽은 기사의 카테고리</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
-      </div>
-      <span class="xxl-font th-font">02</span>
+      <span class="xl-font">읽은 기사의 카테고리</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">02</span>
     </div>
-    <div class="th-font">지금까지 읽은 기사의 카테고리 비율을 보여드려요.</div>
-    <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
+    <div class="mb-3 th-font sm-font">
+      지금까지 읽은 기사의 카테고리 비율을 보여드려요.
+    </div>
+    <div class="d-flex justify-space-between align-center py-2 px-3 xxxl-font">
       <div x-large icon></div>
-      <span class="xxxxl-font" style="color: #757575"
+      <span class="xxl-font" style="color: #757575"
         >{{ this.currentYear }}년</span
       >
       <div x-large icon></div>
@@ -29,6 +31,7 @@
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 
 import { mapState } from "vuex";
 
@@ -106,18 +109,19 @@ export default {
                 useBorderRadius: true,
                 borderRadius: "3",
                 font: {
-                  size: 16,
+                  size: 14,
                   family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-3")
+                    .getPropertyValue("--main-font-1")
                     .trim(),
                 },
+                textAlign: "left",
               },
             },
             tooltip: {
               enabled: true,
             },
           },
-          cutout: "60%",
+          cutout: "55%",
           animation: {
             animateScale: true,
             animateRotate: true,
