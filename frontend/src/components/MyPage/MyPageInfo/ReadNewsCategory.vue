@@ -110,9 +110,9 @@ export default {
                 borderRadius: "3",
                 font: {
                   size: 14,
-                  family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-1")
-                    .trim(),
+                  // family: getComputedStyle(document.documentElement)
+                  //   .getPropertyValue("--main-font-1")
+                  //   .trim(),
                 },
                 textAlign: "left",
               },

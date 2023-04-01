@@ -96,9 +96,9 @@ export default {
                 color: "rgb(0, 0, 0)", // 항목 글씨 색상 변경
                 font: {
                   size: 14, // 항목 글씨 크기 변경
-                  family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-1")
-                    .trim(),
+                  // family: getComputedStyle(document.documentElement)
+                  //   .getPropertyValue("--main-font-1")
+                  //   .trim(),
                 },
               },
             },
