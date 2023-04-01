@@ -47,13 +47,9 @@ export default {
   data() {
     return {};
   },
-  created() {
-    console.log("#21# 가져온 news 확인: ", this.article);
-  },
   methods: {
     // [@Method] 기사 상세페이지로 이동
     moveDetailArticle(articleId) {
-      console.log("#21# articleId 확인: ", this.article.articleId);
       this.$router.push(`/news/${articleId}`);
     },
   },

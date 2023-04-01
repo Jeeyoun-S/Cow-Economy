@@ -1,7 +1,7 @@
 <template>
   <v-sheet id="news-list">
     <!-- sort select -->
-    <v-sheet class="mx-7 d-flex flex-row align-center mt-2 mb-5">
+    <v-sheet class="mx-5 d-flex flex-row align-center mt-2 mb-5">
       <!-- i) news sort select -->
       <v-sheet width="160px"
         ><v-select
@@ -51,7 +51,7 @@
 
 <script>
 import NewsCard from "./element/NewsCard.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "NewsList",
@@ -65,12 +65,37 @@ export default {
     };
   },
   computed: {
-    ...mapState("newsStore", ["news"]),
+    ...mapState("newsStore", ["news", "categoryNews"]),
   },
   created() {
-    this.sort = "인기순";
+    this.sort = "최신순";
     this.category = "전체";
-    // console.log("#21# news 확인: ", this.news);
+    console.log("#21# 가져온 뉴스 확인: ", this.news);
+  },
+  watch: {
+    sort() {
+      this.sortNews();
+    },
+    category() {
+      this.filterNews();
+    },
+  },
+  methods: {
+    ...mapActions("newsStore", ["setCategoryNews"]),
+    // [@Method] 최신 or 인기순 정렬
+    sortNews() {
+      if (this.sort == "최신순") {
+        this.news.sort(function (a, b) {
+          return new Date(b.article_regtime) - new Date(a.article_regtime);
+        });
+      } else if (this.sort == "인기순") {
+        this.news.sort(function (a, b) {
+          return b.article_hits - a.article_hits;
+        });
+      }
+    },
+    // [@Method] 카테고리 별 정렬
+    filterNews() {},
   },
 };
 </script>
