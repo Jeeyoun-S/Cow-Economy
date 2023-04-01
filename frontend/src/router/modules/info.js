@@ -1,10 +1,10 @@
 import InfoHeader from "@/views/Header/InfoHeader.vue";
-import InfoPage from "@/components/MainPage/InfoPage.vue";
+import InfoPage from "@/components/InfoPage/InfoPage.vue";
 
-const main = [
+const info = [
   {
     path: "/",
-    name: "main",
+    name: "info",
     components: {
       header: InfoHeader,
       default: InfoPage,
@@ -12,4 +12,4 @@ const main = [
   },
 ];
 
-export default main;
+export default info;
