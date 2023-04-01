@@ -134,4 +134,8 @@ public class MemoController {
 
         return BaseResponse.fail();
     }
+
+    @ApiOperation(value="메모 좋아요", notes="메모에 좋아요를 누를 수 있다")
+    @PostMapping
+    public BaseResponse<?>
 }
