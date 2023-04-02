@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pagination black">
+    <div class="pagination">
       <div class="dot selected"></div>
       <div class="dot"></div>
       <div class="dot"></div>
@@ -26,13 +26,49 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <img height="60px" :src="require('@/assets/images/icon.png')" />
-              <h1>소 귀<span>에</span> 경<span>제읽기</span></h1>
-              <span class="description">경제 기사를 읽으며</span>
-              <span class="description">경제에 대해 공부하는 서비스</span>
+              <div class="line-top"></div>
+              <div class="motion">
+                <div class="glitter glitter1"></div>
+                <div class="glitter glitter2"></div>
+                <div class="glitter glitter3"></div>
+                <div class="glitter glitter4"></div>
+                <div class="glitter glitter5"></div>
+                <div class="glitter glitter6"></div>
+                <div class="glitter glitter7"></div>
+                <div class="glitter glitter8"></div>
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+              </div>
+              <img
+                class="logo"
+                height="150px"
+                :src="require('@/assets/images/icon/logo_full.png')"
+              />
+              <div class="detail d-flex flex-column align-center">
+                <div class="title">
+                  <span>소 귀에 경제 읽기</span>
+                  <!-- <div class="cursor"></div> -->
+                </div>
+                <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
+                <span class="description">경제 기사를 읽으며</span>
+                <span class="description">경제에 대해 공부하는 서비스</span>
+                <MainHeaderLogin class="mt-3"></MainHeaderLogin>
+                <v-btn
+                  class="px-10 mt-3"
+                  elevation="0"
+                  color="var(--main-col-1)"
+                  to="/home"
+                  dark
+                  rounded
+                  outlined
+                >
+                  로그인 없이 시작하기
+                </v-btn>
+              </div>
             </div>
           </div>
           <div class="page features">
+            <div class="number"></div>
             <div class="feature">
               <h3>Infinite Flicking</h3>
               <p class="description">
@@ -143,11 +179,14 @@
 <script>
 import { Flicking } from "@egjs/vue-flicking";
 import Scene from "scenejs";
+// import { typing } from "@scenejs/effects";
+import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
 
 export default {
   name: "FlickingTest",
   components: {
-    Flicking: Flicking,
+    Flicking,
+    MainHeaderLogin,
   },
   data() {
     return {
@@ -187,7 +226,7 @@ export default {
       //   pagination.classList.remove("black");
       // }
 
-      if (index) dots[flicking.index].classList.remove("selected");
+      dots[flicking.index].classList.remove("selected");
       dots[index].classList.add("selected");
     });
 
@@ -255,7 +294,7 @@ export default {
             left: "45%",
           },
           1: {
-            transform: "translate(0%, -50vh) translateY(-60%)",
+            transform: "translate(0%, -50vh) translateY(-80%)",
             left: "60%",
           },
           2: {
@@ -438,6 +477,148 @@ export default {
       }
     ).playCSS();
 
+    new Scene(
+      {
+        ".line-top": {
+          0: {
+            transform: "translateY(-100%) scaleY(1)",
+          },
+          0.3: {
+            transform: "translateY(0%) scaleY(0)",
+          },
+          options: {
+            easing: "ease-in",
+          },
+        },
+        ".circle1": {
+          0: {
+            "border-width": "100px",
+            transform: "scale(0)",
+          },
+          0.7: {
+            opacity: 1,
+          },
+          0.9: {
+            "border-width": "0px",
+            transform: "scale(1)",
+            opacity: 0,
+          },
+          options: {
+            delay: 0.5,
+          },
+        },
+        ".circle2": {
+          0: {
+            "border-width": "200px",
+            transform: "scale(0)",
+          },
+          0.1: {
+            opacity: 1,
+          },
+          0.7: {
+            "border-width": "0px",
+            transform: "scale(1)",
+            opacity: 0,
+          },
+          1.8: 1,
+          options: {
+            delay: 1.1,
+          },
+        },
+        ".glitter": (i) => ({
+          0: {
+            width: "0px",
+            transform: {
+              rotate: `${(360 / 8) * i}deg`,
+              translate: "0px",
+              scaleX: 1,
+            },
+            opacity: 0,
+          },
+          0.3: {
+            width: "50px",
+            opacity: 1,
+          },
+          0.8: {
+            width: "0px",
+            transform: {
+              translate: "100px",
+              scaleX: 0,
+            },
+            opacity: 0,
+          },
+          options: {
+            delay: 0.5,
+          },
+        }),
+        ".logo": {
+          0: {
+            opacity: 0,
+            transform: "scale(0.3)",
+            top: "-100px",
+            bottom: "-100px",
+          },
+          0.1: {
+            opacity: 1,
+          },
+          0.8: {
+            opacity: 1,
+          },
+          1: {
+            transform: "translateY(0%) scale(1)",
+            opacity: 1,
+          },
+          2: {
+            transform: "translateY(-115%)  scale(1)",
+          },
+          options: {
+            delay: 1.3,
+          },
+        },
+        ".detail": {
+          0: {
+            opacity: 0,
+          },
+          2.3: {
+            opacity: 1,
+          },
+          options: {
+            delay: 2.3,
+          },
+        },
+      },
+      {
+        easing: "ease-out",
+        selector: true,
+        iterationCount: "1",
+      }
+    ).playCSS();
+
+    // new Scene(
+    //   {
+    //     ".title span": typing({
+    //       text: "소 귀에 경제 읽기.",
+    //       duration: 1,
+    //       delay: 0.5,
+    //       end: 11,
+    //     }),
+    //     ".title .cursor": {
+    //       0: { opacity: 0 },
+    //       0.5: { opacity: 0 },
+    //       "0.5>": { opacity: 1 },
+    //       1: { opacity: 0 },
+    //       options: {
+    //         iterationCount: 3,
+    //       },
+    //     },
+    //   },
+    //   {
+    //     // iterationCount: "infinite",
+    //     direction: "alternate",
+    //     selector: true,
+    //   }
+    // ).play();
+
     let isEnableScroll = true;
     let timerId = 0;
 
@@ -478,12 +659,87 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800&display=swap"); */
 
+/* 첫 페이지 서비스 제목 */
+.title {
+  margin: 10px;
+}
+/* .title .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 30px;
+  background: white;
+} */
+.title span {
+  font-size: 30px;
+  color: var(--main-col-1);
+  font-family: var(--main-font-5);
+}
 /* * {
   font-family: "Open Sans", sans-serif !important;
   letter-spacing: 0.5px !important;
 } */
+/* 첫 페이지 서비스 로고 등장 효과 */
+.line-top {
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+  width: 2px;
+  height: 70%;
+  transform-origin: 50% 100%;
+  background: var(--main-col-3);
+  margin: auto;
+  transform: translateY(-100%);
+}
+.motion {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: 50%;
+  max-width: 600px;
+  max-height: 600px;
+}
+.motion .circle {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 70px solid var(--main-col-3);
+  left: -100px;
+  right: -100px;
+  top: -100px;
+  bottom: -100px;
+  margin: auto;
+  opacity: 0;
+}
+.motion .circle2 {
+  width: 300px;
+  height: 300px;
+}
+.motion .glitter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  height: 2px;
+  background: var(--main-col-3);
+  transform-origin: 0px 1px;
+}
+.logo {
+  position: absolute;
+  left: -100px;
+  right: -100px;
+  top: -100px;
+  bottom: -100px;
+  margin: auto;
+}
 .ratio13:before {
   content: "" !important;
   position: relative !important;
@@ -536,11 +792,11 @@ body,
   /* min-width: 1000px; */
   bottom: 80%;
   right: 45%;
-  background: var(--graph-1-col-4);
+  background: var(--quiz-1-col-1);
   z-index: 1;
 }
 /* 가운데 동그라미의 테두리 동그라미 */
-.c2 {
+/* .c2 {
   width: 85%;
   max-width: 380px;
   top: 50%;
@@ -548,42 +804,44 @@ body,
   transform: translate(-50%, -50%);
   border: 5px solid var(--main-col-1);
   z-index: 0;
-}
+} */
 /* 첫 페이지 가운데 동그라미 */
-.c3 {
+/* .c3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: var(--main-col-2);
   z-index: 0;
-}
+} */
+/* 메인페이지 오른쪽 아래 */
 .c4 {
-  width: 60vmax !important;
-  min-width: 1000px !important;
-  top: 50% !important;
-  left: 45% !important;
-  background: #30b78e !important;
+  width: 60vmax;
+  min-width: 1000px;
+  top: 65%;
+  left: 45%;
+  background: var(--quiz-1-col-2);
+  z-index: 1;
 }
+/* 메인페이지 오른쪽 위 */
 .c5 {
-  width: 20% !important;
-  min-width: 300px !important;
-  bottom: 60% !important;
-  left: 70% !important;
-  border: 40px solid #ea905d !important;
+  width: 200px;
+  bottom: 72%;
+  left: 75%;
+  border: 30px solid var(--quiz-1-col-4);
 }
+/* 메인페이지 왼쪽 아래 */
 .c6 {
-  width: 20% !important;
-  min-width: 300px !important;
-  top: 60% !important;
-  right: 70% !important;
-  border: 40px solid #5d95ea !important;
+  width: 200px;
+  top: 70%;
+  right: 70%;
+  border: 40px solid var(--quiz-1-col-6);
 }
 .c7 {
-  width: 60vmax !important;
-  min-width: 1000px !important;
-  left: 50% !important;
-  top: 80% !important;
-  background: #6692ca !important;
+  width: 60vmax;
+  min-width: 1000px;
+  left: 50%;
+  top: 80%;
+  background: var(--quiz-1-col-3);
 }
 .r1 {
   width: 20px !important;
@@ -818,15 +1076,15 @@ body,
   text-align: center !important;
 } */
 /* 타이틀 - 소귀경 */
-.flicking .page.main h1 {
+/* .flicking .page.main h1 {
   font-size: 33px;
   color: white;
   font-family: var(--main-font-3);
-}
+} */
 /* 타이틀 속 설명 - 에, 제읽기 */
-.flicking .page.main h1 span {
+/* .flicking .page.main h1 span {
   font-family: var(--main-font-0);
-}
+} */
 
 .flicking .page.main .description {
   /* font-size: 16px !important; */
@@ -834,7 +1092,7 @@ body,
   margin: 0px;
   /* padding: 5px !important; */
   /* box-sizing: border-box !important; */
-  color: white;
+  color: var(--main-col-1);
 }
 
 .flicking .page.features h3,
@@ -881,19 +1139,16 @@ body,
   width: 10px !important;
   height: 10px !important;
   border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.4) !important;
+  /* background: rgba(255, 255, 255, 0.4) !important; */
   margin: 10px 10px !important;
   transition: background-color ease 0.5s !important;
   cursor: pointer !important;
 }
-.pagination.black .dot.selected {
-  background: #333 !important;
-}
-.pagination.black .dot {
-  background: rgba(100, 100, 100, 0.4) !important;
+.pagination .dot {
+  background: var(--main-col-4);
 }
 .pagination .dot.selected {
-  background: white !important;
+  background: var(--main-col-1);
 }
 
 .wheel {
