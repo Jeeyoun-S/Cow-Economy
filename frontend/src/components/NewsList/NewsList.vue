@@ -71,8 +71,6 @@ export default {
   created() {
     this.sort = "최신순";
     this.category = "전체";
-    console.log("#21# 가져온 뉴스 확인: ", this.news);
-    // this.newsList = this.news;
   },
   watch: {
     sort() {
