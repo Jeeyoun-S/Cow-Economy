@@ -23,12 +23,13 @@
         <div class="eg-flick-camera">
           <div class="page main">
             <div class="wheel"></div>
-            <div class="container">
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <img height="60px" :src="require('@/assets/images/icon.png')" />
               <h1>소 귀<span>에</span> 경<span>제읽기</span></h1>
-              <p class="description d-flex flex-column">
-                <span>경제 기사를 읽으며</span>
-                <span>경제에 대해 공부하는 서비스</span>
-              </p>
+              <span class="description">경제 기사를 읽으며</span>
+              <span class="description">경제에 대해 공부하는 서비스</span>
             </div>
           </div>
           <div class="page features">
@@ -812,10 +813,10 @@ body,
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
 }
-.flicking .page.main h1,
+/* .flicking .page.main h1,
 .flicking .page.main .description {
   text-align: center !important;
-}
+} */
 /* 타이틀 - 소귀경 */
 .flicking .page.main h1 {
   font-size: 33px;
