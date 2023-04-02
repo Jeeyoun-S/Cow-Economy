@@ -46,12 +46,17 @@
         style="cursor: pointer"
       ></news-card>
     </v-sheet>
+    <!-- go to top button -->
+    <v-btn class="go-to-top" icon color="white" @click="scrollToTop">
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
   </v-sheet>
 </template>
 
 <script>
 import NewsCard from "./element/NewsCard.vue";
 import { mapActions, mapState } from "vuex";
+import { Swiper } from "vue-awesome-swiper";
 
 export default {
   name: "NewsList",
@@ -67,6 +72,11 @@ export default {
   },
   computed: {
     ...mapState("newsStore", ["news", "categoryNews"]),
+  },
+  mounted() {
+    new Swiper(".swiper-container", {
+      // Swiper 옵션 설정
+    });
   },
   created() {
     this.sort = "최신순";
@@ -104,6 +114,13 @@ export default {
         );
       }
     },
+    // [@Method] 맨 위로 가기
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
   },
 };
 </script>
@@ -111,5 +128,13 @@ export default {
 <style>
 #news-list {
   background-color: var(white);
+}
+
+.go-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+
+  background-color: var(--main-col-2);
 }
 </style>
