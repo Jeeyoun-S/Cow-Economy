@@ -1,4 +1,3 @@
-from tqdm import tqdm
 import pandas as pd
 
 from datetime import datetime, timedelta
@@ -21,7 +20,7 @@ def getTodayNews(db_connection_str, spark):
   # 일주일치 자료 가져오기  
   query_str = 'select article_id, article_title, article_regtime from article where article_regtime >= date(now() - INTERVAL 6 DAY)'
   
-  # DB로 저장
+  # DB
   db_connection = create_engine(db_connection_str)
   conn = db_connection.connect()
   
@@ -37,8 +36,7 @@ def getTodayNews(db_connection_str, spark):
   # 오늘 날짜 데이터 가져오기
   from pyspark.sql.functions import date_format
   # 임시로 20230328의 데이터를 오늘로 처리합니다.
-  # today_df = week_df.filter(date_format('article_regtime', 'yyyyMMdd') == today).select('article_id', 'article_title', 'article_content')
-  today_df = week_df.filter(date_format('article_regtime', 'yyyyMMdd') == '20230328').select('article_id', 'article_title')
+  today_df = week_df.filter(date_format('article_regtime', 'yyyyMMdd') == today).select('article_id', 'article_title')
   
   print("오늘 데이터 분리 완료")
   # print(today_df.take(1))
@@ -254,13 +252,25 @@ def saveToDB(df, db_connection_str, spark):
   print("### 관련 기사 DB 저장 완료 ###")
   
   # 마지막 인덱스 가져오기
-  import pyspark.sql.functions as F
+  # import pyspark.sql.functions as F
 
-  last_id = None
-  last_id = df_str.orderBy(F.col("article_id").desc()).select("article_id").first()[0]
+  print("관련 기사 마지막 인덱스 불러오기")
+  
+  # 관련 기사 마지막 인덱스 불러오기
+  query_str = 'select article_id from related_article order by article_id desc limit 1;'
+  
+  # DB
+  conn = db_connection.connect()
+  
+  last_id_df = pd.read_sql_query(text(query_str), conn)
+  last_id = last_id_df['article_id'][0]
+  print("DB에서 관련기사 마지막 인덱스 가져옴")
+  
+  # last_id = None
+  # last_id = df_str.orderBy(F.col("article_id").desc()).select("article_id").first()[0]
   # print(last_id)
   
-  return last_id
+  return str(last_id)
 
 # 관련 기사 마지막 아이디 파일에 저장
 def writeArticleId(path_str, id) :
@@ -328,11 +338,11 @@ def setWordCloud(data, font_path, hdfs_path, spark):
   cloud = wc.generate_from_frequencies(data2_dict)
   
   # 파일 저장
-  cloud.to_file('../output/word_cloud.png')
+  cloud.to_file('/home/ubuntu/coweconomy_store/wordcloud')
   
   # hdfs에 날짜 폴더로 저장
-  # save_df = spark.createDataFrame(data2)
-  # save_df.repartition(1).write.mode("append").csv(hdfs_path+today)
+  save_df = spark.createDataFrame(data2)
+  save_df.repartition(1).write.mode("append").csv(hdfs_path+today)
   print("#### word cloud 저장 완료 ####")
   
   return 'success'

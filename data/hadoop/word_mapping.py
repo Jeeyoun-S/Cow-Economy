@@ -21,7 +21,7 @@ import os
 
 
 def readLastArticleId():
-    f = open("/home/j8a509/crawling/last_article.txt", 'r')
+    f = open("/home/ubuntu/data/crawling/last_article.txt", 'r')
     last_article = f.readlines()
     f.close()
     return last_article
@@ -67,8 +67,8 @@ economy_word_map = dict(economy_words)
 # hdfs 뉴스 가져오기(마지막으로 처리한 다음 기사부터 워드 매핑 작업)
 file_date = dt.datetime.today().astimezone(timezone('Asia/Seoul')).strftime("%Y%m%d") # 오늘 날짜 ex) 20230320
 
-server = "hdfs://cluster.p.ssafy.io:9000" # 서버
-path = "/user/j8a509/news/daily-news/" # 서버
+server = "hdfs://localhost:9000" # 서버
+path = "/news/daily-news/" # 서버
 hdfs_path = server + path # hdfs 폴더 저장 경로
 today_path = hdfs_path+file_date+'.csv' # 오늘 날짜 csv 파일 경로
 
