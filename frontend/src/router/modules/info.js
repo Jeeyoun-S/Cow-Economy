@@ -1,4 +1,4 @@
-import InfoHeader from "@/views/Header/InfoHeader.vue";
+// import InfoHeader from "@/views/Header/InfoHeader.vue";
 import InfoPage from "@/components/InfoPage/InfoPage.vue";
 
 const info = [
@@ -6,7 +6,7 @@ const info = [
     path: "/",
     name: "info",
     components: {
-      header: InfoHeader,
+      // header: InfoHeader,
       default: InfoPage,
     },
   },

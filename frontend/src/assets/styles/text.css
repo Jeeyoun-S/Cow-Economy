@@ -23,6 +23,9 @@
 .xxxxl-font {
   font-size: 26px;
 }
+.x-big-large-font {
+  font-size: 34px;
+}
 /* 폰트 색상 */
 .main-col-1 {
   color: var(--main-col-1);
