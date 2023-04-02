@@ -1,6 +1,7 @@
 package com.coweconomy.service;
 
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
+import com.coweconomy.domain.article.dto.ArticleDto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
@@ -8,29 +9,30 @@ import com.coweconomy.domain.word.dto.EconomyWordDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ArticleService {
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
+    private final UserArticleRepository userArticleRepository;
+    private final UserArticleMemoRepository userArticleMemoRepository;
+    private final EconomyWordRepository economyWordRepository;
 
-    @Autowired
-    ArticleRepository articleRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserArticleRepository userArticleRepository;
-
-    @Autowired
-    UserArticleMemoRepository userArticleMemoRepository;
-
-    @Autowired
-    EconomyWordRepository economyWordRepository;
-
+    public List<ArticleDto> getHotArticles(){
+        List<Article> todayArticles = articleRepository.findByTodayArticles();
+        List<ArticleDto> result = todayArticles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        return result;
+    }
     /**
      * @param articleId 기사 ID
      * **/
