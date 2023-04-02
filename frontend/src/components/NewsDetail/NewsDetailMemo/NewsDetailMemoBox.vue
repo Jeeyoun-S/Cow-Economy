@@ -5,7 +5,7 @@
       <v-sheet
         :color="hover ? 'var(--main-col-5)' : 'transparent'"
         :class="{ 'on-hover': hover }"
-        class="px-8 py-3 d-flex flex-column"
+        class="px-6 py-3 d-flex flex-column"
       >
         <!-- memo header -->
         <v-sheet class="mb-2 d-flex align-center" color="transparent">
