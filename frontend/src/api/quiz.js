@@ -8,16 +8,12 @@ async function checkTodayQuizDone(success, fail) {
 }
 
 // [POST] 오늘의 Quiz로 출제할 경제 단어 가져오기
-async function getQuizWords(userId, success, fail) {
-  // console.log("#user - getQuizWords# params - userId: ", userId);
-
-  await api.post(`/quiz`, JSON.stringify(userId)).then(success).catch(fail);
+async function getQuizWords(success, fail) {
+  await api.post(`/quiz`).then(success).catch(fail);
 }
 
 // [POST] chatGPT에게 유사 경제단어 질문
-async function sendMessageWord(message, success, fail) {
-  const info = { message: message };
-
+async function sendMessageWord(info, success, fail) {
   await api
     .post(`/chatGPT/ask-word`, JSON.stringify(info))
     .then(success)

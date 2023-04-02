@@ -60,3 +60,6 @@
 #home-header .v-tab--active.v-tab {
   font-family: var(--main-font-3) !important;
 }
+.v-dialog {
+  box-shadow: none !important;
+}

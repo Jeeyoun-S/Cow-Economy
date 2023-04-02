@@ -1,5 +1,5 @@
 <template>
-  <v-sheet id="news-content" class="pa-7 d-flex flex-column">
+  <v-sheet id="news-content" class="pa-5 d-flex flex-column">
     <!-- 1 : category & press -->
     <div class="pb-2">
       <v-chip class="mr-2" color="var(--main-col-2)" outlined>{{
@@ -35,7 +35,11 @@
     </div>
 
     <!-- 5 : reference plus button -->
-    <div class="py-2 ml-auto">{{ newsDetail.articleEditor }}</div>
+    <div v-if="newsDetail.articleEditor" class="py-2 ml-auto">
+      {{ newsDetail.articleEditor }}
+    </div>
+
+    <!-- 6 : add reference -->
     <v-snackbar v-model="memoBtn" color="var(--main-col-2)" rounded="pill">
       <div class="d-flex flex-row align-center">
         <v-icon>mdi-plus-circle</v-icon>
