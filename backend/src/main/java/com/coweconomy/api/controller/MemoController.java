@@ -3,6 +3,8 @@ package com.coweconomy.api.controller;
 import com.coweconomy.api.request.MemoRequestDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.jwt.JwtTokenUtil;
+import com.coweconomy.domain.article.entity.MemoHeart;
+import com.coweconomy.domain.article.entity.QMemoHeart;
 import com.coweconomy.domain.user.dto.UserArticleMemoSimpleDto;
 import com.coweconomy.domain.user.entity.UserArticleMemo;
 import com.coweconomy.service.MemoService;
@@ -35,6 +37,22 @@ public class MemoController {
     private BaseResponse exceptionHandling(Exception exception, String type) {
         logger.error(type + exception.toString());
         return BaseResponse.fail();
+    }
+
+    @PostMapping("/addHeart")
+    public BaseResponse<?> addHeart(@RequestParam Long userId, @RequestParam Long memoId) {
+        MemoHeart memoHeart = memoService.addHeart(userId, memoId);
+        if (memoHeart != null) {
+            return BaseResponse.success(memoHeart);
+        } else {
+            return BaseResponse.fail();
+        }
+    }
+
+    @DeleteMapping("/removeHeart")
+    public BaseResponse<?> removeHeart(@RequestParam Long userId, @RequestParam Long memoId) {
+        memoService.removeHeart(userId, memoId);
+        return BaseResponse.success("Heart removed");
     }
 
     @ApiOperation(value = "메모 등록", notes = "새로운 메모를 등록한다.")
@@ -134,8 +152,4 @@ public class MemoController {
 
         return BaseResponse.fail();
     }
-
-//    @ApiOperation(value="메모 좋아요", notes="메모에 좋아요를 누를 수 있다")
-//    @PostMapping
-//    public BaseResponse<?>
 }

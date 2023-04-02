@@ -1,8 +1,12 @@
 import { getSelection } from "@/common/function/textSelection";
+// memoStore.js
+import { likeMemo, unlikeMemo } from "@/api/modules/memo";
+
 
 const memoStore = {
   namespaced: true,
   state: {
+    memoList: [],
     memoBtn: false,
     done: false,
     selectionText: null,
@@ -65,8 +69,35 @@ const memoStore = {
     // UPDATE_ONE_MY_MEMO(state, payload) {
     //   state.myMemoList[payload.index] = payload.newMemo;
     // }
+    LIKE_MEMO(state, payload) {
+      state.memoList[payload.memoId].likeCount += 1;
+    },
+    UNLIKE_MEMO(state, payload) {
+      state.memoList[payload.memoId].likeCount -= 1;
+    }
   },
   actions: {
+    async likeMemo({ commit }, memoId) {
+      try {
+        const result = await likeMemo(memoId);
+        if (result) {
+          commit("LIKE_MEMO", { memoId });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  
+    async unlikeMemo({ commit }, memoId) {
+      try {
+        const result = await unlikeMemo(memoId);
+        if (result) {
+          commit("UNLIKE_MEMO", { memoId });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     changeMemoBtn({ commit }) {
       commit("UPDATE_MEMO_BTN");
     },

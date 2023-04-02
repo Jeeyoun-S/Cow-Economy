@@ -67,4 +67,30 @@ async function deleteMemo(memoId) {
   return await Promise.resolve(result);
 }
 
-export { updateMemo, updateMemoPublicScope, deleteMemo };
+// 메모 좋아요 (POST /memo/{memoId}/like)
+async function likeMemo(memoId) {
+  let result = null;
+  await api.post(`/memo/${memoId}/like`).then((res) => {
+    if (res.data.statusCode == 200) {
+      result = res.data.data;
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  return await Promise.resolve(result);
+}
+
+// 메모 좋아요 취소 (DELETE /memo/{memoId}/like)
+async function unlikeMemo(memoId) {
+  let result = null;
+  await api.delete(`/memo/${memoId}/like`).then((res) => {
+    if (res.data.statusCode == 200) {
+      result = res.data.data;
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  return await Promise.resolve(result);
+}
+
+export { updateMemo, updateMemoPublicScope, deleteMemo, likeMemo, unlikeMemo };

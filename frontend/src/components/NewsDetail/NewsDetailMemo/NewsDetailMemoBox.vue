@@ -108,6 +108,7 @@ import NewsDetailMemoReference from "./NewsDetailMemoReference.vue";
 import NewsDetailMemoBtnDelete from "./NewsDetailMemoBtnDelete.vue";
 import NewsDetailMemoBtnLock from "./NewsDetailMemoBtnLock.vue";
 import { mapActions, mapState } from "vuex";
+import { likeMemo, unlikeMemo } from "@/api/modules/memo";
 
 const memoStore = "memoStore";
 
@@ -141,6 +142,26 @@ export default {
   },
   methods: {
     ...mapActions(memoStore, ["updateNewMemo", "updateSelectionText"]),
+    async likeMemo() {
+      try {
+        const result = await likeMemo(this.memo.memoId);
+        if (result) {
+          // Update the local like count or use a mutation to update the store
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async unlikeMemo() {
+      try {
+        const result = await unlikeMemo(this.memo.memoId);
+        if (result) {
+          // Update the local like count or use a mutation to update the store
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     // 메모 삭제하기
     deleteMemoItem() {
       this.$emit("deleteMemoItem", this.index);
