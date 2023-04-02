@@ -153,7 +153,6 @@ const newsStore = {
         article_hits: 1,
       },
     ],
-    categoryNews: [], // 선택한 Category News
   },
   mutations: {
     setSearchText(state, payload) {
@@ -165,12 +164,6 @@ const newsStore = {
     SET_NEWS(state, news) {
       state.news = news;
     },
-    SET_CATEGORY_NEWS(state, category) {
-      // 선택한 category news만을 set
-      state.categoryNews = state.news.filter((article) =>
-        article.article_category.includes(category)
-      );
-    },
   },
   actions: {
     setSearchText({ commit }, payload) {
@@ -178,10 +171,6 @@ const newsStore = {
     },
     setSearched({ commit }, payload) {
       commit("setSearched", payload);
-    },
-    // [@Method] News 저장 (for. 카테고리 별 정렬)
-    setCategoryNews({ commit }, category) {
-      commit("SET_CATEGORY_NEWS", category);
     },
   },
 };

@@ -40,7 +40,7 @@
     <!-- news card list -->
     <v-sheet>
       <news-card
-        v-for="(article, index) in this.news"
+        v-for="(article, index) in newsList"
         :key="index"
         :article="article"
         style="cursor: pointer"
@@ -60,6 +60,7 @@ export default {
   },
   data() {
     return {
+      newsList: [],
       sort: "", // news 정렬 기준
       category: "", // category 정렬 기준
     };
@@ -71,6 +72,7 @@ export default {
     this.sort = "최신순";
     this.category = "전체";
     console.log("#21# 가져온 뉴스 확인: ", this.news);
+    // this.newsList = this.news;
   },
   watch: {
     sort() {
@@ -95,7 +97,15 @@ export default {
       }
     },
     // [@Method] 카테고리 별 정렬
-    filterNews() {},
+    filterNews() {
+      if (this.category == "전체") {
+        return (this.newsList = this.news);
+      } else {
+        this.newsList = this.news.filter(
+          (article) => article.article_category == this.category
+        );
+      }
+    },
   },
 };
 </script>
