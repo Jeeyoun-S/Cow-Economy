@@ -8,16 +8,12 @@ const userStore = {
   namespaced: true,
   state: {
     isLoggedIn: false,
-    readNews: [
-      ["2022-08", 8],
-      ["2022-09", 20],
-      ["2022-10", 14],
-      ["2022-11", 9],
-      ["2022-12", 12],
-      ["2023-01", 5],
-      ["2023-02", 12],
-      ["2023-03", 23],
-    ],
+    // * graph에 필요한 data
+    articleList: {
+      articleCntList: [],
+      readCategoryList: [],
+      wordCategoryList: [],
+    },
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
@@ -36,6 +32,12 @@ const userStore = {
     SET_IS_LOGGED_IN(state, value) {
       state.isLoggedIn = value;
       // console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
+    },
+    SET_ARTICLE_LIST(state, articleList) {
+      state.articleList.articleCntList = articleList.articleCntList;
+      state.articleList.readCategoryList = articleList.articleCategoryCnt;
+      state.articleList.wordCategoryList = articleList.quizPassWordCategoryCnt;
+      // console.log("articleList 저장확인", state.articleList.articleCntList);
     },
   },
   actions: {
@@ -64,20 +66,17 @@ const userStore = {
         }
       );
     },
-
     logout({ commit }) {
       localStorage.removeItem("access-token");
       window.location.replace("/home");
       commit("SET_IS_LOGGED_IN", false);
+    },
+    // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
+    setUserGraphData({ commit }, articleList) {
+      commit("SET_ARTICLE_LIST", articleList);
     },
   },
   modules: {},
 };
 
 export default userStore;
-//   try {
-//     const accessToken = localStorage.getItem("access-token");
-
-//     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
-//     const response = await this.$
-//   }

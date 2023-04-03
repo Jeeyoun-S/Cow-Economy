@@ -28,13 +28,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
     @Autowired
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,41 +50,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
 
-                .sessionManagement() //(4)
+                // 시큐리티는 기본적으로 세션을 사용
+                // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
                 // UsernamePasswordAuthenticationFilter보다 JwtAuthenticationFilter를 먼저 수행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
-//                 HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
-                .authorizeRequests()
-//                .antMatchers("/api/**")
-//                .permitAll()		// 모두 허용
 
-                // 로그인할 때는 검증 X
-//                .antMatchers("/auth/login/**")
-//                .antMatchers("/auth/**")
-                .antMatchers("/**")
+                // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
+                .authorizeRequests()
+                // 로그인할 때는 검증 하지 않음
+                .antMatchers("/auth/**", "/article", "/article/**", "/main/**")
                 .permitAll()
 
-//                 나머지는 전부 인증 필요
+                // 나머지는 전부 인증 필요
                 .anyRequest()
                 .authenticated()
-
-                // 시큐리티는 기본적으로 세션을 사용
-                // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
         ;
         System.out.println("##### Security Config 확인");
     }
 
+    /**
+     * Cors 설정
+     * @return
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Collections.singletonList("https://j8a509.p.ssafy.io"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -98,10 +90,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return source;
     }
-
-    //비밀번호 암호화를 위한 Encoder 설정
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 }

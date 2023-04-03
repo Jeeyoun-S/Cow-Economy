@@ -19,8 +19,20 @@ async function getNewsDetail(articleId) {
             const startIndex = target.memoStartIndex;
             const endIndex = target.memoEndIndex;
 
-            if (startRange == 0 && endRange == 0 && startIndex == 0 && endIndex == 0) continue;
-            result.userArticleMemoListMine[i].referenceText = getReferenceHTML(startRange, endRange, startIndex, endIndex, result.articleContent).split("@@@");
+            if (
+              startRange == 0 &&
+              endRange == 0 &&
+              startIndex == 0 &&
+              endIndex == 0
+            )
+              continue;
+            result.userArticleMemoListMine[i].referenceText = getReferenceHTML(
+              startRange,
+              endRange,
+              startIndex,
+              endIndex,
+              result.articleContent
+            ).split("@@@");
           }
         } else {
           result.userArticleMemoListMine = [];
@@ -33,11 +45,23 @@ async function getNewsDetail(articleId) {
           const startIndex = target.memoStartIndex;
           const endIndex = target.memoEndIndex;
 
-          if (startRange == 0 && endRange == 0 && startIndex == 0 && endIndex == 0) continue;
-          result.userArticleMemoListOther[j].referenceText = getReferenceHTML(startRange, endRange, startIndex, endIndex, result.articleContent).split("@@@");
+          if (
+            startRange == 0 &&
+            endRange == 0 &&
+            startIndex == 0 &&
+            endIndex == 0
+          )
+            continue;
+          result.userArticleMemoListOther[j].referenceText = getReferenceHTML(
+            startRange,
+            endRange,
+            startIndex,
+            endIndex,
+            result.articleContent
+          ).split("@@@");
         }
       }
-    })
+    }).catch();
   return await Promise.resolve(result);
 }
 
@@ -47,7 +71,7 @@ async function updateReading(articleId) {
   await api.post(`article/${articleId}`)
     .then((res) => {
       result = res.data.data;
-    })
+    }).catch();
   return await Promise.resolve(result);
 }
 

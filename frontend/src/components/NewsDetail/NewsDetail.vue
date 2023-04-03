@@ -7,14 +7,14 @@
     <NewsDetailLoading v-if="loading"></NewsDetailLoading>
     <div v-else>
       <NewsDetailContent :newsDetail="newsDetail"></NewsDetailContent>
-      <NewsDetailRelation></NewsDetailRelation>
+      <NewsDetailRelation :newsRelated="newsRelated"></NewsDetailRelation>
       <NewsDetailMemo
         :memoMine="newsDetail.userArticleMemoListMine"
         :memoOther="newsDetail.userArticleMemoListOther"
       ></NewsDetailMemo>
       <!-- finish reading snackbar -->
       <v-snackbar
-        :timeout="2000000000000000"
+        :timeout="5000"
         class="mb-4"
         v-model="localDone"
         color="var(--main-col-4-1)"
@@ -31,7 +31,7 @@
         >
           <span class="main-col-1"
             >기사를 읽어,
-            <span class="b-font">경험치가 1 EXP 증가</span>했습니다.</span
+            <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -63,6 +63,7 @@ export default {
       localDone: false, // 기사 읽음 snackbar 활성화
       loading: true, // 로딩 중일 경우 true
       newsDetail: null, // 기사 상세 정보
+      newsRelated: null, //관련 기사 리스트
     };
   },
   computed: {
@@ -111,10 +112,10 @@ export default {
         }
       }
       // 스크롤 이벤트 추가
-      document.addEventListener("scroll", finishReading());
+      window.addEventListener("scroll", finishReading);
     },
   },
-  async created() {
+  async mounted() {
     function click() {
       wordStore.state.wordModal = this.innerText;
       wordStore.state.isWordModalOpen = true;
@@ -136,11 +137,19 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
+        console.log("지금 뉴스");
+        console.log(this.newsDetail);
+
+        // newsDetail에 받아온 관련 기사 아이디 넣기
+        this.newsRelated = this.newsDetail.relatedArticleList;
+        console.log(this.newsRelated);
+
         // 로딩 상태 변경
         this.loading = false;
+
       }
     });
-    // 기사를 아직 안 읽었다면 읽음 처리 Event 추기
+    // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
     if (this.newsDetail && !this.newsDetail.reading) this.addScrollEvent();
   },
 };

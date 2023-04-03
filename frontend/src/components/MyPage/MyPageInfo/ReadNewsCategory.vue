@@ -1,21 +1,21 @@
 <template>
-  <div class="pa-5">
+  <div class="px-1 mt-6">
     <div class="d-flex align-center">
-      <span class="xxl-font">읽은 기사의 카테고리</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
-      </div>
-      <span class="xxl-font th-font">02</span>
+      <span class="xl-font">읽은 기사의 카테고리</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">02</span>
     </div>
-    <div class="th-font">지금까지 읽은 기사의 카테고리 비율을 보여드려요.</div>
-    <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-left</v-icon>
-      </v-btn>
-      <span style="color: #757575">2023년</span>
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-right</v-icon>
-      </v-btn>
+    <div class="mb-3 th-font sm-font">
+      지금까지 읽은 기사의 카테고리 비율을 보여드려요.
+    </div>
+    <div class="d-flex justify-space-between align-center py-2 px-3 xxxl-font">
+      <div x-large icon></div>
+      <span class="xxl-font" style="color: #757575"
+        >{{ this.currentYear }}년</span
+      >
+      <div x-large icon></div>
     </div>
     <div class="d-flex justify-center">
       <canvas
@@ -31,6 +31,7 @@
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 
 import { mapState } from "vuex";
 
@@ -38,9 +39,13 @@ export default {
   data: function () {
     return {
       chart: null,
+      currentYear: null,
     };
   },
-  computed: mapState("newsStore", ["readCategoryList"]),
+  computed: mapState("userStore", ["articleList"]),
+  created() {
+    this.currentYear = new Date().getFullYear();
+  },
   mounted() {
     // this.drawChart();
   },
@@ -63,9 +68,10 @@ export default {
         this.chart.destroy();
       }
       const ctx = this.$refs.barChart.getContext("2d");
+      // console.log("readNewsCategory", this.articleList.readCategoryList)
 
-      const labels = this.readCategoryList.map((item) => item[0]);
-      const data = this.readCategoryList.map((item) => item[1]);
+      const labels = this.articleList.readCategoryList.map((item) => item[0]);
+      const data = this.articleList.readCategoryList.map((item) => item[1]);
       // console.log("##23 ", data)
       this.chart = new Chart(ctx, {
         type: "doughnut",
@@ -103,11 +109,12 @@ export default {
                 useBorderRadius: true,
                 borderRadius: "3",
                 font: {
-                  size: 16,
-                  family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-3")
-                    .trim(),
+                  size: 14,
+                  // family: getComputedStyle(document.documentElement)
+                  //   .getPropertyValue("--main-font-1")
+                  //   .trim(),
                 },
+                textAlign: "left",
               },
             },
             tooltip: {

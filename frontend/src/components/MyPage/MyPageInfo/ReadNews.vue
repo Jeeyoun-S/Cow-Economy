@@ -1,13 +1,15 @@
 <template>
-  <div class="px-5">
+  <div class="px-1">
     <div class="d-flex align-center">
-      <span class="xxl-font">읽은 기사 수</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
-      </div>
-      <span class="xxl-font th-font">01</span>
+      <span class="xl-font">읽은 기사 수</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">01</span>
     </div>
-    <div class="th-font">최근 6개월 동안 읽은 기사 수를 보여드려요.</div>
+    <div class="mb-5 th-font sm-font">
+      최근 6개월 동안 읽은 기사 수를 보여드려요.
+    </div>
     <div>
       <canvas ref="barChart" height="300"></canvas>
     </div>
@@ -17,6 +19,7 @@
 <script>
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 import { mapGetters, mapState } from "vuex";
 
 export default {
@@ -24,15 +27,28 @@ export default {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
-    ...mapState("newsStore", ["articleCntList"]),
+    ...mapState("userStore", ["articleList"]),
   },
   mounted() {
     this.createChart();
   },
+  // watch: {
+  //   // Watch for changes in readCategoryList
+  //   readCategoryList: {
+  //     handler() {
+  //       this.$nextTick(() => {
+  //         if (this.$refs.barChart) {
+  //           this.createChart();
+  //         }
+  //       });
+  //     },
+  //     immediate: true, // Run the handler immediately after the watcher is created
+  //   },
+  // },
   methods: {
     createChart() {
       // console.log("##1 ", this.articleCntList);
-      const chartData = this.articleCntList;
+      const chartData = this.articleList.articleCntList;
       const labels = chartData.map(([month]) => {
         const date = new Date(`${month}-01`);
         return `${date.getMonth() + 1}월`;
@@ -109,6 +125,7 @@ export default {
                 bottomRight: 15,
               },
               borderWidth: 0,
+              borderSkipped: false,
               categoryPercentage: 1,
               barPercentage: 1,
             },
@@ -119,6 +136,18 @@ export default {
           plugins: {
             legend: {
               display: false,
+            },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function (context) {
+                  if (context.datasetIndex === 0) {
+                    return context.dataset.label + ": " + context.parsed.y;
+                  } else if (context.datasetIndex === 1) {
+                    return null;
+                  }
+                },
+              },
             },
           },
           scales: {
@@ -141,7 +170,7 @@ export default {
               stacked: true,
               ticks: {
                 font: {
-                  size: 20,
+                  size: 16,
                 },
                 color: "rgba(0, 0, 0, 0.8)",
                 padding: 10,
