@@ -14,7 +14,7 @@
       ></NewsDetailMemo>
       <!-- finish reading snackbar -->
       <v-snackbar
-        :timeout="2000000000000000"
+        :timeout="5000"
         class="mb-4"
         v-model="localDone"
         color="var(--main-col-4-1)"
@@ -31,7 +31,7 @@
         >
           <span class="main-col-1"
             >기사를 읽어,
-            <span class="b-font">경험치가 1 EXP 증가</span>했습니다.</span
+            <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -112,10 +112,10 @@ export default {
         }
       }
       // 스크롤 이벤트 추가
-      document.addEventListener("scroll", finishReading());
+      window.addEventListener("scroll", finishReading);
     },
   },
-  async created() {
+  async mounted() {
     function click() {
       wordStore.state.wordModal = this.innerText;
       wordStore.state.isWordModalOpen = true;
@@ -146,9 +146,10 @@ export default {
 
         // 로딩 상태 변경
         this.loading = false;
+
       }
     });
-    // 기사를 아직 안 읽었다면 읽음 처리 Event 추기
+    // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
     if (this.newsDetail && !this.newsDetail.reading) this.addScrollEvent();
   },
 };

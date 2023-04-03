@@ -1,8 +1,10 @@
 <!-- # for. quiz Loading 창 -->
 <template>
-  <v-dialog max-width="300" persistent v-model="dialog">
-    <v-sheet class="pa-8 d-flex flex-column align-center">
-      <div class="mb-3 b-font xl-font">Quiz 만드는 중</div>
+  <v-dialog max-width="250" persistent v-model="dialog">
+    <v-sheet class="pa-7 pt-8 d-flex flex-column align-center">
+      <div id="quiz-loading-text" class="mb-3 point-b xl-font blue-gredient">
+        Quiz 만드는 중...
+      </div>
       <img
         :src="require('@/assets/images/mypage/quiz/quiz_loading_spinner.gif')"
       />

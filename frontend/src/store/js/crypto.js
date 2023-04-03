@@ -1,5 +1,4 @@
-// #21#
-// CryptoJS 암/복호화
+// # CryptoJS 암/복호화
 import CryptoJS from "crypto-js";
 
 export const encrypt = (data, key) => {
