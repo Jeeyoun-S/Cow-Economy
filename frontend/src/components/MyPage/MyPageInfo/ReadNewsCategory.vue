@@ -11,7 +11,9 @@
       지금까지 읽은 기사의 카테고리 비율을 보여드려요.
     </div>
     <div v-if="hasData">
-      <div class="d-flex justify-space-between align-center py-2 px-3 xxxl-font">
+      <div
+        class="d-flex justify-space-between align-center py-2 px-3 xxxl-font"
+      >
         <div x-large icon></div>
         <span class="xxl-font" style="color: #757575"
           >{{ this.currentYear }}년</span
@@ -25,7 +27,7 @@
           height="400"
         ></canvas>
       </div>
-    </div> 
+    </div>
     <InfoNoData v-else v-bind:childValue="msg"></InfoNoData>
   </div>
 </template>
@@ -37,8 +39,7 @@ Chart.register(...registerables);
 Chart.defaults.font.family = "MinSans-Regular";
 
 import { mapState } from "vuex";
-import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue"
-
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue";
 
 export default {
   components: {
@@ -48,15 +49,15 @@ export default {
     return {
       chart: null,
       currentYear: null,
-      msg: "기사를 읽어주세요"
+      msg: "기사를 읽어주세요",
     };
   },
   computed: {
     ...mapState("userStore", ["articleList"]),
     hasData() {
       const wordCategoryList = this.articleList.readCategoryList;
-      console.log(wordCategoryList)
-      return wordCategoryList.some(value => value[1] !== 0);
+      // console.log(wordCategoryList)
+      return wordCategoryList.some((value) => value[1] !== 0);
     },
   },
   created() {

@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     openDialog() {
-      console.log("openDialog");
+      // console.log("openDialog");
       this.dialog = true;
     },
     closeDialog() {

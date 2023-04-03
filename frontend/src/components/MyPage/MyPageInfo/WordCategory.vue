@@ -11,7 +11,9 @@
       오늘의 Quiz에서 맞춘 용어의 카테고리를 보여드립니다.
     </div>
     <div v-if="hasData">
-      <div class="d-flex justify-space-between align-center pt-2 px-3 xxxl-font">
+      <div
+        class="d-flex justify-space-between align-center pt-2 px-3 xxxl-font"
+      >
         <div x-large icon></div>
         <span class="xxl-font" style="color: #757575"
           >{{ this.currentYear }}년 {{ this.currentMonth }}월</span
@@ -27,7 +29,7 @@
 <script>
 import { mapState } from "vuex";
 import { Chart, registerables } from "chart.js";
-import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue"
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue";
 
 Chart.register(...registerables);
 Chart.defaults.font.family = "MinSans-Regular";
@@ -47,8 +49,8 @@ export default {
     ...mapState("userStore", ["articleList"]),
     hasData() {
       const wordCategoryList = this.articleList.wordCategoryList;
-      console.log(wordCategoryList)
-      return wordCategoryList.some(value => value[1] !== 0);
+      // console.log(wordCategoryList)
+      return wordCategoryList.some((value) => value[1] !== 0);
     },
   },
   created() {
