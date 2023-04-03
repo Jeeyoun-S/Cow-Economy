@@ -51,3 +51,6 @@
 .v-expansion-panel-header {
   line-height: 1.2 !important;
 }
+.v-dialog {
+  box-shadow: none !important;
+}

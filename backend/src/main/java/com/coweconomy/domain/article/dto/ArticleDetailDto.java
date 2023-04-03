@@ -51,12 +51,14 @@ public class ArticleDetailDto extends ArticleDto {
         } else {
             this.userArticleMemoListOther = memoList.stream().filter(m -> m.getMemoPublicScope()).map(m -> new UserArticleMemoDetailDto(m)).collect(Collectors.toList());
         }
-
-        // 관련 기사 구현 필요한 곳
-        // this.relatedArticleList
     }
 
     public void updateArticleWord(Map<String, EconomyWordDto> articleWordList) {
         this.articleWordList = articleWordList;
     }
+
+    public void updateRelatedArticle(List<RelatedArticleDto> relatedArticleDto){
+        this.relatedArticleList = relatedArticleDto;
+    }
+
 }

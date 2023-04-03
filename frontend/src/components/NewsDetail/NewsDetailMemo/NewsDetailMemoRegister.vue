@@ -1,5 +1,5 @@
 <template>
-  <v-sheet id="memo-register" class="mx-7 my-4 pa-5" rounded="lg" outlined>
+  <v-sheet id="memo-register" class="mx-6 my-4 pa-5" rounded="lg" outlined>
     <!-- top -->
     <div class="d-flex justify-space-between align-center">
       <!-- left : check memoPublicScrope -->

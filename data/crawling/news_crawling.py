@@ -10,7 +10,6 @@ from pandas import DataFrame, Series
 from sqlalchemy import create_engine, text
 pymysql.install_as_MySQLdb()
 import MySQLdb
-from tqdm import tqdm
 import pickle
 import time
 
@@ -22,19 +21,19 @@ import os
 import hdfs_newsdata as newsdata
 
 def readArticleTime():
-    f = open("/home/j8a509/crawling/article_time.txt", 'r')
+    f = open("/home/ubuntu/data/crawling/article_time.txt", 'r')
     last_article_time = f.readlines()
     f.close()
     return last_article_time
 
 def writeArticleTime(dates) :
-    f = open("/home/j8a509/crawling/article_time.txt", 'w')
+    f = open("/home/ubuntu/data/crawling/article_time.txt", 'w')
     print(dates)
     f.write(dates)
     f.close()
 
 def writeLastArticleId(article) :
-    f = open("/home/j8a509/crawling/last_article.txt", 'w')
+    f = open("/home/ubuntu/data/crawling/last_article.txt", 'w')
     print(article)
     f.write(article)
     f.close()
