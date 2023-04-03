@@ -2,6 +2,7 @@ package com.coweconomy.service;
 
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
 import com.coweconomy.domain.article.dto.ArticleDto;
+import com.coweconomy.domain.article.dto.RelatedArticleDto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.User;
 import com.coweconomy.domain.user.entity.UserArticle;
