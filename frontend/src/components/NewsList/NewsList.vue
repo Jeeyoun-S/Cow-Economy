@@ -1,10 +1,10 @@
 <template>
   <v-sheet id="news-list">
     <!-- sort select -->
-    <v-sheet class="mx-5 d-flex flex-row align-center mt-2 mb-5">
+    <v-sheet class="mx-5 d-flex flex-row align-center mb-5">
       <!-- i) news sort select -->
-      <v-sheet width="160px"
-        ><v-select
+      <v-sheet width="160px" class="mt-5">
+        <v-select
           v-model="sort"
           :items="['최신순', '인기순']"
           color="var(--main-col-2)"
@@ -13,10 +13,11 @@
           outlined
           hide-details
           style="font-size: 15px"
-        ></v-select
-      ></v-sheet>
+        />
+      </v-sheet>
       <!-- ii) news category select -->
       <v-select
+        class="mt-5"
         v-model="category"
         :items="[
           '전체',

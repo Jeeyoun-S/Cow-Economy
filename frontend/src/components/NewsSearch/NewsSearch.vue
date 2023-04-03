@@ -3,6 +3,7 @@
   <div :class="{'main-container': isNoResult}" v-else>
     <NewsSearchNoResult v-if="isNoResult"></NewsSearchNoResult>
     <NewsSearchResult v-else :newsList="searchNews"></NewsSearchResult>
+
   </div>
 </template>
 
@@ -15,12 +16,12 @@ import { mapState, mapGetters } from "vuex";
 export default {
   name: "NewsSearch",
   computed: {
-    ...mapState("newsStore", ["searched", "news"]),
-    ...mapGetters("newsStore", ["searchNews"]),
-    isNoResult() {
-      return this.searchNews.length === 0;
-    },
+  ...mapState("newsStore", ["searched", "news"]),
+  ...mapGetters("newsStore", ["searchNews"]),
+  isNoResult() {
+    return this.searchNews.length === 0;
   },
+},
   components: {
     NewsSearchBeforeSearch,
     NewsSearchNoResult,
