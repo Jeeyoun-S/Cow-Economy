@@ -6,6 +6,15 @@
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
+    <v-btn
+      class="next-icon"
+      icon
+      large
+      color="var(--main-col-1)"
+      @click="nextFlicking()"
+    >
+      <v-icon x-large>mdi-chevron-down</v-icon>
+    </v-btn>
     <div class="background">
       <div class="shapes">
         <div class="circle c1"></div>
@@ -41,7 +50,7 @@
               </div>
               <img
                 class="logo"
-                height="150px"
+                height="130px"
                 :src="require('@/assets/images/icon/logo_full.png')"
               />
               <div class="detail d-flex flex-column align-center">
@@ -67,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div class="page features">
+          <!-- <div class="page news">
             <div class="number"></div>
             <div class="feature">
               <h3>Infinite Flicking</h3>
@@ -119,10 +128,46 @@
                 ><h2>LEARN&nbsp;<br />MORE&nbsp;</h2></a
               >
             </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              222
+            </div>
           </div>
         </div>
       </div>
-      <div class="imac">
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              333
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              444
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="imac">
         <div class="screen">
           <div class="container">
             <Flicking class="panels" :options="gap5Options">
@@ -136,8 +181,8 @@
         <div class="bottom"></div>
         <div class="stand"></div>
         <div class="stand-bottom"></div>
-      </div>
-      <div class="macbook">
+      </div> -->
+      <!-- <div class="macbook">
         <div class="screen ratio062">
           <div class="container">
             <Flicking class="panels" :options="gap5Options">
@@ -149,8 +194,8 @@
           </div>
         </div>
         <div class="bottom"></div>
-      </div>
-      <div class="ipad ratio13">
+      </div> -->
+      <!-- <div class="ipad ratio13">
         <div class="container">
           <Flicking class="panels" :options="gap5Options">
             <div class="panel"></div>
@@ -159,16 +204,52 @@
             <div class="panel"></div>
           </Flicking>
         </div>
-      </div>
+      </div> -->
+      <!-- <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <div class="wheel"></div>
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            > -->
       <div class="iphone">
         <div class="head"></div>
         <div class="container">
           <Flicking class="panels" :options="gap10Options">
-            <div class="panel"></div>
+            <div class="panel">dd</div>
             <div class="panel"></div>
             <div class="panel"></div>
             <div class="panel"></div>
           </Flicking>
+        </div>
+        <div class="home"></div>
+      </div>
+      <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div>
+        <div class="head"></div>
+        <div class="container">
+          <!-- <Flicking class="panels" :options="gap10Options">
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking> -->
+        </div>
+        <div class="home"></div>
+      </div>
+      <div>
+        <div class="head"></div>
+        <div class="container">
+          <!-- <Flicking class="panels" :options="gap10Options">
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking> -->
         </div>
         <div class="home"></div>
       </div>
@@ -181,6 +262,7 @@ import { Flicking } from "@egjs/vue-flicking";
 import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
+// import { shakeY } from "@scenejs/effects";
 
 export default {
   name: "FlickingTest",
@@ -205,8 +287,14 @@ export default {
       },
     };
   },
+  methods: {
+    nextFlicking() {
+      this.$refs.flicking.next();
+    },
+  },
   mounted() {
     const flicking = this.$refs.flicking;
+    console.log(flicking.panels);
     const pagination = document.querySelector(".pagination");
     const dots = [].slice.call(pagination.querySelectorAll(".dot"));
 
@@ -309,9 +397,13 @@ export default {
         ".c5": {
           0: {
             transform: "translate(0, 0%)",
+            opacity: 1,
           },
           1: {
             transform: "translate(0, -100%)",
+          },
+          2: {
+            opacity: 0,
           },
         },
         ".c6": {
@@ -325,69 +417,71 @@ export default {
         ".iphone": {
           0: {
             transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
+            opacity: 2,
           },
           1: {
             transform:
-              "translate(-50%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
+              "translate(-60%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
             background: "#eee",
           },
           2: {
-            transform:
-              "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
-            background: "#444",
-          },
-          3: {
-            transform: "translateY3(-50vh) translateY2(-100%)",
-          },
-        },
-        ".imac": {
-          1: {
-            transform:
-              "translate(-50%) translate2(0px, 170px) translateY(50vh)",
+            // transform:
+            //   "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
+            // background: "#444",
             opacity: 0,
           },
-          2: {
-            transform: "translateY(0vh) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform: "translateY(-50vh) translateY2(-100%)",
-          },
+          // 3: {
+          //   transform: "translateY3(-50vh) translateY2(-100%)",
+          // },
         },
-        ".macbook": {
-          1: {
-            transform:
-              "translate(-50%) translate2(-200px, 170px) translateY(70vh)",
-            opacity: 0,
-          },
-          2: {
-            transform:
-              "translateY(0vh) translate2(-200px, 170px) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform:
-              "translateY(-50vh) translate2(-200px, 0px) translateY2(-150%)",
-          },
-        },
-        ".ipad": {
-          1: {
-            transform:
-              "translate(-50%) translate2(200px, 170px) translateY(70vh)",
-          },
-          1.3: {
-            opacity: 0,
-          },
-          2: {
-            transform:
-              "translateY(0vh) translate2(200px, 170px) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform:
-              "translateY(-50vh) translate2(200px, 50px) translateY2(-100%)",
-          },
-        },
+        // ".imac": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(0px, 170px) translateY(50vh)",
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform: "translateY(0vh) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform: "translateY(-50vh) translateY2(-100%)",
+        //   },
+        // },
+        // ".macbook": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(-200px, 170px) translateY(70vh)",
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform:
+        //       "translateY(0vh) translate2(-200px, 170px) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform:
+        //       "translateY(-50vh) translate2(-200px, 0px) translateY2(-150%)",
+        //   },
+        // },
+        // ".ipad": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(200px, 170px) translateY(70vh)",
+        //   },
+        //   1.3: {
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform:
+        //       "translateY(0vh) translate2(200px, 170px) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform:
+        //       "translateY(-50vh) translate2(200px, 50px) translateY2(-100%)",
+        //   },
+        // },
         ".background2": {
           1: {
             transform: "translateY(100vh)",
@@ -442,6 +536,16 @@ export default {
           3: {
             top: "50%",
             transform: "translate(-60%, -60%) scale(0.3)",
+          },
+        },
+        ".next-icon": {
+          0: {
+            opacity: 1,
+            "z-index": 2080,
+          },
+          2.5: {
+            opacity: 1,
+            "z-index": -100,
           },
         },
       },
@@ -594,6 +698,23 @@ export default {
       }
     ).playCSS();
 
+    new Scene(
+      {
+        ".next-icon": {
+          0: {
+            transform: "translateY(100%)",
+          },
+          1: {
+            transform: "translateY(-100%)",
+          },
+        },
+      },
+      {
+        selector: true,
+        iterationCount: "infinite",
+      }
+    ).play();
+
     // new Scene(
     //   {
     //     ".title span": typing({
@@ -665,6 +786,18 @@ export default {
 .title {
   margin: 10px;
 }
+.next-icon {
+  /* position: fixed; */
+  /* bottom: 5%; */
+  /* left: 45.5%; */
+  /* left: 50%; */
+  position: absolute;
+  right: 44%;
+  bottom: 5%;
+  transform: translateY(-50%);
+  z-index: 2080;
+  /* z-index: 2080; */
+}
 /* .title .cursor {
   display: inline-block;
   width: 2px;
@@ -674,7 +807,7 @@ export default {
 .title span {
   font-size: 30px;
   color: var(--main-col-1);
-  font-family: var(--main-font-5);
+  font-family: var(--logo-font-2);
 }
 /* * {
   font-family: "Open Sans", sans-serif !important;
@@ -731,6 +864,9 @@ export default {
   height: 2px;
   background: var(--main-col-3);
   transform-origin: 0px 1px;
+}
+.detail {
+  margin-top: 50px;
 }
 .logo {
   position: absolute;
@@ -856,13 +992,13 @@ body,
   bottom: 90% !important;
   left: 65% !important;
 }
-.iphone,
+/* .iphone,
 .ipad,
-.macbook,
-.imac {
+.macbook, */
+/* .imac {
   z-index: 2050 !important;
   transform: translateY(100vh) !important;
-}
+} */
 .iphone {
   position: absolute !important;
   width: 200px !important;
@@ -940,7 +1076,7 @@ body,
 .panels .panel:nth-child(4n) {
   background-color: #b5f6b9 !important;
 }
-.ipad {
+/* .ipad {
   position: absolute !important;
   width: 150px !important;
   background: #444 !important;
@@ -962,8 +1098,8 @@ body,
 }
 .ipad .panels .panel {
   width: 40% !important;
-}
-.imac {
+} */
+/* .imac {
   position: absolute;
   width: 280px !important;
   left: 50% !important;
@@ -1015,8 +1151,8 @@ body,
   height: 6px !important;
   border-radius: 3px !important;
   background: #e5e5e5 !important;
-}
-.macbook {
+} */
+/* .macbook {
   position: absolute !important;
   width: 240px !important;
   left: 50% !important;
@@ -1051,7 +1187,7 @@ body,
   background: #eee !important;
   margin: 3px auto 0px !important;
   border-radius: 5px !important;
-}
+} */
 
 .background2 {
   background: #9c5dea !important;
@@ -1061,15 +1197,21 @@ body,
 .flicking .eg-flick-viewport,
 .flicking .eg-flick-camera,
 .flicking .page {
-  position: relative !important;
-  width: 100% !important;
-  height: 100% !important;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
-.flicking .page .container {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+.flicking .page.main .container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.flicking .page.news .container {
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  transform: translate(-50%, -50%);
 }
 /* .flicking .page.main h1,
 .flicking .page.main .description {
@@ -1095,7 +1237,7 @@ body,
   color: var(--main-col-1);
 }
 
-.flicking .page.features h3,
+/* .flicking .page.features h3,
 .flicking .page.features .description {
   color: #fff !important;
 }
@@ -1104,13 +1246,13 @@ body,
   width: 200px !important;
   top: 50% !important;
   left: 50% !important;
-}
+} */
 
-.flicking .page.slogan h2 span[data-text]:before {
+/* .flicking .page.slogan h2 span[data-text]:before {
   content: attr(data-text) !important;
 }
 .flicking .page.slogan .container {
-  min-width: 600px !important;
+  min-width: 600px;
   height: 350px !important;
   text-align: center !important;
   color: #eee !important;
@@ -1124,15 +1266,15 @@ body,
   padding: 5px 10px 5px 10px !important;
   border: 3px solid #eee !important;
   color: #eee !important;
-}
+} */
 
 .pagination {
   /* position: relative; */
-  position: absolute !important;
-  right: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 2080 !important;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2080;
 }
 .pagination .dot {
   position: relative !important;
