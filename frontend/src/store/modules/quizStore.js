@@ -80,6 +80,8 @@ const quizStore = {
     },
     // [@Method] Quiz 문제 출제
     async setExamQuestions({ commit, state }) {
+      var result = 0;
+
       // Quiz 문제 가져오기
       await getQuizWords(
         async ({ data }) => {
@@ -147,17 +149,20 @@ const quizStore = {
 
             // console.log("# index", state.index)
             // console.log("# questions", state.questions)
+            result = 1;
           }
           // ii) 사용자가 읽은 기사 내 경제 단어 7개 미만
           else {
             await commit("SET_QUESTIONS", [0]);
             await commit("SET_SELECT_QUIZ_ARTICLE", [0]);
+            result = 2;
           }
         },
         (error) => {
           console.log(error);
         }
       );
+      return await Promise.resolve(result);
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
     async excuteSendMessage({ commit }, words) {
