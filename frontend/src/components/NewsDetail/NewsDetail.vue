@@ -30,8 +30,7 @@
           class="d-flex flex-row align-center justify-space-between"
         >
           <span class="main-col-1"
-            >기사를 읽어,
-            <span class="b-font">경험치 1 EXP 증가</span></span
+            >기사를 읽어, <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -137,16 +136,15 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
-        console.log("지금 뉴스");
-        console.log(this.newsDetail);
+        // console.log("지금 뉴스");
+        // console.log(this.newsDetail);
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
-        console.log(this.newsRelated);
+        // console.log(this.newsRelated);
 
         // 로딩 상태 변경
         this.loading = false;
-
       }
     });
     // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
