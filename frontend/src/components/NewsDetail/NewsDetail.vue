@@ -30,8 +30,7 @@
           class="d-flex flex-row align-center justify-space-between"
         >
           <span class="main-col-1"
-            >기사를 읽어,
-            <span class="b-font">경험치 1 EXP 증가</span></span
+            >기사를 읽어, <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -88,6 +87,7 @@ export default {
   },
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
+    ...mapActions("memoStore", ["updateReading"]),
     addScrollEvent() {
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
@@ -99,7 +99,8 @@ export default {
       function finishReading() {
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
-        if (now > target) {
+        if (now > target && !memoStore.state.reading) {
+          memoStore.state.reading = true;
           // 스크롤 이벤트 삭제
           document.removeEventListener("scroll", finishReading);
           // 기사 읽음 처리 API 요청
@@ -146,11 +147,13 @@ export default {
 
         // 로딩 상태 변경
         this.loading = false;
-
       }
     });
     // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
-    if (this.newsDetail && !this.newsDetail.reading) this.addScrollEvent();
+    if (this.newsDetail && !this.newsDetail.reading) {
+      this.addScrollEvent();
+      this.updateReading(this.newsDetail.reading);
+    }
   },
 };
 </script>
