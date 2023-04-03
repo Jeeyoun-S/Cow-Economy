@@ -11,12 +11,6 @@ import java.util.Optional;
  * */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    /**
-     * 사용자 정보 User 테이블에 추가
-     * @param user must not be {@literal null}.
-     * @return
-     */
-    User save(User user);
 
     /**
      * Email에 해당하는 User 조회
@@ -24,4 +18,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     User findByUserEmail(String userEmail);
+
+    /**
+     * ID(seq)에 해당되는 User 조회
+     *
+     * @param userId 조회할 회원 ID(seq)
+     * @return User 회원 Entity
+     **/
+    Optional<User> findByUserId(Long userId);
+    
+    /**
+     * 사용자 정보 User 테이블에 추가
+     * @param user must not be {@literal null}.
+     * @return
+     */
+    User save(User user);
+
+    
 }

@@ -1,220 +1,170 @@
 <template>
-  <div class="pa-8">
-    <v-sheet class="pa-8" rounded="xl">
-      <div class="py-2 d-flex flex-row align-center">
-        <img
-          class="mr-2"
-          height="30"
-          :src="require('@/assets/images/mypage/quiz/pencil.png')"
-        />
-        <span class="black-font xxxl-font">오늘의 퀴즈</span>
-      </div>
-      <v-divider class="my-1"></v-divider>
-      <div class="xl-font">
-        <!-- 1st -->
-        <div class="py-3 d-flex flex-row justify-space-between">
-          <v-sheet width="85%">
-            7문제 중 5문제 이상 통과하면<br />
-            경험치 +100을 얻을 수 있습니다.
-          </v-sheet>
-          <img
-            width="10%"
-            :src="require('@/assets/images/mypage/quiz/book.png')"
-          />
-        </div>
-        <!-- 2ed -->
-        <div class="py-3 d-flex flex-row justify-space-between">
-          <img
-            width="10%"
-            aspect-ratio="1"
-            :src="require('@/assets/images/mypage/quiz/question-mark.png')"
-          />
-          <v-sheet width="85%">
-            문제로는 경제 용어에 대한<br />
-            설명이 주어집니다.
-          </v-sheet>
-        </div>
-        <!-- 3th -->
-        <div class="py-3 d-flex flex-row justify-space-between">
-          <v-sheet width="85%">
-            보기 4개 중 설명에 맞는 단어를<br />
-            선택하시면 됩니다.
-          </v-sheet>
-          <img
-            width="10%"
-            height="auto"
-            :src="require('@/assets/images/mypage/quiz/winking-emoji.gif')"
-          />
-        </div>
-        <!-- 4th -->
-        <div class="py-3 d-flex flex-row justify-space-between">
-          <div>
-            한 문제에 10초의 시간⏰이 주어집니다.<br />
-            1일 1회 도전 가능합니다.
-          </div>
-        </div>
-        <div class="py-3">
-          <v-btn block dark color="var(--main-col-2)" @click="moveQuiz()" large
-            >시작하기</v-btn
+  <div class="pa-5">
+    <v-sheet class="pa-2" rounded="lg" color="transparent">
+      <div class="pb-2 d-flex flex-row justify-space-between">
+        <div class="px-2 d-flex flex-column narrow white-col-1">
+          <span class="xxl-font blue-gredient point-b">오늘의</span>
+          <span class="point-b blue-gredient x-big-large-font"
+            >경제 용어 Quiz</span
           >
         </div>
+        <img
+          class="mr-2"
+          height="50"
+          :src="require('@/assets/images/emoji/pencil.png')"
+        />
       </div>
+      <!-- <v-sheet class="my-1" height="2" color="var(--main-col-2)"></v-sheet> -->
+      <div class="my-3 d-flex flex-row justify-space-between flex-wrap">
+        <v-card
+          v-for="(info, index) in infos"
+          :key="index"
+          width="47%"
+          height="180"
+          class="graph-1-shadow point-th mb-4 pa-3 d-flex flex-column justify-center align-center"
+          rounded="xl"
+        >
+          <img class="mb-5" :src="info.image" height="60" />
+          <div class="sm-font">{{ info.message[0] }}</div>
+          <div class="sm-font">{{ info.message[1] }}</div>
+          <div class="sm-font" v-if="info.message[2]">
+            {{ info.message[2] }}
+          </div>
+        </v-card>
+      </div>
+      <v-btn
+        class="gradient-2"
+        rounded
+        block
+        dark
+        color="var(--main-col-2)"
+        @click="moveQuiz()"
+        large
+        >시작하기</v-btn
+      >
       <!-- 오늘의 Quiz 진입불가 Alert -->
-      <div v-if="alertQuizFlag">
-        <today-not-enter-modal></today-not-enter-modal>
-      </div>
+      <!-- i) 하루에 한 번 기회 소진 -->
+      <today-not-enter-alert ref="todaynot"></today-not-enter-alert>
+      <!-- ii) Quiz 출제를 위한 경제단어 부족 -->
+      <shortage-word-alert ref="shortage"></shortage-word-alert>
+      <!-- iii) 로그인 안 된 상태 -->
+      <today-quiz-not-user ref="notuser"></today-quiz-not-user>
+      <!-- # for. quiz Loading 창 -->
+      <the-quiz-loading
+        :loading="this.$store.state.quizLoadingStatus"
+      ></the-quiz-loading>
     </v-sheet>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import TodayNotEnterModal from "./element/TodayNotEnterModal.vue";
+import { mapActions, mapState, mapGetters } from "vuex";
+import ShortageWordAlert from "./alert/ShortageWordAlert.vue";
+import TodayNotEnterAlert from "./alert/TodayNotEnterAlert.vue";
+import TodayQuizNotUser from "./alert/TodayQuizNotUser.vue";
+import TheQuizLoading from "./alert/TheQuizLoading.vue";
 
 const quizStore = "quizStore";
 
 export default {
   name: "TodayQuizInfo",
+  components: {
+    ShortageWordAlert,
+    TodayNotEnterAlert,
+    TodayQuizNotUser,
+    TheQuizLoading,
+  },
   data() {
     return {
-      alertQuizFlag: false, // 오늘의 Quiz 진행 여부에 따른 alert창
-      isLoading: false, // 오늘의 Quiz가 준비될 동안 보여줄 Loading
+      loading: false, // 퀴즈 출제 시도 시 로딩 창 활성화 여부
+      infos: [
+        {
+          message: ["읽었던 기사 속", "단어를", "맞추는 퀴즈"],
+          image: require("@/assets/images/emoji/question-mark.png"),
+        },
+        {
+          message: ["15초 내에", "보기 4개 중", "답을 선택"],
+          image: require("@/assets/images/emoji/winking-emoji.gif"),
+        },
+        {
+          message: ["7문제 중 5개", "이상 맞추면", "경험치 100 증가"],
+          image: require("@/assets/images/emoji/books.png"),
+        },
+        {
+          message: ["1일 1회", "도전 가능", ""],
+          image: require("@/assets/images/emoji/alarm_clock.png"),
+        },
+      ],
     };
-  },
-  components: {
-    TodayNotEnterModal,
   },
   computed: {
     ...mapState(quizStore, ["questions", "todayQuizFlag"]),
+    ...mapGetters("userStore", ["isLoggedIn"]),
   },
-  watch: {
-    questions() {
-      location.href = `${process.env.VUE_APP_BASE_URL}/today-quiz`;
-    },
+  // watch: {
+  //   questions() {
+  //     if (0 < this.questions.length < 7) {
+  //       // Modal 창 열기
+  //       this.$refs.shortage.openDialog();
+  //     } else {
+  //       this.$router.push("/today-quiz");
+  //     }
+  //   },
+  // },
+  async created() {
+    // 로그인된 상태라면
+    if (this.isLoggedIn) {
+      // [@Method] Quiz 진행 여부 판단
+      await this.checkTodayQuiz();
+    }
+    // console.log("# Quiz 진행 여부 확인[true = 가능]: ", this.todayQuizFlag);
   },
   methods: {
-    ...mapActions(quizStore, ["setExamQuestions"]),
-    // [@Method] Quiz 페이지로 이동
-    moveQuiz() {
-      if (this.todayQuizFlag == false) {
-        this.setExamQuestions(); // Quiz 문제 출제 - QuizStor
-      } else {
-        // ! 오늘 Quiz 다 했다고 alert 창 띄우기
-        this.alertQuizFlag = true;
+    ...mapActions(quizStore, [
+      "setExamQuestions",
+      "checkTodayQuiz",
+      "excuteSendMessage",
+    ]),
+    // [@Method] Quiz 페이지로 이동 or 알림창 출력
+    async moveQuiz() {
+      // 로그인 된 상태인 경우
+      if (this.isLoggedIn) {
+        // 퀴즈를 푼 적이 없는 경우
+        if (this.todayQuizFlag == true) {
+          // 퀴즈 출제
+          await this.setExamQuestions(); // [@Method] Quiz 문제 출제
+        }
+        // 퀴즈는 푼 적이 있는 경우
+        else {
+          this.$refs.todaynot.openDialog(); // ! 오늘 Quiz 다 했다고 alert 창 띄우기
+        }
+      }
+      // 로그인 안 된 상태인 경우
+      else {
+        this.$refs.notuser.openDialog(); // 로그인 안 한 상태라고 창 띄우기
       }
     },
   },
 };
 </script>
 
-<style>
-.quiz-info {
-  font-family: var(--main-font-2);
+<style scoped>
+/* .first {
+  background-image: url("@/assets/images/emoji/books.png");
+  background-size: 70px;
+  background-position-x: right;
+  background-position-y: bottom;
 }
-
-.quiz-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 327px;
-  height: 518px;
-  background-color: white;
-
-  margin-left: 7%;
-  margin-top: 10%;
+.second {
+  background-image: url("@/assets/images/emoji/question-mark.png");
+  background-size: 70px;
+  background-position-x: left;
+  background-position-y: bottom;
 }
-
-/* 제목 */
-.quiz-center .quiz-title {
-  font-size: 24px;
-  font-weight: bold;
-
-  width: 50%;
-
-  margin-top: 15%;
-  margin-right: 40%;
-}
-.quiz-center .quiz-title img {
-  width: 30px;
-  height: 30px;
-
-  margin-left: 3%;
-  margin-right: 3%;
-}
-/* 제목 바 */
-.quiz-center .quiz-title-bar {
-  width: 170%;
-  height: 4%;
-  background-color: var(--main-col-2);
-}
-
-/* first 문단 */
-.quiz-center .quiz-center-item-first {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 90%;
-  margin-left: 5%;
-}
-.quiz-center .quiz-center-item-first img {
-  /* width: 36px;
-  height: 36px; */
-  width: 40px;
-  height: 40px;
-
-  margin-right: 10%;
-}
-
-/* second 문단 */
-.quiz-center .quiz-center-item-second {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  width: 90%;
-}
-.quiz-center .quiz-center-item-second img {
-  width: 45px;
-  height: 50px;
-
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-/* third 문단 */
-.quiz-center .quiz-center-item-third {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 90%;
-  margin-left: 5%;
-}
-.quiz-center .quiz-center-item-third img {
-  width: 50px;
-  height: 50px;
-
-  margin-right: 10%;
-}
-
-/* fourth 문단 */
-.quiz-center .quiz-center-item-fourth {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  width: 90%;
-  margin-left: 5%;
-}
-
-/* 시작하기 Button */
-.quiz-center .quiz-center-button {
-  margin-bottom: 10%;
-  width: 85%;
-}
+.third {
+  background-image: url("@/assets/images/emoji/winking-emoji.gif");
+  background-size: 70px;
+  background-position-x: right;
+  background-position-y: bottom;
+} */
 </style>

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin
-@Api(value = "인증 API", tags = {"Auth."})
 @RestController
 @RequestMapping("/auth")
 public class KakaoController {

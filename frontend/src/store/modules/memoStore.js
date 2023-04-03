@@ -4,6 +4,7 @@ const memoStore = {
   namespaced: true,
   state: {
     memoBtn: false,
+    done: false,
     selectionText: null,
     selectionResult: {
       startIndex: null,
@@ -23,8 +24,7 @@ const memoStore = {
       startRange: null,
       endRange: null
     },
-    otherMemoList: [],
-    myMemoList: []
+    reading: false
   },
   getters: {
 
@@ -43,19 +43,19 @@ const memoStore = {
       state.selectionResult["startRange"] = payload.startRange;
       state.selectionResult["endRange"] = payload.endRange;
     },
-    UPDATE_MY_MEMO(state, payload) {
-      if (payload.sort == "최신순") {
-        state.myMemoList.unshift(payload.memo);
-      } else {
-        state.myMemoList.push(payload.memo);
-      }
-    },
-    UPDATE_PUBLIC_SCOPE(state, payload) {
-      state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
-    },
-    DELETE_MEMO(state, payload) {
-      state.myMemoList.splice(payload, 1);
-    },
+    // UPDATE_MY_MEMO(state, payload) {
+    //   if (payload.sort == "최신순") {
+    //     state.myMemoList.unshift(payload.memo);
+    //   } else {
+    //     state.myMemoList.push(payload.memo);
+    //   }
+    // },
+    // UPDATE_PUBLIC_SCOPE(state, payload) {
+    //   state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
+    // },
+    // DELETE_MEMO(state, payload) {
+    //   state.myMemoList.splice(payload, 1);
+    // },
     UPDATE_NEW_MEMO(state, payload) {
       state.newMemo.isModify = payload.isModify;
       state.newMemo.memoContent = payload.memoContent;
@@ -63,8 +63,11 @@ const memoStore = {
       state.newMemo.memoId = payload.memoId;
       state.newMemo.index = payload.index;
     },
-    UPDATE_ONE_MY_MEMO(state, payload) {
-      state.myMemoList[payload.index] = payload.newMemo;
+    // UPDATE_ONE_MY_MEMO(state, payload) {
+    //   state.myMemoList[payload.index] = payload.newMemo;
+    // }
+    UPDATE_READING(state, payload) {
+      state.reading = payload;
     }
   },
   actions: {
@@ -88,21 +91,24 @@ const memoStore = {
         "endRange": null,
       });
     },
-    addMyMemo({ commit }, data) {
-      commit("UPDATE_MY_MEMO", data);
-    },
-    updatePublicScope({ commit }, index) {
-      commit("UPDATE_PUBLIC_SCOPE", index);
-    },
+    // addMyMemo({ commit }, data) {
+    //   commit("UPDATE_MY_MEMO", data);
+    // },
+    // updatePublicScope({ commit }, index) {
+    //   commit("UPDATE_PUBLIC_SCOPE", index);
+    // },
     deleteMemo({ commit }, index) {
       commit("DELETE_MEMO", index);
     },
     updateNewMemo({ commit }, memo) {
       commit("UPDATE_NEW_MEMO", memo);
     },
-    modifyMyMemo({ commit }, memo) {
-      commit("UPDATE_ONE_MY_MEMO", memo);
+    updateReading({ commit }, reading) {
+      commit("UPDATE_READING", reading)
     }
+    // modifyMyMemo({ commit }, memo) {
+    //   commit("UPDATE_ONE_MY_MEMO", memo);
+    // }
   },
   modules: {
   }

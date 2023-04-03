@@ -39,3 +39,27 @@
   display: block !important;
   flex: 0 1 auto;
 }
+.memo .v-expansion-panel-header,
+.v-expansion-panel-content__wrap {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.memo .v-expansion-panel-header--active {
+  font-family: var(--main-font-3);
+  color: var(--main-col-1);
+}
+.v-expansion-panel-header {
+  line-height: 1.2 !important;
+}
+#home-header .v-tab {
+  /* text-transform: none !important; */
+  font-family: var(--main-font-2) !important;
+  letter-spacing: 0em;
+  font-size: 1.02rem;
+}
+#home-header .v-tab--active.v-tab {
+  font-family: var(--main-font-3) !important;
+}
+.v-dialog {
+  box-shadow: none !important;
+}

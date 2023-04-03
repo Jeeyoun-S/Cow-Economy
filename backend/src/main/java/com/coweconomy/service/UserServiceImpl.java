@@ -1,9 +1,7 @@
 package com.coweconomy.service;
 
 import com.coweconomy.api.request.UserRegisterPostReq;
-import com.coweconomy.domain.user.dto.UserDto;
 import com.coweconomy.domain.user.entity.User;
-import com.coweconomy.domain.user.entity.UserAuthority;
 import com.coweconomy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isTokenSaved(String userEmail, String token) {
         User user = userRepository.findByUserEmail(userEmail);
-        user.setToken(token);
+        user.setUserToken(token);
         try {
             userRepository.save(user);
             return true;

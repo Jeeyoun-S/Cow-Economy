@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="300">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" icon text color="var(--main-col-3)"
+      <v-btn v-bind="attrs" v-on="on" icon text :color="color" :small="isSmall"
         ><v-icon> mdi-delete-forever </v-icon></v-btn
       >
     </template>
@@ -44,21 +44,25 @@ export default {
   props: {
     memoId: Number,
     index: Number,
+    color: String,
+    isSmall: Boolean,
+    indexDetail: Number,
   },
   methods: {
-    ...mapActions("memoStore", [
-      "deleteMemo",
-      "updateNewMemo",
-      "removeSelectionText",
-    ]),
+    ...mapActions("memoStore", ["updateNewMemo", "removeSelectionText"]),
+    // 메모 삭제하기
     deleteMemoItem() {
+      // 메모 삭제 API 요청 보내기
       deleteMemo(this.memoId).then((res) => {
+        // 삭제 성공
         if (res) {
-          // 삭제 성공
-          this.deleteMemo(this.index);
+          // 경고창 닫기
           this.dialog = false;
+          // 만약 현재 수정 중이었던 메모를 삭제했다면
           if (this.newMemo.memoId == this.memoId) {
+            // 등록창 인용문 삭제
             this.removeSelectionText();
+            // 등록창 메모 내용 삭제
             this.updateNewMemo({
               isModify: false,
               memoId: null,
@@ -67,7 +71,12 @@ export default {
               index: null,
             });
           }
-          this.$emit("deleteMemoItem");
+          // 메모 리스트에서 삭제하기
+          if (this.isSmall) {
+            this.$emit("deleteMemoItem", this.index, this.indexDetail);
+          } else {
+            this.$emit("deleteMemoItem");
+          }
         } else {
           // 삭제 실패
         }

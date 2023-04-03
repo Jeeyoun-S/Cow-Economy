@@ -2,13 +2,22 @@
   <v-sheet class="pa-6" color="transparent">
     <div class="main-title-font align-center">
       <img height="19.47" :src="require('@/assets/images/emoji _fire.png')" />
-      최신 트렌트
+      최신 트렌드
     </div>
     <div class="main-subtitle-font">
       최근 경제 뉴스에서 다루고 있는 핵심 키워드를 확인해 보세요.
     </div>
-    <v-sheet class="mt-4 trend_area" rounded color="white">
-      <img class="trend_img" :src="`${imgPath}`" alt="word cloud 이미지" />
+    <v-sheet
+      class="mt-4 trend_area pa-1"
+      rounded="lg"
+      elevation="3"
+      color="white"
+    >
+      <v-img
+        class="trend_img"
+        :src="`${imgPath}`"
+        alt="word cloud 이미지"
+      ></v-img>
     </v-sheet>
   </v-sheet>
 </template>

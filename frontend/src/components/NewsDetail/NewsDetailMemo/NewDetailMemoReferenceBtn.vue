@@ -57,6 +57,7 @@ export default {
       );
     },
     remove() {
+      // 인용문 삭제하기
       this.$emit("removeReference");
     },
   },

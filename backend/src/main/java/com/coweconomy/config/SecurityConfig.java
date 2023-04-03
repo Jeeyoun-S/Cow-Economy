@@ -62,13 +62,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // HttpServeltRequest를 사용하는 요청들에 접근 제한 설정
                 .authorizeRequests()
                 // 로그인할 때는 검증 하지 않음
-                .antMatchers("/auth/**")
+                .antMatchers("/auth/**", "/article", "/article/**", "/main/**")
                 .permitAll()
 
                 // 나머지는 전부 인증 필요
                 .anyRequest()
                 .authenticated()
         ;
+        System.out.println("##### Security Config 확인");
     }
 
     /**
@@ -78,8 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedOrigins(Collectins.singletonList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Collectins.singletonList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
