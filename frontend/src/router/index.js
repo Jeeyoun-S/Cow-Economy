@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import main from "@/router/modules/main";
+import info from "@/router/modules/info";
 import home from "@/router/modules/home";
 import news from "@/router/modules/news";
 import quiz from "@/router/modules/quiz";
@@ -14,7 +14,7 @@ import error from "@/router/modules/error";
 Vue.use(VueRouter);
 
 const routes = [
-  ...main,
+  ...info,
   ...home,
   ...news,
   ...quiz,

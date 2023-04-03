@@ -1,5 +1,5 @@
 <template>
-  <v-sheet @click="goNewsDetail" width="130" height="100%">
+  <v-sheet @click="goNewsDetail" width="100%" height="100%">
     <v-card
       v-if="relation.articleThumbnail != 'NaN'"
       class="blue-shadow"
