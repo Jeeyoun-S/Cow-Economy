@@ -4,7 +4,7 @@
     <v-toolbar flat height="65px">
       <!-- 로고 (글씨) -->
       <v-sheet class="pt-1" height="45px">
-        <img height="100%" :src="require('@/assets/images/logo.png')" />
+        <img height="100%" :src="require('@/assets/images/logo/logo.png')" />
       </v-sheet>
       <v-spacer></v-spacer>
       <!-- 검색 아이콘 -->

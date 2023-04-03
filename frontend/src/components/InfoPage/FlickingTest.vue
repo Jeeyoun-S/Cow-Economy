@@ -42,7 +42,6 @@
                 <div class="glitter glitter2"></div>
                 <div class="glitter glitter3"></div>
                 <div class="glitter glitter4"></div>
-                k
                 <div class="glitter glitter5"></div>
                 <div class="glitter glitter6"></div>
                 <div class="glitter glitter7"></div>
@@ -53,7 +52,7 @@
               <img
                 class="logo"
                 height="120px"
-                :src="require('@/assets/images/icon/logo_full.png')"
+                :src="require('@/assets/images/logo/logo_full.png')"
               />
               <div class="detail d-flex flex-column align-center">
                 <div class="title">

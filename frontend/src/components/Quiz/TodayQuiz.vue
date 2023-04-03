@@ -13,7 +13,7 @@
       >
         오늘의 Quiz
       </span>
-      <img height="80%" :src="require('@/assets/images/logo.png')" />
+      <img height="80%" :src="require('@/assets/images/logo/logo.png')" />
     </v-sheet>
     <!-- 프로그레스 바 -->
     <step-progress></step-progress>
