@@ -11,14 +11,41 @@
       24시간 내 경제 분야에서 인기 뉴스를 확인해 보세요.
     </div>
     <swiper class="swiper mt-4" :options="swiperOption">
-      <swiper-slide v-for="tag in model" :key="tag">
-        <v-card class="trend_area" rounded="lg" elevation="4" color="white">
+      <swiper-slide v-for="(article, idx) in news" :key="idx">
+        <v-card
+          class="news-item"
+          rounded="lg"
+          elevation="4"
+          color="white"
+          @click="moveNewsDetail(article.articleId)"
+        >
           <v-img
             class="trend_img"
             rounded="lg"
-            src="https://imgnews.pstatic.net/image/009/2023/03/28/0005107713_001_20230328114304617.jpg?type=w647"
-            alt="word cloud 이미지"
+            :src="article.articleThumbnail"
           />
+          <div
+            class="text-col ma-5 main-hot-news-font"
+            style="
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              position: absolute;
+              top: 50%;
+            "
+          >
+            <!-- 언론사, 날짜 -->
+            <div style="display: flex; justify-content: space-between">
+              <p class="my-1">{{ article.articlePress }}</p>
+              <p class="my-1">{{ article.articleRegtime }}</p>
+            </div>
+            <!-- 제목 -->
+            <div class="title-row">
+              <v-card-title class="pa-0 main-title-font">{{
+                article.articleTitle
+              }}</v-card-title>
+            </div>
+          </div>
         </v-card>
       </swiper-slide>
     </swiper>
@@ -26,16 +53,28 @@
 </template>
 
 <script>
+import { getTodayHotNews } from "@/api/modules/article.js";
 export default {
-  name: "HotTrends",
+  name: "HotNews",
   data() {
     return {
-      imgPath: process.env.VUE_APP_WORD_CLOUD_URL,
-      model: ["1", "2", "3"],
+      news: [],
       swiperOption: {
         spaceBetween: 25,
       },
     };
+  },
+  mounted() {
+    // console.log("create");
+    getTodayHotNews().then((res) => {
+      this.news = res;
+      // console.log(this.news);
+    });
+  },
+  methods: {
+    moveNewsDetail(articleId) {
+      this.$router.push(`/news/${articleId}`);
+    },
   },
 };
 </script>
@@ -43,8 +82,8 @@ export default {
 <style scoped>
 .trend_area {
   text-align: center;
-  /* width: 338;
-  height: 229; */
+  width: 338;
+  height: 229;
 }
 .trend_img {
   width: 100%;

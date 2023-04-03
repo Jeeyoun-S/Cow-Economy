@@ -98,13 +98,23 @@
   word-break: break-all;
 }
 .main-title-font {
-  font-size: 20px;
+  font-size: 18px;
   font-family: var(--main-font-3);
 }
 .main-subtitle-font {
   font-size: 12px;
   font-family: var(--main-font-2);
   color: grey;
+}
+.main-hot-news-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: white;
+}
+.main-category-news-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: black;
 }
 .white-shadow {
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;

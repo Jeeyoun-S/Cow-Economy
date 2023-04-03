@@ -7,10 +7,15 @@
     <div class="main-subtitle-font">
       최근 24시간 내 카테고리별 뉴스를 확인해 보세요.
     </div>
-    <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center">
       <span class="pr-3" style="white-space: nowrap">분류</span>
       <v-slide-group>
-        <v-chip-group v-model="selectedTag" selected-class="text-primary" column @input="onTagChange">
+        <v-chip-group
+          v-model="selectedTag"
+          selected-class="text-primary"
+          column
+          @input="onTagChange"
+        >
           <v-chip
             filter
             style="background-color: white !important"
@@ -25,10 +30,15 @@
         </v-chip-group>
       </v-slide-group>
     </div>
-    <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center">
       <span class="pr-3" style="white-space: nowrap">정렬</span>
       <v-slide-group>
-        <v-chip-group v-model="selectedSortKey" selected-class="text-primary" column @input="sortNews">
+        <v-chip-group
+          v-model="selectedSortKey"
+          selected-class="text-primary"
+          column
+          @input="sortNews"
+        >
           <v-chip
             filter
             style="background-color: white !important"
@@ -43,18 +53,25 @@
         </v-chip-group>
       </v-slide-group>
     </div>
-    
+
     <v-card
-    v-for="news in filteredArticles"
-    :key="news.articleId"
-    class="news-item my-2 d-flex flex-row"
-    elevation="0"
+      v-for="article in filteredArticles"
+      :key="article.articleId"
+      class="mx-auto my-2 d-flex flex-row"
+      height="130"
     >
       <!-- 이미지 -->
-      <v-img v-if="news.article_thumbnail" width="5%" max-width="100" :src="news.article_thumbnail"></v-img>
+      <div v-if="article.articleThumbnail">
+        <v-avatar class="custom-avatar" size="130" tile>
+          <v-img
+            v-if="article.articleThumbnail"
+            :src="article.articleThumbnail"
+          ></v-img>
+        </v-avatar>
+      </div>
       <!-- 기사 텍스트 -->
       <div
-        class="text-col ma-5 main-subtitle-font"
+        class="text-col ma-5 main-category-news-font"
         style="flex: 1; display: flex; flex-direction: column"
       >
         <!-- 언론사, 날짜 -->
@@ -62,13 +79,13 @@
           class="main-subtitle-font"
           style="display: flex; justify-content: space-between"
         >
-          <p class="my-1">{{ news.article_press }}</p>
-          <p class="my-1">{{ news.article_regtime }}</p>
+          <p class="my-1">{{ article.articlePress }}</p>
+          <p class="my-1">{{ article.articleRegtime }}</p>
         </div>
         <!-- 제목 -->
         <div class="title-row">
-          <v-card-title class="pa-0 main-title-font">{{
-            news.article_title
+          <v-card-title class="pa-0" style="font-size: 18px;">{{
+            article.articleTitle
           }}</v-card-title>
         </div>
       </div>
@@ -77,51 +94,63 @@
 </template>
 
 <script>
-import newsStore from "@/store/modules/newsStore.js"
+import { getTodayAllNews } from "@/api/modules/article.js";
 
 export default {
   name: "CategoryNews",
   data() {
     return {
+      news: [],
       tags: [
         { name: "금융", category: "금융" },
         { name: "증권", category: "증권" },
         { name: "산업/재계", category: "산업/재계" },
         { name: "중기/벤처", category: "중기/벤처" },
         { name: "부동산", category: "부동산" },
-        { name: "글로벌경제", category: "글로벌경제" },
+        { name: "글로벌경제", category: "글로벌 경제" },
         { name: "생활경제", category: "생활경제" },
-        { name: "경제일반", category: "경제일반" },
+        { name: "경제일반", category: "경제 일반" },
       ],
       selectedTag: { name: "금융", category: "금융" },
       sortKeys: [
         { label: "최신순", value: "최신순" },
         { label: "인기순", value: "인기순" },
       ],
-      selectedSortKey: '최신순',
+      selectedSortKey: "최신순",
     };
   },
   computed: {
-    allNews() {
-      console.log(newsStore.state.news)
-      return newsStore.state.news;
-    },
     filteredArticles() {
       if (!this.selectedTag) {
         return [];
       }
-      let filtered = this.allNews.filter(
-        (article) => article.article_category === this.selectedTag.category
+      console.log("computed");
+      console.log(this.news);
+      if (this.news.length == 0) {
+        // console.log(this.news.length)
+        return [];
+      }
+      let filtered = (
+        this.selectedSortKey === "최신순" ? this.news[1] : this.news[0]
+      ).filter(
+        (article) => article.articleCategory === this.selectedTag.category
       );
 
-      if (this.selectedSortKey === '최신순') {
-        filtered.sort((a, b) => new Date(b.article_regtime) - new Date(a.article_regtime));
-      } else if (this.selectedSortKey === '인기순') {
-        filtered.sort((a, b) => b.article_hits - a.article_hits);
+      if (this.selectedSortKey === "최신순") {
+        filtered.sort(
+          (a, b) => new Date(b.articleRegtime) - new Date(a.articleRegtime)
+        );
+      } else if (this.selectedSortKey === "인기순") {
+        filtered.sort((a, b) => b.articleHits - a.articleHits);
       }
-
       return filtered;
     },
+  },
+  created() {
+    getTodayAllNews().then((res) => {
+      console.log("create");
+      this.news = res;
+    });
   },
   methods: {
     onTagChange(value) {
@@ -131,7 +160,10 @@ export default {
     sortNews(value) {
       this.selectedSortKey = value;
     },
-  }
+    moveNewsDetail(articleId) {
+      this.$router.push(`/news/${articleId}`);
+    },
+  },
 };
 </script>
 <style scoped></style>
