@@ -5,6 +5,7 @@
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
+      <div class="dot"></div>
     </div>
     <v-btn
       class="next-icon"
@@ -50,7 +51,7 @@
               </div>
               <img
                 class="logo"
-                height="130px"
+                height="120px"
                 :src="require('@/assets/images/icon/logo_full.png')"
               />
               <div class="detail d-flex flex-column align-center">
@@ -150,26 +151,30 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <div class="function point-b main-col-1 xxxxl-font">
-                다양하게 보는 경제 뉴스
-              </div>
+              <!-- <div class="func-1 point-b main-col-1 xxxxl-font">
+                다양한 경제 뉴스 보기
+              </div> -->
+              <div
+                class="func-1 point-b main-col-1 xxxxl-font"
+                style="height: 40px"
+              ></div>
               <div class="d-flex flex-column align-center">
                 <div class="d-flex flex-wrap align-center justify-center">
                   <v-chip
-                    class="mr-1 my-1 px-4"
+                    class="chip-1 mr-1 my-1 px-4"
                     color="var(--graph-1-col-3)"
                     outlined
                     style="background-color: white !important"
                     >인기 뉴스</v-chip
                   >
                   <v-chip
-                    class="mr-1 my-1 px-4"
+                    class="chip-1 mr-1 my-1 px-4"
                     color="var(--graph-1-col-1)"
                     outlined
                     style="background-color: white !important"
                     >최신 트렌드</v-chip
                   ><v-chip
-                    class="mr-1 my-1 px-4"
+                    class="chip-1 mr-1 my-1 px-4"
                     color="var(--graph-1-col-5)"
                     outlined
                     style="background-color: white !important"
@@ -178,7 +183,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-center justify-center">
                   <v-chip
-                    class="mr-1 my-1 px-4"
+                    class="chip-1 mr-1 my-1 px-4"
                     color="var(--graph-1-col-4)"
                     outlined
                     style="background-color: white !important"
@@ -186,7 +191,7 @@
                   >
 
                   <v-chip
-                    class="px-4 my-1"
+                    class="chip-1 px-4 my-1"
                     color="var(--graph-1-col-6)"
                     outlined
                     style="background-color: white !important"
@@ -238,21 +243,55 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <v-sheet class="pa-4 sm-font" rounded="lg" width="70%">
+              <v-sheet
+                height="70"
+                width="90%"
+                color="transparent"
+                class="mb-2 d-flex flex-column justify-end align-start"
+              >
+                <span class="white-col-1 point-md xxxxl-font pink-gradient"
+                  >단어</span
+                >
+                <span class="main-col-1 md-font"
+                  >기사 속 밑줄 친 경제 용어를 클릭해보세요!</span
+                >
+                <span class="main-col-1 md-font"
+                  >해당 용어에 대한 설명을 볼 수 있습니다.</span
+                >
+              </v-sheet>
+              <v-sheet class="sample pa-4 sm-font" rounded="lg" width="90%">
                 남양유업은 지난 2013년 대리점 물량 밀어내기 갑질 논란, 2021년
                 불가리스 사태, 창업주 3세들의 마약 투약과 최근 한앤컴퍼니와의
                 경영권 분쟁 등의 사건으로 인해 주가가 지속적으로 하락세다.
                 실적도 부진하다.
-                <span class="underline main-col-1 b-font">영업손실</span>은
-                868억원을 내, 적자폭을 11.5% 늘렸고 당기순손실은 781억원을
-                냈다.<br /><br />행동주의 펀드가 일부 승리했지만, 주주들의
-                불만은 여전하다. 이날 주총이 끝나기 전 자리를 벗어나던 한 50대
-                주주는 “감사 선임을 제외하고는 전부 홍 회장 의도대로 결론이
-                났다”며 “불가리스 사태로 법적 처벌을 받아야 할 사람이 주주들
-                발목 잡고 자신들(경영진)의 이익만을 추구한다”고 비판하기도
-                했다.<br /><br />이어 “경영권 분쟁이 있는 상황에서 홍 회장의
-                아들인 홍진석씨가 사내이사로 선임되는 것이 말이 되느냐”고
-                덧붙였다.
+                <span style="position: relative">
+                  <v-icon
+                    style="position: absolute; left: 70%; top: 60%"
+                    color="black"
+                    large
+                    >mdi-cursor-default</v-icon
+                  >
+                  <span class="underline">영업손실</span>
+                </span>
+                은 868억원을 내,
+                <span class="memo-sample">적자폭을 11.5%</span> 늘렸고
+                당기순손실은 781억원을 냈다.
+              </v-sheet>
+              <v-sheet
+                height="70"
+                width="90%"
+                color="transparent"
+                class="mt-2 d-flex flex-column justify-start align-end"
+              >
+                <span class="white-col-1 point-md xxxxl-font pink-gradient"
+                  >메모</span
+                >
+                <span class="main-col-1 md-font"
+                  >기사 내용을 드래그해 메모를 써보세요!</span
+                >
+                <span class="main-col-1 md-font"
+                  >선택한 내용을 메모에 추가하는 창이 뜹니다</span
+                >
               </v-sheet>
               <!-- <div>뉴스 상세보기</div>
               <div>단어 뜻 보기</div>
@@ -269,7 +308,42 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              임시
+              <div>퀴즈</div>
+              <div>마이페이지 그래프</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <div class="detail d-flex flex-column align-center">
+                <div class="title">
+                  <span>소 귀에 경제 읽기</span>
+                  <!-- <div class="cursor"></div> -->
+                </div>
+                <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
+                <span class="description">지금 바로</span>
+                <span class="description">경제 공부를 시작해보세요!</span>
+                <MainHeaderLogin class="mt-3"></MainHeaderLogin>
+                <v-btn
+                  class="px-10 mt-3"
+                  elevation="0"
+                  color="var(--main-col-1)"
+                  to="/home"
+                  dark
+                  rounded
+                  outlined
+                >
+                  로그인 없이 시작하기
+                </v-btn>
+                <div>SSAFY 8기 A509 오난쥉이조</div>
+                <div>엄희정 민동주 서지윤 손승환 신도연</div>
+              </div>
             </div>
           </div>
         </div>
@@ -355,7 +429,7 @@
 <script>
 import { Flicking } from "@egjs/vue-flicking";
 import Scene from "scenejs";
-// import { typing } from "@scenejs/effects";
+import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
 // import { shakeY } from "@scenejs/effects";
 import { AutoPlay } from "@egjs/flicking-plugins";
@@ -384,6 +458,7 @@ export default {
       plugins: [
         new AutoPlay({ duration: 1000, direction: "NEXT", stopOnHover: false }),
       ],
+      snackbarSample: true,
     };
   },
   methods: {
@@ -412,6 +487,8 @@ export default {
       // } else {
       //   pagination.classList.remove("black");
       // }
+
+      // console.log(flicking.index, index);
 
       dots[flicking.index].classList.remove("selected");
       dots[index].classList.add("selected");
@@ -498,27 +575,37 @@ export default {
           },
           3: {
             left: "57%",
-            transform: "translate(-50%, 0vh) translateY(-60%) scale(0.27)",
+            transform: "translate(-35%, 0vh) translateY(-30%) scale(0.27)",
           },
         },
         ".c5": {
           0: {
             transform: "translate(0, 0%)",
             opacity: 1,
+            "border-color": "var(--quiz-1-col-4)",
           },
           1: {
-            transform: "translate(0, -100%)",
+            transform: "translate(0, -150%)",
+            // "z-index": 0,
           },
-          2: {
-            opacity: 0,
+          1.5: {
+            transform: "translate(0, -20%)",
+            "z-index": 1,
+            "border-color": "var(--main-col-5)",
           },
         },
         ".c6": {
           0: {
             transform: "translate(0, 0%) translate2(0vw, 0vh)",
+            "border-color": "var(--quiz-1-col-6)",
           },
           1: {
             transform: "translate(0, -100%) translate2(0vw, -100vh)",
+          },
+          1.5: {
+            transform: "translate(0, 45%) translate2(0vw, 0vh)",
+            "z-index": 1,
+            "border-color": "var(--main-col-5)",
           },
         },
         // ".iphone": {
@@ -623,14 +710,14 @@ export default {
             opacity: 0,
           },
         }),
-        ".panel.slogan h2": {
-          1.7: {
-            opacity: 0,
-          },
-          2: {
-            opacity: 1,
-          },
-        },
+        // ".panel.slogan h2": {
+        //   1.7: {
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     opacity: 1,
+        //   },
+        // },
         ".c7": {
           1: {
             transform: "translate(0%, 0%)",
@@ -642,7 +729,7 @@ export default {
           },
           3: {
             top: "50%",
-            transform: "translate(-60%, -60%) scale(0.3)",
+            transform: "translate(-60%, -70%) scale(0.3)",
           },
         },
         ".next-icon": {
@@ -650,19 +737,119 @@ export default {
             opacity: 1,
             "z-index": 2080,
           },
-          2.5: {
+          3.5: {
             opacity: 1,
             "z-index": -100,
+          },
+        },
+        // "func-1": {
+        //   1: typing({
+        //     text: "다양한 경제 뉴스 읽기",
+        //     duration: 1,
+        //     delay: 0.5,
+        //     end: 11,
+        //   }),
+        // },
+        ".chip-1": {
+          0: {
+            opacity: 0,
+          },
+          1: {
+            opacity: 1,
+          },
+          2: {
+            opacity: 0,
           },
         },
       },
       {
         selector: true,
       }
-    ).setTime(0);
+    )
+      // .on("update", ({ progress }) => {
+      //   if (progress >= 2) {
+      //     new Scene(
+      //       {
+      //         "func-1": typing({
+      //           text: "다양한 경제 뉴스 읽기",
+      //           duration: 1,
+      //           delay: 0.5,
+      //           end: 11,
+      //         }),
+      //       },
+      //       {
+      //         iterationCount: "infinite",
+      //         direction: "alternate",
+      //         selector: true,
+      //       }
+      //     ).play();
+      //   }
+      // })
+      .setTime(0);
 
     this.$refs.flicking.on("move", () => {
       scene.setTime(flicking.camera.progress);
+      if (flicking.camera.progress == 1) {
+        new Scene(
+          {
+            ".func-1": typing({
+              text: "다양한 경제 뉴스 보기.",
+              duration: 1,
+              end: 13,
+            }),
+          },
+          {
+            // iterationCount: "1",
+            direction: "alternate",
+            selector: true,
+          }
+        ).play();
+      } else if (flicking.camera.progress == 2) {
+        new Scene(
+          {
+            ".underline": {
+              0: {
+                color: "rgba(0, 0, 0, 0.87)",
+                "font-family": "var(--main-font-2)",
+              },
+              1: {
+                color: "var(--main-col-1)",
+                "font-family": "var(--main-font-5)",
+              },
+            },
+            ".word": {
+              0: {
+                transform: "translate(0%, 0%) scale(0)",
+              },
+              1: {
+                transform: "translate(0%, 0%) scale(0)",
+              },
+              2.5: {
+                transform: "translate(70%, -250%) scale(1)",
+              },
+              4: {
+                transform: "translate(70%, -250%) scale(1)",
+              },
+            },
+            ".memo-sample": {
+              0: {
+                "background-color": "transparent",
+                color: "black",
+              },
+              1: {
+                "background-color": "var(--main-col-2)",
+                color: "white",
+              },
+            },
+          },
+          {
+            iterationCount: "infinite",
+            direction: "alternate",
+            selector: true,
+          }
+        ).playCSS();
+        // 매출총이익에서 판매비와 일반관리비를 차감한 금액으로, 총이익보다 판매비와 일반관리비가 클 경우에 나타난다. 영업이익과 함께 영업손실은, 기업의 정상적인 영업활동이 아닌 활동에서 발생한 수익과 비용을 포함하지 않는다. 즉 영업에 직접 관련되지 않은 영업외수익·비용, 특별수익·손실, 법인세 등은 제외된다.
+      }
     });
 
     new Scene(
@@ -780,7 +967,7 @@ export default {
             opacity: 1,
           },
           2: {
-            transform: "translateY(-100%)  scale(1)",
+            transform: "translateY(-105%)  scale(1)",
           },
           options: {
             delay: 1.3,
@@ -870,7 +1057,7 @@ export default {
         var delta = e.deltaY;
 
         if (Math.abs(delta) > 40) {
-          if (delta > 0 && flicking.index < 3) {
+          if (delta > 0 && flicking.index < 4) {
             setScrollTimer();
             flicking.next();
           } else if (delta < 0 && flicking.index > 0) {
@@ -898,10 +1085,12 @@ export default {
   /* bottom: 5%; */
   /* left: 45.5%; */
   /* left: 50%; */
+  width: 44px;
   position: absolute;
-  /* left: 48%; */
   bottom: 5%;
-  /* text-align: center; */
+  left: 50%;
+  margin-left: -22px; /* width의 50% */
+  /* margin-top: -50px; height의 50% */
   /* transform: translateY(-50%); */
   z-index: 2080;
   /* z-index: 2080; */
@@ -921,6 +1110,13 @@ export default {
   font-family: "Open Sans", sans-serif !important;
   letter-spacing: 0.5px !important;
 } */
+.word {
+  position: absolute;
+  top: -29%;
+  left: 28%;
+  /* opacity: 0; */
+  transform: "translate(0%, 0%) scale(0)";
+}
 /* 첫 페이지 서비스 로고 등장 효과 */
 .line-top {
   position: absolute;

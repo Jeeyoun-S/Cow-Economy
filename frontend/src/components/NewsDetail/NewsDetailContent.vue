@@ -43,7 +43,7 @@
     <v-snackbar v-model="memoBtn" color="var(--main-col-2)" rounded="pill">
       <div class="d-flex flex-row align-center">
         <v-icon>mdi-plus-circle</v-icon>
-        <span class="ml-2">메모에 인용문으로 추가하기</span>
+        <span class="ml-2">메모에 인용문 추가하기</span>
       </div>
       <template v-slot:action="{ attrs }">
         <v-btn
