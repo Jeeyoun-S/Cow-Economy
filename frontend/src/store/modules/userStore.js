@@ -68,7 +68,7 @@ const userStore = {
     },
     logout({ commit }) {
       localStorage.removeItem("access-token");
-      window.location.replace("/home");
+      window.location.replace("/");
       commit("SET_IS_LOGGED_IN", false);
     },
     // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
