@@ -898,9 +898,10 @@ export default {
   /* bottom: 5%; */
   /* left: 45.5%; */
   /* left: 50%; */
-  position: fixed;
-  left: 46%;
+  position: absolute;
+  /* left: 48%; */
   bottom: 5%;
+  /* text-align: center; */
   /* transform: translateY(-50%); */
   z-index: 2080;
   /* z-index: 2080; */
