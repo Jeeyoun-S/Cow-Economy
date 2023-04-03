@@ -84,15 +84,15 @@ export default {
     },
     // memolist를 정렬
     sortMemoList() {
-      if (this.sort == "최신순") {
-        this.memos_all.sort(function (a, b) {
-          return new Date(b.regtime) - new Date(a.regtime);
-        });
-      } else {
-        this.memos_all.sort(function (a, b) {
-          return a.heartNum - b.heartNum;
-        });
-      }
+      // if (this.sort == "최신순") {
+      this.memos_all.sort(function (a, b) {
+        return new Date(b.regtime) - new Date(a.regtime);
+      });
+      // } else {
+      //   this.memos_all.sort(function (a, b) {
+      //     return a.heartNum - b.heartNum;
+      //   });
+      // }
 
       // 무한스크롤 초기화하고 다시 넣기
       this.memoIndex = 0;
