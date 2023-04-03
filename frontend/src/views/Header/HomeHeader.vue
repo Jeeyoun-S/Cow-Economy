@@ -1,5 +1,5 @@
 <template>
-  <v-sheet>
+  <v-sheet id="home-header">
     <!-- 상단 헤더 -->
     <v-toolbar flat height="65px">
       <!-- 로고 (글씨) -->

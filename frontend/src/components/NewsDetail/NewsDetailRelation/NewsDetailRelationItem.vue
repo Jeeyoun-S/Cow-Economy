@@ -1,6 +1,12 @@
 <template>
   <v-sheet @click="goNewsDetail" width="100%" height="100%">
-    <v-card class="blue-shadow" width="100%" height="100%" rounded="default">
+    <v-card
+      v-if="relation.articleThumbnail != 'NaN'"
+      class="blue-shadow"
+      width="100%"
+      height="100%"
+      rounded="default"
+    >
       <!-- thumbnail -->
       <v-img
         v-if="relation.articleThumbnail != 'NaN'"
