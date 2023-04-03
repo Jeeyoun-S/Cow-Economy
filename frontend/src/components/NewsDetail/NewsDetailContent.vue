@@ -12,7 +12,7 @@
 
     <!-- 2 : title -->
     <div class="py-2">
-      <h2>{{ newsDetail.articleTitle }}</h2>
+      <span class="b-font xxxxl-font">{{ newsDetail.articleTitle }}</span>
     </div>
 
     <!-- 3 : date & original url -->

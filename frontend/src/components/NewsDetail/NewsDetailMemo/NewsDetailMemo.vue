@@ -2,7 +2,7 @@
   <v-sheet class="py-5" id="memo">
     <v-sheet class="mx-5 d-flex flex-row align-center">
       <!-- memo title -->
-      <h3 class="mr-auto">메모</h3>
+      <span class="mr-auto b-font lg-font">메모</span>
       <!-- memo sort select -->
       <v-sheet width="100px">
         <v-select

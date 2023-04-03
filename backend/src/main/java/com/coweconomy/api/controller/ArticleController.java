@@ -54,10 +54,15 @@ public class ArticleController {
         // 기사 정보 가져오기
         ArticleDetailDto articleDetailDto = articleService.getArticleDetail(articleId, userId);
 
-        // 기사 조회수 증가
-        articleService.increaseHits(articleId);
+        if (articleDetailDto != null) {
 
-        return BaseResponse.success(articleDetailDto);
+            // 기사 조회수 증가
+            articleService.increaseHits(articleId);
+
+            return BaseResponse.success(articleDetailDto);
+        } else {
+            return BaseResponse.fail();
+        }
     }
 
     @ApiOperation(value = "기사 읽음 처리", notes = "사용자 기사를 읽은 것으로 처리한다.")

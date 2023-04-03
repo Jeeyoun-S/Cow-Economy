@@ -17,6 +17,10 @@
   padding: 4px 10px 4px 15px;
   margin: 17px 0px;
 }
+#article strong {
+  font-family: var(--main-font-3);
+  font-weight: lighter;
+}
 #article #highlight-pointer {
   background-color: var(--main-col-2);
   color: white;
