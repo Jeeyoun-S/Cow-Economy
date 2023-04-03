@@ -6,19 +6,22 @@
         <div>로그인 후 이용 가능한 페이지입니다.</div>
         <div>로그인 하시겠습니까?</div>
       </div>
-      <!-- 카카오톡 로그인 버튼 -->
-      <!-- <v-flex
-          class="blue-shadow blur-on-hover d-flex flex-clumn align-center justify-center ma-3"
-        > -->
-      <!-- <a id="custom-login-btn"> -->
-      <img
-        class="blur-on-hover blue-shadow"
+      <v-btn
+        class="blur-on-hover blue-shadow mt-4"
         width="100%"
+        height="50"
         @click="kakaoLogin"
-        src="@/assets/images/login/kakao_login.png"
-      />
-      <!-- </a> -->
-      <!-- </v-flex> -->
+        color="yellow accent-4"
+        dark
+      >
+        <img
+          class="kakao-logo"
+          width="100%"
+          src="@/assets/images/login/kakao_login.png"
+          alt="kakao login"
+        />
+        <span class="kakao-text pl-2">카카오톡으로 로그인</span>
+      </v-btn>
     </div>
   </v-sheet>
 </template>
@@ -45,8 +48,11 @@ export default {
   filter: brightness(0.9);
   cursor: pointer;
 }
-img {
+img.kakao-logo {
   border-radius: 10px;
-  max-width: 300px;
+  max-width: 40px;
+}
+.kakao-text {
+  font-weight: bold;
 }
 </style>
