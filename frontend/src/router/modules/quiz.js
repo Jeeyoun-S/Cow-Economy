@@ -26,7 +26,7 @@ const quiz = [
     path: "/today-quiz",
     name: "today-quiz",
     components: {
-      header: HomeHeader,
+      // header: HomeHeader,
       default: TodayQuiz,
     },
     meta: { requiresAuth: true },
