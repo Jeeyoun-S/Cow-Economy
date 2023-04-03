@@ -12,7 +12,7 @@
           보여 드릴 데이터가 없어요
         </p>
         <p class="xl-font">
-          기사를 읽어 주세요
+          {{ this.childValue }}
         </p>
       </v-card-text>
       <v-card-actions class="d-flex justify-center">
@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  props: ["childValue"],
   methods: {
     goToNewsList() {
       this.$router.push('/news'); // '/news' 경로로 이동하는 코드를 추가합니다.

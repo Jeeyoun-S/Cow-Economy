@@ -26,7 +26,7 @@
         ></canvas>
       </div>
     </div> 
-    <InfoNoData v-else></InfoNoData>
+    <InfoNoData v-else v-bind:childValue="msg"></InfoNoData>
   </div>
 </template>
 
@@ -48,6 +48,7 @@ export default {
     return {
       chart: null,
       currentYear: null,
+      msg: "기사를 읽어주세요"
     };
   },
   computed: {

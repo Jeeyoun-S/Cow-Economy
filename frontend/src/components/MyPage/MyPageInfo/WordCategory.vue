@@ -20,7 +20,7 @@
       </div>
       <canvas ref="radarChart"></canvas>
     </div>
-    <InfoNoData v-else></InfoNoData>
+    <InfoNoData v-else v-bind:child-value="msg"></InfoNoData>
   </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
     return {
       currentYear: null,
       currentMonth: null,
+      msg: "퀴즈를 풀어주세요",
     };
   },
   computed: {
