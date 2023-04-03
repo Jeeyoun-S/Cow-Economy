@@ -45,6 +45,14 @@ public class ArticleController {
 
         return BaseResponse.success(hotArticles);
     }
+    @ApiOperation(value = "카테고리별 조회", notes = "오늘 전체 기사 중 인기 기사 10개를 조회한다.")
+    @GetMapping("/category-news")
+    public BaseResponse getCategoryArticles(HttpServletRequest request){
+        List<List<ArticleDto>> articles = articleService.getCategoryArticles();
+        System.out.println(articles.size());
+        return BaseResponse.success(articles);
+    }
+
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")
     @GetMapping("/{articleId}")
     public BaseResponse getArticleDetail(HttpServletRequest request, @PathVariable("articleId") Long articleId) {

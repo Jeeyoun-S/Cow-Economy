@@ -14,10 +14,6 @@ import java.util.stream.Collectors;
 
 @Data
 public class ArticleDetailDto extends ArticleDto {
-
-    // 기사 카테고리
-    private String articleCategory;
-
     // 기자명
     private String articleEditor;
 
@@ -44,11 +40,9 @@ public class ArticleDetailDto extends ArticleDto {
 
     public ArticleDetailDto(Article article, Long userId) {
         super(article);
-
         this.articleEditor = article.getArticleEditor();
         this.articleUrl = article.getArticleUrl();
         this.articleContent = article.getArticleContent();
-        this.articleCategory = article.getArticleCategory();
 
         List<UserArticleMemo> memoList = article.getUserArticleMemoList();
         if (userId > 0) {

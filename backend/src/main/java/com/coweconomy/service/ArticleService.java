@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +30,23 @@ public class ArticleService {
 
 
     public List<ArticleDto> getHotArticles(){
-        List<Article> todayArticles = articleRepository.findByTodayArticles();
+        List<Article> todayArticles = articleRepository.findByTodayHotArticles();
         List<ArticleDto> result = todayArticles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
         return result;
     }
+
+    public List<List<ArticleDto>> getCategoryArticles(){
+        List<Article> hot = articleRepository.findByCategoryHotArticle();
+        List<Article> recent = articleRepository.findByCategoryRecentArticle();
+        List<List<ArticleDto>> result = new ArrayList<>();
+        List<ArticleDto> hotArticles = hot.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        result.add(hotArticles);
+        result.add(recentArticles);
+        System.out.println("카테고리별 뉴스 전체길이: " + result.size());
+        return result;
+    }
+
     /**
      * @param articleId 기사 ID
      * **/

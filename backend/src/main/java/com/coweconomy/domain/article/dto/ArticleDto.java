@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 public class ArticleDto {
     // 기사 ID
     private Long articleId;
+    // 기사 카테고리
+    private String articleCategory;
     // 기사 작성일
     private String articleRegtime;
     // 언론사
@@ -18,11 +20,14 @@ public class ArticleDto {
     private String articleTitle;
     // 기사 썸네일
     private String articleThumbnail;
+    private int articleHits;
     public ArticleDto(Article article) {
         this.articleId = article.getArticleId();
+        this.articleCategory = article.getArticleCategory();
         this.articleRegtime = article.getArticleRegtime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));;
         this.articlePress = article.getArticlePress();
         this.articleTitle = article.getArticleTitle();
         this.articleThumbnail = article.getArticleThumbnail();
+        this.articleHits = article.getArticleHits();
     }
 }

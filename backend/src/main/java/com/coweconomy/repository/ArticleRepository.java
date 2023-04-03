@@ -16,5 +16,16 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     // #21# TEST용
     Article findByArticleId(Long articleId);
     @Query(value = "select * from article a where date(a.article_regtime) = date(now()) order by article_hits desc limit 10", nativeQuery = true)
-    List <Article> findByTodayArticles();
-}
+    List <Article> findByTodayHotArticles();
+
+    @Query(value="SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY a.article_category ORDER BY a.article_hits DESC, a.article_id DESC) AS RN " +
+            "FROM article a WHERE date(a.article_regtime) = date(now()) ) AS RANKING " +
+            "WHERE RANKING.RN <= 5", nativeQuery = true)
+    List <Article> findByCategoryHotArticle();
+    @Query(value="SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY a.article_category ORDER BY a.article_regtime DESC, a.article_id DESC) AS RN " +
+            "FROM article a WHERE date(a.article_regtime) = date(now()) ) AS RANKING " +
+            "WHERE RANKING.RN <= 5", nativeQuery = true)
+    List <Article> findByCategoryRecentArticle();
+
+
+;}
