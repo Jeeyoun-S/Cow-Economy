@@ -7,9 +7,8 @@
       <v-sheet width="100px">
         <v-select
           v-model="sort"
-          :items="
-            isListMine ? ['최신순', '인기순'] : ['최신순', '인기순', '레벨순']
-          "
+          :disabled="isListMine ? true : false"
+          :items="isListMine ? ['최신순'] : ['최신순', '레벨순']"
           color="var(--main-col-2)"
           dense
           rounded
