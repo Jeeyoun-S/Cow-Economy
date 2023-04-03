@@ -173,6 +173,21 @@ const newsStore = {
       commit("setSearched", payload);
     },
   },
+  getters: {
+    allNews(state) {
+      return state.news;
+    },
+    searchNews(state) {
+      if (!state.searchText) {
+        return [];
+      }
+      const searchTextLowerCase = state.searchText.toLowerCase();
+      return state.news.filter((newsItem) =>
+        newsItem.article_title.toLowerCase().includes(searchTextLowerCase) ||
+        newsItem.article_content.toLowerCase().includes(searchTextLowerCase)
+      );
+    },
+  },
 };
 
 export default newsStore;
