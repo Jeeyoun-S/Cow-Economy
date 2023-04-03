@@ -24,6 +24,7 @@ const memoStore = {
       startRange: null,
       endRange: null
     },
+    reading: false
   },
   getters: {
 
@@ -65,6 +66,9 @@ const memoStore = {
     // UPDATE_ONE_MY_MEMO(state, payload) {
     //   state.myMemoList[payload.index] = payload.newMemo;
     // }
+    UPDATE_READING(state, payload) {
+      state.reading = payload;
+    }
   },
   actions: {
     changeMemoBtn({ commit }) {
@@ -99,6 +103,9 @@ const memoStore = {
     updateNewMemo({ commit }, memo) {
       commit("UPDATE_NEW_MEMO", memo);
     },
+    updateReading({ commit }, reading) {
+      commit("UPDATE_READING", reading)
+    }
     // modifyMyMemo({ commit }, memo) {
     //   commit("UPDATE_ONE_MY_MEMO", memo);
     // }

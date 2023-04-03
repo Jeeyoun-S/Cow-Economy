@@ -121,7 +121,7 @@ export default {
               enabled: true,
             },
           },
-          cutout: "55%",
+          cutout: "60%",
           animation: {
             animateScale: true,
             animateRotate: true,

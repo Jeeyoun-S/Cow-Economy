@@ -7,7 +7,7 @@
       >
         등록된 메모가 없습니다.
       </div>
-      <div v-else>
+      <div class="d-flex flex-column" v-else>
         <v-row class="pb-3">
           <v-col cols="4"
             ><v-select
