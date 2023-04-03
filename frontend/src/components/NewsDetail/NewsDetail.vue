@@ -138,12 +138,12 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
-        console.log("지금 뉴스");
-        console.log(this.newsDetail);
+        // console.log("지금 뉴스");
+        // console.log(this.newsDetail);
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
-        console.log(this.newsRelated);
+        // console.log(this.newsRelated);
 
         // 로딩 상태 변경
         this.loading = false;
