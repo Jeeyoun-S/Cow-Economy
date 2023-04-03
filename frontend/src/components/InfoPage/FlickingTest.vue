@@ -131,14 +131,102 @@
           </div> -->
         </div>
       </div>
+      <!-- <div class="iphone">
+        <div class="head"></div>
+        <div class="container">
+          <Flicking class="panels" :options="gap10Options">
+            <div class="panel">dd</div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking>
+        </div>
+        <div class="home"></div>
+      </div> -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
-          <div class="page main">
-            <!-- <div class="wheel"></div> -->
+          <div class="page main news">
+            <div class="wheel"></div>
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              222
+              <div class="function point-b main-col-1 xxxxl-font">
+                다양하게 보는 경제 뉴스
+              </div>
+              <div class="d-flex flex-column align-center">
+                <div class="d-flex flex-wrap align-center justify-center">
+                  <v-chip
+                    class="mr-1 my-1 px-4"
+                    color="var(--graph-1-col-3)"
+                    outlined
+                    style="background-color: white !important"
+                    >인기 뉴스</v-chip
+                  >
+                  <v-chip
+                    class="mr-1 my-1 px-4"
+                    color="var(--graph-1-col-1)"
+                    outlined
+                    style="background-color: white !important"
+                    >최신 트렌드</v-chip
+                  ><v-chip
+                    class="mr-1 my-1 px-4"
+                    color="var(--graph-1-col-5)"
+                    outlined
+                    style="background-color: white !important"
+                    >최신 뉴스</v-chip
+                  >
+                </div>
+                <div class="d-flex flex-wrap align-center justify-center">
+                  <v-chip
+                    class="mr-1 my-1 px-4"
+                    color="var(--graph-1-col-4)"
+                    outlined
+                    style="background-color: white !important"
+                    >카테고리별 뉴스</v-chip
+                  >
+
+                  <v-chip
+                    class="px-4 my-1"
+                    color="var(--graph-1-col-6)"
+                    outlined
+                    style="background-color: white !important"
+                    >키워드 검색</v-chip
+                  >
+                </div>
+              </div>
+              <v-sheet height="450px"></v-sheet>
+              <div class="phone">
+                <div class="head"></div>
+                <div class="container">
+                  <Flicking
+                    class="panels"
+                    :options="gap10Options"
+                    :plugins="plugins"
+                  >
+                    <div class="panel">
+                      2월 회사채 발행 19% 증가한 20조원…주식 발행은 84% 급감
+                    </div>
+                    <div class="panel">
+                      “주식 사라” vs “아직 아냐”…증권사 애널리스트 격돌
+                    </div>
+                    <div class="panel">
+                      비트코인, 바이낸스 악재에 하락..."2만5천달러까지 떨어질
+                      수도" [코인브리핑]
+                    </div>
+                    <div class="panel">
+                      비트코인 1분기 72% 급등…2년 만에 최대 상승폭
+                    </div>
+                    <div class="panel">
+                      "예비신랑, 삼성전자에 물렸습니다"…결혼 앞둔 여성들 '멘붕'
+                      [박의명의 불개미 구조대]
+                    </div>
+                    <div class="panel">
+                      주총 온라인 생중계...주주가치 제고 나선 기업은
+                    </div>
+                  </Flicking>
+                </div>
+                <div class="home"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -150,7 +238,26 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              333
+              <v-sheet class="pa-4 sm-font" rounded="lg" width="70%">
+                남양유업은 지난 2013년 대리점 물량 밀어내기 갑질 논란, 2021년
+                불가리스 사태, 창업주 3세들의 마약 투약과 최근 한앤컴퍼니와의
+                경영권 분쟁 등의 사건으로 인해 주가가 지속적으로 하락세다.
+                실적도 부진하다.
+                <span class="underline main-col-1 b-font">영업손실</span>은
+                868억원을 내, 적자폭을 11.5% 늘렸고 당기순손실은 781억원을
+                냈다.<br /><br />행동주의 펀드가 일부 승리했지만, 주주들의
+                불만은 여전하다. 이날 주총이 끝나기 전 자리를 벗어나던 한 50대
+                주주는 “감사 선임을 제외하고는 전부 홍 회장 의도대로 결론이
+                났다”며 “불가리스 사태로 법적 처벌을 받아야 할 사람이 주주들
+                발목 잡고 자신들(경영진)의 이익만을 추구한다”고 비판하기도
+                했다.<br /><br />이어 “경영권 분쟁이 있는 상황에서 홍 회장의
+                아들인 홍진석씨가 사내이사로 선임되는 것이 말이 되느냐”고
+                덧붙였다.
+              </v-sheet>
+              <!-- <div>뉴스 상세보기</div>
+              <div>단어 뜻 보기</div>
+              <div>메모 남기기</div>
+              <div>카카오톡 공유</div> -->
             </div>
           </div>
         </div>
@@ -162,7 +269,7 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              444
+              임시
             </div>
           </div>
         </div>
@@ -212,11 +319,16 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             > -->
-      <div class="iphone">
+      <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div>
         <div class="head"></div>
         <div class="container">
           <Flicking class="panels" :options="gap10Options">
-            <div class="panel">dd</div>
+            <div class="panel"></div>
             <div class="panel"></div>
             <div class="panel"></div>
             <div class="panel"></div>
@@ -224,35 +336,18 @@
         </div>
         <div class="home"></div>
       </div>
-      <!-- </div>
-          </div>
+      <div>
+        <div class="head"></div>
+        <div class="container">
+          <Flicking class="panels" :options="gap10Options">
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking>
         </div>
+        <div class="home"></div>
       </div> -->
-
-      <div>
-        <div class="head"></div>
-        <div class="container">
-          <!-- <Flicking class="panels" :options="gap10Options">
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking> -->
-        </div>
-        <div class="home"></div>
-      </div>
-      <div>
-        <div class="head"></div>
-        <div class="container">
-          <!-- <Flicking class="panels" :options="gap10Options">
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking> -->
-        </div>
-        <div class="home"></div>
-      </div>
     </Flicking>
   </div>
 </template>
@@ -263,6 +358,7 @@ import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
 // import { shakeY } from "@scenejs/effects";
+import { AutoPlay } from "@egjs/flicking-plugins";
 
 export default {
   name: "FlickingTest",
@@ -281,10 +377,13 @@ export default {
         circular: true,
         gap: 10,
       },
-      gap5Options: {
-        circular: true,
-        gap: 10,
-      },
+      // gap5Options: {
+      //   circular: true,
+      //   gap: 10,
+      // },
+      plugins: [
+        new AutoPlay({ duration: 1000, direction: "NEXT", stopOnHover: false }),
+      ],
     };
   },
   methods: {
@@ -294,7 +393,7 @@ export default {
   },
   mounted() {
     const flicking = this.$refs.flicking;
-    console.log(flicking.panels);
+    // console.log(flicking.panels);
     const pagination = document.querySelector(".pagination");
     const dots = [].slice.call(pagination.querySelectorAll(".dot"));
 
@@ -323,16 +422,24 @@ export default {
         ".c1": {
           0: {
             right: "45%",
-            transform: "translate(0%, 0vh) translateY(0%)",
+            transform: "translate(0%, 0vh) translateY(0%) scale(1)",
           },
           1: {
             right: "60%",
-            transform: "translate(0%, 50vh) translateY(90%)",
+            transform: "translate(0%, 50vh) translateY(100%) scale(1)",
+          },
+          1.5: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(10)",
+          },
+          1.8: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(50)",
           },
           2: {
             right: "85%",
             transform:
-              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(1)",
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(100)",
           },
           3: {
             right: "10%",
@@ -414,26 +521,26 @@ export default {
             transform: "translate(0, -100%) translate2(0vw, -100vh)",
           },
         },
-        ".iphone": {
-          0: {
-            transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
-            opacity: 2,
-          },
-          1: {
-            transform:
-              "translate(-60%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
-            background: "#eee",
-          },
-          2: {
-            // transform:
-            //   "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
-            // background: "#444",
-            opacity: 0,
-          },
-          // 3: {
-          //   transform: "translateY3(-50vh) translateY2(-100%)",
-          // },
-        },
+        // ".iphone": {
+        //   0: {
+        //     transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
+        //     opacity: 2,
+        //   },
+        //   1: {
+        //     transform:
+        //       "translate(-60%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
+        //     background: "#eee",
+        //   },
+        //   2: {
+        //     transform:
+        //       "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
+        //     background: "#444",
+        //     opacity: 0,
+        //   },
+        //   3: {
+        //     transform: "translateY3(-50vh) translateY2(-100%)",
+        //   },
+        // },
         // ".imac": {
         //   1: {
         //     transform:
@@ -493,14 +600,14 @@ export default {
             transform: "translateY(-100vh)",
           },
         },
-        ".iphone .container": {
-          0.9: {
-            opacity: 0,
-          },
-          1: {
-            opacity: 1,
-          },
-        },
+        // ".iphone .container": {
+        //   0.9: {
+        //     opacity: 0,
+        //   },
+        //   1: {
+        //     opacity: 1,
+        //   },
+        // },
         ".feature": (i) => ({
           0.9: {
             transform: "translate(-50%, -50%) translate2(0px, 0px)",
@@ -531,7 +638,7 @@ export default {
           },
           2: {
             transform: "translate(0%, 0%) scale(1)",
-            top: "80%",
+            top: "70%",
           },
           3: {
             top: "50%",
@@ -673,7 +780,7 @@ export default {
             opacity: 1,
           },
           2: {
-            transform: "translateY(-115%)  scale(1)",
+            transform: "translateY(-100%)  scale(1)",
           },
           options: {
             delay: 1.3,
@@ -791,10 +898,10 @@ export default {
   /* bottom: 5%; */
   /* left: 45.5%; */
   /* left: 50%; */
-  position: absolute;
-  right: 44%;
+  position: fixed;
+  left: 46%;
   bottom: 5%;
-  transform: translateY(-50%);
+  /* transform: translateY(-50%); */
   z-index: 2080;
   /* z-index: 2080; */
 }
@@ -866,7 +973,7 @@ export default {
   transform-origin: 0px 1px;
 }
 .detail {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 .logo {
   position: absolute;
@@ -999,82 +1106,158 @@ body,
   z-index: 2050 !important;
   transform: translateY(100vh) !important;
 } */
-.iphone {
-  position: absolute !important;
-  width: 200px !important;
-  height: 400px !important;
-  border-radius: 20px !important;
-  background: #eee !important;
-  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px !important;
-  left: 50% !important;
-  top: 100% !important;
-  transform: translate(-50%, -90px) !important;
-  margin: auto !important;
-  transform-origin: bottom !important;
+.phone {
+  position: absolute;
+  width: 210px;
+  height: 360px;
+  border-radius: 20px;
+  background: #eee;
+  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
+  left: 50%;
+  transform: translate(-50%, 40px);
+  margin: auto;
+  transform-origin: bottom;
+}
+.phone .head {
+  position: absolute;
+  width: 36px;
+  height: 8px;
+  top: 22px;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  margin: auto;
+  background: #ddd;
+}
+.phone .container {
+  position: absolute;
+  width: calc(100% - 16px);
+  height: calc(100% - 100px);
+  background: transparent;
+  border: 2px solid #ddd;
+  background: #eee;
+  position: absolute;
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 10px;
+  padding: 0px;
+}
+.phone .home {
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  border: 2px solid #ccc;
+  background: #eee;
+  border-radius: 50%;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+/* .iphone {
+  position: absolute;
+  width: 200px;
+  height: 400px;
+  border-radius: 20px;
+  background: #eee;
+  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -90px);
+  margin: auto;
+  transform-origin: bottom;
 }
 .iphone .head {
-  position: absolute !important;
-  width: 36px !important;
-  height: 8px !important;
-  top: 22px !important;
-  left: 0 !important;
-  right: 0 !important;
-  border-radius: 4px !important;
-  margin: auto !important;
-  background: #ddd !important;
+  position: absolute;
+  width: 36px;
+  height: 8px;
+  top: 22px;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  margin: auto;
+  background: #ddd;
 }
 .iphone .container {
-  position: absolute !important;
-  width: calc(100% - 16px) !important;
-  height: calc(100% - 100px) !important;
-  background: transparent !important;
-  border: 2px solid #ddd !important;
-  background: #eee !important;
-  position: absolute !important;
-  border-radius: 5px !important;
-  left: 0 !important;
-  right: 0 !important;
-  margin: auto !important;
-  bottom: 52px !important;
+  position: absolute;
+  width: calc(100% - 16px);
+  height: calc(100% - 100px);
+  background: transparent;
+  border: 2px solid #ddd;
+  background: #eee;
+  position: absolute;
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 52px;
 }
 .iphone .home {
-  position: absolute !important;
-  width: 36px !important;
-  height: 36px !important;
-  border: 2px solid #ccc !important;
-  background: #eee !important;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #ccc;
+  background: #eee;
   border-radius: 50% !important;
   bottom: 6px !important;
   left: 0 !important;
   right: 0 !important;
   margin: auto !important;
-}
+} */
 
 .panels {
-  position: absolute !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 100% !important;
-  height: 150px !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 180px !important;
 }
 .panels .panel {
-  position: relative !important;
-  width: 70% !important;
-  height: 100% !important;
-  border-radius: 10px !important;
-  background: #f55 !important;
+  display: flex;
+  align-items: flex-end;
+  width: 75%;
+  height: 100%;
+  border-radius: 10px;
+  /* background: #f55; */
+  margin-right: 8px;
+  background-size: cover;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  background-image: linear-gradient(to left, red, yellow);
 }
-.panels .panel:nth-child(4n + 1) {
-  background-color: #78caff !important;
+.panels .panel:nth-child(6n + 1) {
+  /* background-color: #78caff; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/032/2023/03/28/0003213554_001_20230328074601106.jpg?type=w647");
 }
-.panels .panel:nth-child(4n + 2) {
-  background-color: #ffd99d !important;
+.panels .panel:nth-child(6n + 2) {
+  /* background-color: #ffd99d; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/018/2023/03/28/0005450748_001_20230328074402156.jpg?type=w647");
 }
-.panels .panel:nth-child(4n + 3) {
-  background-color: #ffb0b9 !important;
+.panels .panel:nth-child(6n + 3) {
+  /* background-color: #ffb0b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987742_001_20230328101902374.jpg?type=w647");
 }
-.panels .panel:nth-child(4n) {
-  background-color: #b5f6b9 !important;
+.panels .panel:nth-child(6n + 4) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/277/2023/04/02/0005239612_001_20230402082201352.jpg?type=w647");
+}
+.panels .panel:nth-child(6n + 5) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/015/2023/04/01/0004827547_001_20230401134201025.jpg?type=w647");
+}
+.panels .panel:nth-child(6n) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987841_001_20230328115902063.jpg?type=w647");
 }
 /* .ipad {
   position: absolute !important;
@@ -1208,10 +1391,10 @@ body,
   transform: translate(-50%, -50%);
 }
 .flicking .page.news .container {
-  position: absolute;
+  /* position: absolute;
   left: 50%;
   bottom: 30%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 /* .flicking .page.main h1,
 .flicking .page.main .description {
