@@ -22,9 +22,9 @@
         style="width: 90%; !important; color:black"
       >
         {{
-          relation.articleTitle.length < 28
+          relation.articleTitle.length < 30
             ? relation.articleTitle
-            : relation.articleTitle.slice(0, 28) + "···"
+            : relation.articleTitle.slice(0, 30) + "···"
         }}
       </v-card-text>
     </v-card>
