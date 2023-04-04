@@ -7,7 +7,7 @@ const api = apiInstance();
 // [GET /article/{article_id}] 기사 상세정보 조회
 async function getNewsDetail(articleId) {
   var result = null;
-  await api.get(`article/${articleId}`)
+  await api.get(`/article/${articleId}`)
     .then((res) => {
       if (res.data.statusCode == 200) {
         result = res.data.data;
@@ -68,7 +68,7 @@ async function getNewsDetail(articleId) {
 // [POST /article/{articleId}] 기사 읽음 처리
 async function updateReading(articleId) {
   var result = false;
-  await api.post(`article/${articleId}`)
+  await api.post(`/article/${articleId}`)
     .then((res) => {
       result = res.data.data;
     }).catch();

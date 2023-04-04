@@ -49,6 +49,8 @@
       <shortage-word-alert ref="shortage"></shortage-word-alert>
       <!-- iii) 로그인 안 된 상태 -->
       <today-quiz-not-user ref="notuser"></today-quiz-not-user>
+      <!-- iiii) Server Error -->
+      <server-error ref="error"></server-error>
       <!-- # for. quiz Loading 창 -->
       <the-quiz-loading
         :loading="this.$store.state.quizLoadingStatus"
@@ -63,6 +65,7 @@ import ShortageWordAlert from "./alert/ShortageWordAlert.vue";
 import TodayNotEnterAlert from "./alert/TodayNotEnterAlert.vue";
 import TodayQuizNotUser from "./alert/TodayQuizNotUser.vue";
 import TheQuizLoading from "./alert/TheQuizLoading.vue";
+import ServerError from "./alert/ServerError.vue";
 
 const quizStore = "quizStore";
 
@@ -73,6 +76,7 @@ export default {
     TodayNotEnterAlert,
     TodayQuizNotUser,
     TheQuizLoading,
+    ServerError,
   },
   data() {
     return {
@@ -132,7 +136,13 @@ export default {
         // 퀴즈를 푼 적이 없는 경우
         if (this.todayQuizFlag == true) {
           // 퀴즈 출제
-          await this.setExamQuestions(); // [@Method] Quiz 문제 출제
+          await this.setExamQuestions().then((res) => {
+            if (res == 2) {
+              this.$refs.shortage.openDialog();
+            } else if (res == 0) {
+              this.$refs.error.openDialog();
+            }
+          }); // [@Method] Quiz 문제 출제
         }
         // 퀴즈는 푼 적이 있는 경우
         else {
