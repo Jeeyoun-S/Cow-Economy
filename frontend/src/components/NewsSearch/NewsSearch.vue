@@ -11,22 +11,40 @@
 import NewsSearchBeforeSearch from '@/components/NewsSearch/NewsSearchBeforeSearch.vue';
 import NewsSearchNoResult from './NewsSearchNoResult.vue';
 import NewsSearchResult from "./NewsSearchResult.vue"
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "NewsSearch",
-  computed: {
-  ...mapState("newsStore", ["searched", "news"]),
-  ...mapGetters("newsStore", ["searchNews"]),
-  isNoResult() {
-    return this.searchNews.length === 0;
-  },
-},
   components: {
     NewsSearchBeforeSearch,
     NewsSearchNoResult,
     NewsSearchResult,
+  },
+  computed: {
+    ...mapState("newsStore", ["searched", "news"]),
+    ...mapGetters("newsStore", ["searchNews"]),
+    isNoResult() { 
+      if(this.searched===false && this.searchNews.length===0)
+        return true;
+      else
+        return false;
+    },
+  },
+  created(){
+    this.initNews();
+  },
+  methods: {
+    ...mapActions("newsStore",["init"]),
+    initNews(){
+      this.init();
+    }
   }
+  // methods: {
+  //   ...mapState("newsStore", ["setSearched"])
+  // },
+  // destroyed() {
+  //   this.setSearched(false);
+  // }
 }
 </script>
 
