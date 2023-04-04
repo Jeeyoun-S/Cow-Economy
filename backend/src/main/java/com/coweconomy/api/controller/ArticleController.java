@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +50,19 @@ public class ArticleController {
     @GetMapping("/category-news")
     public BaseResponse getCategoryArticles(HttpServletRequest request){
         List<List<ArticleDto>> articles = articleService.getCategoryArticles();
-        System.out.println(articles.size());
         return BaseResponse.success(articles);
     }
 
+    @ApiOperation(value = "키워드 검색", notes = "키워드로 기사를 조회한다.")
+    @GetMapping("/search")
+    public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestParam Long lastArticleId){
+        System.out.println(keyword+" "+lastArticleId);
+        List<ArticleDto> articles = articleService.getByKeywordArticles(keyword,lastArticleId);
+        for (ArticleDto article:articles) {
+            System.out.println("제목: " + article.getArticleTitle() );
+        }
+        return BaseResponse.success(articles);
+    }
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")
     @GetMapping("/{articleId}")
     public BaseResponse getArticleDetail(HttpServletRequest request, @PathVariable("articleId") Long articleId) {

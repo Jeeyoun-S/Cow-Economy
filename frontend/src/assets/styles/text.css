@@ -125,9 +125,12 @@
   color: white;
 }
 .main-category-news-font {
-  font-size: 12px;
-  font-family: var(--main-font-2);
-  color: black;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
 }
 .white-shadow {
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;

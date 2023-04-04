@@ -2,6 +2,8 @@ package com.coweconomy.repository;
 
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,5 +29,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "WHERE RANKING.RN <= 5", nativeQuery = true)
     List <Article> findByCategoryRecentArticle();
 
-
+    Page<Article> findByArticleIdLessThanAndArticleTitleContainsOrderByArticleIdDesc(Long lastArticleId, String Keyword, PageRequest pageRequest);
 ;}

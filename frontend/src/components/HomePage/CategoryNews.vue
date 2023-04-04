@@ -54,50 +54,25 @@
       </v-slide-group>
     </div>
 
-    <v-card
-      v-for="article in filteredArticles"
-      :key="article.articleId"
+    <news-card
+      v-for="(article,idx) in filteredArticles"
+      :key="idx"
+      :article="article"
       class="mx-auto my-2 d-flex flex-row"
       height="130"
     >
-      <!-- 이미지 -->
-      <div v-if="article.articleThumbnail">
-        <v-avatar class="custom-avatar" size="130" tile>
-          <v-img
-            v-if="article.articleThumbnail"
-            :src="article.articleThumbnail"
-          ></v-img>
-        </v-avatar>
-      </div>
-      <!-- 기사 텍스트 -->
-      <div
-        class="text-col ma-5 main-category-news-font"
-        style="flex: 1; display: flex; flex-direction: column"
-      >
-        <!-- 언론사, 날짜 -->
-        <div
-          class="main-subtitle-font"
-          style="display: flex; justify-content: space-between"
-        >
-          <p class="my-1">{{ article.articlePress }}</p>
-          <p class="my-1">{{ article.articleRegtime }}</p>
-        </div>
-        <!-- 제목 -->
-        <div class="title-row">
-          <v-card-title class="pa-0" style="font-size: 18px;">{{
-            article.articleTitle
-          }}</v-card-title>
-        </div>
-      </div>
-    </v-card>
+    </news-card>
   </v-sheet>
 </template>
 
 <script>
 import { getTodayAllNews } from "@/api/modules/article.js";
-
+import NewsCard from '@/common/component/NewsCard.vue';
 export default {
   name: "CategoryNews",
+  components: {
+    NewsCard
+  },
   data() {
     return {
       news: [],
@@ -124,8 +99,6 @@ export default {
       if (!this.selectedTag) {
         return [];
       }
-      console.log("computed");
-      console.log(this.news);
       if (this.news.length == 0) {
         // console.log(this.news.length)
         return [];
@@ -148,7 +121,6 @@ export default {
   },
   created() {
     getTodayAllNews().then((res) => {
-      console.log("create");
       this.news = res;
     });
   },

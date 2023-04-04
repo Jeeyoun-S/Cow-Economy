@@ -31,6 +31,22 @@
         @click="filterByCategory('부동산')"
         >부동산</v-tab
       >
+      <v-tab
+        :class="{ 'selected-category': selectedCategory === '글로벌 경제' }"
+        @click="filterByCategory('글로벌 경제')"
+        >글로벌경제</v-tab
+      >
+      <v-tab
+        :class="{ 'selected-category': selectedCategory === '생활경제' }"
+        @click="filterByCategory('생활경제')"
+        >생활경제</v-tab
+      >
+      <v-tab
+        :class="{ 'selected-category': selectedCategory === '경제 일반' }"
+        @click="filterByCategory('경제 일반')"
+        >경제일반</v-tab
+      >
+      
     </v-tabs>
 
     <v-sheet
@@ -49,7 +65,7 @@
         <v-select
           class="md-r-font main-col-3"
           :value="sortKey"
-          :items="['정렬', '최신순', '인기순']"
+          :items="['최신순', '인기순']"
           dense
           rounded
           outlined
@@ -58,86 +74,79 @@
         ></v-select>
       </v-sheet>
     </v-sheet>
-
-    <v-card
-      v-for="news in filteredNews"
-      :key="news.articleId"
-      class="news-item mx-7 my-2"
-      outlined
-      style="border-radius: 8px; height: 120px; overflow: hidden"
-    >
-      <div class="news-content" style="display: flex; height: 100%">
-        <!-- 이미지 -->
-        <div
-          class="image-col"
-          v-if="news.article_thumbnail"
-          style="
-            width: 100px;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-          "
-        >
-          <v-img :src="news.article_thumbnail" cover></v-img>
-        </div>
-        <!-- 기사 텍스트 -->
-        <div
-          class="text-col ma-5 main-subtitle-font"
-          style="flex: 1; display: flex; flex-direction: column"
-        >
-          <!-- 언론사, 날짜 -->
-          <div
-            class="main-subtitle-font"
-            style="display: flex; justify-content: space-between"
-          >
-            <p class="my-1">{{ news.article_press }}</p>
-            <p class="my-1">{{ news.article_regtime }}</p>
-          </div>
-          <!-- 제목 -->
-          <div class="title-row">
-            <v-card-title class="pa-0 main-title-font">{{
-              news.article_title
-            }}</v-card-title>
-          </div>
-        </div>
-      </div>
-    </v-card>
+    <v-sheet class="pa-6" color="transparent">
+      <news-card
+        v-for="(article, idx) in filteredNews"
+        :key="idx"
+        :article="article"
+        class="mx-auto my-2 d-flex flex-row"
+        height="130"
+      >
+      </news-card>
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    </v-sheet>
   </div>
 </template>
 
 <script>
+import NewsCard from "@/common/component/NewsCard.vue";
+import InfiniteLoading from "vue-infinite-loading";
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "NewsSearchResult",
+  components: {
+    NewsCard,
+    InfiniteLoading
+  },
   props: {
     newsList: Array,
   },
   data() {
     return {
+      page: 1,
+      items: this.newsList,
       selectedCategory: null,
-      sortKey: "정렬",
+      sortKey: "최신순",
     };
   },
   computed: {
+    ...mapState("newsStore", ["searchText"]),
     filteredNews() {
       let filtered = this.selectedCategory
-        ? this.newsList.filter(
-            (news) => news.article_category === this.selectedCategory
+        ? this.items.filter(
+            (news) => news.articleCategory === this.selectedCategory
           )
-        : this.newsList;
+        : this.items;
 
       if (this.sortKey === "최신순") {
         filtered.sort(
-          (a, b) => new Date(a.article_regtime) - new Date(b.article_regtime)
+          (a, b) => new Date(b.articleRegtime) - new Date(a.articleRegtime)
         );
       } else if (this.sortKey === "인기순") {
-        filtered.sort((a, b) => b.article_hits - a.article_hits);
+        filtered.sort((a, b) => b.articleHits - a.articleHits);
       }
 
       return filtered;
     },
   },
   methods: {
+    ...mapActions("newsStore", ["setNews"]),
+    async infiniteHandler($state) {
+      console.log("infiniteHandler");
+      console.log(this.items.length);
+      await this.setNews({"keyword": this.searchText, "lastArticleId": this.items[this.items.length-1].articleId});
+      if (this.newsList){
+        await setTimeout(() => {
+          this.items = this.items.concat(this.newsList);
+          for (let index = 0; index < this.items.length; index++) {
+            console.log(this.items[index].articleTitle);
+          }
+          $state.loaded();
+        }, 1000);
+      }else{
+        $state.complete();
+      }
+    },
     filterByCategory(category) {
       this.selectedCategory = category;
     },

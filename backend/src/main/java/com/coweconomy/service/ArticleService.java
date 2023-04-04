@@ -11,6 +11,8 @@ import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +49,12 @@ public class ArticleService {
         return result;
     }
 
+    public List<ArticleDto> getByKeywordArticles(String keyword, Long lastArticleId){
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<Article> articles = articleRepository.findByArticleIdLessThanAndArticleTitleContainsOrderByArticleIdDesc(lastArticleId, keyword, pageRequest);
+        List<ArticleDto> result = articles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        return result;
+    }
     /**
      * @param articleId 기사 ID
      * **/

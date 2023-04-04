@@ -18,11 +18,22 @@
           elevation="4"
           color="white"
           @click="moveNewsDetail(article.articleId)"
+          style="
+            background: linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 51.04%,
+              #000000 84.9%
+            );
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.14);
+          "
+          position="relative"
         >
           <v-img
             class="trend_img"
             rounded="lg"
             :src="article.articleThumbnail"
+            height="300"
+            position="relative"
           />
           <div
             class="text-col ma-5 main-hot-news-font"
@@ -37,7 +48,13 @@
             <!-- 언론사, 날짜 -->
             <div style="display: flex; justify-content: space-between">
               <p class="my-1">{{ article.articlePress }}</p>
-              <p class="my-1">{{ article.articleRegtime }}</p>
+              <p class="my-1">
+                {{
+                  new Intl.DateTimeFormat("kr").format(
+                    new Date(article.articleRegtime)
+                  )
+                }}
+              </p>
             </div>
             <!-- 제목 -->
             <div class="title-row">
@@ -65,10 +82,8 @@ export default {
     };
   },
   mounted() {
-    // console.log("create");
     getTodayHotNews().then((res) => {
       this.news = res;
-      // console.log(this.news);
     });
   },
   methods: {
