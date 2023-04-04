@@ -1,18 +1,24 @@
 <template>
-  <v-sheet min-height="100%" color="transparent" class="ma-0 d-flex flex-column align-center">
+  <v-sheet
+    min-height="100%"
+    color="transparent"
+    class="ma-0 d-flex flex-column align-center"
+  >
     <div class="wrap ma-7">
-      <div class="login-container d-flex flex-column align-center justify-center pt-8">
-        <h1 class="b-font">LOGIN</h1>
+      <div
+        class="login-container d-flex flex-column align-center justify-center"
+      >
+        <h1 class="login-gradient black-font x-big-large-font">LOGIN</h1>
         <!-- <div class="py-10"> -->
-          <div>로그인 후 이용 가능한 페이지입니다.</div>
-          <div>로그인 하시겠습니까?</div>
-          <div style="height: 100px"></div>
-          <img
-            class="blur-on-hover blue-shadow"
-            width="250"
-            @click="kakaoLogin"
-            src="@/assets/images/login/kakao_login.png"
-          />
+        <div class="login-gradient">로그인 후 이용 가능한 페이지입니다.</div>
+        <div class="login-gradient">로그인 하시겠습니까?</div>
+        <div style="height: 60px"></div>
+        <img
+          class="blur-on-hover blue-shadow"
+          width="250"
+          @click="kakaoLogin"
+          src="@/assets/images/login/kakao_login.png"
+        />
         <!-- </div> -->
       </div>
       <div class="wave-container">
@@ -22,8 +28,6 @@
     </div>
   </v-sheet>
 </template>
-
-
 
 <script>
 export default {
@@ -55,7 +59,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .blur-on-hover:hover {
   transform: scale(1.05);
@@ -73,16 +76,21 @@ export default {
   perspective: 1000px;
 } */
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
-  20%, 80% {
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-4px, 0, 0);
   }
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(4px, 0, 0);
   }
 }
@@ -103,20 +111,24 @@ export default {
 } */
 
 @keyframes drift {
-  100% { 
-    transform: rotate(-360deg); 
+  100% {
+    transform: rotate(-360deg);
   }
 }
 
 .wrap {
   width: 90%;
-  height: 600px;
+  height: 500px;
   position: relative;
   overflow: hidden;
   /* border-radius: 50%; */
   background: var(--main-col-1);
-  background: linear-gradient(180deg, var(--graph-1-col-4) 37%, var(--main-col-4) 81%);
-  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    180deg,
+    var(--graph-1-col-4) 37%,
+    var(--main-col-4) 81%
+  );
+  /* box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1); */
   transform: translate3d(0, 0, 0);
 }
 
@@ -131,7 +143,8 @@ export default {
   align-items: center;
 }
 
-h1.b-font, .login-container div {
+h1,
+.login-container div {
   color: white;
 }
 
@@ -143,12 +156,16 @@ h1.b-font, .login-container div {
 }
 
 .wave {
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 520px;
   position: absolute;
-  top: 60%;
-  left: -100px;
-  border-radius: 43%;
+  margin-left: -260px;
+  margin-bottom: -260px;
+  bottom: 50%;
+  left: 50%;
+  /* top: 60%; */
+  /* left: -6%; */
+  border-radius: 40%;
   animation: drift 4s infinite linear;
   background: rgba(255, 255, 255, 0.4);
 }
@@ -157,5 +174,4 @@ h1.b-font, .login-container div {
   animation: drift 8s infinite linear;
   background: rgba(255, 255, 255, 0.2);
 }
-
 </style>
