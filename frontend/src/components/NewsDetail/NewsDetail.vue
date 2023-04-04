@@ -42,6 +42,7 @@
       <NewsDetailContentWord></NewsDetailContentWord>
     </div>
     <news-detail-server-error ref="detailerror"></news-detail-server-error>
+    <scroll-top-btn v-if="!loading"></scroll-top-btn>
   </v-sheet>
 </template>
 
@@ -56,6 +57,7 @@ import { getNewsDetail, updateReading } from "@/api/modules/article.js";
 import wordStore from "@/store/modules/wordStore";
 import NewsDetailContentWord from "@/components/NewsDetail/NewsDetailContentWord.vue";
 import NewsDetailServerError from "./NewsDetailServerError.vue";
+import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
 
 export default {
   name: "NewsDetail",
@@ -78,6 +80,7 @@ export default {
     NewsDetailLoading,
     NewsDetailContentWord,
     NewsDetailServerError,
+    ScrollTopBtn,
   },
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
   watch: {
