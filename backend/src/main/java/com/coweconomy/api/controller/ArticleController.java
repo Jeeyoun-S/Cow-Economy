@@ -59,7 +59,7 @@ public class ArticleController {
         System.out.println(keyword+" "+lastArticleId);
         List<ArticleDto> articles = articleService.getByKeywordArticles(keyword,lastArticleId);
         for (ArticleDto article:articles) {
-            System.out.println("제목: " + article.getArticleTitle() );
+            System.out.println("기사: "+ article.getArticleId()+" " + article.getArticleTitle()+" "+article.getArticleRegtime() );
         }
         return BaseResponse.success(articles);
     }

@@ -36,6 +36,8 @@ const newsStore = {
       await searchNews(param,
         async({data}) => {
           commit("SET_NEWS",data.data);
+          if(data.data.lenth>0)
+            commit("SET_SEARCHED", true);
         }
       ),
       (error) => {

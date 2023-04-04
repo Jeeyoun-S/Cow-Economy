@@ -50,7 +50,7 @@ public class ArticleService {
     }
 
     public List<ArticleDto> getByKeywordArticles(String keyword, Long lastArticleId){
-        PageRequest pageRequest = PageRequest.of(0, 10);
+        PageRequest pageRequest = PageRequest.of(0, 7);
         Page<Article> articles = articleRepository.findByArticleIdLessThanAndArticleTitleContainsOrderByArticleIdDesc(lastArticleId, keyword, pageRequest);
         List<ArticleDto> result = articles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
         return result;

@@ -24,7 +24,10 @@ export default {
     ...mapState("newsStore", ["searched", "news"]),
     ...mapGetters("newsStore", ["searchNews"]),
     isNoResult() { 
-      return this.searchNews.length === 0;
+      if(this.searched===false && this.searchNews.length===0)
+        return true;
+      else
+        return false;
     },
   },
   created(){

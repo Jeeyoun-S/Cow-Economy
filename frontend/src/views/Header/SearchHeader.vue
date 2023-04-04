@@ -32,12 +32,13 @@ export default {
     return { keyword: "", page: "1" };
   },
   methods: {
-    ...mapActions("newsStore", ["setSearchText", "setSearched", "setNews"]),
+    ...mapActions("newsStore", ["init", "setSearchText", "setSearched", "setNews"]),
     // onInput(value) {
     //   this.setSearchText(value);
     //   this.setSearched(true);
     // },
     async searchKeyword() {
+      await this.init();
       this.setSearchText(this.keyword);
       await this.setNews({"keyword": this.keyword, "lastArticleId": Number.MAX_SAFE_INTEGER + 1});
       this.setSearched(true);

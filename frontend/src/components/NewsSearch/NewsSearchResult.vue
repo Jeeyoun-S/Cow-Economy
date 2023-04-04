@@ -103,7 +103,7 @@ export default {
   },
   data() {
     return {
-      page: 1,
+      page: this.newsList[this.newsList.length-1].articleId,
       items: this.newsList,
       selectedCategory: null,
       sortKey: "최신순",
@@ -112,6 +112,7 @@ export default {
   computed: {
     ...mapState("newsStore", ["searchText"]),
     filteredNews() {
+      // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
       let filtered = this.selectedCategory
         ? this.items.filter(
             (news) => news.articleCategory === this.selectedCategory
@@ -125,7 +126,6 @@ export default {
       } else if (this.sortKey === "인기순") {
         filtered.sort((a, b) => b.articleHits - a.articleHits);
       }
-
       return filtered;
     },
   },
@@ -133,14 +133,15 @@ export default {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
       console.log("infiniteHandler");
-      console.log(this.items.length);
-      await this.setNews({"keyword": this.searchText, "lastArticleId": this.items[this.items.length-1].articleId});
-      if (this.newsList){
+      console.log("마지막 기사: "+this.page);
+      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
+      if (this.newsList.length>0){
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
           for (let index = 0; index < this.items.length; index++) {
             console.log(this.items[index].articleTitle);
           }
+          this.page = this.items[this.items.length-1].articleId;
           $state.loaded();
         }, 1000);
       }else{
