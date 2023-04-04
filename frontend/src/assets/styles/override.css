@@ -93,5 +93,5 @@
   color: var(--main-col-1) !important;
 }
 #news-content .v-btn:not(.v-btn--round).v-size--small {
-  min-width: 45px;
+  min-width: 40px;
 }

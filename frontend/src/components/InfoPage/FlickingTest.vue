@@ -17,6 +17,7 @@
       <v-icon x-large>mdi-chevron-down</v-icon>
     </v-btn>
     <img
+      style="cursor: pointer"
       @click="moveToHome()"
       class="top-logo"
       src="@/assets/images/logo/logo.png"
@@ -161,7 +162,7 @@
                 다양한 경제 뉴스 보기
               </div> -->
               <div
-                class="func-1 point-b main-col-1 xxxxl-font"
+                class="func-1 point-md main-col-1 xxxxl-font"
                 style="height: 40px"
               ></div>
               <div class="d-flex flex-column align-center">
@@ -205,7 +206,7 @@
                   >
                 </div>
               </div>
-              <v-sheet height="450px"></v-sheet>
+              <v-sheet height="60vh"></v-sheet>
               <div class="phone">
                 <div class="head"></div>
                 <div class="container">
@@ -314,8 +315,16 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <div>퀴즈</div>
-              <div>마이페이지 그래프</div>
+              <v-sheet>
+                <span class="point-md xxxxl-font">오늘의 Quiz</span>
+                <v-sheet>읽었던 기사 속 단어를 맞추는 퀴즈</v-sheet>
+                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+              </v-sheet>
+              <v-sheet>
+                <span class="point-md xxxxl-font">나의 활동 그래프</span>
+              </v-sheet>
             </div>
           </div>
         </div>
@@ -327,14 +336,16 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <div class="detail d-flex flex-column align-center">
-                <div class="title">
-                  <span>소 귀에 경제 읽기</span>
-                  <!-- <div class="cursor"></div> -->
-                </div>
+              <div class="d-flex flex-column align-center">
+                <!-- <div class="title"> -->
+                <!-- <span>소 귀에 경제 읽기</span> -->
+                <!-- <div class="cursor"></div> -->
+                <!-- </div> -->
                 <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
-                <span class="description">지금 바로</span>
-                <span class="description">경제 공부를 시작해보세요!</span>
+                <span class="b-font xxl-font main-col-2">지금 바로</span>
+                <span class="b-font xxl-font main-col-2"
+                  >경제 공부를 시작해보세요!</span
+                >
                 <MainHeaderLogin class="mt-3"></MainHeaderLogin>
                 <v-btn
                   class="px-10 mt-3"
@@ -347,8 +358,8 @@
                 >
                   로그인 없이 시작하기
                 </v-btn>
-                <div>SSAFY 8기 A509 오난쥉이조</div>
-                <div>엄희정 민동주 서지윤 손승환 신도연</div>
+                <div class="logo-th">SSAFY 8기 A509 오난쥉이조</div>
+                <div class="logo-th">엄희정 민동주 서지윤 손승환 신도연</div>
               </div>
             </div>
           </div>
@@ -530,7 +541,7 @@ export default {
           3: {
             right: "10%",
             transform:
-              "translateX(7vw) translate(50%, 8vh) translateY(50%) scale(0)",
+              "translateX(7vw) translate(40%, 68vh) translateY(50%) scale(0.5)",
           },
         },
         ".c2": {
@@ -584,7 +595,7 @@ export default {
           },
           3: {
             left: "57%",
-            transform: "translate(-35%, 0vh) translateY(-30%) scale(0.27)",
+            transform: "translate(-35%, 0vh) translateY(10%) scale(0.27)",
           },
         },
         ".c5": {
@@ -596,25 +607,28 @@ export default {
           1: {
             transform: "translate(0, -150%)",
             // "z-index": 0,
+            "border-color": "var(--main-col-5)",
           },
           1.5: {
             transform: "translate(0, -20%)",
             "z-index": 1,
-            "border-color": "var(--main-col-5)",
           },
         },
         ".c6": {
           0: {
             transform: "translate(0, 0%) translate2(0vw, 0vh)",
             "border-color": "var(--quiz-1-col-6)",
+            opacity: 1,
           },
           1: {
-            transform: "translate(0, -100%) translate2(0vw, -100vh)",
+            // transform: "translate(0, -100%) translate2(0vw, -100vh)",
+            opacity: 0,
+            "border-color": "var(--main-col-5)",
           },
           1.5: {
             transform: "translate(0, 45%) translate2(0vw, 0vh)",
+            opacity: 1,
             "z-index": 1,
-            "border-color": "var(--main-col-5)",
           },
         },
         // ".iphone": {
@@ -737,9 +751,10 @@ export default {
             top: "70%",
           },
           3: {
-            top: "50%",
-            transform: "translate(-60%, -70%) scale(0.3)",
+            top: "40%",
+            transform: "translate(-65%, -70%) scale(0.3)",
           },
+          4: {},
         },
         ".next-icon": {
           0: {
@@ -1333,11 +1348,12 @@ body,
 } */
 .phone {
   position: absolute;
-  width: 210px;
-  height: 360px;
+  width: 60vw;
+  max-width: 250px;
+  height: 50vh;
   border-radius: 20px;
-  background: #eee;
-  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
+  background: white;
+  box-shadow: 0px 0px 8px 0px rgba(100, 100, 100, 0.4);
   left: 50%;
   transform: translate(-50%, 40px);
   margin: auto;
@@ -1360,7 +1376,7 @@ body,
   height: calc(100% - 100px);
   background: transparent;
   border: 2px solid #ddd;
-  background: #eee;
+  background: white;
   position: absolute;
   border-radius: 5px;
   left: 0;
@@ -1374,7 +1390,7 @@ body,
   width: 33px;
   height: 33px;
   border: 2px solid #ccc;
-  background: #eee;
+  background: white;
   border-radius: 50%;
   bottom: 6px;
   left: 0;

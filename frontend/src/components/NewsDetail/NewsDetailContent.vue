@@ -17,7 +17,9 @@
 
     <!-- 3 : date & original url -->
     <div class="py-2 d-flex align-center justify-space-between">
-      <span class="sm-font">{{ newsDetail.articleRegtime }}</span>
+      <span class="xsm-font">{{
+        newsDetail.articleRegtime.substr(0, 16)
+      }}</span>
       <div class="d-flex align-center">
         <v-btn-toggle
           v-model="toggle_exclusive"
