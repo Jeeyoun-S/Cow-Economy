@@ -82,3 +82,16 @@
   height: 3px !important;
   color: var(--main-col-1) !important;
 }
+#list-select .v-text-field fieldset,
+.v-text-field .v-input__control {
+  color: var(--main-col-1) !important;
+}
+#list-select .theme--light.v-icon {
+  color: var(--main-col-1) !important;
+}
+#list-select .theme--light.v-select .v-select__selections {
+  color: var(--main-col-1) !important;
+}
+#news-content .v-btn:not(.v-btn--round).v-size--small {
+  min-width: 45px;
+}

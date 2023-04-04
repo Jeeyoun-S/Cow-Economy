@@ -1,62 +1,66 @@
 <template>
-  <div class="pa-5">
-    <v-sheet class="pa-2" rounded="lg" color="transparent">
-      <div class="pb-2 d-flex flex-row justify-space-between">
-        <div class="px-2 d-flex flex-column narrow white-col-1">
-          <span class="xxl-font blue-gredient point-b">오늘의</span>
-          <span class="point-b blue-gredient x-big-large-font"
-            >경제 용어 Quiz</span
-          >
-        </div>
-        <img
-          class="mr-2"
-          height="50"
-          :src="require('@/assets/images/emoji/pencil.png')"
-        />
-      </div>
-      <!-- <v-sheet class="my-1" height="2" color="var(--main-col-2)"></v-sheet> -->
-      <div class="my-3 d-flex flex-row justify-space-between flex-wrap">
-        <v-card
-          v-for="(info, index) in infos"
-          :key="index"
-          width="47%"
-          height="180"
-          class="graph-1-shadow point-th mb-4 pa-3 d-flex flex-column justify-center align-center"
-          rounded="xl"
+  <v-sheet class="pa-7" color="transparent" height="100%">
+    <!-- <v-sheet class="pa-2" rounded="lg" color="transparent"> -->
+    <div class="pb-2 d-flex flex-row justify-space-between">
+      <div class="px-2 d-flex flex-column narrow white-col-1">
+        <span class="xxl-font blue-gredient point-b">오늘의</span>
+        <span class="point-b blue-gredient x-big-large-font"
+          >경제 용어 Quiz</span
         >
-          <img class="mb-5" :src="info.image" height="60" />
-          <div class="sm-font">{{ info.message[0] }}</div>
-          <div class="sm-font">{{ info.message[1] }}</div>
-          <div class="sm-font" v-if="info.message[2]">
-            {{ info.message[2] }}
-          </div>
-        </v-card>
       </div>
-      <v-btn
-        class="gradient-2"
-        rounded
-        block
-        dark
-        color="var(--main-col-2)"
-        @click="moveQuiz()"
-        large
-        >시작하기</v-btn
+      <img
+        class="mr-2"
+        height="50"
+        :src="require('@/assets/images/emoji/pencil.png')"
+      />
+    </div>
+    <!-- <v-sheet class="my-1" height="2" color="var(--main-col-2)"></v-sheet> -->
+    <v-sheet
+      height="70%"
+      color="transparent"
+      class="my-3 d-flex flex-row justify-space-between flex-wrap"
+    >
+      <v-card
+        v-for="(info, index) in infos"
+        :key="index"
+        width="47%"
+        height="45%"
+        class="graph-1-shadow point-th mb-4 pa-3 d-flex flex-column justify-center align-center"
+        rounded="xl"
       >
-      <!-- 오늘의 Quiz 진입불가 Alert -->
-      <!-- i) 하루에 한 번 기회 소진 -->
-      <today-not-enter-alert ref="todaynot"></today-not-enter-alert>
-      <!-- ii) Quiz 출제를 위한 경제단어 부족 -->
-      <shortage-word-alert ref="shortage"></shortage-word-alert>
-      <!-- iii) 로그인 안 된 상태 -->
-      <today-quiz-not-user ref="notuser"></today-quiz-not-user>
-      <!-- iiii) Server Error -->
-      <server-error ref="error"></server-error>
-      <!-- # for. quiz Loading 창 -->
-      <the-quiz-loading
-        :loading="this.$store.state.quizLoadingStatus"
-      ></the-quiz-loading>
+        <img class="mb-5" :src="info.image" height="60" />
+        <div class="sm-font">{{ info.message[0] }}</div>
+        <div class="sm-font">{{ info.message[1] }}</div>
+        <div class="sm-font" v-if="info.message[2]">
+          {{ info.message[2] }}
+        </div>
+      </v-card>
     </v-sheet>
-  </div>
+    <v-btn
+      class="gradient-2"
+      rounded
+      block
+      dark
+      color="var(--main-col-2)"
+      @click="moveQuiz()"
+      large
+      >시작하기</v-btn
+    >
+    <!-- 오늘의 Quiz 진입불가 Alert -->
+    <!-- i) 하루에 한 번 기회 소진 -->
+    <today-not-enter-alert ref="todaynot"></today-not-enter-alert>
+    <!-- ii) Quiz 출제를 위한 경제단어 부족 -->
+    <shortage-word-alert ref="shortage"></shortage-word-alert>
+    <!-- iii) 로그인 안 된 상태 -->
+    <today-quiz-not-user ref="notuser"></today-quiz-not-user>
+    <!-- iiii) Server Error -->
+    <server-error ref="error"></server-error>
+    <!-- # for. quiz Loading 창 -->
+    <the-quiz-loading
+      :loading="this.$store.state.quizLoadingStatus"
+    ></the-quiz-loading>
+    <!-- </v-sheet> -->
+  </v-sheet>
 </template>
 
 <script>

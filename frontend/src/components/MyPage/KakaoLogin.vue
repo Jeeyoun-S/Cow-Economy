@@ -1,10 +1,10 @@
 <template>
   <v-sheet
-    min-height="100%"
+    height="100%"
     color="transparent"
     class="ma-0 d-flex flex-column align-center"
   >
-    <div class="wrap ma-7">
+    <div class="wrap ma-5">
       <div
         class="login-container d-flex flex-column align-center justify-center"
       >
@@ -12,9 +12,9 @@
         <!-- <div class="py-10"> -->
         <div class="login-gradient">로그인 후 이용 가능한 페이지입니다.</div>
         <div class="login-gradient">로그인 하시겠습니까?</div>
-        <div style="height: 60px"></div>
+        <div style="height: 50px"></div>
         <img
-          class="blur-on-hover blue-shadow"
+          class="blur-on-hover img-white"
           width="250"
           @click="kakaoLogin"
           src="@/assets/images/login/kakao_login.png"
@@ -118,7 +118,7 @@ export default {
 
 .wrap {
   width: 90%;
-  height: 500px;
+  height: 100%;
   position: relative;
   overflow: hidden;
   /* border-radius: 50%; */

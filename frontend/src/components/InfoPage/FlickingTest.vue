@@ -16,6 +16,11 @@
     >
       <v-icon x-large>mdi-chevron-down</v-icon>
     </v-btn>
+    <img
+      @click="moveToHome()"
+      class="top-logo"
+      src="@/assets/images/logo/logo.png"
+    />
     <div class="background">
       <div class="shapes">
         <div class="circle c1"></div>
@@ -49,6 +54,7 @@
                 <div class="circle circle1"></div>
                 <div class="circle circle2"></div>
               </div>
+
               <img
                 class="logo"
                 height="120px"
@@ -465,6 +471,9 @@ export default {
     nextFlicking() {
       this.$refs.flicking.next();
     },
+    moveToHome() {
+      this.$router.push("/home");
+    },
   },
   mounted() {
     const flicking = this.$refs.flicking;
@@ -740,6 +749,14 @@ export default {
           3.5: {
             opacity: 1,
             "z-index": -100,
+          },
+        },
+        ".top-logo": {
+          0: {
+            opacity: 0,
+          },
+          0.8: {
+            opacity: 1,
           },
         },
         // "func-1": {
@@ -1079,6 +1096,17 @@ export default {
 /* 첫 페이지 서비스 제목 */
 .title {
   margin: 10px;
+}
+.top-logo {
+  position: absolute;
+  margin: 12px;
+  height: 42px;
+  /* bottom: 5%;
+  left: 50%; */
+  /* margin-left: -22px; width의 50% */
+  /* margin-top: -50px; height의 50% */
+  /* transform: translateY(-50%); */
+  z-index: 2080;
 }
 .next-icon {
   /* position: fixed; */

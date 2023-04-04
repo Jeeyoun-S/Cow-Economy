@@ -1,8 +1,9 @@
 <template>
-  <v-sheet id="news-list">
+  <v-sheet id="news-list" min-height="100%">
     <!-- sort select -->
     <v-sheet
       class="mx-5 pt-4 pb-2 d-flex flex-row justify-space-between align-center"
+      id="list-select"
     >
       <!-- i) news sort select -->
       <v-sheet width="37%">
