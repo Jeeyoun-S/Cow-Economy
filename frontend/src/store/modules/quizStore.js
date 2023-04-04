@@ -4,7 +4,8 @@ import {
   setQuizResult,
   sendMessageWord,
 } from "@/api/quiz";
-import { encrypt } from "@/store/js/crypto.js";
+// import { encrypt } from "@/store/js/crypto.js";
+import router from "@/router/index.js";
 
 import store from "@/store/index.js";
 
@@ -79,54 +80,59 @@ const quizStore = {
     },
     // [@Method] Quiz 문제 출제
     async setExamQuestions({ commit, state }) {
-      // # Back-end에서 현재 로그인 한 userId 사용함
-      const info = {
-        userId: 1,
-      };
+      var result = 0;
 
+      // Quiz 문제 가져오기
       await getQuizWords(
-        info,
         async ({ data }) => {
           // i) 성공
+          let simiIndex = 0; // 4지선다 set 시 사용 (similarityWord index 번호)
+
           if (data.statusCode == 200) {
-            // Quiz 제작
+            // 로딩 모달창 열기
+            store.commit("QUIZ_LOADING_STATUS", true);
+
+            // console.log("# 문제 가져오기 #", data.data);
             const quiz = []; // Quiz
             const articleList = []; // Quiz 출제 시 선정한 기사 ID
 
-            // 1) 가져온 경제용어로 문제 만들기
+            // 1) [호출] chatGPT로 유사한 단어 3개 가져오기 (for. 4지선다)
+            //    - 성공 시 similarityWord 에 유사 경제용어 저장
+            await store.dispatch("quizStore/excuteSendMessage", data.data, {
+              root: true,
+            });
+
+            // 2) Quiz 제작
             for (const word of data.data) {
               const quizItem = new Object();
               const answers = new Object();
               const randomNum = Math.floor(Math.random() * (102 - 98) + 97); // 97-100 중 Random 숫자 뽑기 (for. 정답 자리), [a:97, b:98, c:99, d:100]
-              // i) 문제, 정답 번호 setting
-              // ! 문제 설명에 답 제거
+
+              // i) 문제 & 정답 번호 set
+              // - 문제 저장 시 문제 있는 경제용어(답) [ ]으로 변경
               quizItem.question = word.economyWord.wordExpl.replaceAll(
                 word.economyWord.word,
                 "[ ]"
               );
-              quizItem.correctAnswer = encrypt(
-                String.fromCharCode(randomNum),
-                process.env.VUE_APP_CRYPT_KEY
-              );
-              //
-              // ii) 4지선다
-              // - [호출] chatGPT로 유사한 단어 3개 가져오기
-              await store.dispatch(
-                "quizStore/excuteSendMessage",
-                word.economyWord.word,
-                {
-                  root: true,
-                }
-              );
-              // - 4지선다 setting
-              let cnt = 0;
+              // - 문제 답 저장 시 user가 봐도 모르도록 암호화
+              // quizItem.correctAnswer = encrypt(
+              //   String.fromCharCode(randomNum),
+              //   process.env.VUE_APP_CRYPT_KEY
+              // );
+              quizItem.correctAnswer = randomNum;
+
+              // ii) 4지선다 set
               for (let i = 97; i <= 100; i++) {
+                // 정답 (개발 중엔 + 표시를 붙여 정답을 알아볼 수 있도록 함)
                 if (i == randomNum) {
                   answers[String.fromCharCode(randomNum)] =
-                    word.economyWord.word + "+";
-                } else {
-                  answers[String.fromCharCode(i)] = state.similarityWord[cnt];
-                  cnt++;
+                    word.economyWord.word;
+                }
+                // 정답 외 단어
+                else {
+                  answers[String.fromCharCode(i)] =
+                    state.similarityWord[simiIndex];
+                  simiIndex++;
                 }
               }
               quizItem.answers = answers;
@@ -134,46 +140,50 @@ const quizStore = {
 
               articleList.push(word.articleId);
             }
-            // console.log("#21# quiz 확인: ", quiz);
-            // console.log("#21# articleList 확인: ", articleList);
+
+            // 3) 완성한 Quiz 저장
             await commit("SET_QUESTIONS", quiz);
             await commit("SET_SELECT_QUIZ_ARTICLE", articleList);
             // 이후 TodayQuizInfo 페이지에서 TodayQuiz 페이지로 이동
+            router.push("/today-quiz");
+
+            // console.log("# index", state.index)
+            // console.log("# questions", state.questions)
+            result = 1;
           }
           // ii) 사용자가 읽은 기사 내 경제 단어 7개 미만
           else {
             await commit("SET_QUESTIONS", [0]);
             await commit("SET_SELECT_QUIZ_ARTICLE", [0]);
+            result = 2;
           }
         },
         (error) => {
           console.log(error);
         }
       );
+      return await Promise.resolve(result);
     },
     // [@Method] chatGPT에게 해당 경제 단어와 유사한 단어 3개 조회 질문
-    async excuteSendMessage({ commit }, word) {
+    async excuteSendMessage({ commit }, words) {
       // # for. quiz Loading 창
-      store.commit("QUIZ_LOADING_STATUS", true);
+      // store.commit("QUIZ_LOADING_STATUS", true);
 
-      const message =
-        "경제용어 " +
-        word +
-        "와 유사한 경제용어 3개 설명없이 단어만 1, 2, 3으로 출력해줘";
+      // Quiz로 출제할 경제용어 List
+      const quizWord = [];
+      for (const word of words) {
+        quizWord.push(word.economyWord.word);
+      }
+      const info = {
+        wordList: quizWord,
+      };
 
       await sendMessageWord(
-        message,
+        info,
         async ({ data }) => {
-          // console.log("#21# chatGPT 질문 실행결과: ", data.data);
-          // 경제단어 추출 [정규식 사용]
-          const regex = /(?:\d\. )(.+?)(?=\(|\n|$)/g;
-          var similarityWord = [];
-          let match;
-          while ((match = regex.exec(data.data)) !== null) {
-            similarityWord.push(match[1]);
-          }
-          // 조회한 유사 경제단어 SET
-          commit("SET_SIMILARITY_WORD", similarityWord);
+          // console.log(data.data);
+          // S) 경제용어와 유사한 단어 similarityWord에 저장
+          commit("SET_SIMILARITY_WORD", data.data);
         },
         (error) => {
           console.log(error);
@@ -198,9 +208,9 @@ const quizStore = {
       }
 
       // [@Method] Quiz 결과 저장 & 성공 시 경험치 획득
-      // # Back-end에서 현재 로그인한 userId로 사용함
+      // # userId는 Back-end에서 현재 로그인한 userId로 사용함
       const info = {
-        userId: 1,
+        userId: 0,
         isPassFlag: state.isPass,
         selectArticleId: state.selectQuizArticle,
       };

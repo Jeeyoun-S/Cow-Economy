@@ -1,33 +1,54 @@
 <template>
-  <div class="px-5">
+  <div class="px-1">
     <div class="d-flex align-center">
-      <span class="xxl-font">읽은 기사 수</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
-      </div>
-      <span class="xxl-font th-font">01</span>
+      <span class="xl-font">읽은 기사 수</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">01</span>
     </div>
-    <div class="th-font">최근 6개월 동안 읽은 기사 수를 보여드려요.</div>
-    <div>
+    <div class="mb-5 th-font sm-font">
+      최근 6개월 동안 읽은 기사 수를 보여드려요.
+    </div>
+    <div v-if="hasData">
       <canvas ref="barChart" height="300"></canvas>
     </div>
+    <InfoNoData v-else v-bind:childValue="msg"></InfoNoData>
   </div>
 </template>
 
 <script>
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 import { mapGetters, mapState } from "vuex";
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue"
 
 export default {
+  components: {
+    InfoNoData,
+  },
+  data: function() {
+    return {
+      msg: "기사를 읽어주세요",
+      msg2: "최근 6개월간 읽은 기사가 없어요"
+    }
+  },
   computed: {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
     ...mapState("userStore", ["articleList"]),
+    hasData() {
+      const wordCategoryList = this.articleList.articleCntList;
+      "기사를 읽어주세요"
+      return wordCategoryList.some(value => value[1] !== 0);
+    },
   },
   mounted() {
-    this.createChart();
+    if (this.hasData) {
+      this.createChart();
+    }
   },
   // watch: {
   //   // Watch for changes in readCategoryList
@@ -122,6 +143,7 @@ export default {
                 bottomRight: 15,
               },
               borderWidth: 0,
+              borderSkipped: false,
               categoryPercentage: 1,
               barPercentage: 1,
             },
@@ -132,6 +154,18 @@ export default {
           plugins: {
             legend: {
               display: false,
+            },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function (context) {
+                  if (context.datasetIndex === 0) {
+                    return context.dataset.label + ": " + context.parsed.y;
+                  } else if (context.datasetIndex === 1) {
+                    return null;
+                  }
+                },
+              },
             },
           },
           scales: {
@@ -154,7 +188,7 @@ export default {
               stacked: true,
               ticks: {
                 font: {
-                  size: 20,
+                  size: 16,
                 },
                 color: "rgba(0, 0, 0, 0.8)",
                 padding: 10,

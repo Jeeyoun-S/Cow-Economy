@@ -1,6 +1,7 @@
 import { getToken } from "@/api/user";
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "@/router/index.js";
 
 Vue.use(Vuex);
 
@@ -66,14 +67,13 @@ const userStore = {
         }
       );
     },
-    logout({ commit }) {
+    async logout({ commit }) {
       localStorage.removeItem("access-token");
-      window.location.replace("/home");
-      commit("SET_IS_LOGGED_IN", false);
+      await commit("SET_IS_LOGGED_IN", false);
+      await router.replace("/");
     },
     // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
     setUserGraphData({ commit }, articleList) {
-      console.log("#21# 그래프 data 확인: ", articleList);
       commit("SET_ARTICLE_LIST", articleList);
     },
   },

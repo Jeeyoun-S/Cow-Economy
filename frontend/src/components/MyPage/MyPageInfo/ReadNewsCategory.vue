@@ -1,29 +1,34 @@
 <template>
-  <div class="pa-5">
+  <div class="px-1 mt-6">
     <div class="d-flex align-center">
-      <span class="xxl-font">읽은 기사의 카테고리</span>
-      <div class="horizontal-divider">
-        <v-divider class="mx-2"></v-divider>
+      <span class="xl-font">읽은 기사의 카테고리</span>
+      <!-- <div class="horizontal-divider"> -->
+      <v-divider class="mx-2"></v-divider>
+      <!-- </div> -->
+      <span class="xl-font th-font">02</span>
+    </div>
+    <div class="mb-3 th-font sm-font">
+      지금까지 읽은 기사의 카테고리 비율을 보여드려요.
+    </div>
+    <div v-if="hasData">
+      <div
+        class="d-flex justify-space-between align-center py-2 px-3 xxxl-font"
+      >
+        <div x-large icon></div>
+        <span class="xxl-font" style="color: #757575"
+          >{{ this.currentYear }}년</span
+        >
+        <div x-large icon></div>
       </div>
-      <span class="xxl-font th-font">02</span>
+      <div class="d-flex justify-center">
+        <canvas
+          class="chartjs-render-monitor"
+          ref="barChart"
+          height="350"
+        ></canvas>
+      </div>
     </div>
-    <div class="th-font">지금까지 읽은 기사의 카테고리 비율을 보여드려요.</div>
-    <div class="d-flex justify-space-between align-center pt-7 px-3 xxxl-font">
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-left</v-icon>
-      </v-btn>
-      <span style="color: #757575">2023년</span>
-      <v-btn x-large icon>
-        <v-icon x-large style="color: #bdbdbd">mdi-chevron-right</v-icon>
-      </v-btn>
-    </div>
-    <div class="d-flex justify-center">
-      <canvas
-        class="chartjs-render-monitor"
-        ref="barChart"
-        height="400"
-      ></canvas>
-    </div>
+    <InfoNoData v-else v-bind:childValue="msg"></InfoNoData>
   </div>
 </template>
 
@@ -31,18 +36,37 @@
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
+Chart.defaults.font.family = "MinSans-Regular";
 
 import { mapState } from "vuex";
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue";
 
 export default {
+  components: {
+    InfoNoData,
+  },
   data: function () {
     return {
       chart: null,
+      currentYear: null,
+      msg: "기사를 읽어주세요",
     };
   },
-  computed: mapState("userStore", ["articleList"]),
+  computed: {
+    ...mapState("userStore", ["articleList"]),
+    hasData() {
+      const wordCategoryList = this.articleList.readCategoryList;
+      // console.log(wordCategoryList)
+      return wordCategoryList.some((value) => value[1] !== 0);
+    },
+  },
+  created() {
+    this.currentYear = new Date().getFullYear();
+  },
   mounted() {
-    // this.drawChart();
+    if (this.hasData) {
+      this.drawChart();
+    }
   },
   watch: {
     // Watch for changes in readCategoryList
@@ -77,13 +101,13 @@ export default {
               data: data,
               backgroundColor: [
                 "#cdd2fd",
-                "#9ba6fa",
-                "#6979f8",
-                "#3c4bbf",
-                "#23319d",
-                "#182271",
+                "#a7b0f8",
+                "#8996f9",
+                "#5764c9",
+                "#3846b3",
+                "#2c378b",
+                "#040f65",
                 "#000c64",
-                "#000000",
               ],
               borderWidth: 1,
             },
@@ -104,11 +128,12 @@ export default {
                 useBorderRadius: true,
                 borderRadius: "3",
                 font: {
-                  size: 16,
-                  family: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--main-font-3")
-                    .trim(),
+                  size: 14,
+                  // family: getComputedStyle(document.documentElement)
+                  //   .getPropertyValue("--main-font-1")
+                  //   .trim(),
                 },
+                textAlign: "left",
               },
             },
             tooltip: {

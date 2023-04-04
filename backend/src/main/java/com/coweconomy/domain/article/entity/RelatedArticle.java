@@ -31,3 +31,4 @@ public class RelatedArticle {
     private String subArticleId;
 
 }
+

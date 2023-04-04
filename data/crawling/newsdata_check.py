@@ -19,7 +19,7 @@ from pyspark.sql.session import SparkSession
 import os
 
 def writeLastArticleId(article) :
-    f = open("/home/j8a509/crawling/test.txt", 'w')
+    f = open("/home/ubuntu/data/crawling/test.txt", 'w')
     print(article)
     f.write(article)
     f.close()
@@ -29,8 +29,8 @@ spark = SparkSession(sc)
 # hdfs 뉴스 가져오기(마지막으로 처리한 다음 기사부터 워드 매핑 작업)
 file_date = dt.datetime.today().astimezone(timezone('Asia/Seoul')).strftime("%Y%m%d") # 오늘 날짜 ex) 20230320
 
-server = "hdfs://cluster.p.ssafy.io:9000" # 서버
-path = "/user/j8a509/news/daily-news/" # 서버
+server = "hdfs://localhost:9000" # 서버
+path = "/news/daily-news/" # 서버
 hdfs_path = server + path # hdfs 폴더 저장 경로
 today_path = hdfs_path+file_date+'.csv' # 오늘 날짜 csv 파일 경로
 toady_csv = spark.read.option("multiLine",True).option("header", True).option("sep", ",").csv(today_path)
@@ -38,4 +38,4 @@ toady_csv = spark.read.option("multiLine",True).option("header", True).option("s
 today_pd = toady_csv.toPandas() # 오늘 csv
 print(today_pd.tail(2))
 
-writeLastArticleId("쉘스크립트 테스트")
+writeLastArticleId("테스트")

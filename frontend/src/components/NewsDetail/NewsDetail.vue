@@ -7,14 +7,14 @@
     <NewsDetailLoading v-if="loading"></NewsDetailLoading>
     <div v-else>
       <NewsDetailContent :newsDetail="newsDetail"></NewsDetailContent>
-      <NewsDetailRelation></NewsDetailRelation>
+      <NewsDetailRelation :newsRelated="newsRelated"></NewsDetailRelation>
       <NewsDetailMemo
         :memoMine="newsDetail.userArticleMemoListMine"
         :memoOther="newsDetail.userArticleMemoListOther"
       ></NewsDetailMemo>
       <!-- finish reading snackbar -->
       <v-snackbar
-        :timeout="2000000000000000"
+        :timeout="5000"
         class="mb-4"
         v-model="localDone"
         color="var(--main-col-4-1)"
@@ -30,8 +30,7 @@
           class="d-flex flex-row align-center justify-space-between"
         >
           <span class="main-col-1"
-            >기사를 읽어,
-            <span class="b-font">경험치가 1 EXP 증가</span>했습니다.</span
+            >기사를 읽어, <span class="b-font">경험치 1 EXP 증가</span></span
           ><v-btn icon text>
             <v-icon color="var(--main-col-1)" @click="localDone = false">
               mdi-close-circle
@@ -42,6 +41,8 @@
       <!-- word explain modal -->
       <NewsDetailContentWord></NewsDetailContentWord>
     </div>
+    <news-detail-server-error ref="detailerror"></news-detail-server-error>
+    <scroll-top-btn v-if="!loading"></scroll-top-btn>
   </v-sheet>
 </template>
 
@@ -55,6 +56,8 @@ import memoStore from "@/store/modules/memoStore";
 import { getNewsDetail, updateReading } from "@/api/modules/article.js";
 import wordStore from "@/store/modules/wordStore";
 import NewsDetailContentWord from "@/components/NewsDetail/NewsDetailContentWord.vue";
+import NewsDetailServerError from "./NewsDetailServerError.vue";
+import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
 
 export default {
   name: "NewsDetail",
@@ -63,6 +66,7 @@ export default {
       localDone: false, // 기사 읽음 snackbar 활성화
       loading: true, // 로딩 중일 경우 true
       newsDetail: null, // 기사 상세 정보
+      newsRelated: null, //관련 기사 리스트
     };
   },
   computed: {
@@ -75,6 +79,8 @@ export default {
     NewsDetailMemo,
     NewsDetailLoading,
     NewsDetailContentWord,
+    NewsDetailServerError,
+    ScrollTopBtn,
   },
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
   watch: {
@@ -87,6 +93,7 @@ export default {
   },
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
+    ...mapActions("memoStore", ["updateReading"]),
     addScrollEvent() {
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
@@ -98,7 +105,8 @@ export default {
       function finishReading() {
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
-        if (now > target) {
+        if (now > target && !memoStore.state.reading) {
+          memoStore.state.reading = true;
           // 스크롤 이벤트 삭제
           document.removeEventListener("scroll", finishReading);
           // 기사 읽음 처리 API 요청
@@ -111,17 +119,20 @@ export default {
         }
       }
       // 스크롤 이벤트 추가
-      document.addEventListener("scroll", finishReading());
+      window.addEventListener("scroll", finishReading);
     },
   },
-  async created() {
+  async mounted() {
     function click() {
       wordStore.state.wordModal = this.innerText;
       wordStore.state.isWordModalOpen = true;
     }
     // 기사 상세 정보 요청하는 API
     await getNewsDetail(this.$route.params.id).then((res) => {
-      if (res) {
+      if (res == null) {
+        // console.log("여기");
+        this.$refs.detailerror.openDialog();
+      } else if (res) {
         // 받아온 기사 내용은 HTML로 바꾸고 event 추가하기
         var content = document.createElement("div");
         content.setAttribute("id", "article");
@@ -136,12 +147,22 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
+        // console.log("지금 뉴스");
+        // console.log(this.newsDetail);
+
+        // newsDetail에 받아온 관련 기사 아이디 넣기
+        this.newsRelated = this.newsDetail.relatedArticleList;
+        // console.log(this.newsRelated);
+        // console.log(this.newsDetail);
         // 로딩 상태 변경
         this.loading = false;
       }
     });
-    // 기사를 아직 안 읽었다면 읽음 처리 Event 추기
-    if (this.newsDetail && !this.newsDetail.reading) this.addScrollEvent();
+    // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
+    if (this.newsDetail && !this.newsDetail.reading) {
+      this.addScrollEvent();
+      this.updateReading(this.newsDetail.reading);
+    }
   },
 };
 </script>

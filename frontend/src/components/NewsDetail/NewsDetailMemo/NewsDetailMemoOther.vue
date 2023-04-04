@@ -47,17 +47,13 @@ export default {
       }
     },
     sortMemoList() {
-      if (this.sort == "최신순") {
-        this.memos_all.sort(function (a, b) {
-          return new Date(b.regtime) - new Date(a.regtime);
-        });
-      } else if (this.sort == "레벨순") {
+      if (this.sort == "레벨순") {
         this.memos_all.sort(function (a, b) {
           return b.userExperience - a.userExperience;
         });
       } else {
         this.memos_all.sort(function (a, b) {
-          return a.heartNum - b.heartNum;
+          return new Date(b.regtime) - new Date(a.regtime);
         });
       }
 

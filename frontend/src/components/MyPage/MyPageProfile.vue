@@ -14,9 +14,12 @@
     <v-sheet color="transparent" class="d-flex flex-column" width="63%"
       ><div class="d-flex flex-row align-center justify-space-between">
         <!-- Level -->
-        <span class="b-font xl-font main-col-1"
-          >LEVEL {{ String.fromCharCode(user.userLevel) }}</span
-        >
+        <div class="xl-font main-col-1">
+          <span class="ex-th-font">LEVEL </span>
+          <span class="black-font">{{
+            String.fromCharCode(user.userLevel)
+          }}</span>
+        </div>
         <!-- Level Info -->
         <v-dialog v-model="levelInfoDialog" max-width="370">
           <template v-slot:activator="{ on, attrs }">
@@ -40,7 +43,7 @@
               >
                 <img
                   class="mr-2"
-                  height="45"
+                  height="38"
                   :src="require('@/assets/images/level/' + levelImage[l])"
                 />
                 <div>EXP {{ minExperience[l] }}<br />이상 자동 승급</div>

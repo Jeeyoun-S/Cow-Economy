@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="transparent">
+  <v-sheet color="transparent" height="100%">
     <!-- 로그인 상태 -->
     <div v-if="isLoggedIn">
       <MyPageLoading v-if="loading"></MyPageLoading>
@@ -7,14 +7,15 @@
         <!-- level profile -->
         <MyPageProfile :user="user" class="justify-center"></MyPageProfile>
         <!-- username & logout btn -->
-        <v-sheet class="pa-7" rounded="t-xl" elevation="5">
+        <v-sheet class="pa-6" rounded="t-xl" elevation="5">
           <!-- hello & logout -->
           <v-sheet class="pa-1 d-flex flex-row justify-space-between pb-5">
             <div class="xl-font">
               <div>안녕하세요</div>
               <div class="d-flex align-center">
                 <span class="b-font">{{ user.userNickname }}</span
-                >님<img
+                >님
+                <img
                   height="25"
                   class="pl-1"
                   src="@/assets/images/emoji/waving_hand.png"
@@ -56,9 +57,9 @@
       </div>
     </div>
     <!-- 로그아웃 상태 -->
-    <div v-else>
+    <v-sheet color="transparent" height="100%" v-else>
       <kakaoLogin></kakaoLogin>
-    </div>
+    </v-sheet>
   </v-sheet>
 </template>
 

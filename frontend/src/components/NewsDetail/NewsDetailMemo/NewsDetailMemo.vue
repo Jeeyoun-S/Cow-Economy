@@ -1,15 +1,14 @@
 <template>
-  <v-sheet class="py-7" id="memo">
-    <v-sheet class="mx-7 d-flex flex-row align-center">
+  <v-sheet class="py-5" id="memo">
+    <v-sheet class="mx-5 d-flex flex-row align-center">
       <!-- memo title -->
-      <h3 class="mr-auto">메모</h3>
+      <span class="mr-auto b-font lg-font">메모</span>
       <!-- memo sort select -->
       <v-sheet width="100px">
         <v-select
           v-model="sort"
-          :items="
-            isListMine ? ['최신순', '인기순'] : ['최신순', '인기순', '레벨순']
-          "
+          :disabled="isListMine ? true : false"
+          :items="isListMine ? ['최신순'] : ['최신순', '레벨순']"
           color="var(--main-col-2)"
           dense
           rounded
@@ -20,7 +19,7 @@
       </v-sheet>
     </v-sheet>
     <!-- list buttons -->
-    <v-row v-if="isLoggedIn" class="mx-7 py-5 pt-7">
+    <v-row v-if="isLoggedIn" class="mx-5 py-5 pt-7">
       <v-col class="pa-0">
         <v-btn
           elevation="0"
@@ -47,14 +46,14 @@
       </v-col>
     </v-row>
     <!-- Login Guide -->
-    <v-row v-else class="mx-7 py-5 pt-7">
+    <v-row v-else class="mx-6 py-5 pt-7">
       <v-sheet
         class="pa-1 px-5 d-flex flex-row align-center"
         color="var(--main-col-2)"
         dark
         width="100%"
         rounded="xl"
-        ><span class="sm-font">메모 작성은 로그인 후 가능합니다.</span>
+        ><span class="sm-font">메모 작성은 회원만 가능합니다.</span>
         <v-btn
           class="my-1 ml-auto"
           @click="moveLogin()"
