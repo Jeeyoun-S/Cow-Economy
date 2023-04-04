@@ -10,11 +10,11 @@
       <div class="d-flex flex-nowrap">
         <!-- article thumbnail -->
         <div v-if="this.article.article_thumbnail">
-          <v-avatar class="custom-avatar" size="125" tile>
+          <v-avatar class="my-2 ml-2" size="125" tile>
             <v-img :src="this.article.article_thumbnail" />
           </v-avatar>
         </div>
-        <div class="ml-3 mt-1 mr-2 mb-2">
+        <div class="ml-3 mt-3 mr-2 mb-2">
           <!-- article title -->
           <!-- - 글자수가 60 이상일 경우 ... 처리 (2줄)-->
           <v-card-actions
@@ -59,10 +59,5 @@ export default {
 <style>
 .no-shadow {
   box-shadow: none;
-}
-
-.custom-avatar {
-  border-top-left-radius: 3;
-  border-bottom-left-radius: 3;
 }
 </style>
