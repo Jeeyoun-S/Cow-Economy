@@ -252,8 +252,9 @@
               </v-sheet>
               <v-sheet class="d-flex flex-column">
                 <span class="point-md xxxxl-font">나의 활동 그래프</span>
-                <!-- <v-sheet class="d-flex flex-row"> -->
-                <canvas ref="barChart" height="300"></canvas>
+                <v-sheet class="d-flex flex-row" width="200">
+                  <canvas ref="barChart"></canvas>
+                </v-sheet>
                 <canvas ref="doughnutChart" height="300"></canvas>
                 <!-- </v-sheet> -->
               </v-sheet>
@@ -857,7 +858,7 @@ export default {
       },
       options: {
         aspectRatio: 1,
-        maxBarThickness: 35,
+        maxBarThickness: 20,
         plugins: {
           legend: {
             display: false,
@@ -895,7 +896,7 @@ export default {
             stacked: true,
             ticks: {
               font: {
-                size: 16,
+                size: 13,
               },
               color: "rgba(0, 0, 0, 0.8)",
               padding: 10,
