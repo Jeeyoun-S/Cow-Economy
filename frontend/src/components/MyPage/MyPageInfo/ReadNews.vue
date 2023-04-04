@@ -10,9 +10,10 @@
     <div class="mb-5 th-font sm-font">
       최근 6개월 동안 읽은 기사 수를 보여드려요.
     </div>
-    <div>
+    <div v-if="hasData">
       <canvas ref="barChart" height="300"></canvas>
     </div>
+    <InfoNoData v-else v-bind:childValue="msg"></InfoNoData>
   </div>
 </template>
 
@@ -21,16 +22,33 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 Chart.defaults.font.family = "MinSans-Regular";
 import { mapGetters, mapState } from "vuex";
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue"
 
 export default {
+  components: {
+    InfoNoData,
+  },
+  data: function() {
+    return {
+      msg: "기사를 읽어주세요",
+      msg2: "최근 6개월간 읽은 기사가 없어요"
+    }
+  },
   computed: {
     ...mapGetters({
       getLastSixMonthsReadNews: "userStore/getLastSixMonthsReadNews",
     }),
     ...mapState("userStore", ["articleList"]),
+    hasData() {
+      const wordCategoryList = this.articleList.articleCntList;
+      "기사를 읽어주세요"
+      return wordCategoryList.some(value => value[1] !== 0);
+    },
   },
   mounted() {
-    this.createChart();
+    if (this.hasData) {
+      this.createChart();
+    }
   },
   // watch: {
   //   // Watch for changes in readCategoryList

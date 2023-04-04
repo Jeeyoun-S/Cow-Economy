@@ -1,9 +1,12 @@
 <template>
-  <v-sheet id="news-list">
+  <v-sheet id="news-list" min-height="100%">
     <!-- sort select -->
-    <v-sheet class="mx-5 d-flex flex-row align-center mb-5">
+    <v-sheet
+      class="mx-5 pt-4 pb-2 d-flex flex-row justify-space-between align-center"
+      id="list-select"
+    >
       <!-- i) news sort select -->
-      <v-sheet width="160px" class="mt-5">
+      <v-sheet width="37%">
         <v-select
           v-model="sort"
           :items="['최신순', '인기순']"
@@ -16,27 +19,28 @@
         />
       </v-sheet>
       <!-- ii) news category select -->
-      <v-select
-        class="mt-5"
-        v-model="category"
-        :items="[
-          '전체',
-          '금융',
-          '부동산',
-          '산업/재계',
-          '글로벌 경제',
-          '증권',
-          '중기/벤처',
-          '생활경제',
-          '경제 일반',
-        ]"
-        color="var(--main-col-2)"
-        dense
-        rounded
-        outlined
-        hide-details
-        style="font-size: 15px"
-      ></v-select>
+      <v-sheet width="60%">
+        <v-select
+          v-model="category"
+          :items="[
+            '전체',
+            '금융',
+            '부동산',
+            '산업/재계',
+            '글로벌 경제',
+            '증권',
+            '중기/벤처',
+            '생활경제',
+            '경제 일반',
+          ]"
+          color="var(--main-col-2)"
+          dense
+          rounded
+          outlined
+          hide-details
+          style="font-size: 15px"
+        ></v-select>
+      </v-sheet>
     </v-sheet>
     <!-- news card list -->
     <v-sheet>
@@ -48,9 +52,7 @@
       ></news-card>
     </v-sheet>
     <!-- go to top button -->
-    <v-btn class="go-to-top" icon color="white" @click="scrollToTop">
-      <v-icon>mdi-arrow-up</v-icon>
-    </v-btn>
+    <ScrollTopBtn></ScrollTopBtn>
   </v-sheet>
 </template>
 
@@ -58,11 +60,13 @@
 import NewsCard from "./element/NewsCard.vue";
 import { mapActions, mapState } from "vuex";
 import { Swiper } from "vue-awesome-swiper";
+import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
 
 export default {
   name: "NewsList",
   components: {
     NewsCard,
+    ScrollTopBtn,
   },
   data() {
     return {
@@ -116,26 +120,27 @@ export default {
       }
     },
     // [@Method] 맨 위로 가기
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    },
+    // scrollToTop() {
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth",
+    //   });
+    // },
   },
 };
 </script>
 
 <style>
-#news-list {
+/* #news-list {
   background-color: var(white);
-}
+} */
 
-.go-to-top {
+/* .go-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
 
   background-color: var(--main-col-2);
-}
+  z-index: 1;
+} */
 </style>

@@ -5,6 +5,9 @@
 .xs-font {
   font-size: 12px;
 }
+.xsm-font {
+  font-size: 13px;
+}
 .sm-font {
   font-size: 14px;
 }
@@ -146,4 +149,8 @@
 }
 .pink-gradient {
   filter: drop-shadow(0px 0px 5px var(--main-col-1));
+}
+
+.login-gradient {
+  filter: drop-shadow(0px 0px 5px var(--graph-1-col-4));
 }

@@ -10,38 +10,57 @@
     <div class="mb-3 th-font sm-font">
       오늘의 Quiz에서 맞춘 용어의 카테고리를 보여드립니다.
     </div>
-    <div class="d-flex justify-space-between align-center pt-2 px-3 xxxl-font">
-      <div x-large icon></div>
-      <span class="xxl-font" style="color: #757575"
-        >{{ this.currentYear }}년 {{ this.currentMonth }}월</span
+    <div v-if="hasData">
+      <div
+        class="d-flex justify-space-between align-center pt-2 px-3 xxxl-font"
       >
-      <div x-large icon></div>
+        <div x-large icon></div>
+        <span class="xxl-font" style="color: #757575"
+          >{{ this.currentYear }}년 {{ this.currentMonth }}월</span
+        >
+        <div x-large icon></div>
+      </div>
+      <canvas ref="radarChart"></canvas>
     </div>
-    <canvas ref="radarChart"></canvas>
+    <InfoNoData v-else v-bind:child-value="msg"></InfoNoData>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { Chart, registerables } from "chart.js";
+import InfoNoData from "@/components/MyPage/MyPageInfo/InfoNoData.vue";
 
 Chart.register(...registerables);
 Chart.defaults.font.family = "MinSans-Regular";
 
 export default {
+  components: {
+    InfoNoData,
+  },
   data: function () {
     return {
       currentYear: null,
       currentMonth: null,
+      msg: "퀴즈를 풀어주세요",
     };
   },
-  computed: mapState("userStore", ["articleList"]),
+  computed: {
+    ...mapState("userStore", ["articleList"]),
+    hasData() {
+      const wordCategoryList = this.articleList.wordCategoryList;
+      // console.log(wordCategoryList)
+      return wordCategoryList.some((value) => value[1] !== 0);
+    },
+  },
   created() {
     this.currentYear = new Date().getFullYear();
     this.currentMonth = new Date().getMonth() + 1;
   },
   mounted() {
-    this.drawRadarChart();
+    if (this.hasData) {
+      this.drawRadarChart();
+    }
   },
   methods: {
     drawRadarChart() {
@@ -56,7 +75,7 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: "Categories",
+              label: "",
               data: data,
               backgroundColor: "rgba(229, 232, 253, 0.8)",
               borderColor: "rgba(81, 118, 250, 1)",

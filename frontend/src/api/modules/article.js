@@ -9,6 +9,7 @@ async function getNewsDetail(articleId) {
   var result = null;
   await api.get(`/article/${articleId}`)
     .then((res) => {
+      // console.log(res.data)
       if (res.data.statusCode == 200) {
         result = res.data.data;
         if (result.userArticleMemoListMine) {
@@ -60,8 +61,11 @@ async function getNewsDetail(articleId) {
             result.articleContent
           ).split("@@@");
         }
+      } else {
+        result = res.data.data;
       }
-    }).catch();
+    })
+    .catch();
   return await Promise.resolve(result);
 }
 

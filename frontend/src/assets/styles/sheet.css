@@ -46,3 +46,6 @@
 .img-mint {
   filter: drop-shadow(0px 0px 3px #89ffe5);
 }
+.img-white {
+  filter: drop-shadow(0px 0px 5px white);
+}

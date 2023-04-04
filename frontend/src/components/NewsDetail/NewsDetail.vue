@@ -41,6 +41,8 @@
       <!-- word explain modal -->
       <NewsDetailContentWord></NewsDetailContentWord>
     </div>
+    <news-detail-server-error ref="detailerror"></news-detail-server-error>
+    <scroll-top-btn v-if="!loading"></scroll-top-btn>
   </v-sheet>
 </template>
 
@@ -54,6 +56,8 @@ import memoStore from "@/store/modules/memoStore";
 import { getNewsDetail, updateReading } from "@/api/modules/article.js";
 import wordStore from "@/store/modules/wordStore";
 import NewsDetailContentWord from "@/components/NewsDetail/NewsDetailContentWord.vue";
+import NewsDetailServerError from "./NewsDetailServerError.vue";
+import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
 
 export default {
   name: "NewsDetail",
@@ -75,6 +79,8 @@ export default {
     NewsDetailMemo,
     NewsDetailLoading,
     NewsDetailContentWord,
+    NewsDetailServerError,
+    ScrollTopBtn,
   },
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
   watch: {
@@ -123,7 +129,10 @@ export default {
     }
     // 기사 상세 정보 요청하는 API
     await getNewsDetail(this.$route.params.id).then((res) => {
-      if (res) {
+      if (res == null) {
+        // console.log("여기");
+        this.$refs.detailerror.openDialog();
+      } else if (res) {
         // 받아온 기사 내용은 HTML로 바꾸고 event 추가하기
         var content = document.createElement("div");
         content.setAttribute("id", "article");
@@ -144,7 +153,7 @@ export default {
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
         // console.log(this.newsRelated);
-
+        // console.log(this.newsDetail);
         // 로딩 상태 변경
         this.loading = false;
       }

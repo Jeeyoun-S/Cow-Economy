@@ -12,25 +12,51 @@
 
     <!-- 2 : title -->
     <div class="py-2">
-      <h2>{{ newsDetail.articleTitle }}</h2>
+      <span class="b-font xxxxl-font">{{ newsDetail.articleTitle }}</span>
     </div>
 
     <!-- 3 : date & original url -->
-    <div class="py-2 d-flex align-center">
-      <span class="sm-font">{{ newsDetail.articleRegtime }}</span>
-      <v-btn
-        class="ml-auto"
-        color="grey darken-1"
-        small
-        outlined
-        rounded
-        @click="openOriginalUrl()"
-        >원본 보기</v-btn
-      >
+    <div class="py-2 d-flex align-center justify-space-between">
+      <span class="xsm-font">{{
+        newsDetail.articleRegtime.substr(0, 16)
+      }}</span>
+      <div class="d-flex align-center">
+        <v-btn-toggle
+          v-model="toggle_exclusive"
+          color="var(--main-col-1)"
+          mandatory
+          dense
+          rounded
+          class="mr-2"
+        >
+          <v-btn class="pa-0" text small>작게</v-btn>
+          <v-btn class="pa-0" text small>보통</v-btn>
+          <v-btn class="pa-0" text small>크게</v-btn>
+        </v-btn-toggle>
+        <v-btn
+          class="ml-auto"
+          color="grey darken-1"
+          small
+          outlined
+          rounded
+          @click="openOriginalUrl()"
+          >원본 보기</v-btn
+        >
+      </div>
     </div>
 
     <!-- 4 : content -->
-    <div id="content" class="py-2">
+    <div
+      id="content"
+      class="py-2"
+      :class="
+        toggle_exclusive == 2
+          ? 'lg-font'
+          : toggle_exclusive == 0
+          ? 'sm-font'
+          : ''
+      "
+    >
       <!-- <div id="article" v-html="newsDetail.articleContent"></div> -->
     </div>
 
@@ -43,7 +69,7 @@
     <v-snackbar v-model="memoBtn" color="var(--main-col-2)" rounded="pill">
       <div class="d-flex flex-row align-center">
         <v-icon>mdi-plus-circle</v-icon>
-        <span class="ml-2">메모에 인용문으로 추가하기</span>
+        <span class="ml-2">메모에 인용문 추가하기</span>
       </div>
       <template v-slot:action="{ attrs }">
         <v-btn
@@ -77,6 +103,11 @@ const memoStore = "memoStore";
 
 export default {
   name: "NewsDetailContent",
+  data() {
+    return {
+      toggle_exclusive: 1,
+    };
+  },
   props: {
     newsDetail: Object,
   },

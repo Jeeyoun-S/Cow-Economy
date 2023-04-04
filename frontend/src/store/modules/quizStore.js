@@ -126,7 +126,7 @@ const quizStore = {
                 // 정답 (개발 중엔 + 표시를 붙여 정답을 알아볼 수 있도록 함)
                 if (i == randomNum) {
                   answers[String.fromCharCode(randomNum)] =
-                    word.economyWord.word + "+";
+                    word.economyWord.word;
                 }
                 // 정답 외 단어
                 else {

@@ -109,7 +109,7 @@ export default {
     &--valid /* 지나간 step font */
       span
         color: transparent
-        background-image: url("@/assets/images/icon/check-solid.svg")
+        background-image: url("@/assets/images/mypage/quiz/check-solid.svg")
         background-position: center center
         background-size: 15px
       .step-progress__step-label

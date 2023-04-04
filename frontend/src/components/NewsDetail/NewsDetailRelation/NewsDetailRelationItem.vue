@@ -47,15 +47,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text_in_img {
-  position: absolute;
-  bottom: 0;
-  color: white;
-  width: 95%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 84.9%);
-}
-.non_image {
-  background-color: var(--main-col-4-1);
-}
-</style>
+<style></style>
