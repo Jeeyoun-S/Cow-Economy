@@ -3,7 +3,7 @@ const newsStore = {
   state: {
     searchText: "",
     searched: false,
-    // cur: "",
+    cur: "",
     news: [
       {
         articleId: 1,
@@ -165,9 +165,10 @@ const newsStore = {
     SET_NEWS(state, news) {
       state.news = news;
     },
-    // SET_CUR_NEWS(state, payload) {
-    //   state.cur = payload;
-    // }
+    SET_CUR_NEWS(state, payload) {
+      state.cur = payload;
+      console.log(state.cur)
+    }
   },
   actions: {
     setSearchText({ commit }, payload) {
@@ -176,9 +177,10 @@ const newsStore = {
     setSearched({ commit }, payload) {
       commit("SET_SEARCHED", payload);
     },
-    // setCurNews({ commit }, payload) {
-    //   commit("SET_CUR_NEWS", payload)
-    // }
+    setCurNews({ commit }, payload) {
+      console.log(payload)
+      commit("SET_CUR_NEWS", payload)
+    }
   },
   getters: {
     allNews(state) {

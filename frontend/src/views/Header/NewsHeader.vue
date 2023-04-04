@@ -29,11 +29,18 @@ export default {
     BackIcon,
   },
   mounted() {
-    this.initKakaoShare();
+    if (this.cur) {
+      this.initKakaoShare();
+    }
   },
   computed: {
     ...mapState('newsStore', ['cur']),
 
+  },
+  watch: {
+    cur() {
+      this.initKakaoShare();
+    },
   },
   methods: {
     initKakaoShare() {
@@ -42,6 +49,7 @@ export default {
         return;
       }
       const newsTitle = this.cur
+      console.log("여기")
       console.log(newsTitle)
 
       window.Kakao.Link.createDefaultButton({

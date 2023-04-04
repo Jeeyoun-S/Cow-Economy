@@ -94,7 +94,7 @@ export default {
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
     ...mapActions("memoStore", ["updateReading"]),
-    // ...mapActions("newsStore", ["setCurNews"]),
+    ...mapActions("newsStore", ["setCurNews"]),
 
     addScrollEvent() {
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
@@ -149,8 +149,9 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
-        //   const newsTitle = this.newsDetail.articleTitle
-        //   this.setCurNews(newsTitle)
+        const newsTitle = this.newsDetail.articleTitle
+        console.log(newsTitle);
+        this.setCurNews(newsTitle)
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
