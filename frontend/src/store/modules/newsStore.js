@@ -181,6 +181,9 @@ const newsStore = {
     setSearchText({ commit }, payload) {
       commit("SET_SEARCH_TEXT", payload);
     },
+    setCurNews({ commit }, payload) {
+      commit("SET_CUR_NEWS", payload)
+    },
     setSearched({ commit }, payload) {
       commit("SET_SEARCHED", payload);
     },
