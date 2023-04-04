@@ -20,6 +20,8 @@
 
 <script>
 import BackIcon from "@/common/component/BackIcon.vue";
+import { mapState } from 'vuex';
+
 
 export default {
   name: "NewsHeader",
@@ -29,24 +31,28 @@ export default {
   mounted() {
     this.initKakaoShare();
   },
+  computed: {
+    ...mapState('newsStore', ['cur']),
+
+  },
   methods: {
     initKakaoShare() {
       if (!window.Kakao.isInitialized()) {
         alert("카카오 SDK가 초기화되지 않았습니다.");
         return;
       }
+      const newsTitle = this.cur
+      console.log(newsTitle)
 
       window.Kakao.Link.createDefaultButton({
         container: this.$refs.kakaoShareButton,
         objectType: "feed",
-        // 나중에 기사 완성 되면 제목, 설명, 이미지 변수 넣기
         content: {
-          title: "News Title",
-          description: "News Description",
-          imageUrl: "https://lh3.googleusercontent.com/poWNIQX2ZneVwTfUCFVrsRcE5skKidLAX-12WJ0czkD6-0FOAI_Rc7P-EzgcaWBfedBhj8tz7N_X8rqWK95iYSRpIDQUnDwwbiSZLac",
+          title: newsTitle,
+          imageUrl: "@/assets/images/logo/logo_full.png",
           link: {
-            mobileWebUrl: "http://localhost:3000/news/1",
-            webUrl: "http://localhost:3000/news/1",
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
           },
         },
       });

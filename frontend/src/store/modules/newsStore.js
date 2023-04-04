@@ -3,6 +3,7 @@ const newsStore = {
   state: {
     searchText: "",
     searched: false,
+    cur: "",
     news: [
       {
         articleId: 1,
@@ -155,23 +156,29 @@ const newsStore = {
     ],
   },
   mutations: {
-    setSearchText(state, payload) {
+    SET_SEARCH_TEXT(state, payload) {
       state.searchText = payload;
     },
-    setSearched(state, payload) {
+    SET_SEARCHED(state, payload) {
       state.searched = payload;
     },
     SET_NEWS(state, news) {
       state.news = news;
     },
+    SET_CUR_NEWS(state, payload) {
+      state.cur = payload;
+    }
   },
   actions: {
     setSearchText({ commit }, payload) {
-      commit("setSearchText", payload);
+      commit("SET_SEARCH_TEXT", payload);
     },
     setSearched({ commit }, payload) {
-      commit("setSearched", payload);
+      commit("SET_SEARCHED", payload);
     },
+    setCurNews({ commit }, payload) {
+      commit("SET_CUR_NEWS", payload)
+    }
   },
   getters: {
     allNews(state) {
