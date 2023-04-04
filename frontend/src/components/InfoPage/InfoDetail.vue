@@ -241,22 +241,78 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <v-sheet class="d-flex flex-column">
+              <v-sheet
+                class="mb-5 d-flex flex-column justify-center align-center"
+                color="transparent"
+                width="80%"
+              >
                 <span class="point-md xxxxl-font">오늘의 Quiz</span>
-                <div>
-                  <v-sheet>읽었던 기사 속 단어를 맞추는 퀴즈</v-sheet>
-                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
-                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
-                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                <span class="sm-font"
+                  >경제 용어에 대한 퀴즈를 풀며 경제 지식을 한층 더
+                  높여보세요.</span
+                >
+                <div class="d-flex flex-column justify-center align-center">
+                  <v-chip class="my-1" color="var(--main-col-1)" outlined
+                    >1. 읽었던 기사 속 단어를 맞추는 퀴즈</v-chip
+                  >
+                  <v-chip class="my-1">15초 내에 보기 4개 중 답을 선택</v-chip>
+                  <v-chip class="my-1"
+                    >총 7문제 중 5문제 이상 맞히면 성공</v-chip
+                  >
+                  <v-chip class="my-1">성공 시, 경험치 획득</v-chip>
                 </div>
               </v-sheet>
-              <v-sheet class="d-flex flex-column">
+              <v-sheet
+                class="d-flex flex-column justify-center align-center"
+                color="transparent"
+                width="80%"
+              >
                 <span class="point-md xxxxl-font">나의 활동 그래프</span>
-                <v-sheet class="d-flex flex-row" width="200">
-                  <canvas ref="barChart"></canvas>
-                </v-sheet>
-                <canvas ref="doughnutChart" height="300"></canvas>
-                <!-- </v-sheet> -->
+                <span class="sm-font"
+                  >내가 읽은 기사를 통계로 알아볼 수 있습니다.</span
+                >
+                <div class="py-3 d-flex flex-row">
+                  <Flicking
+                    class="charts"
+                    :options="options"
+                    :plugins="chartPlugins"
+                  >
+                    <v-sheet
+                      width="220"
+                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                    >
+                      <span class="my-2 md-font lg-font">읽은 기사 수</span>
+                      <canvas ref="barChart"></canvas>
+                    </v-sheet>
+                    <v-sheet
+                      width="220"
+                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                    >
+                      <span class="my-2 md-font lg-font"
+                        >읽은 기사의 카테고리</span
+                      >
+                      <canvas
+                        ref="doughnutChart"
+                        style="
+                          height: 200px !important;
+                          width: 200px !important;
+                        "
+                      ></canvas>
+                    </v-sheet>
+                    <v-sheet
+                      width="220"
+                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                    >
+                      <span class="my-2 md-font lg-font"
+                        >경제 용어의 카테고리</span
+                      >
+                      <canvas
+                        ref="radarChart"
+                        style="height: 200px !important"
+                      ></canvas>
+                    </v-sheet>
+                  </Flicking>
+                </div>
               </v-sheet>
             </div>
           </div>
@@ -270,6 +326,9 @@
             >
               <div class="d-flex flex-column align-center">
                 <span class="b-font xxl-font main-col-2">지금 바로</span>
+                <span class="black-font xxl-font main-col-2"
+                  >소귀경에 접속해</span
+                >
                 <span class="b-font xxl-font main-col-2"
                   >경제 공부를 시작해보세요!</span
                 >
@@ -285,14 +344,18 @@
                 >
                   로그인 없이 시작하기
                 </v-btn>
-                <div class="logo-th">SSAFY 8기 A509 오난쥉이조</div>
-                <div class="logo-th">엄희정 민동주 서지윤 손승환 신도연</div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </Flicking>
+    <div
+      class="team d-flex flex-column justify-center align-center main-col-1 white-gradient"
+    >
+      <div class="point-th">SSAFY 8기 A509 오난쥉이조</div>
+      <div class="point-th">엄희정 민동주 서지윤 손승환 신도연</div>
+    </div>
   </div>
 </template>
 
@@ -323,13 +386,21 @@ export default {
         gap: 10,
       },
       plugins: [
-        new AutoPlay({ duration: 1000, direction: "NEXT", stopOnHover: false }),
+        new AutoPlay({ duration: 1500, direction: "NEXT", stopOnHover: false }),
       ],
+      chartPlugins: [
+        new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false }),
+      ],
+      options: {
+        circular: true,
+        gap: 10,
+      },
       snackbarSample: true,
     };
   },
   methods: {
     nextFlicking() {
+      console.log("여기 후보 3");
       this.$refs.flicking.next();
     },
     moveToHome() {
@@ -343,6 +414,7 @@ export default {
 
     dots.forEach((dot, i) => {
       dot.addEventListener("click", () => {
+        console.log("여기 후보 1");
         this.$refs.flicking.stopAnimation();
         this.$refs.flicking.moveTo(i);
       });
@@ -393,6 +465,19 @@ export default {
             right: "10%",
             transform:
               "translateX(7vw) translate(40%, 68vh) translateY(50%) scale(0.5)",
+          },
+          3.5: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(10)",
+          },
+          3.8: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(50)",
+          },
+          4: {
+            right: "85%",
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(100)",
           },
         },
         ".c2": {
@@ -464,6 +549,12 @@ export default {
             transform: "translate(0, -20%)",
             "z-index": 1,
           },
+          3: {
+            transform: "translate(0, -20%) scale(1)",
+          },
+          4: {
+            transform: "translate(0, -20%) scale(2)",
+          },
         },
         ".c6": {
           0: {
@@ -477,9 +568,15 @@ export default {
             "border-color": "var(--main-col-5)",
           },
           1.5: {
-            transform: "translate(0, 45%) translate2(0vw, 0vh)",
+            transform: "translate(0, 45%) translate2(0vw, 0vh) scale(1)",
             opacity: 1,
             "z-index": 1,
+          },
+          3: {
+            transform: "translate(0, 45%) translate2(0vw, 0vh) scale(1)",
+          },
+          4: {
+            transform: "translate(0, 45%) translate2(0vw, 0vh) scale(2)",
           },
         },
         ".background2": {
@@ -535,10 +632,10 @@ export default {
         },
         ".top-logo": {
           0: {
-            opacity: 0,
+            transform: "scale(0)",
           },
           0.8: {
-            opacity: 1,
+            transform: "scale(1)",
           },
         },
         ".chip-1": {
@@ -550,6 +647,14 @@ export default {
           },
           2: {
             opacity: 0,
+          },
+        },
+        ".team": {
+          3: {
+            transform: "scale(0)",
+          },
+          4: {
+            transform: "scale(1)",
           },
         },
       },
@@ -583,7 +688,7 @@ export default {
                 color: "rgba(0, 0, 0, 0.87)",
                 "font-family": "var(--main-font-2)",
               },
-              1: {
+              0.8: {
                 color: "var(--main-col-1)",
                 "font-family": "var(--main-font-5)",
               },
@@ -592,13 +697,13 @@ export default {
               0: {
                 transform: "translate(0%, 0%) scale(0)",
               },
-              1: {
+              0.8: {
                 transform: "translate(0%, 0%) scale(0)",
               },
-              2.5: {
+              2.3: {
                 transform: "translate(70%, -250%) scale(1)",
               },
-              4: {
+              3.8: {
                 transform: "translate(70%, -250%) scale(1)",
               },
             },
@@ -607,7 +712,7 @@ export default {
                 "background-color": "transparent",
                 color: "black",
               },
-              1: {
+              0.8: {
                 "background-color": "var(--main-col-2)",
                 color: "white",
               },
@@ -619,7 +724,6 @@ export default {
             selector: true,
           }
         ).playCSS();
-        // 매출총이익에서 판매비와 일반관리비를 차감한 금액으로, 총이익보다 판매비와 일반관리비가 클 경우에 나타난다. 영업이익과 함께 영업손실은, 기업의 정상적인 영업활동이 아닌 활동에서 발생한 수익과 비용을 포함하지 않는다. 즉 영업에 직접 관련되지 않은 영업외수익·비용, 특별수익·손실, 법인세 등은 제외된다.
       }
     });
 
@@ -929,7 +1033,7 @@ export default {
         ],
         datasets: [
           {
-            data: [2, 3, 4, 5, 6, 7],
+            data: [2, 3, 4, 5, 6, 7, 8, 9],
             backgroundColor: [
               "#cdd2fd",
               "#a7b0f8",
@@ -945,6 +1049,7 @@ export default {
         ],
       },
       options: {
+        maintainAspectRatio: false,
         responsive: false,
         plugins: {
           legend: {
@@ -959,7 +1064,7 @@ export default {
               useBorderRadius: true,
               borderRadius: "3",
               font: {
-                size: 14,
+                size: 10,
                 // family: getComputedStyle(document.documentElement)
                 //   .getPropertyValue("--main-font-1")
                 //   .trim(),
@@ -979,6 +1084,71 @@ export default {
       },
     });
 
+    new Chart(this.$refs.radarChart, {
+      type: "radar",
+      data: {
+        labels: [
+          "금융",
+          "증권",
+          "산업/재계",
+          "중기/벤처",
+          "부동산",
+          "글로벌 경제",
+          "생활경제",
+          "경제 일반",
+        ],
+        datasets: [
+          {
+            label: "",
+            data: [5, 2, 4, 6, 7, 5, 8, 9],
+            backgroundColor: "rgba(229, 232, 253, 0.8)",
+            borderColor: "rgba(81, 118, 250, 1)",
+            borderWidth: 1,
+            pointBackgroundColor: "rgba(81, 118, 250, 1)",
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false,
+            position: "bottom",
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        scales: {
+          r: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              display: false,
+            },
+            grid: {
+              color: function (context) {
+                return context.tick.value === 0
+                  ? "rgba(0, 0, 0, 0)"
+                  : "rgba(0, 0, 0, 0.1)";
+              },
+            },
+            angleLines: {
+              display: false,
+            },
+            pointLabels: {
+              color: "rgb(0, 0, 0)", // 항목 글씨 색상 변경
+              font: {
+                size: 10, // 항목 글씨 크기 변경
+                // family: getComputedStyle(document.documentElement)
+                //   .getPropertyValue("--main-font-1")
+                //   .trim(),
+              },
+            },
+          },
+        },
+      },
+    });
+
     let isEnableScroll = true;
     let timerId = 0;
 
@@ -994,7 +1164,7 @@ export default {
 
     window.addEventListener(
       "wheel",
-      function (e) {
+      function moveFlickingPage(e) {
         if (!isEnableScroll || flicking.animating) {
           return;
         }
@@ -1004,6 +1174,7 @@ export default {
         if (Math.abs(delta) > 40) {
           if (delta > 0 && flicking.index < 4) {
             setScrollTimer();
+            console.log("여기 후보 2", flicking.panelCount);
             flicking.next();
           } else if (delta < 0 && flicking.index > 0) {
             flicking.prev();
@@ -1015,6 +1186,9 @@ export default {
       }
     );
   },
+  // beforeDestroy() {
+  //   window.removeEventListener("wheel");
+  // },
 };
 </script>
 
@@ -1024,6 +1198,14 @@ export default {
 /* 첫 페이지 서비스 제목 */
 .title {
   margin: 10px;
+}
+.team {
+  position: absolute;
+  bottom: 5%;
+  width: 300px;
+  z-index: 2080;
+  left: 50%;
+  margin-left: -150px;
 }
 .top-logo {
   position: absolute;

@@ -1,37 +1,25 @@
 <template>
-  <!-- <v-card class="overflow-hidden" color="transparent" elevation="0">
-    <InfoHeader></InfoHeader>
-    <v-sheet
-      id="scrolling-techniques-3"
-      class="scroll overflow-auto"
-      max-height="100vh"
-      color="transparent"
-    >
-      <v-container>
-        <info-page-first></info-page-first> -->
-  <flicking-test></flicking-test>
-  <!-- </v-container>
-    </v-sheet>
-  </v-card> -->
+  <div>
+    <landing v-if="isLoggedIn"></landing>
+    <info-detail v-else></info-detail>
+  </div>
 </template>
 
 <script>
-// import InfoHeader from "@/views/Header/InfoHeader.vue";
-// import InfoPageFirst from "./InfoPageFirst.vue";
-import FlickingTest from "./FlickingTest.vue";
+import InfoDetail from "./InfoDetail.vue";
+import Landing from "./Landing.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "InfoPage",
   components: {
-    // InfoHeader,
-    // InfoPageFirst,
-    FlickingTest,
+    InfoDetail,
+    Landing,
   },
   created() {
-    if (this.isLoggedIn) {
-      this.$router.push("/home");
-    }
+    // if (this.isLoggedIn) {
+    //   this.$router.push("/home");
+    // }
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
