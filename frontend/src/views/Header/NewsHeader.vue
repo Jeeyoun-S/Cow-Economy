@@ -22,7 +22,6 @@
 import BackIcon from "@/common/component/BackIcon.vue";
 import { mapState } from 'vuex';
 
-
 export default {
   name: "NewsHeader",
   components: {
@@ -35,7 +34,6 @@ export default {
   },
   computed: {
     ...mapState('newsStore', ['cur']),
-
   },
   watch: {
     cur() {
@@ -48,22 +46,20 @@ export default {
         alert("카카오 SDK가 초기화되지 않았습니다.");
         return;
       }
-      const newsTitle = this.cur
-      console.log("여기")
-      console.log(newsTitle)
 
-      window.Kakao.Link.createDefaultButton({
-        container: this.$refs.kakaoShareButton,
-        objectType: "feed",
-        content: {
-          title: newsTitle,
-          imageUrl: "@/assets/images/logo/logo_full.png",
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
-          },
-        },
-      });
+      const templateId = 91976
+      this.$refs.kakaoShareButton.onclick = () => {
+        window.Kakao.Link.sendCustom({
+          templateId: templateId,
+          templateArgs: {
+            'title': this.cur[0],
+            'content': this.cur[1],
+            'imageUrl': "@/assets/images/logo/logo_full.png",
+            'linkMobile': window.location.href,
+            'linkWeb': window.location.href,
+          }
+        });
+      };
     },
     shareKakao() {
       this.$refs.kakaoShareButton.click();

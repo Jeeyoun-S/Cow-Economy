@@ -56,7 +56,6 @@ export default {
     ...mapState("userStore", ["articleList"]),
     hasData() {
       const wordCategoryList = this.articleList.readCategoryList;
-      // console.log(wordCategoryList)
       return wordCategoryList.some((value) => value[1] !== 0);
     },
   },
@@ -87,12 +86,9 @@ export default {
         this.chart.destroy();
       }
       const ctx = this.$refs.barChart.getContext("2d");
-      // console.log("readNewsCategory", this.articleList.readCategoryList)
 
       const labels = this.articleList.readCategoryList.map((item) => item[0]);
       const data = this.articleList.readCategoryList.map((item) => item[1]);
-      console.log(data)
-      // console.log("##23 ", data)
       this.chart = new Chart(ctx, {
         type: "doughnut",
         data: {

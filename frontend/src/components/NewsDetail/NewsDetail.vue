@@ -132,7 +132,6 @@ export default {
     // 기사 상세 정보 요청하는 API
     await getNewsDetail(this.$route.params.id).then((res) => {
       if (res == null) {
-        // console.log("여기");
         this.$refs.detailerror.openDialog();
       } else if (res) {
         // 받아온 기사 내용은 HTML로 바꾸고 event 추가하기
@@ -150,13 +149,13 @@ export default {
         this.setWordInfo(res.articleWordList);
 
         const newsTitle = this.newsDetail.articleTitle
-        console.log(newsTitle);
-        this.setCurNews(newsTitle)
+        const newsContent = this.newsDetail.articleContent.innerHTML
+
+        this.setCurNews([newsTitle, newsContent])
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
-        // console.log(this.newsRelated);
-        // console.log(this.newsDetail);
+
         // 로딩 상태 변경
         this.loading = false;
       }
