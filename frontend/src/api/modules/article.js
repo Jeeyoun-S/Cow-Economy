@@ -79,4 +79,27 @@ async function updateReading(articleId) {
   return await Promise.resolve(result);
 }
 
-export { updateReading, getNewsDetail };
+async function getTodayHotNews(){
+  var result = null;
+  await api.get('/article/hot-news').then((res)=>{
+    result = res.data.data;
+  });
+  return await Promise.resolve(result);
+}
+
+async function getTodayAllNews() {
+  var result = null;
+  await api.get('/article/category-news').then((res)=>{
+    result = res.data.data;
+  });
+  // console.log(result)
+  return await Promise.resolve(result);
+}
+
+async function searchNews(param, success, fail){
+  console.log({param});
+  await api.get(`/article/search?keyword=${param.keyword}&lastArticleId=${param.lastArticleId}`).then(success).catch(fail);
+}
+
+
+export { updateReading, getNewsDetail, getTodayHotNews, getTodayAllNews, searchNews };
