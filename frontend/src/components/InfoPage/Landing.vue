@@ -21,7 +21,7 @@
     </div>
 
     <img
-      class="logo team-gradient"
+      class="logo logo-gradient"
       height="100px"
       :src="require('@/assets/images/logo/logo_full.png')"
     />
