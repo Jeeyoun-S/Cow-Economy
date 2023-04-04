@@ -241,17 +241,21 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <v-sheet>
+              <v-sheet class="d-flex flex-column">
                 <span class="point-md xxxxl-font">오늘의 Quiz</span>
-                <v-sheet>읽었던 기사 속 단어를 맞추는 퀴즈</v-sheet>
-                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
-                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
-                <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                <div>
+                  <v-sheet>읽었던 기사 속 단어를 맞추는 퀴즈</v-sheet>
+                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                  <v-sheet>15초 내에 보기 4개 중 답을 선택</v-sheet>
+                </div>
               </v-sheet>
-              <v-sheet>
+              <v-sheet class="d-flex flex-column">
                 <span class="point-md xxxxl-font">나의 활동 그래프</span>
+                <!-- <v-sheet class="d-flex flex-row"> -->
                 <canvas ref="barChart" height="300"></canvas>
                 <canvas ref="doughnutChart" height="300"></canvas>
+                <!-- </v-sheet> -->
               </v-sheet>
             </div>
           </div>
@@ -852,6 +856,7 @@ export default {
         ],
       },
       options: {
+        aspectRatio: 1,
         maxBarThickness: 35,
         plugins: {
           legend: {
