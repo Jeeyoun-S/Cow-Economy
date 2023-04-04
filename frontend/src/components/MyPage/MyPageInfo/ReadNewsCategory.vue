@@ -24,7 +24,7 @@
         <canvas
           class="chartjs-render-monitor"
           ref="barChart"
-          height="400"
+          height="350"
         ></canvas>
       </div>
     </div>

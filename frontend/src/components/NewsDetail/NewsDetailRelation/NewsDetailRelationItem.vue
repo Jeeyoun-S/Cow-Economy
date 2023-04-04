@@ -1,12 +1,6 @@
 <template>
   <v-sheet @click="goNewsDetail" width="100%" height="100%">
-    <v-card
-      v-if="relation.articleThumbnail != 'NaN'"
-      class="blue-shadow"
-      width="100%"
-      height="100%"
-      rounded="default"
-    >
+    <v-card class="blue-shadow" width="100%" height="100%" rounded="default">
       <!-- thumbnail -->
       <v-img
         v-if="relation.articleThumbnail != 'NaN'"
@@ -53,15 +47,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text_in_img {
-  position: absolute;
-  bottom: 0;
-  color: white;
-  width: 95%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 84.9%);
-}
-.non_image {
-  background-color: var(--main-col-4-1);
-}
-</style>
+<style></style>

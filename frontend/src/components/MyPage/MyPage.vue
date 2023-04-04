@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="transparent">
+  <v-sheet color="transparent" height="100%">
     <!-- 로그인 상태 -->
     <div v-if="isLoggedIn">
       <MyPageLoading v-if="loading"></MyPageLoading>
@@ -57,9 +57,9 @@
       </div>
     </div>
     <!-- 로그아웃 상태 -->
-    <div v-else>
+    <v-sheet color="transparent" height="100%" v-else>
       <kakaoLogin></kakaoLogin>
-    </div>
+    </v-sheet>
   </v-sheet>
 </template>
 

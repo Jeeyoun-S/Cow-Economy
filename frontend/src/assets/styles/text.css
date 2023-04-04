@@ -134,3 +134,7 @@
 .pink-gradient {
   filter: drop-shadow(0px 0px 5px var(--main-col-1));
 }
+
+.login-gradient {
+  filter: drop-shadow(0px 0px 5px var(--graph-1-col-4));
+}

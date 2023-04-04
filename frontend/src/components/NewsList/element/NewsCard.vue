@@ -1,40 +1,47 @@
 <template>
   <v-card
     max-width="100%"
-    class="mx-auto no-shadow"
+    class="d-flex flex-column"
     tile
     elevation="0"
     @click="moveDetailArticle(article.articleId)"
   >
-    <v-card>
-      <div class="d-flex flex-nowrap">
-        <!-- article thumbnail -->
-        <div v-if="this.article.article_thumbnail">
-          <v-avatar class="custom-avatar" size="125" tile>
-            <v-img :src="this.article.article_thumbnail" />
-          </v-avatar>
+    <!-- <v-card>  -->
+    <v-sheet class="px-5 py-3 d-flex flex-row align-center">
+      <!-- article thumbnail -->
+      <!-- <div v-if="this.article.article_thumbnail"> -->
+      <v-avatar
+        class="mr-3"
+        size="90"
+        tile
+        v-if="this.article.article_thumbnail"
+      >
+        <v-img
+          :src="this.article.article_thumbnail"
+          :aspect-ratio="1000 / 1000"
+        />
+      </v-avatar>
+      <!-- </div> -->
+      <div>
+        <!-- article title -->
+        <!-- - 글자수가 60 이상일 경우 ... 처리 (2줄)-->
+        <div class="py-1" v-if="this.article.article_title.length > 65">
+          {{ this.article.article_title.slice(0, 65) }} ...
         </div>
-        <div class="ml-3 mt-1 mr-2 mb-2">
-          <!-- article title -->
-          <!-- - 글자수가 60 이상일 경우 ... 처리 (2줄)-->
-          <v-card-actions
-            v-if="this.article.article_title.length > 65"
-            class="text-h7"
-            >{{ this.article.article_title.slice(0, 65) }} ...
-          </v-card-actions>
-          <v-card-actions v-else class="text-h7">{{
-            this.article.article_title
-          }}</v-card-actions>
-          <!-- article press & regtime -->
-          <div class="d-flex mt-4">
-            <v-chip outlined>{{ this.article.article_press }}</v-chip>
-            <v-chip outlined>{{
-              this.article.article_regtime.slice(0, 10)
-            }}</v-chip>
-          </div>
+        <div class="py-1" v-else>{{ this.article.article_title }}</div>
+        <!-- article press & regtime -->
+        <div class="d-flex flex-row py-1">
+          <v-chip class="mr-2" outlined small>{{
+            this.article.article_press
+          }}</v-chip>
+          <v-chip outlined small>{{
+            this.article.article_regtime.slice(0, 10)
+          }}</v-chip>
         </div>
       </div>
-    </v-card>
+    </v-sheet>
+    <!-- </v-card> -->
+    <v-divider></v-divider>
   </v-card>
 </template>
 
@@ -57,12 +64,7 @@ export default {
 </script>
 
 <style>
-.no-shadow {
+/* .no-shadow {
   box-shadow: none;
-}
-
-.custom-avatar {
-  border-top-left-radius: 3;
-  border-bottom-left-radius: 3;
-}
+} */
 </style>

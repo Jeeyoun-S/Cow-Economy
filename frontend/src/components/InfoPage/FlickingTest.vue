@@ -5,7 +5,22 @@
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
+      <div class="dot"></div>
     </div>
+    <v-btn
+      class="next-icon"
+      icon
+      large
+      color="var(--main-col-1)"
+      @click="nextFlicking()"
+    >
+      <v-icon x-large>mdi-chevron-down</v-icon>
+    </v-btn>
+    <img
+      @click="moveToHome()"
+      class="top-logo"
+      src="@/assets/images/logo/logo.png"
+    />
     <div class="background">
       <div class="shapes">
         <div class="circle c1"></div>
@@ -32,7 +47,6 @@
                 <div class="glitter glitter2"></div>
                 <div class="glitter glitter3"></div>
                 <div class="glitter glitter4"></div>
-                k
                 <div class="glitter glitter5"></div>
                 <div class="glitter glitter6"></div>
                 <div class="glitter glitter7"></div>
@@ -40,10 +54,11 @@
                 <div class="circle circle1"></div>
                 <div class="circle circle2"></div>
               </div>
+
               <img
                 class="logo"
-                height="150px"
-                :src="require('@/assets/images/icon/logo_full.png')"
+                height="120px"
+                :src="require('@/assets/images/logo/logo_full.png')"
               />
               <div class="detail d-flex flex-column align-center">
                 <div class="title">
@@ -68,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div class="page features">
+          <!-- <div class="page news">
             <div class="number"></div>
             <div class="feature">
               <h3>Infinite Flicking</h3>
@@ -120,10 +135,226 @@
                 ><h2>LEARN&nbsp;<br />MORE&nbsp;</h2></a
               >
             </div>
+          </div> -->
+        </div>
+      </div>
+      <!-- <div class="iphone">
+        <div class="head"></div>
+        <div class="container">
+          <Flicking class="panels" :options="gap10Options">
+            <div class="panel">dd</div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking>
+        </div>
+        <div class="home"></div>
+      </div> -->
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main news">
+            <div class="wheel"></div>
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <!-- <div class="func-1 point-b main-col-1 xxxxl-font">
+                다양한 경제 뉴스 보기
+              </div> -->
+              <div
+                class="func-1 point-b main-col-1 xxxxl-font"
+                style="height: 40px"
+              ></div>
+              <div class="d-flex flex-column align-center">
+                <div class="d-flex flex-wrap align-center justify-center">
+                  <v-chip
+                    class="chip-1 mr-1 my-1 px-4"
+                    color="var(--graph-1-col-3)"
+                    outlined
+                    style="background-color: white !important"
+                    >인기 뉴스</v-chip
+                  >
+                  <v-chip
+                    class="chip-1 mr-1 my-1 px-4"
+                    color="var(--graph-1-col-1)"
+                    outlined
+                    style="background-color: white !important"
+                    >최신 트렌드</v-chip
+                  ><v-chip
+                    class="chip-1 mr-1 my-1 px-4"
+                    color="var(--graph-1-col-5)"
+                    outlined
+                    style="background-color: white !important"
+                    >최신 뉴스</v-chip
+                  >
+                </div>
+                <div class="d-flex flex-wrap align-center justify-center">
+                  <v-chip
+                    class="chip-1 mr-1 my-1 px-4"
+                    color="var(--graph-1-col-4)"
+                    outlined
+                    style="background-color: white !important"
+                    >카테고리별 뉴스</v-chip
+                  >
+
+                  <v-chip
+                    class="chip-1 px-4 my-1"
+                    color="var(--graph-1-col-6)"
+                    outlined
+                    style="background-color: white !important"
+                    >키워드 검색</v-chip
+                  >
+                </div>
+              </div>
+              <v-sheet height="450px"></v-sheet>
+              <div class="phone">
+                <div class="head"></div>
+                <div class="container">
+                  <Flicking
+                    class="panels"
+                    :options="gap10Options"
+                    :plugins="plugins"
+                  >
+                    <div class="panel">
+                      2월 회사채 발행 19% 증가한 20조원…주식 발행은 84% 급감
+                    </div>
+                    <div class="panel">
+                      “주식 사라” vs “아직 아냐”…증권사 애널리스트 격돌
+                    </div>
+                    <div class="panel">
+                      비트코인, 바이낸스 악재에 하락..."2만5천달러까지 떨어질
+                      수도" [코인브리핑]
+                    </div>
+                    <div class="panel">
+                      비트코인 1분기 72% 급등…2년 만에 최대 상승폭
+                    </div>
+                    <div class="panel">
+                      "예비신랑, 삼성전자에 물렸습니다"…결혼 앞둔 여성들 '멘붕'
+                      [박의명의 불개미 구조대]
+                    </div>
+                    <div class="panel">
+                      주총 온라인 생중계...주주가치 제고 나선 기업은
+                    </div>
+                  </Flicking>
+                </div>
+                <div class="home"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="imac">
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <v-sheet
+                height="70"
+                width="90%"
+                color="transparent"
+                class="mb-2 d-flex flex-column justify-end align-start"
+              >
+                <span class="white-col-1 point-md xxxxl-font pink-gradient"
+                  >단어</span
+                >
+                <span class="main-col-1 md-font"
+                  >기사 속 밑줄 친 경제 용어를 클릭해보세요!</span
+                >
+                <span class="main-col-1 md-font"
+                  >해당 용어에 대한 설명을 볼 수 있습니다.</span
+                >
+              </v-sheet>
+              <v-sheet class="sample pa-4 sm-font" rounded="lg" width="90%">
+                남양유업은 지난 2013년 대리점 물량 밀어내기 갑질 논란, 2021년
+                불가리스 사태, 창업주 3세들의 마약 투약과 최근 한앤컴퍼니와의
+                경영권 분쟁 등의 사건으로 인해 주가가 지속적으로 하락세다.
+                실적도 부진하다.
+                <span style="position: relative">
+                  <v-icon
+                    style="position: absolute; left: 70%; top: 60%"
+                    color="black"
+                    large
+                    >mdi-cursor-default</v-icon
+                  >
+                  <span class="underline">영업손실</span>
+                </span>
+                은 868억원을 내,
+                <span class="memo-sample">적자폭을 11.5%</span> 늘렸고
+                당기순손실은 781억원을 냈다.
+              </v-sheet>
+              <v-sheet
+                height="70"
+                width="90%"
+                color="transparent"
+                class="mt-2 d-flex flex-column justify-start align-end"
+              >
+                <span class="white-col-1 point-md xxxxl-font pink-gradient"
+                  >메모</span
+                >
+                <span class="main-col-1 md-font"
+                  >기사 내용을 드래그해 메모를 써보세요!</span
+                >
+                <span class="main-col-1 md-font"
+                  >선택한 내용을 메모에 추가하는 창이 뜹니다</span
+                >
+              </v-sheet>
+              <!-- <div>뉴스 상세보기</div>
+              <div>단어 뜻 보기</div>
+              <div>메모 남기기</div>
+              <div>카카오톡 공유</div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <div>퀴즈</div>
+              <div>마이페이지 그래프</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <!-- <div class="wheel"></div> -->
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            >
+              <div class="detail d-flex flex-column align-center">
+                <div class="title">
+                  <span>소 귀에 경제 읽기</span>
+                  <!-- <div class="cursor"></div> -->
+                </div>
+                <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
+                <span class="description">지금 바로</span>
+                <span class="description">경제 공부를 시작해보세요!</span>
+                <MainHeaderLogin class="mt-3"></MainHeaderLogin>
+                <v-btn
+                  class="px-10 mt-3"
+                  elevation="0"
+                  color="var(--main-col-1)"
+                  to="/home"
+                  dark
+                  rounded
+                  outlined
+                >
+                  로그인 없이 시작하기
+                </v-btn>
+                <div>SSAFY 8기 A509 오난쥉이조</div>
+                <div>엄희정 민동주 서지윤 손승환 신도연</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="imac">
         <div class="screen">
           <div class="container">
             <Flicking class="panels" :options="gap5Options">
@@ -137,8 +368,8 @@
         <div class="bottom"></div>
         <div class="stand"></div>
         <div class="stand-bottom"></div>
-      </div>
-      <div class="macbook">
+      </div> -->
+      <!-- <div class="macbook">
         <div class="screen ratio062">
           <div class="container">
             <Flicking class="panels" :options="gap5Options">
@@ -150,8 +381,8 @@
           </div>
         </div>
         <div class="bottom"></div>
-      </div>
-      <div class="ipad ratio13">
+      </div> -->
+      <!-- <div class="ipad ratio13">
         <div class="container">
           <Flicking class="panels" :options="gap5Options">
             <div class="panel"></div>
@@ -160,8 +391,20 @@
             <div class="panel"></div>
           </Flicking>
         </div>
-      </div>
-      <div class="iphone">
+      </div> -->
+      <!-- <div class="eg-flick-viewport">
+        <div class="eg-flick-camera">
+          <div class="page main">
+            <div class="wheel"></div>
+            <div
+              class="container d-flex flex-column justify-center align-center"
+            > -->
+      <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div>
         <div class="head"></div>
         <div class="container">
           <Flicking class="panels" :options="gap10Options">
@@ -173,6 +416,18 @@
         </div>
         <div class="home"></div>
       </div>
+      <div>
+        <div class="head"></div>
+        <div class="container">
+          <Flicking class="panels" :options="gap10Options">
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </Flicking>
+        </div>
+        <div class="home"></div>
+      </div> -->
     </Flicking>
   </div>
 </template>
@@ -180,8 +435,10 @@
 <script>
 import { Flicking } from "@egjs/vue-flicking";
 import Scene from "scenejs";
-// import { typing } from "@scenejs/effects";
+import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
+// import { shakeY } from "@scenejs/effects";
+import { AutoPlay } from "@egjs/flicking-plugins";
 
 export default {
   name: "FlickingTest",
@@ -200,14 +457,27 @@ export default {
         circular: true,
         gap: 10,
       },
-      gap5Options: {
-        circular: true,
-        gap: 10,
-      },
+      // gap5Options: {
+      //   circular: true,
+      //   gap: 10,
+      // },
+      plugins: [
+        new AutoPlay({ duration: 1000, direction: "NEXT", stopOnHover: false }),
+      ],
+      snackbarSample: true,
     };
+  },
+  methods: {
+    nextFlicking() {
+      this.$refs.flicking.next();
+    },
+    moveToHome() {
+      this.$router.push("/home");
+    },
   },
   mounted() {
     const flicking = this.$refs.flicking;
+    // console.log(flicking.panels);
     const pagination = document.querySelector(".pagination");
     const dots = [].slice.call(pagination.querySelectorAll(".dot"));
 
@@ -227,6 +497,8 @@ export default {
       //   pagination.classList.remove("black");
       // }
 
+      // console.log(flicking.index, index);
+
       dots[flicking.index].classList.remove("selected");
       dots[index].classList.add("selected");
     });
@@ -236,16 +508,24 @@ export default {
         ".c1": {
           0: {
             right: "45%",
-            transform: "translate(0%, 0vh) translateY(0%)",
+            transform: "translate(0%, 0vh) translateY(0%) scale(1)",
           },
           1: {
             right: "60%",
-            transform: "translate(0%, 50vh) translateY(90%)",
+            transform: "translate(0%, 50vh) translateY(100%) scale(1)",
+          },
+          1.5: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(10)",
+          },
+          1.8: {
+            transform:
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(50)",
           },
           2: {
             right: "85%",
             transform:
-              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(1)",
+              "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(100)",
           },
           3: {
             right: "10%",
@@ -304,91 +584,107 @@ export default {
           },
           3: {
             left: "57%",
-            transform: "translate(-50%, 0vh) translateY(-60%) scale(0.27)",
+            transform: "translate(-35%, 0vh) translateY(-30%) scale(0.27)",
           },
         },
         ".c5": {
           0: {
             transform: "translate(0, 0%)",
+            opacity: 1,
+            "border-color": "var(--quiz-1-col-4)",
           },
           1: {
-            transform: "translate(0, -100%)",
+            transform: "translate(0, -150%)",
+            // "z-index": 0,
+          },
+          1.5: {
+            transform: "translate(0, -20%)",
+            "z-index": 1,
+            "border-color": "var(--main-col-5)",
           },
         },
         ".c6": {
           0: {
             transform: "translate(0, 0%) translate2(0vw, 0vh)",
+            "border-color": "var(--quiz-1-col-6)",
           },
           1: {
             transform: "translate(0, -100%) translate2(0vw, -100vh)",
           },
-        },
-        ".iphone": {
-          0: {
-            transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
-          },
-          1: {
-            transform:
-              "translate(-50%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
-            background: "#eee",
-          },
-          2: {
-            transform:
-              "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
-            background: "#444",
-          },
-          3: {
-            transform: "translateY3(-50vh) translateY2(-100%)",
+          1.5: {
+            transform: "translate(0, 45%) translate2(0vw, 0vh)",
+            "z-index": 1,
+            "border-color": "var(--main-col-5)",
           },
         },
-        ".imac": {
-          1: {
-            transform:
-              "translate(-50%) translate2(0px, 170px) translateY(50vh)",
-            opacity: 0,
-          },
-          2: {
-            transform: "translateY(0vh) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform: "translateY(-50vh) translateY2(-100%)",
-          },
-        },
-        ".macbook": {
-          1: {
-            transform:
-              "translate(-50%) translate2(-200px, 170px) translateY(70vh)",
-            opacity: 0,
-          },
-          2: {
-            transform:
-              "translateY(0vh) translate2(-200px, 170px) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform:
-              "translateY(-50vh) translate2(-200px, 0px) translateY2(-150%)",
-          },
-        },
-        ".ipad": {
-          1: {
-            transform:
-              "translate(-50%) translate2(200px, 170px) translateY(70vh)",
-          },
-          1.3: {
-            opacity: 0,
-          },
-          2: {
-            transform:
-              "translateY(0vh) translate2(200px, 170px) translateY2(0%)",
-            opacity: 1,
-          },
-          3: {
-            transform:
-              "translateY(-50vh) translate2(200px, 50px) translateY2(-100%)",
-          },
-        },
+        // ".iphone": {
+        //   0: {
+        //     transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
+        //     opacity: 2,
+        //   },
+        //   1: {
+        //     transform:
+        //       "translate(-60%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
+        //     background: "#eee",
+        //   },
+        //   2: {
+        //     transform:
+        //       "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
+        //     background: "#444",
+        //     opacity: 0,
+        //   },
+        //   3: {
+        //     transform: "translateY3(-50vh) translateY2(-100%)",
+        //   },
+        // },
+        // ".imac": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(0px, 170px) translateY(50vh)",
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform: "translateY(0vh) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform: "translateY(-50vh) translateY2(-100%)",
+        //   },
+        // },
+        // ".macbook": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(-200px, 170px) translateY(70vh)",
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform:
+        //       "translateY(0vh) translate2(-200px, 170px) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform:
+        //       "translateY(-50vh) translate2(-200px, 0px) translateY2(-150%)",
+        //   },
+        // },
+        // ".ipad": {
+        //   1: {
+        //     transform:
+        //       "translate(-50%) translate2(200px, 170px) translateY(70vh)",
+        //   },
+        //   1.3: {
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     transform:
+        //       "translateY(0vh) translate2(200px, 170px) translateY2(0%)",
+        //     opacity: 1,
+        //   },
+        //   3: {
+        //     transform:
+        //       "translateY(-50vh) translate2(200px, 50px) translateY2(-100%)",
+        //   },
+        // },
         ".background2": {
           1: {
             transform: "translateY(100vh)",
@@ -400,14 +696,14 @@ export default {
             transform: "translateY(-100vh)",
           },
         },
-        ".iphone .container": {
-          0.9: {
-            opacity: 0,
-          },
-          1: {
-            opacity: 1,
-          },
-        },
+        // ".iphone .container": {
+        //   0.9: {
+        //     opacity: 0,
+        //   },
+        //   1: {
+        //     opacity: 1,
+        //   },
+        // },
         ".feature": (i) => ({
           0.9: {
             transform: "translate(-50%, -50%) translate2(0px, 0px)",
@@ -423,14 +719,14 @@ export default {
             opacity: 0,
           },
         }),
-        ".panel.slogan h2": {
-          1.7: {
-            opacity: 0,
-          },
-          2: {
-            opacity: 1,
-          },
-        },
+        // ".panel.slogan h2": {
+        //   1.7: {
+        //     opacity: 0,
+        //   },
+        //   2: {
+        //     opacity: 1,
+        //   },
+        // },
         ".c7": {
           1: {
             transform: "translate(0%, 0%)",
@@ -438,21 +734,139 @@ export default {
           },
           2: {
             transform: "translate(0%, 0%) scale(1)",
-            top: "80%",
+            top: "70%",
           },
           3: {
             top: "50%",
-            transform: "translate(-60%, -60%) scale(0.3)",
+            transform: "translate(-60%, -70%) scale(0.3)",
+          },
+        },
+        ".next-icon": {
+          0: {
+            opacity: 1,
+            "z-index": 2080,
+          },
+          3.5: {
+            opacity: 1,
+            "z-index": -100,
+          },
+        },
+        ".top-logo": {
+          0: {
+            opacity: 0,
+          },
+          0.8: {
+            opacity: 1,
+          },
+        },
+        // "func-1": {
+        //   1: typing({
+        //     text: "다양한 경제 뉴스 읽기",
+        //     duration: 1,
+        //     delay: 0.5,
+        //     end: 11,
+        //   }),
+        // },
+        ".chip-1": {
+          0: {
+            opacity: 0,
+          },
+          1: {
+            opacity: 1,
+          },
+          2: {
+            opacity: 0,
           },
         },
       },
       {
         selector: true,
       }
-    ).setTime(0);
+    )
+      // .on("update", ({ progress }) => {
+      //   if (progress >= 2) {
+      //     new Scene(
+      //       {
+      //         "func-1": typing({
+      //           text: "다양한 경제 뉴스 읽기",
+      //           duration: 1,
+      //           delay: 0.5,
+      //           end: 11,
+      //         }),
+      //       },
+      //       {
+      //         iterationCount: "infinite",
+      //         direction: "alternate",
+      //         selector: true,
+      //       }
+      //     ).play();
+      //   }
+      // })
+      .setTime(0);
 
     this.$refs.flicking.on("move", () => {
       scene.setTime(flicking.camera.progress);
+      if (flicking.camera.progress == 1) {
+        new Scene(
+          {
+            ".func-1": typing({
+              text: "다양한 경제 뉴스 보기.",
+              duration: 1,
+              end: 13,
+            }),
+          },
+          {
+            // iterationCount: "1",
+            direction: "alternate",
+            selector: true,
+          }
+        ).play();
+      } else if (flicking.camera.progress == 2) {
+        new Scene(
+          {
+            ".underline": {
+              0: {
+                color: "rgba(0, 0, 0, 0.87)",
+                "font-family": "var(--main-font-2)",
+              },
+              1: {
+                color: "var(--main-col-1)",
+                "font-family": "var(--main-font-5)",
+              },
+            },
+            ".word": {
+              0: {
+                transform: "translate(0%, 0%) scale(0)",
+              },
+              1: {
+                transform: "translate(0%, 0%) scale(0)",
+              },
+              2.5: {
+                transform: "translate(70%, -250%) scale(1)",
+              },
+              4: {
+                transform: "translate(70%, -250%) scale(1)",
+              },
+            },
+            ".memo-sample": {
+              0: {
+                "background-color": "transparent",
+                color: "black",
+              },
+              1: {
+                "background-color": "var(--main-col-2)",
+                color: "white",
+              },
+            },
+          },
+          {
+            iterationCount: "infinite",
+            direction: "alternate",
+            selector: true,
+          }
+        ).playCSS();
+        // 매출총이익에서 판매비와 일반관리비를 차감한 금액으로, 총이익보다 판매비와 일반관리비가 클 경우에 나타난다. 영업이익과 함께 영업손실은, 기업의 정상적인 영업활동이 아닌 활동에서 발생한 수익과 비용을 포함하지 않는다. 즉 영업에 직접 관련되지 않은 영업외수익·비용, 특별수익·손실, 법인세 등은 제외된다.
+      }
     });
 
     new Scene(
@@ -570,7 +984,7 @@ export default {
             opacity: 1,
           },
           2: {
-            transform: "translateY(-115%)  scale(1)",
+            transform: "translateY(-105%)  scale(1)",
           },
           options: {
             delay: 1.3,
@@ -594,6 +1008,23 @@ export default {
         iterationCount: "1",
       }
     ).playCSS();
+
+    new Scene(
+      {
+        ".next-icon": {
+          0: {
+            transform: "translateY(100%)",
+          },
+          1: {
+            transform: "translateY(-100%)",
+          },
+        },
+      },
+      {
+        selector: true,
+        iterationCount: "infinite",
+      }
+    ).play();
 
     // new Scene(
     //   {
@@ -643,7 +1074,7 @@ export default {
         var delta = e.deltaY;
 
         if (Math.abs(delta) > 40) {
-          if (delta > 0 && flicking.index < 3) {
+          if (delta > 0 && flicking.index < 4) {
             setScrollTimer();
             flicking.next();
           } else if (delta < 0 && flicking.index > 0) {
@@ -666,6 +1097,32 @@ export default {
 .title {
   margin: 10px;
 }
+.top-logo {
+  position: absolute;
+  margin: 12px;
+  height: 42px;
+  /* bottom: 5%;
+  left: 50%; */
+  /* margin-left: -22px; width의 50% */
+  /* margin-top: -50px; height의 50% */
+  /* transform: translateY(-50%); */
+  z-index: 2080;
+}
+.next-icon {
+  /* position: fixed; */
+  /* bottom: 5%; */
+  /* left: 45.5%; */
+  /* left: 50%; */
+  width: 44px;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  margin-left: -22px; /* width의 50% */
+  /* margin-top: -50px; height의 50% */
+  /* transform: translateY(-50%); */
+  z-index: 2080;
+  /* z-index: 2080; */
+}
 /* .title .cursor {
   display: inline-block;
   width: 2px;
@@ -675,12 +1132,19 @@ export default {
 .title span {
   font-size: 30px;
   color: var(--main-col-1);
-  font-family: var(--main-font-5);
+  font-family: var(--logo-font-2);
 }
 /* * {
   font-family: "Open Sans", sans-serif !important;
   letter-spacing: 0.5px !important;
 } */
+.word {
+  position: absolute;
+  top: -29%;
+  left: 28%;
+  /* opacity: 0; */
+  transform: "translate(0%, 0%) scale(0)";
+}
 /* 첫 페이지 서비스 로고 등장 효과 */
 .line-top {
   position: absolute;
@@ -732,6 +1196,9 @@ export default {
   height: 2px;
   background: var(--main-col-3);
   transform-origin: 0px 1px;
+}
+.detail {
+  margin-top: 60px;
 }
 .logo {
   position: absolute;
@@ -857,91 +1324,167 @@ body,
   bottom: 90% !important;
   left: 65% !important;
 }
-.iphone,
+/* .iphone,
 .ipad,
-.macbook,
-.imac {
+.macbook, */
+/* .imac {
   z-index: 2050 !important;
   transform: translateY(100vh) !important;
+} */
+.phone {
+  position: absolute;
+  width: 210px;
+  height: 360px;
+  border-radius: 20px;
+  background: #eee;
+  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
+  left: 50%;
+  transform: translate(-50%, 40px);
+  margin: auto;
+  transform-origin: bottom;
 }
-.iphone {
-  position: absolute !important;
-  width: 200px !important;
-  height: 400px !important;
-  border-radius: 20px !important;
-  background: #eee !important;
-  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px !important;
-  left: 50% !important;
-  top: 100% !important;
-  transform: translate(-50%, -90px) !important;
-  margin: auto !important;
-  transform-origin: bottom !important;
+.phone .head {
+  position: absolute;
+  width: 36px;
+  height: 8px;
+  top: 22px;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  margin: auto;
+  background: #ddd;
+}
+.phone .container {
+  position: absolute;
+  width: calc(100% - 16px);
+  height: calc(100% - 100px);
+  background: transparent;
+  border: 2px solid #ddd;
+  background: #eee;
+  position: absolute;
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 10px;
+  padding: 0px;
+}
+.phone .home {
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  border: 2px solid #ccc;
+  background: #eee;
+  border-radius: 50%;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+/* .iphone {
+  position: absolute;
+  width: 200px;
+  height: 400px;
+  border-radius: 20px;
+  background: #eee;
+  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -90px);
+  margin: auto;
+  transform-origin: bottom;
 }
 .iphone .head {
-  position: absolute !important;
-  width: 36px !important;
-  height: 8px !important;
-  top: 22px !important;
-  left: 0 !important;
-  right: 0 !important;
-  border-radius: 4px !important;
-  margin: auto !important;
-  background: #ddd !important;
+  position: absolute;
+  width: 36px;
+  height: 8px;
+  top: 22px;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  margin: auto;
+  background: #ddd;
 }
 .iphone .container {
-  position: absolute !important;
-  width: calc(100% - 16px) !important;
-  height: calc(100% - 100px) !important;
-  background: transparent !important;
-  border: 2px solid #ddd !important;
-  background: #eee !important;
-  position: absolute !important;
-  border-radius: 5px !important;
-  left: 0 !important;
-  right: 0 !important;
-  margin: auto !important;
-  bottom: 52px !important;
+  position: absolute;
+  width: calc(100% - 16px);
+  height: calc(100% - 100px);
+  background: transparent;
+  border: 2px solid #ddd;
+  background: #eee;
+  position: absolute;
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 52px;
 }
 .iphone .home {
-  position: absolute !important;
-  width: 36px !important;
-  height: 36px !important;
-  border: 2px solid #ccc !important;
-  background: #eee !important;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #ccc;
+  background: #eee;
   border-radius: 50% !important;
   bottom: 6px !important;
   left: 0 !important;
   right: 0 !important;
   margin: auto !important;
-}
+} */
 
 .panels {
-  position: absolute !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 100% !important;
-  height: 150px !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 180px !important;
 }
 .panels .panel {
-  position: relative !important;
-  width: 70% !important;
-  height: 100% !important;
-  border-radius: 10px !important;
-  background: #f55 !important;
+  display: flex;
+  align-items: flex-end;
+  width: 75%;
+  height: 100%;
+  border-radius: 10px;
+  /* background: #f55; */
+  margin-right: 8px;
+  background-size: cover;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  background-image: linear-gradient(to left, red, yellow);
 }
-.panels .panel:nth-child(4n + 1) {
-  background-color: #78caff !important;
+.panels .panel:nth-child(6n + 1) {
+  /* background-color: #78caff; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/032/2023/03/28/0003213554_001_20230328074601106.jpg?type=w647");
 }
-.panels .panel:nth-child(4n + 2) {
-  background-color: #ffd99d !important;
+.panels .panel:nth-child(6n + 2) {
+  /* background-color: #ffd99d; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/018/2023/03/28/0005450748_001_20230328074402156.jpg?type=w647");
 }
-.panels .panel:nth-child(4n + 3) {
-  background-color: #ffb0b9 !important;
+.panels .panel:nth-child(6n + 3) {
+  /* background-color: #ffb0b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987742_001_20230328101902374.jpg?type=w647");
 }
-.panels .panel:nth-child(4n) {
-  background-color: #b5f6b9 !important;
+.panels .panel:nth-child(6n + 4) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/277/2023/04/02/0005239612_001_20230402082201352.jpg?type=w647");
 }
-.ipad {
+.panels .panel:nth-child(6n + 5) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/015/2023/04/01/0004827547_001_20230401134201025.jpg?type=w647");
+}
+.panels .panel:nth-child(6n) {
+  /* background-color: #b5f6b9; */
+  background-image: linear-gradient(to bottom, transparent, black),
+    url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987841_001_20230328115902063.jpg?type=w647");
+}
+/* .ipad {
   position: absolute !important;
   width: 150px !important;
   background: #444 !important;
@@ -963,8 +1506,8 @@ body,
 }
 .ipad .panels .panel {
   width: 40% !important;
-}
-.imac {
+} */
+/* .imac {
   position: absolute;
   width: 280px !important;
   left: 50% !important;
@@ -1016,8 +1559,8 @@ body,
   height: 6px !important;
   border-radius: 3px !important;
   background: #e5e5e5 !important;
-}
-.macbook {
+} */
+/* .macbook {
   position: absolute !important;
   width: 240px !important;
   left: 50% !important;
@@ -1052,7 +1595,7 @@ body,
   background: #eee !important;
   margin: 3px auto 0px !important;
   border-radius: 5px !important;
-}
+} */
 
 .background2 {
   background: #9c5dea !important;
@@ -1062,15 +1605,21 @@ body,
 .flicking .eg-flick-viewport,
 .flicking .eg-flick-camera,
 .flicking .page {
-  position: relative !important;
-  width: 100% !important;
-  height: 100% !important;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
-.flicking .page .container {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+.flicking .page.main .container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.flicking .page.news .container {
+  /* position: absolute;
+  left: 50%;
+  bottom: 30%;
+  transform: translate(-50%, -50%); */
 }
 /* .flicking .page.main h1,
 .flicking .page.main .description {
@@ -1096,7 +1645,7 @@ body,
   color: var(--main-col-1);
 }
 
-.flicking .page.features h3,
+/* .flicking .page.features h3,
 .flicking .page.features .description {
   color: #fff !important;
 }
@@ -1105,13 +1654,13 @@ body,
   width: 200px !important;
   top: 50% !important;
   left: 50% !important;
-}
+} */
 
-.flicking .page.slogan h2 span[data-text]:before {
+/* .flicking .page.slogan h2 span[data-text]:before {
   content: attr(data-text) !important;
 }
 .flicking .page.slogan .container {
-  min-width: 600px !important;
+  min-width: 600px;
   height: 350px !important;
   text-align: center !important;
   color: #eee !important;
@@ -1125,15 +1674,15 @@ body,
   padding: 5px 10px 5px 10px !important;
   border: 3px solid #eee !important;
   color: #eee !important;
-}
+} */
 
 .pagination {
   /* position: relative; */
-  position: absolute !important;
-  right: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 2080 !important;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2080;
 }
 .pagination .dot {
   position: relative !important;

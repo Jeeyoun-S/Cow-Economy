@@ -4,7 +4,7 @@
     <v-toolbar flat height="65px">
       <!-- 로고 (글씨) -->
       <v-sheet class="pt-1" height="45px">
-        <img height="100%" :src="require('@/assets/images/logo.png')" />
+        <img height="100%" :src="require('@/assets/images/logo/logo.png')" />
       </v-sheet>
       <v-spacer></v-spacer>
       <!-- 검색 아이콘 -->
@@ -14,7 +14,7 @@
     </v-toolbar>
 
     <!-- 하단 메뉴 -->
-    <v-tabs class="menu b-font" color="var(--main-col-2)" grow>
+    <v-tabs class="b-font" color="var(--main-col-2)" grow>
       <v-tab to="/home">Home</v-tab>
       <v-tab to="/news">News</v-tab>
       <v-tab to="/quiz">Quiz</v-tab>

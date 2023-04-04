@@ -63,3 +63,35 @@
 .v-dialog {
   box-shadow: none !important;
 }
+.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
+  > .v-input__control
+  > .v-input__slot {
+  box-shadow: 0px 0px 4px 0px lightgray !important;
+}
+.menu .v-tab {
+  font-size: 17px !important;
+  font-family: var(--main-font-1-1);
+  color: var(--main-col-1) !important;
+  /* padding: 0 15px; */
+  min-width: 0px;
+}
+.menu .v-tab.v-tab--active.selected-category {
+  font-family: var(--main-font-3);
+}
+.menu .v-tabs-slider-wrapper {
+  height: 3px !important;
+  color: var(--main-col-1) !important;
+}
+#list-select .v-text-field fieldset,
+.v-text-field .v-input__control {
+  color: var(--main-col-1) !important;
+}
+#list-select .theme--light.v-icon {
+  color: var(--main-col-1) !important;
+}
+#list-select .theme--light.v-select .v-select__selections {
+  color: var(--main-col-1) !important;
+}
+#news-content .v-btn:not(.v-btn--round).v-size--small {
+  min-width: 45px;
+}
