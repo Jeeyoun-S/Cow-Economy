@@ -1,3 +1,4 @@
+import {searchNews} from '@/api/modules/article.js';
 const newsStore = {
   namespaced: true,
   state: {
@@ -157,6 +158,7 @@ const newsStore = {
   },
   mutations: {
     SET_SEARCH_TEXT(state, payload) {
+      console.log(payload);
       state.searchText = payload;
     },
     SET_SEARCHED(state, payload) {
@@ -170,14 +172,30 @@ const newsStore = {
     }
   },
   actions: {
+    init({commit}){
+      console.log("## 기사 초기화 동작");
+      commit("SET_NEWS", []); 
+      commit("SET_SEARCH_TEXT", "");
+      commit("SET_SEARCHED", false);
+    },
     setSearchText({ commit }, payload) {
       commit("SET_SEARCH_TEXT", payload);
     },
     setSearched({ commit }, payload) {
       commit("SET_SEARCHED", payload);
     },
-    setCurNews({ commit }, payload) {
-      commit("SET_CUR_NEWS", payload)
+    async setNews({commit}, param){
+      console.log(param.keyword+ " " + param.lastArticleId);
+      await searchNews(param,
+        async({data}) => {
+          commit("SET_NEWS",data.data);
+          if(data.data.lenth>0)
+            commit("SET_SEARCHED", true);
+        }
+      ),
+      (error) => {
+        console.log(error);
+      }
     }
   },
   getters: {
@@ -185,14 +203,14 @@ const newsStore = {
       return state.news;
     },
     searchNews(state) {
-      if (!state.searchText) {
+      if (!state.searchText || state.news === []) {
         return [];
       }
-      const searchTextLowerCase = state.searchText.toLowerCase();
-      return state.news.filter((newsItem) =>
-        newsItem.article_title.toLowerCase().includes(searchTextLowerCase) ||
-        newsItem.article_content.toLowerCase().includes(searchTextLowerCase)
-      );
+      // const searchTextLowerCase = state.searchText.toLowerCase();
+      // return state.news.filter((newsItem) =>
+      //   newsItem.articleTitle.toLowerCase().includes(searchTextLowerCase)
+      // );
+      return state.news;
     },
   },
 };

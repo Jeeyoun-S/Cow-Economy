@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("###########spring security#############");
         http
                 // 교차출처 리소스 공유(CORS) 설정
                 .cors()
