@@ -41,7 +41,7 @@ export default {
       await this.init();
       this.setSearchText(this.keyword);
       await this.setNews({"keyword": this.keyword, "lastArticleId": Number.MAX_SAFE_INTEGER + 1});
-      this.setSearched(true);
+      // this.setSearched(true);
     },
     clearKeyword() {
       this.keyword = "";

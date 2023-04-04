@@ -103,7 +103,7 @@ export default {
   },
   data() {
     return {
-      page: this.newsList[this.newsList.length-1].articleId,
+      page: 0,
       items: this.newsList,
       selectedCategory: null,
       sortKey: "최신순",
@@ -134,6 +134,7 @@ export default {
     async infiniteHandler($state) {
       console.log("infiniteHandler");
       console.log("마지막 기사: "+this.page);
+      this.page = this.newsList[this.newsList.length-1].articleId
       await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
       if (this.newsList.length>0){
         await setTimeout(() => {

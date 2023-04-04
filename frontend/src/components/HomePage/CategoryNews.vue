@@ -55,7 +55,7 @@
     </div>
 
     <news-card
-      v-for="(article,idx) in filteredArticles"
+      v-for="(article, idx) in filteredArticles"
       :key="idx"
       :article="article"
       class="mx-auto my-2 d-flex flex-row"
@@ -67,11 +67,11 @@
 
 <script>
 import { getTodayAllNews } from "@/api/modules/article.js";
-import NewsCard from '@/common/component/NewsCard.vue';
+import NewsCard from "@/common/component/NewsCard.vue";
 export default {
   name: "CategoryNews",
   components: {
-    NewsCard
+    NewsCard,
   },
   data() {
     return {
