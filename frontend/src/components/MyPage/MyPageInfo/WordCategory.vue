@@ -75,7 +75,7 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: "Categories",
+              label: "",
               data: data,
               backgroundColor: "rgba(229, 232, 253, 0.8)",
               borderColor: "rgba(81, 118, 250, 1)",

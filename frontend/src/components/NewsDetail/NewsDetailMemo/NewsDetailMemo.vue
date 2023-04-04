@@ -53,7 +53,7 @@
         dark
         width="100%"
         rounded="xl"
-        ><span class="sm-font">메모 작성은 로그인 후 가능합니다.</span>
+        ><span class="sm-font">메모 작성은 회원만 가능합니다.</span>
         <v-btn
           class="my-1 ml-auto"
           @click="moveLogin()"
