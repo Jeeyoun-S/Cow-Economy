@@ -84,73 +84,8 @@
               </div>
             </div>
           </div>
-          <!-- <div class="page news">
-            <div class="number"></div>
-            <div class="feature">
-              <h3>Infinite Flicking</h3>
-              <p class="description">
-                You can dynamically add panels to the flicking.
-              </p>
-            </div>
-            <div class="feature">
-              <h3>Free Scroll</h3>
-              <p class="description">The panels are freely scrollable..</p>
-            </div>
-            <div class="feature">
-              <h3>Variable Size</h3>
-              <p class="description">
-                You can place multiple panels and specify various sizes for each
-                panel.
-              </p>
-            </div>
-            <div class="feature">
-              <h3>Flexible Align</h3>
-              <p class="description">
-                Use Hanger and Anchor to provide customizable alignment.
-              </p>
-            </div>
-            <div class="feature">
-              <h3>Progress</h3>
-              <p class="description">
-                Indicates the overall progress of the Flicking.
-              </p>
-            </div>
-            <div class="feature">
-              <h3>Bound</h3>
-              <p class="description">
-                Bound the panels so that they are not out of the flicking area.
-              </p>
-            </div>
-          </div>
-          <div class="page slogan">
-            <div class="container">
-              <h2>
-                Everyday <span data-text="30"></span> million people experience.
-                <br />It's reliable, flexible and extendable carousel.
-              </h2>
-            </div>
-          </div>
-          <div class="page more">
-            <div class="container">
-              <a href="https://github.com/naver/egjs-flicking" target="_blank"
-                ><h2>LEARN&nbsp;<br />MORE&nbsp;</h2></a
-              >
-            </div>
-          </div> -->
         </div>
       </div>
-      <!-- <div class="iphone">
-        <div class="head"></div>
-        <div class="container">
-          <Flicking class="panels" :options="gap10Options">
-            <div class="panel">dd</div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking>
-        </div>
-        <div class="home"></div>
-      </div> -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main news">
@@ -158,9 +93,6 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <!-- <div class="func-1 point-b main-col-1 xxxxl-font">
-                다양한 경제 뉴스 보기
-              </div> -->
               <div
                 class="func-1 point-md main-col-1 xxxxl-font"
                 style="height: 40px"
@@ -206,7 +138,7 @@
                   >
                 </div>
               </div>
-              <v-sheet height="60vh"></v-sheet>
+              <v-sheet height="55vh"></v-sheet>
               <div class="phone">
                 <div class="head"></div>
                 <div class="container">
@@ -246,7 +178,6 @@
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
-            <!-- <div class="wheel"></div> -->
             <div
               class="container d-flex flex-column justify-center align-center"
             >
@@ -300,10 +231,6 @@
                   >선택한 내용을 메모에 추가하는 창이 뜹니다</span
                 >
               </v-sheet>
-              <!-- <div>뉴스 상세보기</div>
-              <div>단어 뜻 보기</div>
-              <div>메모 남기기</div>
-              <div>카카오톡 공유</div> -->
             </div>
           </div>
         </div>
@@ -311,7 +238,6 @@
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
-            <!-- <div class="wheel"></div> -->
             <div
               class="container d-flex flex-column justify-center align-center"
             >
@@ -324,6 +250,8 @@
               </v-sheet>
               <v-sheet>
                 <span class="point-md xxxxl-font">나의 활동 그래프</span>
+                <canvas ref="barChart" height="300"></canvas>
+                <canvas ref="doughnutChart" height="300"></canvas>
               </v-sheet>
             </div>
           </div>
@@ -332,16 +260,10 @@
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
-            <!-- <div class="wheel"></div> -->
             <div
               class="container d-flex flex-column justify-center align-center"
             >
               <div class="d-flex flex-column align-center">
-                <!-- <div class="title"> -->
-                <!-- <span>소 귀에 경제 읽기</span> -->
-                <!-- <div class="cursor"></div> -->
-                <!-- </div> -->
-                <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
                 <span class="b-font xxl-font main-col-2">지금 바로</span>
                 <span class="b-font xxl-font main-col-2"
                   >경제 공부를 시작해보세요!</span
@@ -365,80 +287,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="imac">
-        <div class="screen">
-          <div class="container">
-            <Flicking class="panels" :options="gap5Options">
-              <div class="panel"></div>
-              <div class="panel"></div>
-              <div class="panel"></div>
-              <div class="panel"></div>
-            </Flicking>
-          </div>
-        </div>
-        <div class="bottom"></div>
-        <div class="stand"></div>
-        <div class="stand-bottom"></div>
-      </div> -->
-      <!-- <div class="macbook">
-        <div class="screen ratio062">
-          <div class="container">
-            <Flicking class="panels" :options="gap5Options">
-              <div class="panel"></div>
-              <div class="panel"></div>
-              <div class="panel"></div>
-              <div class="panel"></div>
-            </Flicking>
-          </div>
-        </div>
-        <div class="bottom"></div>
-      </div> -->
-      <!-- <div class="ipad ratio13">
-        <div class="container">
-          <Flicking class="panels" :options="gap5Options">
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking>
-        </div>
-      </div> -->
-      <!-- <div class="eg-flick-viewport">
-        <div class="eg-flick-camera">
-          <div class="page main">
-            <div class="wheel"></div>
-            <div
-              class="container d-flex flex-column justify-center align-center"
-            > -->
-      <!-- </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div>
-        <div class="head"></div>
-        <div class="container">
-          <Flicking class="panels" :options="gap10Options">
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking>
-        </div>
-        <div class="home"></div>
-      </div>
-      <div>
-        <div class="head"></div>
-        <div class="container">
-          <Flicking class="panels" :options="gap10Options">
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-            <div class="panel"></div>
-          </Flicking>
-        </div>
-        <div class="home"></div>
-      </div> -->
     </Flicking>
   </div>
 </template>
@@ -450,6 +298,7 @@ import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
 // import { shakeY } from "@scenejs/effects";
 import { AutoPlay } from "@egjs/flicking-plugins";
+import { Chart } from "chart.js";
 
 export default {
   name: "FlickingTest",
@@ -468,10 +317,6 @@ export default {
         circular: true,
         gap: 10,
       },
-      // gap5Options: {
-      //   circular: true,
-      //   gap: 10,
-      // },
       plugins: [
         new AutoPlay({ duration: 1000, direction: "NEXT", stopOnHover: false }),
       ],
@@ -488,7 +333,6 @@ export default {
   },
   mounted() {
     const flicking = this.$refs.flicking;
-    // console.log(flicking.panels);
     const pagination = document.querySelector(".pagination");
     const dots = [].slice.call(pagination.querySelectorAll(".dot"));
 
@@ -501,14 +345,6 @@ export default {
 
     this.$refs.flicking.on("willChange", (e) => {
       const index = e.index;
-
-      // if (index === 0 || index === 3) {
-      //   pagination.classList.add("black");
-      // } else {
-      //   pagination.classList.remove("black");
-      // }
-
-      // console.log(flicking.index, index);
 
       dots[flicking.index].classList.remove("selected");
       dots[index].classList.add("selected");
@@ -537,6 +373,16 @@ export default {
             right: "85%",
             transform:
               "translate(40%, 20vh) translateX(0vw) translateY(0%) scale(100)",
+          },
+          2.3: {
+            right: "10%",
+            transform:
+              "translateX(7vw) translate(40%, 68vh) translateY(50%) scale(50)",
+          },
+          2.8: {
+            right: "10%",
+            transform:
+              "translateX(7vw) translate(40%, 68vh) translateY(50%) scale(5)",
           },
           3: {
             right: "10%",
@@ -631,74 +477,6 @@ export default {
             "z-index": 1,
           },
         },
-        // ".iphone": {
-        //   0: {
-        //     transform: "translate(-50%, -90px) translateY(0vh) translateY2(0%)",
-        //     opacity: 2,
-        //   },
-        //   1: {
-        //     transform:
-        //       "translate(-60%, 0px) translateY(-50vh) translateY2(-50%) translateX(0px) translateY3(0vh) scale(1)",
-        //     background: "#eee",
-        //   },
-        //   2: {
-        //     transform:
-        //       "translate(-50%, -30px) translateX(120px) translateY2(-50%) translateY3(0vh) scale(0.3)",
-        //     background: "#444",
-        //     opacity: 0,
-        //   },
-        //   3: {
-        //     transform: "translateY3(-50vh) translateY2(-100%)",
-        //   },
-        // },
-        // ".imac": {
-        //   1: {
-        //     transform:
-        //       "translate(-50%) translate2(0px, 170px) translateY(50vh)",
-        //     opacity: 0,
-        //   },
-        //   2: {
-        //     transform: "translateY(0vh) translateY2(0%)",
-        //     opacity: 1,
-        //   },
-        //   3: {
-        //     transform: "translateY(-50vh) translateY2(-100%)",
-        //   },
-        // },
-        // ".macbook": {
-        //   1: {
-        //     transform:
-        //       "translate(-50%) translate2(-200px, 170px) translateY(70vh)",
-        //     opacity: 0,
-        //   },
-        //   2: {
-        //     transform:
-        //       "translateY(0vh) translate2(-200px, 170px) translateY2(0%)",
-        //     opacity: 1,
-        //   },
-        //   3: {
-        //     transform:
-        //       "translateY(-50vh) translate2(-200px, 0px) translateY2(-150%)",
-        //   },
-        // },
-        // ".ipad": {
-        //   1: {
-        //     transform:
-        //       "translate(-50%) translate2(200px, 170px) translateY(70vh)",
-        //   },
-        //   1.3: {
-        //     opacity: 0,
-        //   },
-        //   2: {
-        //     transform:
-        //       "translateY(0vh) translate2(200px, 170px) translateY2(0%)",
-        //     opacity: 1,
-        //   },
-        //   3: {
-        //     transform:
-        //       "translateY(-50vh) translate2(200px, 50px) translateY2(-100%)",
-        //   },
-        // },
         ".background2": {
           1: {
             transform: "translateY(100vh)",
@@ -710,14 +488,6 @@ export default {
             transform: "translateY(-100vh)",
           },
         },
-        // ".iphone .container": {
-        //   0.9: {
-        //     opacity: 0,
-        //   },
-        //   1: {
-        //     opacity: 1,
-        //   },
-        // },
         ".feature": (i) => ({
           0.9: {
             transform: "translate(-50%, -50%) translate2(0px, 0px)",
@@ -733,14 +503,6 @@ export default {
             opacity: 0,
           },
         }),
-        // ".panel.slogan h2": {
-        //   1.7: {
-        //     opacity: 0,
-        //   },
-        //   2: {
-        //     opacity: 1,
-        //   },
-        // },
         ".c7": {
           1: {
             transform: "translate(0%, 0%)",
@@ -754,7 +516,7 @@ export default {
             top: "40%",
             transform: "translate(-65%, -70%) scale(0.3)",
           },
-          4: {},
+          // 4: {},
         },
         ".next-icon": {
           0: {
@@ -774,14 +536,6 @@ export default {
             opacity: 1,
           },
         },
-        // "func-1": {
-        //   1: typing({
-        //     text: "다양한 경제 뉴스 읽기",
-        //     duration: 1,
-        //     delay: 0.5,
-        //     end: 11,
-        //   }),
-        // },
         ".chip-1": {
           0: {
             opacity: 0,
@@ -797,27 +551,7 @@ export default {
       {
         selector: true,
       }
-    )
-      // .on("update", ({ progress }) => {
-      //   if (progress >= 2) {
-      //     new Scene(
-      //       {
-      //         "func-1": typing({
-      //           text: "다양한 경제 뉴스 읽기",
-      //           duration: 1,
-      //           delay: 0.5,
-      //           end: 11,
-      //         }),
-      //       },
-      //       {
-      //         iterationCount: "infinite",
-      //         direction: "alternate",
-      //         selector: true,
-      //       }
-      //     ).play();
-      //   }
-      // })
-      .setTime(0);
+    ).setTime(0);
 
     this.$refs.flicking.on("move", () => {
       scene.setTime(flicking.camera.progress);
@@ -1041,30 +775,203 @@ export default {
       }
     ).play();
 
-    // new Scene(
-    //   {
-    //     ".title span": typing({
-    //       text: "소 귀에 경제 읽기.",
-    //       duration: 1,
-    //       delay: 0.5,
-    //       end: 11,
-    //     }),
-    //     ".title .cursor": {
-    //       0: { opacity: 0 },
-    //       0.5: { opacity: 0 },
-    //       "0.5>": { opacity: 1 },
-    //       1: { opacity: 0 },
-    //       options: {
-    //         iterationCount: 3,
-    //       },
-    //     },
-    //   },
-    //   {
-    //     // iterationCount: "infinite",
-    //     direction: "alternate",
-    //     selector: true,
-    //   }
-    // ).play();
+    const colors = [
+      ["rgba(102, 134, 250, 1)", "rgba(102, 134, 250, 0.8)"],
+      ["rgba(128, 136, 251, 1)", "rgba(128, 136, 251, 0.8)"],
+      ["rgba(136, 125, 250, 1)", "rgba(136, 125, 250, 0.8)"],
+      ["rgba(157, 126, 251, 1)", "rgba(157, 126, 251, 0.8)"],
+      ["rgba(163, 103, 250, 1)", "rgba(163, 103, 250, 0.8)"],
+      ["rgba(201, 116, 242, 1)", "rgba(201, 116, 242, 0.8)"],
+    ];
+    const bg_colors = [
+      ["rgba(102, 134, 250, 0.1)", "rgba(102, 134, 250, 0.2)"],
+      ["rgba(128, 136, 251, 0.1)", "rgba(128, 136, 251, 0.2)"],
+      ["rgba(136, 125, 250, 0.1)", "rgba(136, 125, 250, 0.2)"],
+      ["rgba(157, 126, 251, 0.1)", "rgba(157, 126, 251, 0.2)"],
+      ["rgba(163, 103, 250, 0.1)", "rgba(163, 103, 250, 0.2)"],
+      ["rgba(201, 116, 242, 0.1)", "rgba(201, 116, 242, 0.2)"],
+    ];
+    new Chart(this.$refs.barChart, {
+      type: "bar",
+      data: {
+        labels: ["1월", "2월", "3월", "4월", "5월", "6월"],
+        datasets: [
+          {
+            label: "읽은 기사 수",
+            data: [5, 2, 7, 1, 3, 8],
+            backgroundColor: (context) => {
+              const index = context.dataIndex;
+              const chart = context.chart;
+              const gradient = chart.ctx.createLinearGradient(
+                0,
+                chart.height,
+                0,
+                0
+              );
+              gradient.addColorStop(0, colors[index][0]);
+              gradient.addColorStop(1, colors[index][1]);
+              return gradient;
+            },
+            borderWidth: 0,
+            borderRadius: {
+              topLeft: 15,
+              topRight: 15,
+              bottomLeft: 15,
+              bottomRight: 15,
+            },
+            borderSkipped: false,
+            categoryPercentage: 1,
+            barPercentage: 1,
+          },
+          {
+            data: [8, 8, 8, 8, 8, 8],
+            backgroundColor: (context) => {
+              const index = context.dataIndex;
+              const chart = context.chart;
+              const gradient = chart.ctx.createLinearGradient(
+                0,
+                chart.height,
+                0,
+                0
+              );
+              gradient.addColorStop(0, bg_colors[index][0]);
+              gradient.addColorStop(1, bg_colors[index][1]);
+              return gradient;
+            },
+            borderRadius: {
+              topLeft: 15,
+              topRight: 15,
+              bottomLeft: 15,
+              bottomRight: 15,
+            },
+            borderWidth: 0,
+            borderSkipped: false,
+            categoryPercentage: 1,
+            barPercentage: 1,
+          },
+        ],
+      },
+      options: {
+        maxBarThickness: 35,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function (context) {
+                if (context.datasetIndex === 0) {
+                  return context.dataset.label + ": " + context.parsed.y;
+                } else if (context.datasetIndex === 1) {
+                  return null;
+                }
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            display: false,
+            beginAtZero: true,
+            grid: {
+              display: false,
+            },
+            ticks: {
+              display: false,
+              padding: 10,
+              color: "transparent",
+            },
+          },
+          x: {
+            grid: {
+              display: false,
+            },
+            stacked: true,
+            ticks: {
+              font: {
+                size: 16,
+              },
+              color: "rgba(0, 0, 0, 0.8)",
+              padding: 10,
+            },
+            color: "transparent",
+            borderColor: "transparent",
+            borderWidth: 0,
+          },
+        },
+        elements: {
+          bar: {
+            barPercentage: 0.5,
+          },
+        },
+      },
+    });
+
+    new Chart(this.$refs.doughnutChart, {
+      type: "doughnut",
+      data: {
+        labels: [
+          "금융",
+          "증권",
+          "산업/재계",
+          "중기/벤처",
+          "부동산",
+          "글로벌 경제",
+          "생활경제",
+          "경제 일반",
+        ],
+        datasets: [
+          {
+            data: [2, 3, 4, 5, 6, 7],
+            backgroundColor: [
+              "#cdd2fd",
+              "#a7b0f8",
+              "#8996f9",
+              "#5764c9",
+              "#3846b3",
+              "#2c378b",
+              "#040f65",
+              "#000c64",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            boxWidth: 20,
+            align: "center",
+
+            labels: {
+              usePointStyle: true,
+              pointStyle: "circle",
+              borderWidth: 3,
+              useBorderRadius: true,
+              borderRadius: "3",
+              font: {
+                size: 14,
+                // family: getComputedStyle(document.documentElement)
+                //   .getPropertyValue("--main-font-1")
+                //   .trim(),
+              },
+              textAlign: "left",
+            },
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        cutout: "60%",
+        animation: {
+          animateScale: true,
+          animateRotate: true,
+        },
+      },
+    });
 
     let isEnableScroll = true;
     let timerId = 0;
@@ -1339,13 +1246,6 @@ body,
   bottom: 90% !important;
   left: 65% !important;
 }
-/* .iphone,
-.ipad,
-.macbook, */
-/* .imac {
-  z-index: 2050 !important;
-  transform: translateY(100vh) !important;
-} */
 .phone {
   position: absolute;
   width: 60vw;
@@ -1355,7 +1255,7 @@ body,
   background: white;
   box-shadow: 0px 0px 8px 0px rgba(100, 100, 100, 0.4);
   left: 50%;
-  transform: translate(-50%, 40px);
+  transform: translate(-50%, 60px);
   margin: auto;
   transform-origin: bottom;
 }
@@ -1397,57 +1297,6 @@ body,
   right: 0;
   margin: auto;
 }
-
-/* .iphone {
-  position: absolute;
-  width: 200px;
-  height: 400px;
-  border-radius: 20px;
-  background: #eee;
-  box-shadow: rgba(100, 100, 100, 0.4) 5px 5px;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%, -90px);
-  margin: auto;
-  transform-origin: bottom;
-}
-.iphone .head {
-  position: absolute;
-  width: 36px;
-  height: 8px;
-  top: 22px;
-  left: 0;
-  right: 0;
-  border-radius: 4px;
-  margin: auto;
-  background: #ddd;
-}
-.iphone .container {
-  position: absolute;
-  width: calc(100% - 16px);
-  height: calc(100% - 100px);
-  background: transparent;
-  border: 2px solid #ddd;
-  background: #eee;
-  position: absolute;
-  border-radius: 5px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  bottom: 52px;
-}
-.iphone .home {
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  border: 2px solid #ccc;
-  background: #eee;
-  border-radius: 50% !important;
-  bottom: 6px !important;
-  left: 0 !important;
-  right: 0 !important;
-  margin: auto !important;
-} */
 
 .panels {
   position: absolute;
@@ -1500,118 +1349,6 @@ body,
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987841_001_20230328115902063.jpg?type=w647");
 }
-/* .ipad {
-  position: absolute !important;
-  width: 150px !important;
-  background: #444 !important;
-  border-radius: 5px !important;
-  left: 50% !important;
-  bottom: 50% !important;
-}
-.ipad .container {
-  position: absolute !important;
-  left: 6px !important;
-  top: 6px !important;
-  bottom: 6px !important;
-  right: 6px !important;
-  background: #eee !important;
-  border-radius: 3px !important;
-}
-.ipad .panels {
-  height: 80px !important;
-}
-.ipad .panels .panel {
-  width: 40% !important;
-} */
-/* .imac {
-  position: absolute;
-  width: 280px !important;
-  left: 50% !important;
-  bottom: 50% !important;
-}
-.imac .screen {
-  position: relative !important;
-  width: 100% !important;
-  height: 170px !important;
-  margin: auto !important;
-  background: #444 !important;
-  border-radius: 5px 5px 0px 0px !important;
-}
-.imac .screen .container {
-  position: absolute !important;
-  left: 8px !important;
-  right: 8px !important;
-  top: 12px !important;
-  bottom: 12px !important;
-  background: #eee !important;
-}
-.imac .panels {
-  height: 60px !important;
-}
-.imac .panels .panel {
-  width: 50px !important;
-}
-
-.imac .bottom {
-  position: relative !important;
-  width: 100% !important;
-  height: 26px !important;
-  margin: auto !important;
-  background: #eee !important;
-  border-radius: 0px 0px 5px 5px !important;
-}
-.imac .stand {
-  position: relative !important;
-  margin: auto !important;
-  width: 40px !important;
-  border-bottom: 35px solid #eee !important;
-  border-left: 15px solid transparent !important;
-  border-right: 15px solid transparent !important;
-}
-.imac .stand-bottom {
-  position: relative !important;
-  margin: auto !important;
-  width: 100px !important;
-  height: 6px !important;
-  border-radius: 3px !important;
-  background: #e5e5e5 !important;
-} */
-/* .macbook {
-  position: absolute !important;
-  width: 240px !important;
-  left: 50% !important;
-  bottom: 50% !important;
-}
-.macbook .screen {
-  position: relative !important;
-  width: 200px !important;
-  margin: auto !important;
-  background: #444 !important;
-  border-radius: 5px !important;
-}
-.macbook .screen .container {
-  position: absolute !important;
-  left: 6px !important;
-  top: 6px !important;
-  bottom: 6px !important;
-  right: 6px !important;
-  background: #eee !important;
-  border-radius: 3px !important;
-}
-.macbook .panels {
-  height: 50px !important;
-}
-.macbook .panels .panel {
-  width: 40px !important;
-}
-.macbook .bottom {
-  position: relative !important;
-  width: 240px !important;
-  height: 10px !important;
-  background: #eee !important;
-  margin: 3px auto 0px !important;
-  border-radius: 5px !important;
-} */
 
 .background2 {
   background: #9c5dea !important;
@@ -1637,20 +1374,6 @@ body,
   bottom: 30%;
   transform: translate(-50%, -50%); */
 }
-/* .flicking .page.main h1,
-.flicking .page.main .description {
-  text-align: center !important;
-} */
-/* 타이틀 - 소귀경 */
-/* .flicking .page.main h1 {
-  font-size: 33px;
-  color: white;
-  font-family: var(--main-font-3);
-} */
-/* 타이틀 속 설명 - 에, 제읽기 */
-/* .flicking .page.main h1 span {
-  font-family: var(--main-font-0);
-} */
 
 .flicking .page.main .description {
   /* font-size: 16px !important; */
@@ -1660,37 +1383,6 @@ body,
   /* box-sizing: border-box !important; */
   color: var(--main-col-1);
 }
-
-/* .flicking .page.features h3,
-.flicking .page.features .description {
-  color: #fff !important;
-}
-.flicking .page.features .feature {
-  position: absolute !important;
-  width: 200px !important;
-  top: 50% !important;
-  left: 50% !important;
-} */
-
-/* .flicking .page.slogan h2 span[data-text]:before {
-  content: attr(data-text) !important;
-}
-.flicking .page.slogan .container {
-  min-width: 600px;
-  height: 350px !important;
-  text-align: center !important;
-  color: #eee !important;
-}
-.flicking .page.more a {
-  text-decoration: underline !important;
-  color: #eee !important;
-}
-.flicking .page.more h2 {
-  width: 110px !important;
-  padding: 5px 10px 5px 10px !important;
-  border: 3px solid #eee !important;
-  color: #eee !important;
-} */
 
 .pagination {
   /* position: relative; */
