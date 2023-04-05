@@ -110,7 +110,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("newsStore", ["searchText"]),
+    ...mapState("newsStore", ["searchText","categoryLast"]),
     filteredNews() {
       // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
       let filtered = this.selectedCategory
@@ -132,16 +132,11 @@ export default {
   methods: {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
-      console.log("infiniteHandler");
-      console.log("마지막 기사: "+this.page);
       this.page = this.newsList[this.newsList.length-1].articleId
-      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
+      await this.setNews({"keyword": this.searchText, "categoryLast": this.categoryLast});
       if (this.newsList.length>0){
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
-          for (let index = 0; index < this.items.length; index++) {
-            console.log(this.items[index].articleTitle);
-          }
           this.page = this.items[this.items.length-1].articleId;
           $state.loaded();
         }, 1000);

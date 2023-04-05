@@ -6,6 +6,16 @@ const newsStore = {
     searchText: "",
     searched: false,
     news: [],
+    categoryLast: {
+      finance: Number.MAX_SAFE_INTEGER + 1,
+      stock: Number.MAX_SAFE_INTEGER + 1,
+      industry: Number.MAX_SAFE_INTEGER + 1,
+      venture: Number.MAX_SAFE_INTEGER + 1,
+      estate: Number.MAX_SAFE_INTEGER + 1,
+      worldwide: Number.MAX_SAFE_INTEGER + 1,
+      life: Number.MAX_SAFE_INTEGER + 1,
+      common: Number.MAX_SAFE_INTEGER + 1,
+    }
   },
   mutations: {
     SET_BEFORE_SEARCH(state, payload) {
@@ -21,10 +31,28 @@ const newsStore = {
     SET_NEWS(state, news) {
       state.news = news;
     },
+    SET_CATEGORYLAST(state, categoryLast) {
+      // console.log("경제: "+categoryLast[0]);
+      // console.log("증권: "+categoryLast[1]);
+      // console.log("산업: "+categoryLast[2]);
+      // console.log("벤처: "+categoryLast[3]);
+      // console.log("부동산: "+categoryLast[4]);
+      // console.log("글로벌: "+categoryLast[5]);
+      // console.log("생활: "+categoryLast[6]);
+      // console.log("일반: "+categoryLast[7]);
+
+      state.categoryLast.finance = categoryLast[0];
+      state.categoryLast.stock = categoryLast[1];
+      state.categoryLast.industry = categoryLast[2];
+      state.categoryLast.venture = categoryLast[3];
+      state.categoryLast.estate = categoryLast[4];
+      state.categoryLast.global = categoryLast[5];
+      state.categoryLast.life = categoryLast[6];
+      state.categoryLast.common = categoryLast[7];
+    },
   },
   actions: {
     init({commit}){
-      console.log("## 기사 초기화 동작");
       commit("SET_NEWS", []); 
       commit("SET_SEARCH_TEXT", "");
       commit("SET_SEARCHED", false);
@@ -40,15 +68,14 @@ const newsStore = {
       commit("SET_BEFORE_SEARCH", payload);
     },
     async setNews({commit}, param){
-      console.log(param.keyword+ " " + param.lastArticleId);
       await searchNews(param,
         async({data}) => {
-          if(data.data.lenth>0){
-            // console.log(data.data);
+          if(data.data.articles.length>0){
             commit("SET_SEARCHED", true);
           }
           commit("SET_BEFORE_SEARCH", true);
-          commit("SET_NEWS",data.data);
+          commit("SET_NEWS",data.data.articles);
+          commit("SET_CATEGORYLAST", data.data.categoryLast);
         }
       ),
       (error) => {
@@ -64,10 +91,6 @@ const newsStore = {
       if (!state.searchText || state.news === []) {
         return [];
       }
-      // const searchTextLowerCase = state.searchText.toLowerCase();
-      // return state.news.filter((newsItem) =>
-      //   newsItem.articleTitle.toLowerCase().includes(searchTextLowerCase)
-      // );
       return state.news;
     },
   },

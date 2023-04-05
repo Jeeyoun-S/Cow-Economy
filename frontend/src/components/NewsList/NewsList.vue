@@ -8,7 +8,7 @@
       <!-- i) news sort select -->
       <v-sheet width="37%">
         <v-select
-          v-model="sort"
+          v-model="sortKey"
           :items="['최신순', '인기순']"
           color="var(--main-col-2)"
           dense
@@ -16,20 +16,21 @@
           outlined
           hide-details
           style="font-size: 15px"
+          @change="sortNews($event)"
         />
       </v-sheet>
       <!-- ii) news category select -->
       <v-sheet width="60%">
         <v-select
-          v-model="category"
+          v-model="selectedCategory"
           :items="[
             '전체',
             '금융',
-            '부동산',
-            '산업/재계',
-            '글로벌 경제',
             '증권',
+            '산업/재계',
             '중기/벤처',
+            '부동산',
+            '글로벌 경제',
             '생활경제',
             '경제 일반',
           ]"
@@ -71,12 +72,29 @@ export default {
   data() {
     return {
       newsList: [],
-      sort: "", // news 정렬 기준
-      category: "", // category 정렬 기준
+      sortKey: "최신순",
+      selectedCategory: "전체",
     };
   },
   computed: {
-    ...mapState("newsStore", ["news", "categoryNews"]),
+    ...mapState("newsStore", ["searchText"]),
+    filteredNews() {
+      // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
+      let filtered = this.selectedCategory
+        ? this.items.filter(
+            (news) => news.articleCategory === this.selectedCategory
+          )
+        : this.items;
+
+      if (this.sortKey === "최신순") {
+        filtered.sort(
+          (a, b) => new Date(b.articleRegtime) - new Date(a.articleRegtime)
+        );
+      } else if (this.sortKey === "인기순") {
+        filtered.sort((a, b) => b.articleHits - a.articleHits);
+      }
+      return filtered;
+    },
   },
   mounted() {
     new Swiper(".swiper-container", {
@@ -84,8 +102,7 @@ export default {
     });
   },
   created() {
-    this.sort = "최신순";
-    this.category = "전체";
+    console.log("created");
   },
   watch: {
     sort() {
@@ -96,36 +113,39 @@ export default {
     },
   },
   methods: {
-    ...mapActions("newsStore", ["setCategoryNews"]),
-    // [@Method] 최신 or 인기순 정렬
-    sortNews() {
-      if (this.sort == "최신순") {
-        this.news.sort(function (a, b) {
-          return new Date(b.article_regtime) - new Date(a.article_regtime);
-        });
-      } else if (this.sort == "인기순") {
-        this.news.sort(function (a, b) {
-          return b.article_hits - a.article_hits;
-        });
+    ...mapActions("newsStore", ["setNews"]),
+    async infiniteHandler($state) {
+      this.page = this.newsList[this.newsList.length-1].articleId
+      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
+      if (this.newsList.length>0){
+        await setTimeout(() => {
+          this.items = this.items.concat(this.newsList);
+          // for (let index = 0; index < this.items.length; index++) {
+          //   console.log(this.items[index].articleTitle);
+          // }
+          this.page = this.items[this.items.length-1].articleId;
+          $state.loaded();
+        }, 1000);
+      }else{
+        $state.complete();
       }
     },
-    // [@Method] 카테고리 별 정렬
-    filterNews() {
-      if (this.category == "전체") {
-        return (this.newsList = this.news);
-      } else {
-        this.newsList = this.news.filter(
-          (article) => article.article_category == this.category
-        );
-      }
+    filterByCategory(category) {
+      this.selectedCategory = category;
+    },
+    resetFilter() {
+      this.selectedCategory = null;
+    },
+    sortNews(newSortKey) {
+      this.sortKey = newSortKey;
     },
     // [@Method] 맨 위로 가기
-    // scrollToTop() {
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: "smooth",
-    //   });
-    // },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
   },
 };
 </script>
@@ -135,12 +155,12 @@ export default {
   background-color: var(white);
 } */
 
-/* .go-to-top {
+.go-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
 
   background-color: var(--main-col-2);
   z-index: 1;
-} */
+}
 </style>

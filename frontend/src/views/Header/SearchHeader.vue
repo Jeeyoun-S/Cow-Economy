@@ -22,7 +22,7 @@
 
 <script>
 import BackIcon from "@/common/component/BackIcon.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "SearchHeader",
   components: {
@@ -31,17 +31,15 @@ export default {
   data() {
     return { keyword: "", page: "1" };
   },
+  computed: {
+    ...mapState("newsStore",["categoryLast"]),
+  },
   methods: {
     ...mapActions("newsStore", ["init", "setSearchText", "setSearched", "setNews"]),
-    // onInput(value) {
-    //   this.setSearchText(value);
-    //   this.setSearched(true);
-    // },
     async searchKeyword() {
       await this.init();
       this.setSearchText(this.keyword);
-      await this.setNews({"keyword": this.keyword, "lastArticleId": Number.MAX_SAFE_INTEGER + 1});
-      // this.setSearched(true);
+      await this.setNews({"keyword": this.keyword, "categoryLast": this.categoryLast});
     },
     clearKeyword() {
       this.keyword = "";

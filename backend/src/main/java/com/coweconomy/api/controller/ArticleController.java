@@ -1,5 +1,6 @@
 package com.coweconomy.api.controller;
 
+import com.coweconomy.api.request.CategoryArticleDto;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.jwt.JwtTokenUtil;
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Source;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -54,14 +57,27 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "키워드 검색", notes = "키워드로 기사를 조회한다.")
-    @GetMapping("/search")
-    public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestParam Long lastArticleId){
-        System.out.println(keyword+" "+lastArticleId);
-        List<ArticleDto> articles = articleService.getByKeywordArticles(keyword,lastArticleId);
-        for (ArticleDto article:articles) {
-            System.out.println("기사: "+ article.getArticleId()+" " + article.getArticleTitle()+" "+article.getArticleRegtime() );
-        }
-        return BaseResponse.success(articles);
+    @PostMapping("/search")
+    public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestBody CategoryArticleDto categoryLast ){
+//        System.out.println("키워드: "+ keyword);
+//        System.out.println("금융: "+ categoryLast.getFinance());
+//        System.out.println("주식: "+ categoryLast.getStock());
+//        System.out.println("산업: "+ categoryLast.getIndustry());
+//        System.out.println("중기/벤처: "+ categoryLast.getVenture());
+//        System.out.println("부동산: "+ categoryLast.getEstate());
+//        System.out.println("글로벌경제: "+ categoryLast.getWorldwide());
+//        System.out.println("생활경제: "+ categoryLast.getLife());
+//        System.out.println("경제 일반: "+ categoryLast.getCommon());
+        Long[] LastIdList = categoryLast.setCategoryLast(categoryLast);
+
+        HashMap<String, List<?>> result = articleService.getByKeywordArticles(keyword,LastIdList);
+        System.out.println("전체 기사 길이: "+result.get("articles").size());
+
+//        for (ArticleDto article:(List<ArticleDto>)result.get("articles")) {
+//            System.out.println("기사: "+ article.getArticleId()+"     " + article.getArticleCategory()+"      "
+//                    +article.getArticlePress()+"        "+article.getArticleTitle()+"     "+article.getArticleRegtime() );
+//        }
+        return BaseResponse.success(result);
     }
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")
     @GetMapping("/{articleId}")
