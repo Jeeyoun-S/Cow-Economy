@@ -11,6 +11,9 @@ import "@egjs/vue-flicking/dist/flicking-inline.css";
 Vue.config.productionTip = false;
 Vue.use(VueAwesomeSwiper);
 
+// 카카오 SDK 초기화
+window.Kakao.init("74f3c555c6169e50178d0ab40df02751")
+
 new Vue({
   router,
   store,
