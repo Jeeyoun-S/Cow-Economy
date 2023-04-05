@@ -1,7 +1,8 @@
+import { getWordCloud } from "@/api/modules/wordcloud";
+
 const mainStore = {
   namespaced: true,
   state: {
-    isAllComplete: false,
     //word cloud
     words: null,
     wordsFlag: false,
@@ -17,8 +18,21 @@ const mainStore = {
     },
   },
   actions: {
-    updateWordCloud({ commit }, words) {
-      commit("UPDATE_WORDCLOUD", words);
+    async updateWordCloud({ commit }) {
+      await getWordCloud(
+        ({ data }) => {
+          if (data.message == "SUCCESS") {
+            let temp = [];
+            data.data.forEach((el) => {
+              temp.push({ name: el.name, value: el.value });
+            });
+            commit("UPDATE_WORDCLOUD", temp);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
   },
   modules: {},

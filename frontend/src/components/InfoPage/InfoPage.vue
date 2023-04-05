@@ -8,13 +8,32 @@
 <script>
 import InfoDetail from "./InfoDetail.vue";
 import Landing from "./Landing.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "InfoPage",
   components: {
     InfoDetail,
     Landing,
+  },
+  data() {
+    return {
+      isAll: 0,
+    };
+  },
+  watch: {
+    isAll() {
+      if (this.isAll == 3 && this.isLoggedIn) {
+        this.$router.push("/home");
+      }
+    },
+    wordsFlag() {
+      if (this.wordsFlag) {
+        this.isAll += 1;
+      }
+    },
   },
   created() {
     // if (this.isLoggedIn) {
@@ -23,6 +42,7 @@ export default {
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
+    ...mapState(mainStore, ["isAllComplete", "wordsFlag"]),
   },
 };
 </script>

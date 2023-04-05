@@ -19,7 +19,6 @@
       <div class="circle circle3"></div>
       <div class="circle circle4"></div>
     </div> -->
-
     <img
       class="mb-4 logo-gradient"
       height="100px"
@@ -54,10 +53,20 @@
 <script>
 // import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
+import { mapActions, mapState } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "InfoPageFirst",
+  computed: {
+    ...mapState(mainStore, ["isAllComplete", "wordsFlag"]),
+  },
+  methods: {
+    ...mapActions(mainStore, ["updateWordCloud"]),
+  },
   mounted() {
+    this.updateWordCloud();
     // new Scene(
     //   {
     //     ".line-top": {
