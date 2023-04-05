@@ -1,33 +1,34 @@
 <template>
   <v-sheet class="py-6" color="white">
-    <div class="px-6 main-title-font align-center">
+    <div class="px-6 d-flex flex-row align-start">
       <img
-        height="19.47"
+        height="22"
+        class="mr-1"
         :src="require('@/assets/images/increase-stats.png')"
       />
-      인기 뉴스
+      <span class="main-title-font">인기 뉴스</span>
     </div>
     <div class="px-6 main-subtitle-font">
-      24시간 내 경제 분야에서 인기 뉴스를 확인해 보세요.
+      오늘의 경제 분야에서 인기 뉴스를 확인해 보세요.
     </div>
     <swiper class="swiper mt-4 ml-6" :options="swiperOption">
       <swiper-slide v-for="(article, idx) in news" :key="idx">
         <div>
           <v-card
             rounded="lg"
-            elevation="4"
             class="ma-0"
             @click="moveNewsDetail(article.articleId)"
             height="200px"
+            elevation="0"
           >
             <v-img
               :src="article.articleThumbnail"
               class="align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
               height="200px"
             >
               <v-sheet width="91%" class="white-col-1 pa-4" color="transparent">
-                <div class="sm-font d-flex flex-row justify-space-between">
+                <div class="xs-font d-flex flex-row justify-space-between">
                   <span>{{ article.articlePress }}</span>
                   <span>{{
                     new Intl.DateTimeFormat("kr").format(
@@ -35,7 +36,7 @@
                     )
                   }}</span>
                 </div>
-                <span class="lg-font b-font">{{ article.articleTitle }}</span>
+                <span class="b-font">{{ article.articleTitle }}</span>
               </v-sheet>
             </v-img>
             <!-- <v-img

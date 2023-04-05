@@ -1,8 +1,12 @@
 <template>
   <v-sheet class="pa-6" color="transparent">
-    <div class="main-title-font align-center">
-      <img height="19.47" :src="require('@/assets/images/emoji _fire.png')" />
-      최신 트렌드
+    <div class="d-flex flex-row align-start">
+      <img
+        height="22"
+        class="mr-1"
+        :src="require('@/assets/images/emoji _fire.png')"
+      />
+      <span class="main-title-font">최신 트렌드</span>
     </div>
     <div class="main-subtitle-font">
       최근 경제 뉴스에서 다루고 있는 핵심 키워드를 확인해 보세요.
