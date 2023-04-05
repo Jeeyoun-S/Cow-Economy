@@ -94,6 +94,8 @@ export default {
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
     ...mapActions("memoStore", ["updateReading"]),
+    ...mapActions("newsStore", ["setCurNews"]),
+
     addScrollEvent() {
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
@@ -130,7 +132,6 @@ export default {
     // 기사 상세 정보 요청하는 API
     await getNewsDetail(this.$route.params.id).then((res) => {
       if (res == null) {
-        // console.log("여기");
         this.$refs.detailerror.openDialog();
       } else if (res) {
         // 받아온 기사 내용은 HTML로 바꾸고 event 추가하기
@@ -147,13 +148,14 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
-        // console.log("지금 뉴스");
-        // console.log(this.newsDetail);
+        const newsTitle = this.newsDetail.articleTitle
+        const newsContent = this.newsDetail.articleContent.innerHTML
+
+        this.setCurNews([newsTitle, newsContent])
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
-        // console.log(this.newsRelated);
-        // console.log(this.newsDetail);
+
         // 로딩 상태 변경
         this.loading = false;
       }
