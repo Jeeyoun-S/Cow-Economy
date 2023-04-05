@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 오른쪽 페이지 버튼 -->
     <div class="pagination">
       <div class="dot selected"></div>
       <div class="dot"></div>
@@ -7,6 +8,7 @@
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
+    <!-- 화면 중앙 아래 다음 페이지로 이동하는 버튼 -->
     <v-btn
       class="next-icon"
       icon
@@ -16,12 +18,14 @@
     >
       <v-icon x-large>mdi-chevron-down</v-icon>
     </v-btn>
+    <!-- 왼쪽 상단 페이지로 이동하는 로고 (첫 페이지 제외) -->
     <img
       style="cursor: pointer"
       @click="moveToHome()"
       class="top-logo"
       src="@/assets/images/logo/logo.png"
     />
+    <!-- 배경에서 움직이는 동그라미들 -->
     <div class="background">
       <div class="shapes">
         <div class="circle c1"></div>
@@ -34,6 +38,7 @@
       </div>
       <div class="background background2"></div>
     </div>
+    <!-- 5개의 페이지 -->
     <Flicking class="flicking" ref="flicking" :options="flickingOptions">
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
@@ -42,6 +47,7 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
+              <!-- 첫 페이지 등장 효과 -->
               <div class="line-top"></div>
               <div class="motion">
                 <div class="glitter glitter1"></div>
@@ -56,6 +62,7 @@
                 <div class="circle circle2"></div>
               </div>
 
+              <!-- 첫 페이지 로고 및 내용 -->
               <img
                 class="logo"
                 height="120px"
@@ -66,7 +73,6 @@
                   <span>소 귀에 경제 읽기</span>
                   <!-- <div class="cursor"></div> -->
                 </div>
-                <!-- <h1>소 귀<span>에</span> 경<span>제읽기</span></h1> -->
                 <span class="description">경제 기사를 읽으며</span>
                 <span class="description">경제에 대해 공부하는 서비스</span>
                 <MainHeaderLogin class="mt-3"></MainHeaderLogin>
@@ -1161,40 +1167,37 @@ export default {
         isEnableScroll = true;
       }, 600);
     }
-
-    window.addEventListener(
-      "wheel",
-      function moveFlickingPage(e) {
-        if (!isEnableScroll || flicking.animating) {
-          return;
-        }
-        e.preventDefault();
-        var delta = e.deltaY;
-
-        if (Math.abs(delta) > 40) {
-          if (delta > 0 && flicking.index < 4) {
-            setScrollTimer();
-            console.log("여기 후보 2", flicking.panelCount);
-            flicking.next();
-          } else if (delta < 0 && flicking.index > 0) {
-            flicking.prev();
-          }
-        }
-      },
-      {
-        passive: false,
+    function moveFlickingPage(e) {
+      var link = document.location.href;
+      if (link != "http://localhost:3000/") {
+        window.removeEventListener("wheel", moveFlickingPage);
+        return;
       }
-    );
+
+      if (!isEnableScroll || flicking.animating) {
+        return;
+      }
+      e.preventDefault();
+      var delta = e.deltaY;
+
+      if (Math.abs(delta) > 40) {
+        if (delta > 0 && flicking.index < 4) {
+          setScrollTimer();
+          console.log("여기 후보 2", flicking.panelCount);
+          flicking.next();
+        } else if (delta < 0 && flicking.index > 0) {
+          flicking.prev();
+        }
+      }
+    }
+    window.addEventListener("wheel", moveFlickingPage, {
+      passive: false,
+    });
   },
-  // beforeDestroy() {
-  //   window.removeEventListener("wheel");
-  // },
 };
 </script>
 
 <style scoped>
-/* @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800&display=swap"); */
-
 /* 첫 페이지 서비스 제목 */
 .title {
   margin: 10px;
@@ -1242,17 +1245,12 @@ export default {
 .title span {
   font-size: 30px;
   color: var(--main-col-1);
-  font-family: var(--logo-font-2);
+  font-family: var(--point-font-2);
 }
-/* * {
-  font-family: "Open Sans", sans-serif !important;
-  letter-spacing: 0.5px !important;
-} */
 .word {
   position: absolute;
   top: -29%;
   left: 28%;
-  /* opacity: 0; */
   transform: "translate(0%, 0%) scale(0)";
 }
 /* 첫 페이지 서비스 로고 등장 효과 */
@@ -1373,24 +1371,6 @@ body,
   background: var(--quiz-1-col-1);
   z-index: 1;
 }
-/* 가운데 동그라미의 테두리 동그라미 */
-/* .c2 {
-  width: 85%;
-  max-width: 380px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 5px solid var(--main-col-1);
-  z-index: 0;
-} */
-/* 첫 페이지 가운데 동그라미 */
-/* .c3 {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--main-col-2);
-  z-index: 0;
-} */
 /* 메인페이지 오른쪽 아래 */
 .c4 {
   width: 60vmax;
@@ -1485,7 +1465,6 @@ body,
   right: 0;
   margin: auto;
 }
-
 .panels {
   position: absolute;
   top: 50%;
@@ -1537,7 +1516,6 @@ body,
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987841_001_20230328115902063.jpg?type=w647");
 }
-
 .background2 {
   background: #9c5dea !important;
   z-index: -1 !important;
@@ -1562,7 +1540,6 @@ body,
   bottom: 30%;
   transform: translate(-50%, -50%); */
 }
-
 .flicking .page.main .description {
   /* font-size: 16px !important; */
   /* max-width: 600px !important; */
@@ -1571,7 +1548,6 @@ body,
   /* box-sizing: border-box !important; */
   color: var(--main-col-1);
 }
-
 .pagination {
   /* position: relative; */
   position: absolute;
@@ -1596,7 +1572,6 @@ body,
 .pagination .dot.selected {
   background: var(--main-col-1);
 }
-
 .wheel {
   position: absolute !important;
   bottom: 110px !important;
