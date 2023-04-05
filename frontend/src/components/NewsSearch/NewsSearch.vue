@@ -1,5 +1,5 @@
 <template>
-  <NewsSearchBeforeSearch class="main-container" v-if="!searched"></NewsSearchBeforeSearch>
+  <NewsSearchBeforeSearch class="main-container" v-if="!beforeSearch"></NewsSearchBeforeSearch>
   <div :class="{'main-container': isNoResult}" v-else>
     <NewsSearchNoResult v-if="isNoResult"></NewsSearchNoResult>
     <NewsSearchResult v-else :newsList="searchNews"></NewsSearchResult>
@@ -11,7 +11,7 @@
 import NewsSearchBeforeSearch from '@/components/NewsSearch/NewsSearchBeforeSearch.vue';
 import NewsSearchNoResult from './NewsSearchNoResult.vue';
 import NewsSearchResult from "./NewsSearchResult.vue"
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "NewsSearch",
@@ -21,30 +21,18 @@ export default {
     NewsSearchResult,
   },
   computed: {
-    ...mapState("newsStore", ["searched", "news"]),
+    ...mapState("newsStore", ["beforeSearch","searched", "news"]),
     ...mapGetters("newsStore", ["searchNews"]),
     isNoResult() { 
-      if(this.searched===false && this.searchNews.length===0)
+      console.log(this.searched+" "+this.searchNews.length)
+      if(this.searched===false && this.searchNews.length===0){
+        console.log("결과없음")
         return true;
+      }
       else
         return false;
     },
   },
-  created(){
-    this.initNews();
-  },
-  methods: {
-    ...mapActions("newsStore",["init"]),
-    initNews(){
-      this.init();
-    }
-  }
-  // methods: {
-  //   ...mapState("newsStore", ["setSearched"])
-  // },
-  // destroyed() {
-  //   this.setSearched(false);
-  // }
 }
 </script>
 
