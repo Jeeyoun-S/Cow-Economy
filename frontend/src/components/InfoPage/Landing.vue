@@ -53,20 +53,24 @@
 <script>
 // import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 const mainStore = "mainStore";
 
 export default {
   name: "InfoPageFirst",
-  computed: {
-    ...mapState(mainStore, ["isAllComplete", "wordsFlag"]),
-  },
+  computed: {},
   methods: {
-    ...mapActions(mainStore, ["updateWordCloud"]),
+    ...mapActions(mainStore, [
+      "updateWordCloud",
+      "updateHotNews",
+      "updateTodayAllNews",
+    ]),
   },
   mounted() {
-    this.updateWordCloud();
+    this.updateWordCloud(); //워드 클라우드 설정
+    this.updateHotNews(); //인기 뉴스 설정
+    this.updateTodayAllNews(); //카테고리별 뉴스 설정
     // new Scene(
     //   {
     //     ".line-top": {

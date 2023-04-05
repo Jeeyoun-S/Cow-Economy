@@ -20,6 +20,14 @@ const mainStore = {
       state.words = words;
       state.wordsFlag = true;
     },
+    UPDATE_HOT_NEWS(state, news) {
+      state.hotNews = news;
+      state.hotNewsFlag = true;
+    },
+    UPDATE_CATEGORY_NEWS(state, news) {
+      state.categoryNews = news;
+      state.categoryNewsFlag = true;
+    },
   },
   actions: {
     async updateWordCloud({ commit }) {
@@ -38,11 +46,13 @@ const mainStore = {
         }
       );
     },
-    async updateHotNews() {
-      await getTodayHotNews();
+    async updateHotNews({ commit }) {
+      let result = await getTodayHotNews();
+      commit("UPDATE_HOT_NEWS", result);
     },
-    async updateTodayAllNews() {
-      await getTodayAllNews();
+    async updateTodayAllNews({ commit }) {
+      let result = await getTodayAllNews();
+      commit("UPDATE_CATEGORY_NEWS", result);
     },
   },
   modules: {},

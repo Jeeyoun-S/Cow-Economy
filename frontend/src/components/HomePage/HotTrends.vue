@@ -17,9 +17,8 @@
       type="image"
     ></v-skeleton-loader>
     <v-sheet class="mt-4 pa-0" v-else rounded="lg" elevation="3" color="white">
-      <v-img v-if="!wordsFlag" class="trend_img" :src="`${imgPath}`"></v-img>
+      <!-- <v-img v-if="!wordsFlag" class="trend_img" :src="`${imgPath}`"></v-img> -->
       <wordcloud
-        v-else
         style="width 100%; height: 300px;"
         font="GongGothicBold"
         :data="words"
@@ -57,7 +56,7 @@ export default {
   computed: {
     ...mapState(mainStore, ["words", "wordsFlag"]),
   },
-  async mounted() {
+  mounted() {
     if (!this.wordsFlag) {
       //워드 클라우드가 없을 때 새로 갱신
       this.updateWordCloud();

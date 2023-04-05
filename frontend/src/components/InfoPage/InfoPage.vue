@@ -34,15 +34,26 @@ export default {
         this.isAll += 1;
       }
     },
+    hotNewsFlag() {
+      if (this.hotNewsFlag) {
+        this.isAll += 1;
+      }
+    },
+    categoryNewsFlag() {
+      if (this.categoryNewsFlag) {
+        this.isAll += 1;
+      }
+    },
   },
   created() {
     // if (this.isLoggedIn) {
     //   this.$router.push("/home");
     // }
+    this.isAll = 0; //초기화
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
-    ...mapState(mainStore, ["isAllComplete", "wordsFlag"]),
+    ...mapState(mainStore, ["wordsFlag", "hotNewsFlag", "categoryNewsFlag"]),
   },
 };
 </script>
