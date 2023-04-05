@@ -87,6 +87,7 @@
         @infinite="infiniteHandler"
       ></infinite-loading>
     </v-sheet>
+    <ScrollTopBtn></ScrollTopBtn>
   </div>
 </template>
 
@@ -94,11 +95,14 @@
 import NewsCard from "@/common/component/NewsCard.vue";
 import InfiniteLoading from "vue-infinite-loading";
 import { mapActions, mapState } from "vuex";
+import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
+
 export default {
   name: "NewsSearchResult",
   components: {
     NewsCard,
     InfiniteLoading,
+    ScrollTopBtn,
   },
   props: {
     newsList: Array,
