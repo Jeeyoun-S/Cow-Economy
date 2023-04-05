@@ -23,6 +23,7 @@
     "vue": "^2.6.14",
     "vue-awesome-swiper": "^4.1.1",
     "vue-chartjs": "^5.2.0",
+    "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.5.1",
     "vue-step-progress": "^0.3.8",
     "vue-wordcloud": "^1.1.1",

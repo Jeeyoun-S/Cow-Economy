@@ -3,6 +3,7 @@ package com.coweconomy.api.controller;
 import com.coweconomy.api.response.BaseResponse;
 import com.coweconomy.common.jwt.JwtTokenUtil;
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
+import com.coweconomy.domain.article.dto.ArticleDto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.service.ArticleService;
 import com.coweconomy.service.UserService;
@@ -10,9 +11,11 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -36,6 +39,30 @@ public class ArticleController {
         return BaseResponse.fail();
     }
 
+    @ApiOperation(value = "인기 기사 조회", notes = "오늘 전체 기사 중 인기 기사 10개를 조회한다.")
+    @GetMapping("/hot-news")
+    public BaseResponse getHotArticles(HttpServletRequest request){
+        List<ArticleDto> hotArticles = articleService.getHotArticles();
+
+        return BaseResponse.success(hotArticles);
+    }
+    @ApiOperation(value = "카테고리별 조회", notes = "오늘 전체 기사 중 인기 기사 10개를 조회한다.")
+    @GetMapping("/category-news")
+    public BaseResponse getCategoryArticles(HttpServletRequest request){
+        List<List<ArticleDto>> articles = articleService.getCategoryArticles();
+        return BaseResponse.success(articles);
+    }
+
+    @ApiOperation(value = "키워드 검색", notes = "키워드로 기사를 조회한다.")
+    @GetMapping("/search")
+    public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestParam Long lastArticleId){
+        System.out.println(keyword+" "+lastArticleId);
+        List<ArticleDto> articles = articleService.getByKeywordArticles(keyword,lastArticleId);
+        for (ArticleDto article:articles) {
+            System.out.println("기사: "+ article.getArticleId()+" " + article.getArticleTitle()+" "+article.getArticleRegtime() );
+        }
+        return BaseResponse.success(articles);
+    }
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")
     @GetMapping("/{articleId}")
     public BaseResponse getArticleDetail(HttpServletRequest request, @PathVariable("articleId") Long articleId) {

@@ -1,6 +1,7 @@
 package com.coweconomy.service;
 
 import com.coweconomy.domain.article.dto.ArticleDetailDto;
+import com.coweconomy.domain.article.dto.ArticleDto;
 import com.coweconomy.domain.article.dto.RelatedArticleDto;
 import com.coweconomy.domain.article.entity.Article;
 import com.coweconomy.domain.user.entity.User;
@@ -9,32 +10,51 @@ import com.coweconomy.domain.word.dto.EconomyWordDto;
 import com.coweconomy.domain.word.entity.ArticleWord;
 import com.coweconomy.domain.word.entity.EconomyWord;
 import com.coweconomy.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ArticleService {
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
+    private final UserArticleRepository userArticleRepository;
+    private final UserArticleMemoRepository userArticleMemoRepository;
+    private final EconomyWordRepository economyWordRepository;
+    private final RelatedArticleRepository relatedArticleRepository;
 
-    @Autowired
-    ArticleRepository articleRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    public List<ArticleDto> getHotArticles(){
+        List<Article> todayArticles = articleRepository.findByTodayHotArticles();
+        List<ArticleDto> result = todayArticles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        return result;
+    }
 
-    @Autowired
-    UserArticleRepository userArticleRepository;
+    public List<List<ArticleDto>> getCategoryArticles(){
+        List<Article> hot = articleRepository.findByCategoryHotArticle();
+        List<Article> recent = articleRepository.findByCategoryRecentArticle();
+        List<List<ArticleDto>> result = new ArrayList<>();
+        List<ArticleDto> hotArticles = hot.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        result.add(hotArticles);
+        result.add(recentArticles);
+        System.out.println("카테고리별 뉴스 전체길이: " + result.size());
+        return result;
+    }
 
-    @Autowired
-    UserArticleMemoRepository userArticleMemoRepository;
-
-    @Autowired
-    EconomyWordRepository economyWordRepository;
-
-    @Autowired
-    RelatedArticleRepository relatedArticleRepository;
-
+    public List<ArticleDto> getByKeywordArticles(String keyword, Long lastArticleId){
+        PageRequest pageRequest = PageRequest.of(0, 7);
+        Page<Article> articles = articleRepository.findByArticleIdLessThanAndArticleTitleContainsOrderByArticleIdDesc(lastArticleId, keyword, pageRequest);
+        List<ArticleDto> result = articles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        return result;
+    }
     /**
      * @param articleId 기사 ID
      * **/
@@ -140,7 +160,7 @@ public class ArticleService {
         return false;
     }
 
-    public void increaseHits(Long articleId) {  
+    public void increaseHits(Long articleId) {
         // DB에서 articleId로 article 가져오기
         Optional<Article> optionalArticle = articleRepository.findById(articleId);
         if (optionalArticle.isPresent()) {
