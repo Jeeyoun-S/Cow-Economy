@@ -1,4 +1,5 @@
 import { getWordCloud } from "@/api/modules/wordcloud";
+import { getTodayHotNews, getTodayAllNews } from "@/api/modules/article";
 
 const mainStore = {
   namespaced: true,
@@ -7,8 +8,11 @@ const mainStore = {
     words: null,
     wordsFlag: false,
     //인기기사
-
+    hotNews: null,
+    hotNewsFlag: false,
     //카테고리별
+    categoryNews: null,
+    categoryNewsFlag: false,
   },
   getters: {},
   mutations: {
@@ -33,6 +37,12 @@ const mainStore = {
           console.log(error);
         }
       );
+    },
+    async updateHotNews() {
+      await getTodayHotNews();
+    },
+    async updateTodayAllNews() {
+      await getTodayAllNews();
     },
   },
   modules: {},
