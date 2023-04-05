@@ -4,19 +4,19 @@ import lombok.Getter;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 public class WordCloud {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Comment("워드 클라우드 ID")
-    private Long wordCloudId;
-
     @Column(length = 100)
-    @Comment("명사")
+    @Comment("명사 (ID)")
     private String name;
 
     @Comment("명사 빈도수")
+    @NotNull
     private Long value;
+
+
 }
