@@ -149,7 +149,7 @@ export default {
         this.setWordInfo(res.articleWordList);
 
         const newsTitle = this.newsDetail.articleTitle
-        const newsContent = this.newsDetail.articleContent.innerHTML
+        const newsContent = this.newsDetail.articleContent.innerText
 
         this.setCurNews([newsTitle, newsContent])
 
