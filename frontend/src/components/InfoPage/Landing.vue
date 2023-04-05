@@ -19,7 +19,6 @@
       <div class="circle circle3"></div>
       <div class="circle circle4"></div>
     </div> -->
-
     <img
       class="mb-4 logo-gradient"
       height="100px"
@@ -54,10 +53,24 @@
 <script>
 // import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
+import { mapActions } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "InfoPageFirst",
+  computed: {},
+  methods: {
+    ...mapActions(mainStore, [
+      "updateWordCloud",
+      "updateHotNews",
+      "updateTodayAllNews",
+    ]),
+  },
   mounted() {
+    this.updateWordCloud(); //워드 클라우드 설정
+    this.updateHotNews(); //인기 뉴스 설정
+    this.updateTodayAllNews(); //카테고리별 뉴스 설정
     // new Scene(
     //   {
     //     ".line-top": {

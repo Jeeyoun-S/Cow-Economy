@@ -12,7 +12,7 @@
       오늘의 경제 분야에서 인기 뉴스를 확인해 보세요.
     </div>
     <swiper class="swiper mt-4 ml-6" :options="swiperOption">
-      <swiper-slide v-for="(article, idx) in news" :key="idx">
+      <swiper-slide v-for="(article, idx) in hotNews" :key="idx">
         <div>
           <v-card
             rounded="lg"
@@ -82,24 +82,39 @@
 </template>
 
 <script>
-import { getTodayHotNews } from "@/api/modules/article.js";
+// import mainStore from "@/store/modules/mainStore";
+// import { getTodayHotNews } from "@/api/modules/article.js";
+import { mapActions, mapState } from "vuex";
+
+const mainStore = "mainStore";
+
 export default {
   name: "HotNews",
   data() {
     return {
-      news: [],
+      // news: [],
       swiperOption: {
         slidesPerView: "auto",
         spaceBetween: 25,
       },
     };
   },
+  computed: {
+    ...mapState(mainStore, ["hotNews"]),
+  },
+  created() {
+    if (this.howNews == null) {
+      //뉴스가 존재하지 않는 경우 뉴스 불러오기
+      this.updateHotNews();
+    }
+  },
   mounted() {
-    getTodayHotNews().then((res) => {
-      this.news = res;
-    });
+    // getTodayHotNews().then((res) => {
+    //   this.news = res;
+    // });
   },
   methods: {
+    ...mapActions(mainStore, ["updateHotNews"]),
     moveNewsDetail(articleId) {
       this.$router.push(`/news/${articleId}`);
     },

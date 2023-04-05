@@ -17,9 +17,8 @@
       type="image"
     ></v-skeleton-loader>
     <v-sheet class="mt-4 pa-0" v-else rounded="lg" elevation="3" color="white">
-      <v-img v-if="!flag" class="trend_img" :src="`${imgPath}`"></v-img>
+      <!-- <v-img v-if="!wordsFlag" class="trend_img" :src="`${imgPath}`"></v-img> -->
       <wordcloud
-        v-else
         style="width 100%; height: 300px;"
         font="GongGothicBold"
         :data="words"
@@ -37,8 +36,10 @@
 </template>
 
 <script>
-import { getWordCloud } from "@/api/modules/wordcloud";
 import wordcloud from "vue-wordcloud";
+import { mapActions, mapState } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "HotTrends",
@@ -46,25 +47,23 @@ export default {
     return {
       imgPath: process.env.VUE_APP_WORD_CLOUD_URL,
       colors: ["#5aa9e6", "#7fc8f8", "#ffe45e", "#ff6392", "#dab6fc"],
-      words: null,
       rotate: { from: 0, to: 0 },
-      flag: true,
     };
   },
   components: {
     wordcloud,
   },
-  async mounted() {
-    let result = await getWordCloud();
-    this.words = [];
-    if (result != null) {
-      result.data.forEach((el) => {
-        this.words.push({ name: el.name, value: el.value });
-      });
-    } else {
-      //이미지로 대체
-      this.flag = false;
+  computed: {
+    ...mapState(mainStore, ["words", "wordsFlag"]),
+  },
+  mounted() {
+    if (!this.wordsFlag) {
+      //워드 클라우드가 없을 때 새로 갱신
+      this.updateWordCloud();
     }
+  },
+  methods: {
+    ...mapActions(mainStore, ["updateWordCloud"]),
   },
 };
 </script>

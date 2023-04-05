@@ -108,6 +108,9 @@
 import Swiper from "swiper";
 import { getTodayAllNews } from "@/api/modules/article.js";
 import NewsCard from "@/common/component/NewsCard.vue";
+import { mapMutations } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "CategoryNews",
@@ -170,6 +173,7 @@ export default {
     });
   },
   methods: {
+    ...mapMutations(mainStore, ["UPDATE_CATEGORY_NEWS"]),
     onTagChange(value) {
       console.log("onTagChange: ", value);
       this.selectedTag = value;
@@ -188,6 +192,13 @@ export default {
       slidesPerView: "auto",
       spaceBetween: 7,
     });
+  },
+  watch: {
+    news() {
+      if (this.news.length != 0) {
+        this.UPDATE_CATEGORY_NEWS(this.news);
+      }
+    },
   },
 };
 </script>
