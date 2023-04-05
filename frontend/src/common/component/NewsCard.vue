@@ -1,34 +1,50 @@
 <template>
   <v-card
-    max-width="100%"
-    class="mx-auto my-2 d-flex flex-row"
-    height="120"
+    width="100%"
+    height="100%"
+    class="card-gradient mx-auto my-2 d-flex flex-row"
+    elevation="0"
+    rounded="lg"
     @click="moveDetailArticle(article.articleId)"
   >
     <!-- 이미지 -->
-    <div v-if="article.articleThumbnail">
-      <v-avatar class="custom-avatar" size="120" tile>
+    <v-sheet
+      width="100"
+      v-if="article.articleThumbnail && article.articleThumbnail != 'NaN'"
+      :style="{
+        backgroundImage: `url(${article.articleThumbnail})`,
+        backgroundSize: 'cover',
+        borderTopRightRadius: '0px',
+        borderBottomLeftRadius: 'inherit',
+        backgroundPosition: 'center',
+      }"
+    ></v-sheet>
+    <!-- <img
+      v-if="article.articleThumbnail && article.articleThumbnail != 'NaN'"
+      width="100"
+      :src="this.article.articleThumbnail"
+      style="
+        object-fit: cover;
+        border-top-right-radius: 0px !important;
+        border-bottom-left-radius: inherit !important;
+        max-height: 100%;
+      "
+    /> -->
+    <!-- <div v-if="article.articleThumbnail && article.articleThumbnail != 'NaN'">
+      <v-avatar class="custom-avatar" size="105" tile>
         <v-img
           v-if="article.articleThumbnail"
           :src="this.article.articleThumbnail"
         ></v-img>
       </v-avatar>
-    </div>
+    </div> -->
     <!-- 기사 텍스트 -->
     <div
-      class="text-col ma-5"
-      style="
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      "
+      class="text-col ma-4 mb-5 d-flex flex-column justify-start"
+      style="flex: 1"
     >
       <!-- 언론사, 날짜 -->
-      <div
-        class="main-subtitle-font"
-        style="display: flex; justify-content: space-between"
-      >
+      <div class="main-subtitle-font d-flex justify-space-between">
         <p class="my-1">{{ this.article.articlePress }}</p>
         <p class="my-1">
           {{
@@ -40,14 +56,11 @@
       </div>
       <!-- 제목 -->
       <div class="title-row">
-        <v-card-title
-          class="pa-0 main-category-news-font"
-          >{{
-            this.article.articleTitle.length > 60
-              ? this.article.articleTitle.slice(0, 60)
-              : this.article.articleTitle
-          }}</v-card-title
-        >
+        <v-card-title class="pa-0 main-category-news-font">{{
+          this.article.articleTitle.length > 60
+            ? this.article.articleTitle.slice(0, 60) + "···"
+            : this.article.articleTitle
+        }}</v-card-title>
       </div>
     </div>
   </v-card>

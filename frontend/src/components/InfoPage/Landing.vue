@@ -4,7 +4,7 @@
     color="transparent"
     class="gradient d-flex flex-column align-center justify-center"
   >
-    <div class="line-top"></div>
+    <!-- <div class="line-top"></div>
     <div class="motion">
       <div class="glitter glitter1"></div>
       <div class="glitter glitter2"></div>
@@ -18,14 +18,12 @@
       <div class="circle circle2"></div>
       <div class="circle circle3"></div>
       <div class="circle circle4"></div>
-    </div>
-
+    </div> -->
     <img
-      class="logo logo-gradient"
+      class="mb-4 logo-gradient"
       height="100px"
       :src="require('@/assets/images/logo/logo_full.png')"
     />
-
     <v-sheet
       class="loader mb-5 d-flex flex-column justify-center align-center team-gradient"
       width="40%"
@@ -53,145 +51,158 @@
 </template>
 
 <script>
-import Scene from "scenejs";
+// import Scene from "scenejs";
 // import { typing } from "@scenejs/effects";
+import { mapActions } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "InfoPageFirst",
+  computed: {},
+  methods: {
+    ...mapActions(mainStore, [
+      "updateWordCloud",
+      "updateHotNews",
+      "updateTodayAllNews",
+    ]),
+  },
   mounted() {
-    new Scene(
-      {
-        ".line-top": {
-          0: {
-            transform: "translateY(10%) scaleY(0.5)",
-          },
-          0.3: {
-            transform: "translateY(0%) scaleY(0)",
-          },
-          options: {
-            easing: "ease-in",
-          },
-        },
-        ".title": {
-          3: {
-            opacity: 0,
-          },
-          3.5: {
-            opacity: 1,
-          },
-        },
-        ".circle1": {
-          0: {
-            "border-width": "100px",
-            transform: "scale(0)",
-          },
-          0.7: {
-            opacity: 1,
-          },
-          0.9: {
-            "border-width": "0px",
-            transform: "scale(1)",
-            opacity: 0,
-          },
-          options: {
-            delay: 0.5,
-          },
-        },
-        ".circle2": {
-          0: {
-            "border-width": "200px",
-            transform: "scale(0)",
-          },
-          0.1: {
-            opacity: 1,
-          },
-          0.7: {
-            "border-width": "0px",
-            transform: "scale(1)",
-            opacity: 0,
-          },
-          1.8: 1,
-          options: {
-            delay: 1.1,
-          },
-        },
-        ".glitter": (i) => ({
-          0: {
-            width: "0px",
-            transform: {
-              rotate: `${(360 / 8) * i}deg`,
-              translate: "0px",
-              scaleX: 1,
-            },
-            opacity: 0,
-          },
-          0.3: {
-            width: "50px",
-            opacity: 1,
-          },
-          0.8: {
-            width: "0px",
-            transform: {
-              translate: "100px",
-              scaleX: 0,
-            },
-            opacity: 0,
-          },
-          options: {
-            delay: 0.5,
-          },
-        }),
-        ".logo": {
-          0: {
-            opacity: 0,
-            transform: "scale(0.3)",
-            // top: "-100px",
-            // bottom: "-100px",
-          },
-          0.1: {
-            opacity: 1,
-          },
-          0.8: {
-            opacity: 1,
-          },
-          1: {
-            transform: "translateY(40%) scale(1)",
-            opacity: 1,
-          },
-          2: {
-            transform: "translateY(-20%) scale(1)",
-          },
-          options: {
-            delay: 1.3,
-          },
-        },
-        ".loader": {
-          3.3: {
-            transform: "scale(0)",
-          },
-          3.5: {
-            transform: "scale(1)",
-          },
-        },
-        ".detail": {
-          0: {
-            opacity: 0,
-          },
-          2.3: {
-            opacity: 1,
-          },
-          options: {
-            delay: 2.3,
-          },
-        },
-      },
-      {
-        easing: "ease-out",
-        selector: true,
-        iterationCount: "1",
-      }
-    ).playCSS();
-
+    this.updateWordCloud(); //워드 클라우드 설정
+    this.updateHotNews(); //인기 뉴스 설정
+    this.updateTodayAllNews(); //카테고리별 뉴스 설정
+    // new Scene(
+    //   {
+    //     ".line-top": {
+    //       0: {
+    //         transform: "translateY(10%) scaleY(0.5)",
+    //       },
+    //       0.3: {
+    //         transform: "translateY(0%) scaleY(0)",
+    //       },
+    //       options: {
+    //         easing: "ease-in",
+    //       },
+    //     },
+    //     ".title": {
+    //       3: {
+    //         opacity: 0,
+    //       },
+    //       3.5: {
+    //         opacity: 1,
+    //       },
+    //     },
+    //     ".circle1": {
+    //       0: {
+    //         "border-width": "100px",
+    //         transform: "scale(0)",
+    //       },
+    //       0.7: {
+    //         opacity: 1,
+    //       },
+    //       0.9: {
+    //         "border-width": "0px",
+    //         transform: "scale(1)",
+    //         opacity: 0,
+    //       },
+    //       options: {
+    //         delay: 0.5,
+    //       },
+    //     },
+    //     ".circle2": {
+    //       0: {
+    //         "border-width": "200px",
+    //         transform: "scale(0)",
+    //       },
+    //       0.1: {
+    //         opacity: 1,
+    //       },
+    //       0.7: {
+    //         "border-width": "0px",
+    //         transform: "scale(1)",
+    //         opacity: 0,
+    //       },
+    //       1.8: 1,
+    //       options: {
+    //         delay: 1.1,
+    //       },
+    //     },
+    //     ".glitter": (i) => ({
+    //       0: {
+    //         width: "0px",
+    //         transform: {
+    //           rotate: `${(360 / 8) * i}deg`,
+    //           translate: "0px",
+    //           scaleX: 1,
+    //         },
+    //         opacity: 0,
+    //       },
+    //       0.3: {
+    //         width: "50px",
+    //         opacity: 1,
+    //       },
+    //       0.8: {
+    //         width: "0px",
+    //         transform: {
+    //           translate: "100px",
+    //           scaleX: 0,
+    //         },
+    //         opacity: 0,
+    //       },
+    //       options: {
+    //         delay: 0.5,
+    //       },
+    //     }),
+    //     ".logo": {
+    //       0: {
+    //         opacity: 0,
+    //         transform: "scale(0.3)",
+    //         // top: "-100px",
+    //         // bottom: "-100px",
+    //       },
+    //       0.1: {
+    //         opacity: 1,
+    //       },
+    //       0.8: {
+    //         opacity: 1,
+    //       },
+    //       1: {
+    //         transform: "translateY(40%) scale(1)",
+    //         opacity: 1,
+    //       },
+    //       2: {
+    //         transform: "translateY(-20%) scale(1)",
+    //       },
+    //       options: {
+    //         delay: 1.3,
+    //       },
+    //     },
+    //     ".loader": {
+    //       3.3: {
+    //         transform: "scale(0)",
+    //       },
+    //       3.5: {
+    //         transform: "scale(1)",
+    //       },
+    //     },
+    //     ".detail": {
+    //       0: {
+    //         opacity: 0,
+    //       },
+    //       2.3: {
+    //         opacity: 1,
+    //       },
+    //       options: {
+    //         delay: 2.3,
+    //       },
+    //     },
+    //   },
+    //   {
+    //     easing: "ease-out",
+    //     selector: true,
+    //     iterationCount: "1",
+    //   }
+    // ).playCSS();
     // new Scene(
     //   {
     //     ".circle3": {
@@ -236,7 +247,6 @@ export default {
     //     delay: 3,
     //   }
     // ).playCSS();
-
     // new Scene(
     //   {
     //     ".title span": typing({
