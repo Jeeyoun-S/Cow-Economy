@@ -49,7 +49,6 @@ export default {
     ...mapState("userStore", ["articleList"]),
     hasData() {
       const wordCategoryList = this.articleList.wordCategoryList;
-      // console.log(wordCategoryList)
       return wordCategoryList.some((value) => value[1] !== 0);
     },
   },

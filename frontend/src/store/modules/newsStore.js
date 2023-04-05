@@ -6,6 +6,7 @@ const newsStore = {
     beforeSearch: false,
     searchText: "",
     searched: false,
+    cur: [],
     news: [],
     categoryLast: {
       finance: maxArticleId,
@@ -19,6 +20,7 @@ const newsStore = {
     }
   },
   mutations: {
+
     SET_BEFORE_SEARCH(state, payload) {
       state.beforeSearch = payload;
     },
@@ -32,6 +34,9 @@ const newsStore = {
     SET_NEWS(state, news) {
       state.news = news;
     },
+    SET_CUR_NEWS(state, payload) {
+          state.cur = payload;
+    },
     SET_CATEGORYLAST(state, categoryLast) {
       // console.log("금융: "+categoryLast[0]);
       // console.log("증권: "+categoryLast[1]);
@@ -41,7 +46,7 @@ const newsStore = {
       // console.log("글로벌: "+categoryLast[5]);
       // console.log("생활: "+categoryLast[6]);
       // console.log("일반: "+categoryLast[7]);
-      
+
       state.categoryLast.finance = categoryLast[0];
       state.categoryLast.stock = categoryLast[1];
       state.categoryLast.industry = categoryLast[2];
@@ -54,11 +59,11 @@ const newsStore = {
   },
   actions: {
     init({commit}){
-      commit("SET_NEWS", []); 
+      commit("SET_NEWS", []);
       commit("SET_SEARCH_TEXT", "");
       commit("SET_SEARCHED", false);
       commit("SET_BEFORE_SEARCH", false);
-      commit("SET_CATEGORYLAST", 
+      commit("SET_CATEGORYLAST",
       [maxArticleId,
         maxArticleId,
         maxArticleId,
@@ -70,6 +75,9 @@ const newsStore = {
     },
     setSearchText({ commit }, payload) {
       commit("SET_SEARCH_TEXT", payload);
+    },
+    setCurNews({ commit }, payload) {
+          commit("SET_CUR_NEWS", payload)
     },
     setSearched({ commit }, payload) {
       commit("SET_SEARCHED", payload);
