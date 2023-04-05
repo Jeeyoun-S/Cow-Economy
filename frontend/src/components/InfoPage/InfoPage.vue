@@ -1,40 +1,59 @@
 <template>
-  <!-- <v-card class="overflow-hidden" color="transparent" elevation="0">
-    <InfoHeader></InfoHeader>
-    <v-sheet
-      id="scrolling-techniques-3"
-      class="scroll overflow-auto"
-      max-height="100vh"
-      color="transparent"
-    >
-      <v-container>
-        <info-page-first></info-page-first> -->
-  <flicking-test></flicking-test>
-  <!-- </v-container>
-    </v-sheet>
-  </v-card> -->
+  <div>
+    <landing v-if="isLoggedIn"></landing>
+    <info-detail v-else></info-detail>
+  </div>
 </template>
 
 <script>
-// import InfoHeader from "@/views/Header/InfoHeader.vue";
-// import InfoPageFirst from "./InfoPageFirst.vue";
-import FlickingTest from "./FlickingTest.vue";
-import { mapGetters } from "vuex";
+import InfoDetail from "./InfoDetail.vue";
+import Landing from "./Landing.vue";
+import { mapGetters, mapState } from "vuex";
+
+const mainStore = "mainStore";
 
 export default {
   name: "InfoPage",
   components: {
-    // InfoHeader,
-    // InfoPageFirst,
-    FlickingTest,
+    InfoDetail,
+    Landing,
+  },
+  data() {
+    return {
+      isAll: 0,
+    };
+  },
+  watch: {
+    isAll() {
+      if (this.isAll == 3 && this.isLoggedIn) {
+        this.$router.push("/home");
+      }
+    },
+    wordsFlag() {
+      if (this.wordsFlag) {
+        this.isAll += 1;
+      }
+    },
+    hotNewsFlag() {
+      if (this.hotNewsFlag) {
+        this.isAll += 1;
+      }
+    },
+    categoryNewsFlag() {
+      if (this.categoryNewsFlag) {
+        this.isAll += 1;
+      }
+    },
   },
   created() {
-    if (this.isLoggedIn) {
-      this.$router.push("/home");
-    }
+    // if (this.isLoggedIn) {
+    //   this.$router.push("/home");
+    // }
+    this.isAll = 0; //초기화
   },
   computed: {
     ...mapGetters("userStore", ["isLoggedIn"]),
+    ...mapState(mainStore, ["wordsFlag", "hotNewsFlag", "categoryNewsFlag"]),
   },
 };
 </script>

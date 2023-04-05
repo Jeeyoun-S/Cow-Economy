@@ -1,33 +1,34 @@
 <template>
   <v-sheet class="py-6" color="white">
-    <div class="px-6 main-title-font align-center">
+    <div class="px-6 d-flex flex-row align-start">
       <img
-        height="19.47"
+        height="22"
+        class="mr-1"
         :src="require('@/assets/images/increase-stats.png')"
       />
-      인기 뉴스
+      <span class="main-title-font">인기 뉴스</span>
     </div>
     <div class="px-6 main-subtitle-font">
-      24시간 내 경제 분야에서 인기 뉴스를 확인해 보세요.
+      오늘의 경제 분야에서 인기 뉴스를 확인해 보세요.
     </div>
     <swiper class="swiper mt-4 ml-6" :options="swiperOption">
-      <swiper-slide v-for="(article, idx) in news" :key="idx">
+      <swiper-slide v-for="(article, idx) in hotNews" :key="idx">
         <div>
           <v-card
             rounded="lg"
-            elevation="4"
             class="ma-0"
             @click="moveNewsDetail(article.articleId)"
             height="200px"
+            elevation="0"
           >
             <v-img
               :src="article.articleThumbnail"
               class="align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
               height="200px"
             >
               <v-sheet width="91%" class="white-col-1 pa-4" color="transparent">
-                <div class="sm-font d-flex flex-row justify-space-between">
+                <div class="xs-font d-flex flex-row justify-space-between">
                   <span>{{ article.articlePress }}</span>
                   <span>{{
                     new Intl.DateTimeFormat("kr").format(
@@ -35,7 +36,7 @@
                     )
                   }}</span>
                 </div>
-                <span class="lg-font b-font">{{ article.articleTitle }}</span>
+                <span class="b-font">{{ article.articleTitle }}</span>
               </v-sheet>
             </v-img>
             <!-- <v-img
@@ -81,24 +82,39 @@
 </template>
 
 <script>
-import { getTodayHotNews } from "@/api/modules/article.js";
+// import mainStore from "@/store/modules/mainStore";
+// import { getTodayHotNews } from "@/api/modules/article.js";
+import { mapActions, mapState } from "vuex";
+
+const mainStore = "mainStore";
+
 export default {
   name: "HotNews",
   data() {
     return {
-      news: [],
+      // news: [],
       swiperOption: {
         slidesPerView: "auto",
         spaceBetween: 25,
       },
     };
   },
+  computed: {
+    ...mapState(mainStore, ["hotNews"]),
+  },
+  created() {
+    if (this.howNews == null) {
+      //뉴스가 존재하지 않는 경우 뉴스 불러오기
+      this.updateHotNews();
+    }
+  },
   mounted() {
-    getTodayHotNews().then((res) => {
-      this.news = res;
-    });
+    // getTodayHotNews().then((res) => {
+    //   this.news = res;
+    // });
   },
   methods: {
+    ...mapActions(mainStore, ["updateHotNews"]),
     moveNewsDetail(articleId) {
       this.$router.push(`/news/${articleId}`);
     },
