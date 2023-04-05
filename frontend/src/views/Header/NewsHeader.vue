@@ -46,6 +46,7 @@ export default {
         alert("카카오 SDK가 초기화되지 않았습니다.");
         return;
       }
+      console.log(this.cur[2])
 
       const templateId = 91976
       this.$refs.kakaoShareButton.onclick = () => {
@@ -54,7 +55,7 @@ export default {
           templateArgs: {
             'title': this.cur[0],
             'content': this.cur[1],
-            'imageUrl': "@/assets/images/logo/logo_full.png",
+            'imageUrl': this.cur[2],
             'linkMobile': `https://j8a509.p.ssafy.io${window.location.pathname}`,
             'linkWeb': `https://j8a509.p.ssafy.io${window.location.pathname}`,
           }

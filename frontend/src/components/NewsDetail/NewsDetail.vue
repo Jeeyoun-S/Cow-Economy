@@ -150,8 +150,14 @@ export default {
 
         const newsTitle = this.newsDetail.articleTitle
         const newsContent = this.newsDetail.articleContent.innerText
+        var newsThumbnail = ''
+        if (this.newsDetail.articleThumbnail) {
+          newsThumbnail = this.newsDetail.articleThumbnail
+        } else {
+          newsThumbnail = "@/assets/images/news_background.jpg"
+        }
 
-        this.setCurNews([newsTitle, newsContent])
+        this.setCurNews([newsTitle, newsContent, newsThumbnail])
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
