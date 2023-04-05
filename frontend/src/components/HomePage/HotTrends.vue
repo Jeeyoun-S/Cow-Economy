@@ -14,22 +14,18 @@
       elevation="3"
       color="white"
     >
-      <v-img
-        class="trend_img"
-        :src="`${imgPath}`"
-        alt="word cloud 이미지"
-      ></v-img>
+      <v-img class="trend_img" :src="`${imgPath}`"></v-img>
     </v-sheet>
     <v-sheet class="mt-4 pa-0" v-else rounded="lg" elevation="3" color="white">
       <wordcloud
-        style="margin: auto 0"
+        style="width 100%; height: 300px;"
         font="GongGothicBold"
         :data="words"
         nameKey="name"
         valueKey="value"
         :color="colors"
         spiral="rectangular"
-        :fontSize="[10, 35]"
+        :fontSize="[10, 40]"
         :rotate="rotate"
         :showTooltip="false"
       >
@@ -47,14 +43,7 @@ export default {
   data() {
     return {
       imgPath: process.env.VUE_APP_WORD_CLOUD_URL,
-      colors: [
-        "#8E96DF",
-        "#A5D9F0",
-        "#A1ABC7",
-        "#76B0DC",
-        "#6F83E9",
-        "#BDE0FE",
-      ],
+      colors: ["#5aa9e6", "#7fc8f8", "#ffe45e", "#ff6392", "#dab6fc"],
       words: [],
       rotate: { from: 0, to: 0 },
     };
@@ -67,7 +56,6 @@ export default {
     let result = await getWordCloud();
     if (result != null) {
       result.data.forEach((el) => {
-        // this.words.push([el.name, el.value]);
         this.words.push({ name: el.name, value: el.value });
       });
     }
