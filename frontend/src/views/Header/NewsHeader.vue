@@ -55,8 +55,8 @@ export default {
             'title': this.cur[0],
             'content': this.cur[1],
             'imageUrl': "@/assets/images/logo/logo_full.png",
-            'linkMobile': window.location.href,
-            'linkWeb': window.location.href,
+            'linkMobile': `https://j8a509.p.ssafy.io${window.location.pathname}`,
+            'linkWeb': `https://j8a509.p.ssafy.io${window.location.pathname}`,
           }
         });
       };
