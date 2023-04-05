@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)
@@ -49,11 +50,29 @@ public class ArticleService {
         return result;
     }
 
-    public List<ArticleDto> getByKeywordArticles(String keyword, Long lastArticleId){
-        PageRequest pageRequest = PageRequest.of(0, 7);
-        Page<Article> articles = articleRepository.findByArticleIdLessThanAndArticleTitleContainsOrderByArticleIdDesc(lastArticleId, keyword, pageRequest);
+    public HashMap<String,List<?>> getByKeywordArticles(String keyword, Long[] lastArticleId){
+        HashMap<String, List<?>> map = new HashMap<>();
+        List<Article> articles = articleRepository.findByKeywordSearch(keyword, lastArticleId[0],lastArticleId[1], lastArticleId[2],
+                lastArticleId[3],lastArticleId[4],lastArticleId[5],lastArticleId[6],lastArticleId[7]);
         List<ArticleDto> result = articles.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
-        return result;
+        //각 카테고리별 마지막 기사아이디 조회
+        String [] categorys = {"금융", "증권", "산업/재계", "중기/벤처", "부동산", "글로벌 경제", "생활경제", "경제 일반"};
+        List<Long> categoryLast = new ArrayList<>();
+
+        for (String category: categorys) {
+            List<ArticleDto> articleList = result.stream().filter(r -> r.getArticleCategory().equals(category)).sorted((o1, o2) -> -o1.getArticleId().compareTo(o2.getArticleId())).collect(Collectors.toList());
+            System.out.println(category+" 카테고리 정렬");
+            if(articleList.size()>0){
+                System.out.println("마지막 기사 아이디: "+articleList.get(articleList.size()-1).getArticleId());
+                categoryLast.add(articleList.get(articleList.size()-1).getArticleId());
+            }
+            else    categoryLast.add(0L);
+
+        }
+//        System.out.println("전체 마지막 기사 아이디: " + result.get(result.size()-1).getArticleId());
+        map.put("articles", result);
+        map.put("categoryLast", categoryLast);
+        return map;
     }
     /**
      * @param articleId 기사 ID

@@ -83,7 +83,7 @@
         height="130"
       >
       </news-card>
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler"></infinite-loading>
     </v-sheet>
   </div>
 </template>
@@ -103,16 +103,15 @@ export default {
   },
   data() {
     return {
-      page: this.newsList[this.newsList.length-1].articleId,
+      page: 0,
       items: this.newsList,
       selectedCategory: null,
       sortKey: "최신순",
     };
   },
   computed: {
-    ...mapState("newsStore", ["searchText"]),
+    ...mapState("newsStore", ["searchText","news","categoryLast"]),
     filteredNews() {
-      // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
       let filtered = this.selectedCategory
         ? this.items.filter(
             (news) => news.articleCategory === this.selectedCategory
@@ -132,16 +131,11 @@ export default {
   methods: {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
-      console.log("infiniteHandler");
-      console.log("마지막 기사: "+this.page);
-      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
-      if (this.newsList.length>0){
+      console.log("스크롤");
+      await this.setNews({"keyword": this.searchText, "categoryLast": this.categoryLast});
+      if (this.news.length>0){
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
-          for (let index = 0; index < this.items.length; index++) {
-            console.log(this.items[index].articleTitle);
-          }
-          this.page = this.items[this.items.length-1].articleId;
           $state.loaded();
         }, 1000);
       }else{
@@ -149,6 +143,8 @@ export default {
       }
     },
     filterByCategory(category) {
+      if(this.$refs.infiniteLoading.status===2)
+        this.$refs.infiniteLoading.stateChanger.reset()
       this.selectedCategory = category;
     },
     resetFilter() {
