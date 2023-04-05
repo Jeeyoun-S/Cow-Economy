@@ -57,6 +57,21 @@
 .white-col-1 {
   color: white !important;
 }
+.graph-2-col-4 {
+  color: var(--graph-2-col-4);
+}
+.graph-1-col-4 {
+  color: var(--graph-1-col-4);
+}
+.graph-1-col-2 {
+  color: var(--graph-1-col-2);
+}
+.graph-1-col-2-1 {
+  color: var(--graph-1-col-2-1);
+}
+.graph-1-col-4-1 {
+  color: var(--graph-1-col-4-1);
+}
 /* 폰트 굵기 */
 .th-font {
   font-family: var(--main-font-0);
@@ -172,5 +187,5 @@
   filter: drop-shadow(0px 0px 5px var(--graph-1-col-2));
 }
 .graph-gradient {
-  filter: drop-shadow(0px 0px 3px var(--graph-1-col-2));
+  filter: drop-shadow(0px 0px 3px lightgray);
 }
