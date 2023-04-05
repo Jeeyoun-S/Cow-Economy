@@ -75,15 +75,16 @@
                 </div>
                 <span class="description">경제 기사를 읽으며</span>
                 <span class="description">경제에 대해 공부하는 서비스</span>
-                <MainHeaderLogin class="mt-3"></MainHeaderLogin>
+                <MainHeaderLogin class="point-th mt-3"></MainHeaderLogin>
                 <v-btn
-                  class="px-10 mt-3"
+                  class="point-th px-10 mt-3"
                   elevation="0"
                   color="var(--main-col-1)"
                   to="/home"
                   dark
                   rounded
                   outlined
+                  style="background-color: white"
                 >
                   로그인 없이 시작하기
                 </v-btn>
@@ -252,8 +253,10 @@
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font main-col-1">오늘의 Quiz</span>
-                <span class="sm-font main-col-1 md-font"
+                <span class="point-md xxxxl-font main-col-1 white-2-gradient"
+                  >오늘의 Quiz</span
+                >
+                <span class="sm-font main-col-1 md-font white-2-gradient"
                   >읽었던 기사 속 단어를 맞혀보세요.</span
                 >
                 <div class="d-flex flex-column justify-center align-center">
@@ -278,13 +281,14 @@
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font main-col-1 white-gradient"
+                <span
+                  class="white-2-gradient point-md xxxxl-font main-col-1 white-gradient"
                   >나의 활동 그래프</span
                 >
                 <span class="sm-font main-col-1 md-font"
                   >내가 읽은 기사를 통계로 알아볼 수 있습니다.</span
                 >
-                <div class="py-3 d-flex flex-row">
+                <div class="pb-3 d-flex flex-row">
                   <Flicking
                     class="charts"
                     :options="options"
@@ -293,17 +297,17 @@
                     <v-sheet
                       rounded="lg"
                       width="180"
-                      class="blue-shadow mr-2 mb-2 pa-2 d-flex flex-column align-center justify-space-between"
+                      class="graph-gradient my-2 mr-3 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font">읽은 기사 수</span>
+                      <span class="my-2 point-th">읽은 기사 수</span>
                       <canvas ref="barChart"></canvas>
                     </v-sheet>
                     <v-sheet
                       rounded="lg"
                       width="180"
-                      class="blue-shadow mb-2 mr-2 pa-2 d-flex flex-column align-center justify-space-between"
+                      class="graph-gradient my-2 mr-3 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font">읽은 기사의 카테고리</span>
+                      <span class="my-2 point-th">읽은 기사의 카테고리</span>
                       <canvas
                         ref="doughnutChart"
                         style="
@@ -315,9 +319,9 @@
                     <v-sheet
                       rounded="lg"
                       width="180"
-                      class="blue-shadow mr-2 mb-2 pa-2 d-flex flex-column align-center justify-start"
+                      class="graph-gradient mr-3 my-2 pa-2 d-flex flex-column align-center justify-start"
                     >
-                      <span class="my-2 md-font">경제 용어의 카테고리</span>
+                      <span class="my-2 point-th">경제 용어의 카테고리</span>
                       <canvas ref="radarChart"></canvas>
                     </v-sheet>
                   </Flicking>
@@ -333,13 +337,12 @@
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <div class="d-flex flex-column align-center">
-                <span class="b-font xxl-font main-col-2">지금 바로</span>
-                <span class="b-font xxl-font main-col-2"
-                  ><span class="black-font xxl-font main-col-2">소귀경</span>에
-                  접속해</span
+              <div class="d-flex flex-column point-th align-center white-col-1">
+                <span class="xxl-font pink-gradient">지금 바로</span>
+                <span class="xxl-font pink-gradient"
+                  ><span class="point-md xxl-font">소귀경</span>에 접속해</span
                 >
-                <span class="b-font xxl-font main-col-2"
+                <span class="xxl-font pink-gradient"
                   >경제 공부를 시작해보세요!</span
                 >
                 <MainHeaderLogin class="mt-3"></MainHeaderLogin>
@@ -351,6 +354,7 @@
                   dark
                   rounded
                   outlined
+                  style="background-color: white"
                 >
                   로그인 없이 시작하기
                 </v-btn>
@@ -361,7 +365,7 @@
       </div>
     </Flicking>
     <div
-      class="team d-flex flex-column justify-center align-center main-col-1 white-gradient"
+      class="team d-flex flex-column justify-center align-center main-col-1 white-gradient sm-font"
     >
       <div class="point-th">SSAFY 8기 A509 오난쥉이조</div>
       <div class="point-th">엄희정 민동주 서지윤 손승환 신도연</div>

@@ -16,6 +16,7 @@
         backgroundSize: 'cover',
         borderTopRightRadius: '0px',
         borderBottomLeftRadius: 'inherit',
+        backgroundPosition: 'center',
       }"
     ></v-sheet>
     <!-- <img

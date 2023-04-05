@@ -16,7 +16,7 @@
       v-if="words == null"
       type="image"
     ></v-skeleton-loader>
-    <v-sheet class="mt-4 pa-0" v-else rounded="lg" elevation="3" color="white">
+    <v-sheet class="mt-4 pa-0" elevation="2" v-else rounded="lg" color="white">
       <!-- <v-img v-if="!wordsFlag" class="trend_img" :src="`${imgPath}`"></v-img> -->
       <wordcloud
         style="width 100%; height: 300px;"
