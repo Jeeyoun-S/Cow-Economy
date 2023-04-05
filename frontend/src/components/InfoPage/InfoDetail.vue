@@ -252,29 +252,36 @@
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font">오늘의 Quiz</span>
-                <span class="sm-font"
-                  >경제 용어에 대한 퀴즈를 풀며 경제 지식을 한층 더
-                  높여보세요.</span
+                <span class="point-md xxxxl-font main-col-1">오늘의 Quiz</span>
+                <span class="sm-font main-col-1 md-font"
+                  >읽었던 기사 속 단어를 맞혀보세요.</span
                 >
                 <div class="d-flex flex-column justify-center align-center">
-                  <v-chip class="my-1" color="var(--main-col-1)" outlined
-                    >1. 읽었던 기사 속 단어를 맞추는 퀴즈</v-chip
+                  <v-chip
+                    class="px-7 my-1"
+                    color="var(--main-col-1)"
+                    outlined
+                    style="background-color: white !important"
+                    >15초 내에 보기 4개 중 답을 선택</v-chip
                   >
-                  <v-chip class="my-1">15초 내에 보기 4개 중 답을 선택</v-chip>
-                  <v-chip class="my-1"
-                    >총 7문제 중 5문제 이상 맞히면 성공</v-chip
+                  <v-chip
+                    class="px-7 my-1"
+                    color="var(--main-col-1)"
+                    outlined
+                    style="background-color: white !important"
+                    >7문제 중 5문제 이상 맞히면 경험치 획득</v-chip
                   >
-                  <v-chip class="my-1">성공 시, 경험치 획득</v-chip>
                 </div>
               </v-sheet>
               <v-sheet
-                class="d-flex flex-column justify-center align-center"
+                class="d-flex flex-column justify-space-between align-center"
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font">나의 활동 그래프</span>
-                <span class="sm-font"
+                <span class="point-md xxxxl-font main-col-1 white-gradient"
+                  >나의 활동 그래프</span
+                >
+                <span class="sm-font main-col-1 md-font"
                   >내가 읽은 기사를 통계로 알아볼 수 있습니다.</span
                 >
                 <div class="py-3 d-flex flex-row">
@@ -284,38 +291,34 @@
                     :plugins="chartPlugins"
                   >
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="blue-shadow mr-2 mb-2 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font lg-font">읽은 기사 수</span>
+                      <span class="my-2 md-font">읽은 기사 수</span>
                       <canvas ref="barChart"></canvas>
                     </v-sheet>
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="blue-shadow mb-2 mr-2 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font lg-font"
-                        >읽은 기사의 카테고리</span
-                      >
+                      <span class="my-2 md-font">읽은 기사의 카테고리</span>
                       <canvas
                         ref="doughnutChart"
                         style="
-                          height: 200px !important;
-                          width: 200px !important;
+                          height: 180px !important;
+                          width: 180px !important;
                         "
                       ></canvas>
                     </v-sheet>
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="blue-shadow mr-2 mb-2 pa-2 d-flex flex-column align-center justify-start"
                     >
-                      <span class="my-2 md-font lg-font"
-                        >경제 용어의 카테고리</span
-                      >
-                      <canvas
-                        ref="radarChart"
-                        style="height: 200px !important"
-                      ></canvas>
+                      <span class="my-2 md-font">경제 용어의 카테고리</span>
+                      <canvas ref="radarChart"></canvas>
                     </v-sheet>
                   </Flicking>
                 </div>
@@ -332,8 +335,9 @@
             >
               <div class="d-flex flex-column align-center">
                 <span class="b-font xxl-font main-col-2">지금 바로</span>
-                <span class="black-font xxl-font main-col-2"
-                  >소귀경에 접속해</span
+                <span class="b-font xxl-font main-col-2"
+                  ><span class="black-font xxl-font main-col-2">소귀경</span>에
+                  접속해</span
                 >
                 <span class="b-font xxl-font main-col-2"
                   >경제 공부를 시작해보세요!</span
@@ -397,10 +401,7 @@ export default {
       chartPlugins: [
         new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false }),
       ],
-      options: {
-        circular: true,
-        gap: 10,
-      },
+      options: {},
       snackbarSample: true,
     };
   },
