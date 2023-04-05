@@ -69,7 +69,7 @@ public class ArticleService {
             else    categoryLast.add(0L);
 
         }
-        System.out.println("전체 마지막 기사 아이디: " + result.get(result.size()-1).getArticleId());
+//        System.out.println("전체 마지막 기사 아이디: " + result.get(result.size()-1).getArticleId());
         map.put("articles", result);
         map.put("categoryLast", categoryLast);
         return map;

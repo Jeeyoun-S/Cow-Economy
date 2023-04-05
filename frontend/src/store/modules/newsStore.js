@@ -1,4 +1,5 @@
 import {searchNews} from '@/api/modules/article.js';
+const maxArticleId = Number.MAX_SAFE_INTEGER + 1
 const newsStore = {
   namespaced: true,
   state: {
@@ -7,14 +8,14 @@ const newsStore = {
     searched: false,
     news: [],
     categoryLast: {
-      finance: Number.MAX_SAFE_INTEGER + 1,
-      stock: Number.MAX_SAFE_INTEGER + 1,
-      industry: Number.MAX_SAFE_INTEGER + 1,
-      venture: Number.MAX_SAFE_INTEGER + 1,
-      estate: Number.MAX_SAFE_INTEGER + 1,
-      worldwide: Number.MAX_SAFE_INTEGER + 1,
-      life: Number.MAX_SAFE_INTEGER + 1,
-      common: Number.MAX_SAFE_INTEGER + 1,
+      finance: maxArticleId,
+      stock: maxArticleId,
+      industry: maxArticleId,
+      venture: maxArticleId,
+      estate: maxArticleId,
+      worldwide: maxArticleId,
+      life: maxArticleId,
+      common: maxArticleId,
     }
   },
   mutations: {
@@ -32,7 +33,7 @@ const newsStore = {
       state.news = news;
     },
     SET_CATEGORYLAST(state, categoryLast) {
-      // console.log("경제: "+categoryLast[0]);
+      // console.log("금융: "+categoryLast[0]);
       // console.log("증권: "+categoryLast[1]);
       // console.log("산업: "+categoryLast[2]);
       // console.log("벤처: "+categoryLast[3]);
@@ -40,13 +41,13 @@ const newsStore = {
       // console.log("글로벌: "+categoryLast[5]);
       // console.log("생활: "+categoryLast[6]);
       // console.log("일반: "+categoryLast[7]);
-
+      
       state.categoryLast.finance = categoryLast[0];
       state.categoryLast.stock = categoryLast[1];
       state.categoryLast.industry = categoryLast[2];
       state.categoryLast.venture = categoryLast[3];
       state.categoryLast.estate = categoryLast[4];
-      state.categoryLast.global = categoryLast[5];
+      state.categoryLast.worldwide = categoryLast[5];
       state.categoryLast.life = categoryLast[6];
       state.categoryLast.common = categoryLast[7];
     },
@@ -57,6 +58,15 @@ const newsStore = {
       commit("SET_SEARCH_TEXT", "");
       commit("SET_SEARCHED", false);
       commit("SET_BEFORE_SEARCH", false);
+      commit("SET_CATEGORYLAST", 
+      [maxArticleId,
+        maxArticleId,
+        maxArticleId,
+        maxArticleId,
+        maxArticleId,
+        maxArticleId,
+        maxArticleId,
+        maxArticleId]);
     },
     setSearchText({ commit }, payload) {
       commit("SET_SEARCH_TEXT", payload);

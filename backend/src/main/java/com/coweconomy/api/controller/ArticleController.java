@@ -59,24 +59,24 @@ public class ArticleController {
     @ApiOperation(value = "키워드 검색", notes = "키워드로 기사를 조회한다.")
     @PostMapping("/search")
     public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestBody CategoryArticleDto categoryLast ){
-//        System.out.println("키워드: "+ keyword);
-//        System.out.println("금융: "+ categoryLast.getFinance());
-//        System.out.println("주식: "+ categoryLast.getStock());
-//        System.out.println("산업: "+ categoryLast.getIndustry());
-//        System.out.println("중기/벤처: "+ categoryLast.getVenture());
-//        System.out.println("부동산: "+ categoryLast.getEstate());
-//        System.out.println("글로벌경제: "+ categoryLast.getWorldwide());
-//        System.out.println("생활경제: "+ categoryLast.getLife());
-//        System.out.println("경제 일반: "+ categoryLast.getCommon());
+        System.out.println("키워드: "+ keyword);
+        System.out.println("금융: "+ categoryLast.getFinance());
+        System.out.println("주식: "+ categoryLast.getStock());
+        System.out.println("산업: "+ categoryLast.getIndustry());
+        System.out.println("중기/벤처: "+ categoryLast.getVenture());
+        System.out.println("부동산: "+ categoryLast.getEstate());
+        System.out.println("글로벌경제: "+ categoryLast.getWorldwide());
+        System.out.println("생활경제: "+ categoryLast.getLife());
+        System.out.println("경제 일반: "+ categoryLast.getCommon());
         Long[] LastIdList = categoryLast.setCategoryLast(categoryLast);
 
         HashMap<String, List<?>> result = articleService.getByKeywordArticles(keyword,LastIdList);
         System.out.println("전체 기사 길이: "+result.get("articles").size());
 
-//        for (ArticleDto article:(List<ArticleDto>)result.get("articles")) {
-//            System.out.println("기사: "+ article.getArticleId()+"     " + article.getArticleCategory()+"      "
-//                    +article.getArticlePress()+"        "+article.getArticleTitle()+"     "+article.getArticleRegtime() );
-//        }
+        for (ArticleDto article:(List<ArticleDto>)result.get("articles")) {
+            System.out.println("기사: "+ article.getArticleId()+"     " + article.getArticleCategory()+"      "
+                    +article.getArticlePress()+"        "+article.getArticleTitle()+"     "+article.getArticleRegtime() );
+        }
         return BaseResponse.success(result);
     }
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")

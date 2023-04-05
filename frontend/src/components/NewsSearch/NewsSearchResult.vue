@@ -83,7 +83,7 @@
         height="130"
       >
       </news-card>
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler"></infinite-loading>
     </v-sheet>
   </div>
 </template>
@@ -110,9 +110,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("newsStore", ["searchText","categoryLast"]),
+    ...mapState("newsStore", ["searchText","news","categoryLast"]),
     filteredNews() {
-      // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
       let filtered = this.selectedCategory
         ? this.items.filter(
             (news) => news.articleCategory === this.selectedCategory
@@ -132,12 +131,11 @@ export default {
   methods: {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
-      this.page = this.newsList[this.newsList.length-1].articleId
+      console.log("스크롤");
       await this.setNews({"keyword": this.searchText, "categoryLast": this.categoryLast});
-      if (this.newsList.length>0){
+      if (this.news.length>0){
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
-          this.page = this.items[this.items.length-1].articleId;
           $state.loaded();
         }, 1000);
       }else{
@@ -145,6 +143,8 @@ export default {
       }
     },
     filterByCategory(category) {
+      if(this.$refs.infiniteLoading.status===2)
+        this.$refs.infiniteLoading.stateChanger.reset()
       this.selectedCategory = category;
     },
     resetFilter() {
