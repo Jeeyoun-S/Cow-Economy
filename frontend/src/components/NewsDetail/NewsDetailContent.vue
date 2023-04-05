@@ -99,7 +99,7 @@
 
 <script>
 import { addSelectionEvent } from "@/common/function/textSelection";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 const memoStore = "memoStore";
 
@@ -108,14 +108,24 @@ export default {
   data() {
     return {
       toggle_exclusive: 1,
+      memoBtnLocal: false,
     };
   },
   props: {
     newsDetail: Object,
   },
+  // watch: {
+  //   memoBtnLocal() {
+  //     this.changeMemoBtn();
+  //   },
+  //   memoBtn() {
+  //     this.memoBtnLocal = this.memoBtn;
+  //   },
+  // },
   computed: {
     // 메모 인용문 추가 버튼 활성화 여부 memoBtn
     ...mapState(memoStore, ["memoBtn"]),
+    ...mapGetters("userStore", ["isLoggedIn"]),
   },
   methods: {
     ...mapActions(memoStore, ["changeMemoBtn", "getSelectionText"]),
@@ -137,13 +147,16 @@ export default {
       .getElementById("content")
       .appendChild(this.newsDetail.articleContent);
 
-    // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
-    // document 전체에 적용 (div#article에만 하면 미작동)
-    document.addEventListener("selectionchange", addSelectionEvent);
+    if (this.isLoggedIn) {
+      // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
+      // document 전체에 적용 (div#article에만 하면 미작동)
+      document.addEventListener("selectionchange", addSelectionEvent);
+    }
   },
   destroyed() {
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
     document.removeEventListener("selectionchange", addSelectionEvent);
+    // this.memoBtnLocal = false;
   },
 };
 </script>

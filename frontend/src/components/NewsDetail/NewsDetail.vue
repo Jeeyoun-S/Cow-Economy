@@ -97,14 +97,14 @@ export default {
     ...mapActions("newsStore", ["setCurNews"]),
 
     addScrollEvent() {
-      // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
-      var content = document.getElementById("news-content");
       // params에서 기사 ID 가져오기
       var id = this.$route.params.id;
-      // 목표하는 스크롤 위치 (기사 맨 아래)
-      var target = content.offsetTop + content.offsetHeight;
       // 스크롤 이벤트에 넣을 함수
       function finishReading() {
+        // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
+        var content = document.getElementById("news-content");
+        // 목표하는 스크롤 위치 (기사 맨 아래)
+        var target = content.offsetTop + content.offsetHeight;
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
         if (now > target && !memoStore.state.reading) {
