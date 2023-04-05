@@ -15,6 +15,7 @@
         clearable
         @click:append="searchKeyword()"
         @click:clear="clearKeyword()"
+        @keyup.enter="searchKeyword()"
       ></v-text-field>
     </v-toolbar>
   </v-sheet>
@@ -32,14 +33,22 @@ export default {
     return { keyword: "", page: "1" };
   },
   computed: {
-    ...mapState("newsStore",["categoryLast"]),
+    ...mapState("newsStore", ["categoryLast"]),
   },
   methods: {
-    ...mapActions("newsStore", ["init", "setSearchText", "setSearched", "setNews"]),
+    ...mapActions("newsStore", [
+      "init",
+      "setSearchText",
+      "setSearched",
+      "setNews",
+    ]),
     async searchKeyword() {
       await this.init();
       this.setSearchText(this.keyword);
-      await this.setNews({"keyword": this.keyword, "categoryLast": this.categoryLast});
+      await this.setNews({
+        keyword: this.keyword,
+        categoryLast: this.categoryLast,
+      });
     },
     clearKeyword() {
       this.keyword = "";

@@ -46,16 +46,15 @@
         @click="filterByCategory('경제 일반')"
         >경제일반</v-tab
       >
-      
     </v-tabs>
 
     <v-sheet
-      class="mx-7 my-5 d-flex flex-row align-center"
+      class="mx-7 mt-5 d-flex flex-row align-center"
       style="background-color: transparent"
     >
-      <h3 class="mr-auto main-title-font grey--text">
+      <span class="mr-auto lg-font point-md grey--text">
         {{ filteredNews.length }}개의 검색 결과
-      </h3>
+      </span>
       <v-sheet
         width="110px"
         class="md-r-font"
@@ -74,7 +73,7 @@
         ></v-select>
       </v-sheet>
     </v-sheet>
-    <v-sheet class="pa-6" color="transparent">
+    <v-sheet class="pa-6 pt-2" color="transparent">
       <news-card
         v-for="(article, idx) in filteredNews"
         :key="idx"
@@ -83,7 +82,10 @@
         height="130"
       >
       </news-card>
-      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading
+        ref="infiniteLoading"
+        @infinite="infiniteHandler"
+      ></infinite-loading>
     </v-sheet>
   </div>
 </template>
@@ -91,12 +93,12 @@
 <script>
 import NewsCard from "@/common/component/NewsCard.vue";
 import InfiniteLoading from "vue-infinite-loading";
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 export default {
   name: "NewsSearchResult",
   components: {
     NewsCard,
-    InfiniteLoading
+    InfiniteLoading,
   },
   props: {
     newsList: Array,
@@ -110,7 +112,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("newsStore", ["searchText","news","categoryLast"]),
+    ...mapState("newsStore", ["searchText", "news", "categoryLast"]),
     filteredNews() {
       let filtered = this.selectedCategory
         ? this.items.filter(
@@ -132,19 +134,22 @@ export default {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
       console.log("스크롤");
-      await this.setNews({"keyword": this.searchText, "categoryLast": this.categoryLast});
-      if (this.news.length>0){
+      await this.setNews({
+        keyword: this.searchText,
+        categoryLast: this.categoryLast,
+      });
+      if (this.news.length > 0) {
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
           $state.loaded();
         }, 1000);
-      }else{
+      } else {
         $state.complete();
       }
     },
     filterByCategory(category) {
-      if(this.$refs.infiniteLoading.status===2)
-        this.$refs.infiniteLoading.stateChanger.reset()
+      if (this.$refs.infiniteLoading.status === 2)
+        this.$refs.infiniteLoading.stateChanger.reset();
       this.selectedCategory = category;
     },
     resetFilter() {
