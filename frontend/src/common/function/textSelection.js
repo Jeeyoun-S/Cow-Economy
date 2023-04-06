@@ -1,5 +1,6 @@
 // import memoStore from "@/store/modules/memoStore";
 import store from "@/store/index";
+import { useTextSelection } from "@vueuse/core";
 
 /**
  * selection 이벤트 함수
@@ -24,16 +25,35 @@ import store from "@/store/index";
  */
 function getSelection() {
   var selection = window.getSelection();
-  console.log("window.getSelection()", window.getSelection());
-  console.log("document.getSelection()", document.getSelection());
-  console.log(
-    "document.getSelection().getRangeAt(0)",
-    document.getSelection().getRangeAt(0)
-  );
-  console.log(
-    "window.getSelection().getRangeAt(0)",
-    window.getSelection().getRangeAt(0)
-  );
+  try {
+    console.log("window.getSelection()", window.getSelection());
+    console.log("document.getSelection()", document.getSelection());
+  } catch (e) {
+    e;
+  }
+  try {
+    const state = useTextSelection();
+    console.log("useTextSelection", state);
+  } catch (e) {
+    e;
+  }
+  try {
+    console.log("1.", document.selection);
+    console.log("1.", document.selection.createRange());
+  } catch (e) {
+    e;
+  }
+
+  // console.log(
+  //   "document.getSelection().getRangeAt(0)",
+  //   document.getSelection().getRangeAt(0)
+  // );
+  // console.log(
+  //   "window.getSelection().getRangeAt(0)",
+  //   window.getSelection().getRangeAt(0)
+  // );
+  // console.log(document.selection);
+  // console.log(document.selection.createRange());
   // try {
   //   selection = window.getSelection().getRangeAt(0);
   //   if (!selection) {
