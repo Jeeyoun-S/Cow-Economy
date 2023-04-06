@@ -8,7 +8,7 @@
       </v-sheet>
       <v-spacer></v-spacer>
       <!-- 검색 아이콘 -->
-      <v-btn class="mr-0" icon color="grey darken-1" to="/search">
+      <v-btn class="mr-0" icon color="grey darken-1" @click="moveSearch()">
         <v-icon large>mdi-magnify</v-icon>
       </v-btn>
     </v-toolbar>
@@ -24,8 +24,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "HomeHeader",
+  methods: {
+    ...mapActions("newsStore",["init"]),
+    moveSearch(){
+      this.$router.push("/search");
+      this.init();
+    }
+  }
 };
 </script>
 

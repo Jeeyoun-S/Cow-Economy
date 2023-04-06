@@ -55,7 +55,7 @@ const userStore = {
 
             // vuex 로그인 처리
             commit("SET_IS_LOGGED_IN", true);
-            // console.log("토큰 발급 성공!");
+
             // my-page로 이동
             window.location.replace("/my-page");
           } else {
