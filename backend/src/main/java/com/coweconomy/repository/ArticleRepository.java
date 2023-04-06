@@ -64,4 +64,66 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             " WHERE article.article_id = min_article.article_id AND article.article_id = b.article_id", nativeQuery = true)
     List<Article> findByKeywordSearch(@Param("keyword") String keyword, Long finance, Long stock, Long industry, Long venture,
                                       Long estate, Long worldwide, Long life, Long common);
+
+    @Query(value = "SELECT * FROM article article, " +
+            "      (SELECT a.article_title, min(a.article_id) AS article_id FROM article AS a, " +
+            "           (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_hits DESC) AS RN " +
+            "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
+            "                                                               WHEN article_category='증권' THEN :stock " +
+            "                                                               WHEN article_category='산업/재계' THEN :industry " +
+            "                                                               WHEN article_category='중기/벤처' THEN :venture " +
+            "                                                               WHEN article_category='부동산' THEN :estate " +
+            "                                                               WHEN article_category = '글로벌 경제' THEN :worldwide " +
+            "                                                               WHEN article_category = '생활경제' THEN :life " +
+            "                                                               WHEN article_category = '경제 일반' THEN :common " +
+            "                                                               END )" +
+            "                                                               ORDER BY article_hits DESC) AS RANKING " +
+            "                   WHERE RANKING.RN <= 7) b " +
+            "       WHERE a.article_title = b.article_title " +
+            "       GROUP BY a.article_title) min_article, " +
+            "      (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_hits DESC) AS RN " +
+            "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
+            "                                                               WHEN article_category='증권' THEN :stock " +
+            "                                                               WHEN article_category='산업/재계' THEN :industry " +
+            "                                                               WHEN article_category='중기/벤처' THEN :venture " +
+            "                                                               WHEN article_category='부동산' THEN :estate " +
+            "                                                               WHEN article_category = '글로벌 경제' THEN :worldwide " +
+            "                                                               WHEN article_category = '생활경제' THEN :life " +
+            "                                                               WHEN article_category = '경제 일반' THEN :common " +
+            "                                                               END )" +
+            "                                                               ORDER BY article_hits DESC) AS RANKING " +
+            "                   WHERE RANKING.RN <= 7) b " +
+            " WHERE article.article_id = min_article.article_id AND article.article_id = b.article_id", nativeQuery = true)
+    List<Article> findByHowNews(Long finance, Long stock, Long industry, Long venture, Long estate, Long worldwide, Long life, Long common);
+
+    @Query(value = "SELECT * FROM article article, " +
+            "      (SELECT a.article_title, min(a.article_id) AS article_id FROM article AS a, " +
+            "           (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_id DESC) AS RN " +
+            "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
+            "                                                               WHEN article_category='증권' THEN :stock " +
+            "                                                               WHEN article_category='산업/재계' THEN :industry " +
+            "                                                               WHEN article_category='중기/벤처' THEN :venture " +
+            "                                                               WHEN article_category='부동산' THEN :estate " +
+            "                                                               WHEN article_category = '글로벌 경제' THEN :worldwide " +
+            "                                                               WHEN article_category = '생활경제' THEN :life " +
+            "                                                               WHEN article_category = '경제 일반' THEN :common " +
+            "                                                               END )) AS RANKING " +
+            "                   WHERE RANKING.RN <= 7) b " +
+            "       WHERE a.article_title = b.article_title " +
+            "       GROUP BY a.article_title) min_article, " +
+            "      (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_id DESC) AS RN " +
+            "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
+            "                                                               WHEN article_category='증권' THEN :stock " +
+            "                                                               WHEN article_category='산업/재계' THEN :industry " +
+            "                                                               WHEN article_category='중기/벤처' THEN :venture " +
+            "                                                               WHEN article_category='부동산' THEN :estate " +
+            "                                                               WHEN article_category = '글로벌 경제' THEN :worldwide " +
+            "                                                               WHEN article_category = '생활경제' THEN :life " +
+            "                                                               WHEN article_category = '경제 일반' THEN :common " +
+            "                                                               END )) AS RANKING " +
+            "                   WHERE RANKING.RN <= 7) b " +
+            " WHERE article.article_id = min_article.article_id AND article.article_id = b.article_id", nativeQuery = true)
+    List<Article> findByRecentNews(Long finance, Long stock, Long industry, Long venture, Long estate, Long worldwide, Long life, Long common);
+
+
 }
