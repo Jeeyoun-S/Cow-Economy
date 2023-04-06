@@ -130,11 +130,17 @@
 
 ### Info [서비스 소개]
 
-### Home []
+![info page](/docs/screen/info_page.gif)
+
+### Home [트렌드, 인기뉴스, 카테고리별 뉴스]
+
+![home page](/docs/screen/home_page.gif)
 
 ### News [경제 뉴스 목록]
 
 ### Search [키워드 검색]
+
+![search page](/docs/screen/search_page.gif)
 
 ### Quiz [경제 용어 퀴즈]
 
