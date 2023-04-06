@@ -1,7 +1,7 @@
 <template>
   <v-sheet id="news-content" class="pa-5 d-flex flex-column">
     <!-- 1 : category & press -->
-    <div class="pb-2">
+    <div class="pb-2 d-flex">
       <v-chip class="mr-2" color="var(--main-col-2)" outlined>{{
         newsDetail.articleCategory
       }}</v-chip>
@@ -33,15 +33,6 @@
           <v-btn class="pa-0" text small>보통</v-btn>
           <v-btn class="pa-0" text small>크게</v-btn>
         </v-btn-toggle>
-        <v-btn
-          class="ml-auto"
-          color="grey darken-1"
-          small
-          outlined
-          rounded
-          @click="openOriginalUrl()"
-          >원본 보기</v-btn
-        >
       </div>
     </div>
 
@@ -61,8 +52,19 @@
     </div>
 
     <!-- 5 : reference plus button -->
-    <div v-if="newsDetail.articleEditor" class="py-2 ml-auto">
-      {{ newsDetail.articleEditor }}
+    <div class="py-2 d-flex flex-row">
+      <div v-if="newsDetail.articleEditor">
+        {{ newsDetail.articleEditor }}
+      </div>
+      <v-btn
+        class="ml-auto"
+        color="grey darken-1"
+        small
+        outlined
+        rounded
+        @click="openOriginalUrl()"
+        >원본URL</v-btn
+      >
     </div>
 
     <!-- 6 : add reference -->
@@ -97,7 +99,7 @@
 
 <script>
 import { addSelectionEvent } from "@/common/function/textSelection";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 const memoStore = "memoStore";
 
@@ -114,6 +116,7 @@ export default {
   computed: {
     // 메모 인용문 추가 버튼 활성화 여부 memoBtn
     ...mapState(memoStore, ["memoBtn"]),
+    ...mapGetters("userStore", ["isLoggedIn"]),
   },
   methods: {
     ...mapActions(memoStore, ["changeMemoBtn", "getSelectionText"]),
@@ -135,13 +138,16 @@ export default {
       .getElementById("content")
       .appendChild(this.newsDetail.articleContent);
 
-    // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
-    // document 전체에 적용 (div#article에만 하면 미작동)
-    document.addEventListener("selectionchange", addSelectionEvent);
+    if (this.isLoggedIn) {
+      // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
+      // document 전체에 적용 (div#article에만 하면 미작동)
+      document.addEventListener("selectionchange", addSelectionEvent);
+    }
   },
-  destroyed() {
+  beforeDestroy() {
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
     document.removeEventListener("selectionchange", addSelectionEvent);
+    // this.memoBtnLocal = false;
   },
 };
 </script>

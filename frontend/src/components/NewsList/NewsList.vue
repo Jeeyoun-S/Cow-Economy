@@ -101,9 +101,9 @@ export default {
       // Swiper 옵션 설정
     });
   },
-  created() {
-    console.log("created");
-  },
+  // created() {
+  //   console.log("created");
+  // },
   watch: {
     sort() {
       this.sortNews();
@@ -115,18 +115,21 @@ export default {
   methods: {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
-      this.page = this.newsList[this.newsList.length-1].articleId
-      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
-      if (this.newsList.length>0){
+      this.page = this.newsList[this.newsList.length - 1].articleId;
+      await this.setNews({
+        keyword: this.searchText,
+        lastArticleId: this.page,
+      });
+      if (this.newsList.length > 0) {
         await setTimeout(() => {
           this.items = this.items.concat(this.newsList);
           // for (let index = 0; index < this.items.length; index++) {
           //   console.log(this.items[index].articleTitle);
           // }
-          this.page = this.items[this.items.length-1].articleId;
+          this.page = this.items[this.items.length - 1].articleId;
           $state.loaded();
         }, 1000);
-      }else{
+      } else {
         $state.complete();
       }
     },
