@@ -103,21 +103,26 @@ export default {
       function finishReading() {
         // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
         var content = document.getElementById("news-content");
-        // 목표하는 스크롤 위치 (기사 맨 아래)
-        var target = content.offsetTop + content.offsetHeight;
-        // 현재 스크롤 위치
-        var now = window.scrollY + document.documentElement.clientHeight * 0.8;
-        if (now > target && !memoStore.state.reading) {
-          memoStore.state.reading = true;
-          // 스크롤 이벤트 삭제
+        if (content == null) {
           document.removeEventListener("scroll", finishReading);
-          // 기사 읽음 처리 API 요청
-          updateReading(id).then((res) => {
-            if (res) {
-              // vuex의 값을 변경해 snackbar 활성화
-              memoStore.state.done = true;
-            }
-          });
+        } else {
+          // 목표하는 스크롤 위치 (기사 맨 아래)
+          var target = content.offsetTop + content.offsetHeight;
+          // 현재 스크롤 위치
+          var now =
+            window.scrollY + document.documentElement.clientHeight * 0.8;
+          if (now > target && !memoStore.state.reading) {
+            memoStore.state.reading = true;
+            // 스크롤 이벤트 삭제
+            document.removeEventListener("scroll", finishReading);
+            // 기사 읽음 처리 API 요청
+            updateReading(id).then((res) => {
+              if (res) {
+                // vuex의 값을 변경해 snackbar 활성화
+                memoStore.state.done = true;
+              }
+            });
+          }
         }
       }
       // 스크롤 이벤트 추가
