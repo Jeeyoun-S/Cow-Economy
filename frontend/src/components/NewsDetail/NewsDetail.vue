@@ -148,13 +148,12 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
+        // 공유하기 제목, 내용, 이미지
         const newsTitle = this.newsDetail.articleTitle
         const newsContent = this.newsDetail.articleContent.innerText
-        var newsThumbnail = ''
+        var newsThumbnail = ""
         if (this.newsDetail.articleThumbnail) {
           newsThumbnail = this.newsDetail.articleThumbnail
-        } else {
-          newsThumbnail = "@/assets/images/news_background.jpg"
         }
 
         this.setCurNews([newsTitle, newsContent, newsThumbnail])
