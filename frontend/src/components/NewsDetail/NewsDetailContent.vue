@@ -166,11 +166,11 @@ export default {
       .getElementById("content")
       .appendChild(this.newsDetail.articleContent);
 
-    if (this.isLoggedIn) {
+    // if (this.isLoggedIn) {
       // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
       // document 전체에 적용 (div#article에만 하면 미작동)
       document.addEventListener("selectionchange", this.addSelection);
-    }
+    // }
   },
   beforeDestroy() {
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
