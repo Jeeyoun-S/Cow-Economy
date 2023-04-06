@@ -1174,7 +1174,7 @@ export default {
       if (Math.abs(delta) > 40) {
         if (delta > 0 && flicking.index < 4) {
           setScrollTimer();
-          console.log("여기 후보 2", flicking.panelCount);
+          // console.log("여기 후보 2", flicking.panelCount);
           flicking.next();
         } else if (delta < 0 && flicking.index > 0) {
           flicking.prev();
