@@ -125,25 +125,37 @@
 ## 산출물
 
 - [와이어프레임](https://www.figma.com/file/kxRoFFoYETbdrFJGrqAqJj/%EC%86%8C%EA%B7%80%EA%B2%BD-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0-1&t=mFMMCkOs3ytm6m7t-0)
+- [포팅 매뉴얼]
 
 ## 서비스 화면
 
 ### Info [서비스 소개]
 
-![info page](/docs/screen/info_page.gif)
 <img src="/docs/screen/info_page.gif" width="300"/>
+
+- 로그인을 하지 않은 채 '소귀경'에 접속했을때 보여지는 페이지
+-
 
 ### Home [트렌드, 인기뉴스, 카테고리별 뉴스]
 
-![home page](/docs/screen/home_page.gif)
+<img src="/docs/screen/home_page.gif" width="300"/>
+
+- '소귀경'의 첫 페이지로 최신 트렌드, 인기뉴스, 카테고리별 뉴스 제공
+-
 
 ### News [경제 뉴스 목록]
 
 ### News Detail [뉴스 상세페이지]
 
+<img src="/docs/screen/news_detail.gif" width="300"/>
+
+- '소귀경'의 첫 페이지로 최신 트렌드, 인기뉴스, 카테고리별 뉴스 제공
+
 ### Search [키워드 검색]
 
-![search page](/docs/screen/search_page.gif)
+<img src="/docs/screen/search_page.gif" width="300"/>
+
+- '소귀경'의 첫 페이지로 최신 트렌드, 인기뉴스, 카테고리별 뉴스 제공
 
 ### Quiz [경제 용어 퀴즈]
 
