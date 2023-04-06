@@ -24,19 +24,34 @@ import store from '@/store/index';
 */
 function getSelection() {
   var selection = window.getSelection();
-  if (!selection) {
-    selection = document.getSelection();
+  try {
+    selection = window.getSelection().getRangeAt(0);
+    if (!selection) {
+      selection = document.getSelection().getRangeAt(0);
+    }
+  } catch (e) {
+    e;
   }
+
   // console.log("getSelection2", selection.getRangeAt(0).toString())
 
   // if (selection.getRangeAt(0).toString().length > 0) {
   // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
+  // var result = {
+  //   "text": null,
+  //   "startIndex": selection.baseOffset,
+  //   "endIndex": selection.focusOffset,
+  //   "startNode": selection.baseNode,
+  //   "endNode": selection.focusNode,
+  //   "startRange": null,
+  //   "endRange": null
+  // };
   var result = {
     "text": null,
-    "startIndex": selection.baseOffset,
-    "endIndex": selection.focusOffset,
-    "startNode": selection.baseNode,
-    "endNode": selection.focusNode,
+    "startIndex": selection.startOffset,
+    "endIndex": selection.endOffset,
+    "startNode": selection.startContainer,
+    "endNode": selection.endContainer,
     "startRange": null,
     "endRange": null
   };
