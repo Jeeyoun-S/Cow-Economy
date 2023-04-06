@@ -48,10 +48,6 @@
           </div>
         </div>
       </v-chip-group>
-
-      <!-- <div > -->
-
-      <!-- </div> -->
       <!-- </v-slide-group> -->
     </div>
     <div class="pl-6" style="display: flex; align-items: center">
@@ -83,15 +79,6 @@
         </v-chip-group>
       </v-slide-group>
     </div>
-
-    <!-- <news-card
-      v-for="(article, idx) in filteredArticles"
-      :key="idx"
-      :article="article"
-      class="px-6 mx-auto my-2 d-flex flex-row"
-      height="130"
-    >
-    </news-card> -->
     <div class="px-6 mx-auto my-2 d-flex flex-column">
       <news-card
         v-for="(article, idx) in filteredArticles"

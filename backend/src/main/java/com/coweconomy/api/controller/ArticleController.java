@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.Source;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class ArticleController {
     @GetMapping("/category-news")
     public BaseResponse getCategoryArticles(HttpServletRequest request){
         List<List<ArticleDto>> articles = articleService.getCategoryArticles();
+        for (int i = 0; i < articles.get(1).size(); i++) {
+            ArticleDto a = articles.get(1).get(i);
+            System.out.println(a.getArticleCategory()+" "+a.getArticleId()+" "+a.getArticleTitle());
+        }
         return BaseResponse.success(articles);
     }
 
@@ -79,6 +84,24 @@ public class ArticleController {
         }
         return BaseResponse.success(result);
     }
+
+    @ApiOperation(value = "전체 뉴스 조회", notes = "인기순, 최신순 기사를 조회한다.")
+    @PostMapping("/all-news")
+    public BaseResponse getNewsList(HttpServletRequest request, @RequestBody CategoryArticleDto categoryLast ){
+//        System.out.println("금융: "+ categoryLast.getFinance());
+//        System.out.println("주식: "+ categoryLast.getStock());
+//        System.out.println("산업: "+ categoryLast.getIndustry());
+//        System.out.println("중기/벤처: "+ categoryLast.getVenture());
+//        System.out.println("부동산: "+ categoryLast.getEstate());
+//        System.out.println("글로벌경제: "+ categoryLast.getWorldwide());
+//        System.out.println("생활경제: "+ categoryLast.getLife());
+//        System.out.println("경제 일반: "+ categoryLast.getCommon());
+        Long[] lastIdList = categoryLast.setCategoryLast(categoryLast);
+        HashMap<String, List<?>> result = articleService.getNewsList(lastIdList);
+
+        return BaseResponse.success(result);
+    }
+
     @ApiOperation(value = "기사 상세 정보", notes = "기사 상세페이지에 보여줄 정보를 모두 조회한다.")
     @GetMapping("/{articleId}")
     public BaseResponse getArticleDetail(HttpServletRequest request, @PathVariable("articleId") Long articleId) {

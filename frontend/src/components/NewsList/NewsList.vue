@@ -46,11 +46,12 @@
     <!-- news card list -->
     <v-sheet>
       <news-card
-        v-for="(article, index) in newsList"
+        v-for="(article, index) in filteredNews"
         :key="index"
         :article="article"
         style="cursor: pointer"
       ></news-card>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" spinner = "spiral"></infinite-loading>
     </v-sheet>
     <!-- go to top button -->
     <ScrollTopBtn></ScrollTopBtn>
@@ -59,19 +60,45 @@
 
 <script>
 import NewsCard from "./element/NewsCard.vue";
+import { getAllNews } from "@/api/modules/article.js";
 import { mapActions, mapState } from "vuex";
 import { Swiper } from "vue-awesome-swiper";
 import ScrollTopBtn from "@/common/component/ScrollTopBtn.vue";
-
+import InfiniteLoading from "vue-infinite-loading";
+const maxArticleId = Number.MAX_SAFE_INTEGER + 1;
 export default {
   name: "NewsList",
   components: {
     NewsCard,
     ScrollTopBtn,
+    InfiniteLoading,
   },
   data() {
     return {
-      newsList: [],
+      news: [],
+      hotNews: [],
+      recentNews: [],
+      items: [],
+      hotCategoryLast: {
+        finance: maxArticleId,
+        stock: maxArticleId,
+        industry: maxArticleId,
+        venture: maxArticleId,
+        estate: maxArticleId,
+        worldwide: maxArticleId,
+        life: maxArticleId,
+        common: maxArticleId,
+      },
+      recentCategoryLast: {
+        finance: maxArticleId,
+        stock: maxArticleId,
+        industry: maxArticleId,
+        venture: maxArticleId,
+        estate: maxArticleId,
+        worldwide: maxArticleId,
+        life: maxArticleId,
+        common: maxArticleId,
+      },
       sortKey: "최신순",
       selectedCategory: "전체",
     };
@@ -79,12 +106,22 @@ export default {
   computed: {
     ...mapState("newsStore", ["searchText"]),
     filteredNews() {
-      // console.log("마지막 기사: "+this.items[this.items.length-1].articleId);
-      let filtered = this.selectedCategory
-        ? this.items.filter(
-            (news) => news.articleCategory === this.selectedCategory
-          )
-        : this.items;
+      console.log("filter " + this.sortKey);
+
+      if (!this.sortKey) {
+        console.log("sortKey")
+        return [];
+      }
+      if (this.news.length == 0) {
+        console.log("전체뉴스길이 0")
+        return [];
+      }
+      console.log("현재 카테고리: " + this.selectedCategory);
+      
+      let articles = this.sortKey === "최신순" ? this.news[1] : this.news[0];
+      let filtered=(this.selectedCategory==="전체"?articles:(articles.filter(
+        (article) => article.articleCategory === this.selectedCategory
+      )));
 
       if (this.sortKey === "최신순") {
         filtered.sort(
@@ -113,25 +150,37 @@ export default {
     },
   },
   methods: {
-    ...mapActions("newsStore", ["setNews"]),
+    ...mapActions("newsStore", ["init", "setNews"]),
     async infiniteHandler($state) {
-      this.page = this.newsList[this.newsList.length-1].articleId
-      await this.setNews({"keyword": this.searchText, "lastArticleId": this.page});
-      if (this.newsList.length>0){
-        await setTimeout(() => {
-          this.items = this.items.concat(this.newsList);
-          // for (let index = 0; index < this.items.length; index++) {
-          //   console.log(this.items[index].articleTitle);
-          // }
-          this.page = this.items[this.items.length-1].articleId;
-          $state.loaded();
-        }, 1000);
-      }else{
-        $state.complete();
-      }
+      console.log("스크롤");
+      await getAllNews({"hot":this.hotCategoryLast,"recent":this.recentCategoryLast}).then((res) => {
+        this.news = [];
+        // console.log("getAllNews: "+ res.articles);
+
+        this.hotCategoryLast = this.setCategoryLast(res.categoryLast[0]);
+        this.recentCategoryLast = this.setCategoryLast(res.categoryLast[1]);
+        this.hotNews = this.hotNews.concat(res.articles[0]);
+        this.recentNews = this.recentNews.concat(res.articles[1]);
+        this.news.push(this.hotNews);
+        this.news.push(this.recentNews);
+        if (this.hotNews.length > 0 || this.recentNews.length > 0 ) {
+          setTimeout(() => {
+            $state.loaded();
+          }, 1000);
+        } else {
+          $state.complete();
+        }
+      }) 
     },
-    filterByCategory(category) {
-      this.selectedCategory = category;
+    setCategoryLast(category){
+      return {finance: category[0],
+        stock: category[1],
+        industry: category[2],
+        venture: category[3],
+        estate: category[4],
+        worldwide: category[5],
+        life: category[6],
+        common: category[7]}
     },
     resetFilter() {
       this.selectedCategory = null;
@@ -151,10 +200,6 @@ export default {
 </script>
 
 <style>
-/* #news-list {
-  background-color: var(white);
-} */
-
 .go-to-top {
   position: fixed;
   bottom: 30px;

@@ -4,38 +4,36 @@
     class="d-flex flex-column"
     tile
     elevation="0"
-    @click="moveDetailArticle(article.articleId)"
+    @click="moveDetailArticle(this.article.articleId)"
   >
     <!-- <v-card>  -->
     <v-sheet class="px-5 py-3 d-flex flex-row align-center">
       <!-- article thumbnail -->
-      <!-- <div v-if="this.article.article_thumbnail"> -->
       <v-avatar
         class="mr-3"
         size="90"
         tile
-        v-if="this.article.article_thumbnail"
+        v-if="this.article.articleThumbnail && this.article.articleThumbnail != 'NaN'"
       >
         <v-img
-          :src="this.article.article_thumbnail"
+          :src="this.article.articleThumbnail"
           :aspect-ratio="1000 / 1000"
         />
       </v-avatar>
-      <!-- </div> -->
       <div>
         <!-- article title -->
         <!-- - 글자수가 60 이상일 경우 ... 처리 (2줄)-->
-        <div class="py-1" v-if="this.article.article_title.length > 65">
-          {{ this.article.article_title.slice(0, 65) }} ...
+        <div class="py-1" v-if="article.articleTitle.length > 65">
+          {{ article.articleTitle.slice(0, 65) }} ...
         </div>
-        <div class="py-1" v-else>{{ this.article.article_title }}</div>
+        <div class="py-1" v-else>{{ article.articleTitle }}</div>
         <!-- article press & regtime -->
         <div class="d-flex flex-row py-1">
           <v-chip class="mr-2" outlined small>{{
-            this.article.article_press
+            article.articlePress
           }}</v-chip>
           <v-chip outlined small>{{
-            this.article.article_regtime.slice(0, 10)
+            article.articleRegtime.slice(0, 10)
           }}</v-chip>
         </div>
       </div>

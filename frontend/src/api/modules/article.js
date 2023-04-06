@@ -101,9 +101,10 @@ async function searchNews(param, success, fail){
   ).then(success).catch(fail);
 }
 
-async function getAllNews(){
+async function getAllNews(param){
   var result = null;
-  await api.get('/article/all-news').then((res)=>{
+  await api.post('/article/all-news',JSON.stringify(param.hot),JSON.stringify(param.recent)).then((res)=>{
+    console.log(res.data.data);
     result = res.data.data;
   });
   return await Promise.resolve(result);
