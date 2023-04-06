@@ -130,13 +130,15 @@
 
 ### Info [서비스 소개]
 
-![info page](/docs/screen/info_page.gif)
+![info page](/docs/screen/info_page.gif){: width="400"}
 
 ### Home [트렌드, 인기뉴스, 카테고리별 뉴스]
 
 ![home page](/docs/screen/home_page.gif)
 
 ### News [경제 뉴스 목록]
+
+### News Detail [뉴스 상세페이지]
 
 ### Search [키워드 검색]
 
