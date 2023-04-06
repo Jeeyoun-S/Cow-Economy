@@ -123,6 +123,9 @@ export default {
       }
       this.memos_all[index] = memo;
     },
+    onTheBottom() {
+      this.bottom = this.bottomVisible();
+    },
   },
   watch: {
     // 스크롤이 변경되는 것을 감지
@@ -140,18 +143,14 @@ export default {
   },
   created() {
     // 스크롤 이동할 때 bottom 변화 확인
-    window.addEventListener("scroll", () => {
-      this.bottom = this.bottomVisible();
-    });
+    window.addEventListener("scroll", this.onTheBottom);
     // memo 리스트 초기화
     this.memos_all = this.memoMine;
     this.sortMemoList();
   },
   // destroy 시 scroll 이벤트 삭제
   beforeDestroy() {
-    window.removeEventListener("scroll", () => {
-      this.bottom = this.bottomVisible();
-    });
+    window.removeEventListener("scroll", this.onTheBottom);
   },
 };
 </script>

@@ -1160,7 +1160,7 @@ export default {
     }
     function moveFlickingPage(e) {
       var link = document.location.href;
-      if (link != "http://localhost:3000/") {
+      if (link != `${process.env.VUE_APP_BASE_URL}/`) {
         window.removeEventListener("wheel", moveFlickingPage);
         return;
       }

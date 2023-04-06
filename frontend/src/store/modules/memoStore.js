@@ -68,9 +68,15 @@ const memoStore = {
     // }
     UPDATE_READING(state, payload) {
       state.reading = payload;
+    },
+    UPDATE_DONE(state, payload) {
+      state.done = payload;
     }
   },
   actions: {
+    updateDone({ commit }, value) {
+      commit("UPDATE_DONE", value)
+    },
     changeMemoBtn({ commit }) {
       commit("UPDATE_MEMO_BTN");
     },
