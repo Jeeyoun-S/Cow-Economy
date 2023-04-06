@@ -118,18 +118,21 @@ public class ArticleService {
             //관련 기사 설정
             List<RelatedArticleDto> relatedArticleDtoList = new ArrayList<>();
             //관련 기사의 아이디 문자열 분리
-            StringTokenizer tokens = new StringTokenizer(article.getRelatedArticleList().get(0).getSubArticleId(), ",");
-            while(tokens.hasMoreTokens()){
-                //기사 정보 조회
-                Optional<Article> searchArticle = articleRepository.findById(Long.parseLong(tokens.nextToken()));
-                if(searchArticle.isPresent()){
-                    //entity -> DTO (article_id, article_title, article_thumbnail)
-                    Long relatedArticleId = searchArticle.get().getArticleId();
-                    String relatedArticleTitle = searchArticle.get().getArticleTitle();
-                    String relatedArticleThumbnail = searchArticle.get().getArticleThumbnail();
-                    relatedArticleDtoList.add(new RelatedArticleDto(relatedArticleId, relatedArticleTitle, relatedArticleThumbnail));
+            if (article.getRelatedArticleList().size() > 0) {
+                StringTokenizer tokens = new StringTokenizer(article.getRelatedArticleList().get(0).getSubArticleId(), ",");
+                while(tokens.hasMoreTokens()){
+                    //기사 정보 조회
+                    Optional<Article> searchArticle = articleRepository.findById(Long.parseLong(tokens.nextToken()));
+                    if(searchArticle.isPresent()){
+                        //entity -> DTO (article_id, article_title, article_thumbnail)
+                        Long relatedArticleId = searchArticle.get().getArticleId();
+                        String relatedArticleTitle = searchArticle.get().getArticleTitle();
+                        String relatedArticleThumbnail = searchArticle.get().getArticleThumbnail();
+                        relatedArticleDtoList.add(new RelatedArticleDto(relatedArticleId, relatedArticleTitle, relatedArticleThumbnail));
+                    }
                 }
             }
+
             //전체 List DTO로 보내주기
             articleDetailDto.updateRelatedArticle(relatedArticleDtoList);
 

@@ -70,6 +70,9 @@ export default {
       const bottomOfPage = visible + scrollY + 73 >= pageHeight;
       return bottomOfPage || pageHeight < visible;
     },
+    onTheBottom() {
+      this.bottom = this.bottomVisible();
+    },
   },
   watch: {
     bottom(bottom) {
@@ -82,16 +85,12 @@ export default {
     },
   },
   created() {
-    window.addEventListener("scroll", () => {
-      this.bottom = this.bottomVisible();
-    });
+    window.addEventListener("scroll", this.onTheBottom);
     this.memos_all = this.memoOther;
     this.sortMemoList();
   },
   beforeDestroy() {
-    window.removeEventListener("scroll", () => {
-      this.bottom = this.bottomVisible();
-    });
+    window.removeEventListener("scroll", this.onTheBottom);
   },
 };
 </script>
