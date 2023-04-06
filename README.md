@@ -130,7 +130,8 @@
 
 ### Info [서비스 소개]
 
-![info page](/docs/screen/info_page.gif){: width="400"}
+![info page](/docs/screen/info_page.gif)
+<img src="/docs/screen/info_page.gif" width="300"/>
 
 ### Home [트렌드, 인기뉴스, 카테고리별 뉴스]
 
