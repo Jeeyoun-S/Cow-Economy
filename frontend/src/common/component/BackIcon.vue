@@ -9,7 +9,7 @@ export default {
   name: "BackIcon",
   methods: {
     back() {
-      if (this.$router.history.length > 1) {
+      if (window.history.length > 1) {
         this.$router.go(-1);
       } else {
         this.$router.push('/home')
