@@ -169,10 +169,15 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
+        // 공유하기 제목, 내용, 이미지
         const newsTitle = this.newsDetail.articleTitle;
         const newsContent = this.newsDetail.articleContent.innerText;
+        var newsThumbnail = "";
+        if (this.newsDetail.articleThumbnail) {
+          newsThumbnail = this.newsDetail.articleThumbnail;
+        }
 
-        this.setCurNews([newsTitle, newsContent]);
+        this.setCurNews([newsTitle, newsContent, newsThumbnail]);
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
