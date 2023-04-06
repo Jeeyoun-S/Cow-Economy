@@ -112,6 +112,10 @@
 - <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/>
 - <img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=Discord&logoColor=white"/> <img src="https://img.shields.io/badge/Mattermost-0058CC?style=flat-square&logo=Mattermost&logoColor=white"/>
 
+## 팀원 역할
+
+![TEAM](/docs/image/team.png)
+
 ## 프로젝트 구조
 
 ### ERD
@@ -134,6 +138,7 @@
 <img src="/docs/screen/info_page.gif" width="300"/>
 
 - 로그인을 하지 않은 채 '소귀경'에 접속했을때 보여지는 페이지
+- 소귀경 서비스 전반에 대한 설명을 제공
 -
 
 ### Home : 트렌드, 인기뉴스, 카테고리별 뉴스
@@ -149,13 +154,14 @@
 
 <img src="/docs/screen/news_detail.gif" width="300"/>
 
-- '소귀경'의 첫 페이지로 최신 트렌드, 인기뉴스, 카테고리별 뉴스 제공
+- 각 뉴스에 대한 전체 내용을 볼 수 있는 페이지
+- 카테고리, 언론사, 전체 내용, 기자, 원본URL
 
 ### Search : 키워드 검색
 
 <img src="/docs/screen/search_page.gif" width="300"/>
 
-- '소귀경'의 첫 페이지로 최신 트렌드, 인기뉴스, 카테고리별 뉴스 제공
+- '소귀경'의 검색 페이지
 
 ### Quiz : 경제 용어 퀴즈
 
