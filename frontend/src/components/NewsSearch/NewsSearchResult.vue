@@ -137,7 +137,7 @@ export default {
   methods: {
     ...mapActions("newsStore", ["setNews"]),
     async infiniteHandler($state) {
-      console.log("스크롤");
+      // console.log("스크롤");
       await this.setNews({
         keyword: this.searchText,
         categoryLast: this.categoryLast,
