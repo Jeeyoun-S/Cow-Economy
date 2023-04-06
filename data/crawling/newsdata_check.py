@@ -9,8 +9,6 @@ from pandas import DataFrame, Series
 from sqlalchemy import create_engine, text
 pymysql.install_as_MySQLdb()
 import MySQLdb
-from tqdm import tqdm
-import pickle
 import time
 
 from pyspark.context import SparkContext
@@ -26,7 +24,7 @@ def writeLastArticleId(article) :
     
 sc = SparkContext.getOrCreate()
 spark = SparkSession(sc)
-# hdfs 뉴스 가져오기(마지막으로 처리한 다음 기사부터 워드 매핑 작업)
+#hdfs 뉴스 가져오기(마지막으로 처리한 다음 기사부터 워드 매핑 작업)
 file_date = dt.datetime.today().astimezone(timezone('Asia/Seoul')).strftime("%Y%m%d") # 오늘 날짜 ex) 20230320
 
 server = "hdfs://localhost:9000" # 서버
@@ -37,5 +35,3 @@ toady_csv = spark.read.option("multiLine",True).option("header", True).option("s
 # 판다스데이터프레임 = 오늘 날짜 csv + 지금 크롤링한 뉴스
 today_pd = toady_csv.toPandas() # 오늘 csv
 print(today_pd.tail(2))
-
-writeLastArticleId("테스트")
