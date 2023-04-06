@@ -69,12 +69,12 @@ public class ArticleService {
         map.put("categoryLast", categoryLast);
         return map;
     }
-    public HashMap<String,List<?>> getNewsList(Long[] lastArticleId){
+    public HashMap<String,List<?>> getNewsList(Long[] hotCategoryId, Long[] recentCategoryId){
         HashMap<String, List<?>> map = new HashMap<>();
-        List<Article> hot = articleRepository.findByHowNews(lastArticleId[0],lastArticleId[1], lastArticleId[2],
-                lastArticleId[3],lastArticleId[4],lastArticleId[5],lastArticleId[6],lastArticleId[7]);
-        List<Article> recent = articleRepository.findByRecentNews(lastArticleId[0],lastArticleId[1], lastArticleId[2],
-                lastArticleId[3],lastArticleId[4],lastArticleId[5],lastArticleId[6],lastArticleId[7]);
+        List<Article> hot = articleRepository.findByHowNews(hotCategoryId[0],hotCategoryId[1], hotCategoryId[2],
+                hotCategoryId[3],hotCategoryId[4],hotCategoryId[5],hotCategoryId[6],hotCategoryId[7]);
+        List<Article> recent = articleRepository.findByRecentNews(recentCategoryId[0],recentCategoryId[1], recentCategoryId[2],
+                recentCategoryId[3],recentCategoryId[4],recentCategoryId[5],recentCategoryId[6],recentCategoryId[7]);
         List<List<ArticleDto>> articles = new ArrayList<>();
         List<ArticleDto> hotArticles = hot.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
         List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());

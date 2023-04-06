@@ -87,18 +87,10 @@ public class ArticleController {
 
     @ApiOperation(value = "전체 뉴스 조회", notes = "인기순, 최신순 기사를 조회한다.")
     @PostMapping("/all-news")
-    public BaseResponse getNewsList(HttpServletRequest request, @RequestBody CategoryArticleDto categoryLast ){
-//        System.out.println("금융: "+ categoryLast.getFinance());
-//        System.out.println("주식: "+ categoryLast.getStock());
-//        System.out.println("산업: "+ categoryLast.getIndustry());
-//        System.out.println("중기/벤처: "+ categoryLast.getVenture());
-//        System.out.println("부동산: "+ categoryLast.getEstate());
-//        System.out.println("글로벌경제: "+ categoryLast.getWorldwide());
-//        System.out.println("생활경제: "+ categoryLast.getLife());
-//        System.out.println("경제 일반: "+ categoryLast.getCommon());
-        Long[] lastIdList = categoryLast.setCategoryLast(categoryLast);
-        HashMap<String, List<?>> result = articleService.getNewsList(lastIdList);
-
+    public BaseResponse getNewsList(HttpServletRequest request, @RequestBody List<CategoryArticleDto> param){
+        Long[] hot = param.get(0).setCategoryLast(param.get(0));
+        Long[] recent = param.get(1).setCategoryLast(param.get(1));
+        HashMap<String, List<?>> result = articleService.getNewsList(hot,recent);
         return BaseResponse.success(result);
     }
 
