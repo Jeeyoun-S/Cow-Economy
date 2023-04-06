@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
