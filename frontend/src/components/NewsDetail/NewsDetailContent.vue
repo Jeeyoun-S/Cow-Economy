@@ -108,20 +108,11 @@ export default {
   data() {
     return {
       toggle_exclusive: 1,
-      memoBtnLocal: false,
     };
   },
   props: {
     newsDetail: Object,
   },
-  // watch: {
-  //   memoBtnLocal() {
-  //     this.changeMemoBtn();
-  //   },
-  //   memoBtn() {
-  //     this.memoBtnLocal = this.memoBtn;
-  //   },
-  // },
   computed: {
     // 메모 인용문 추가 버튼 활성화 여부 memoBtn
     ...mapState(memoStore, ["memoBtn"]),
@@ -153,7 +144,7 @@ export default {
       document.addEventListener("selectionchange", addSelectionEvent);
     }
   },
-  destroyed() {
+  beforeDestroy() {
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
     document.removeEventListener("selectionchange", addSelectionEvent);
     // this.memoBtnLocal = false;
