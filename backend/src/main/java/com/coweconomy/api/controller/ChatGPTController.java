@@ -35,13 +35,13 @@ public class ChatGPTController {
      */
     @PostMapping("/ask-word")
     public BaseResponse<?> generateCompletion(@RequestBody ChatGPTRequest quizWord) {
-        logger.info("#[Gpt3Controller]# 해당 경제용어와 유사한 경제용어 3개 조회 동작 - ChatGPTRequest: {}", quizWord);
+//        logger.info("#[Gpt3Controller]# 해당 경제용어와 유사한 경제용어 3개 조회 동작 - ChatGPTRequest: {}", quizWord);
 
         try {
             List<String> similarityWordList = new ArrayList<>();
 
             for (String qw: quizWord.getWordList()) {
-                for (String simiWord: myChatGPTService.getChatResponse("경제용어 " + qw + "와 유사한 경제용어 3개 설명없이 단어만 1, 2, 3으로 출력해줘")) {
+                for (String simiWord: myChatGPTService.getChatResponse("퀴즈 선택지를 만들건데 정답은 경제용어 " + qw + "야 그래서 나머지 선택지를 경제용어 " + qw + "와 유사한 경제용어 3개를 설명없이 단어만 1, 2, 3으로 출력해줘 단! " + qw + "는 출력해주면 안돼 다른 걸로 출력해줘")) {
                     similarityWordList.add(simiWord);
                 }
             }

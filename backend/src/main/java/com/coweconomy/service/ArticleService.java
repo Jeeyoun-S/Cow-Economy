@@ -18,19 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final UserArticleRepository userArticleRepository;
-    private final UserArticleMemoRepository userArticleMemoRepository;
     private final EconomyWordRepository economyWordRepository;
-    private final RelatedArticleRepository relatedArticleRepository;
-
 
     public List<ArticleDto> getHotArticles(){
         List<Article> todayArticles = articleRepository.findByTodayHotArticles();
@@ -46,7 +42,7 @@ public class ArticleService {
         List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
         result.add(hotArticles);
         result.add(recentArticles);
-        System.out.println("카테고리별 뉴스 전체길이: " + result.size());
+//        System.out.println("카테고리별 뉴스 전체길이: " + result.size());
         return result;
     }
 
@@ -61,16 +57,48 @@ public class ArticleService {
 
         for (String category: categorys) {
             List<ArticleDto> articleList = result.stream().filter(r -> r.getArticleCategory().equals(category)).sorted((o1, o2) -> -o1.getArticleId().compareTo(o2.getArticleId())).collect(Collectors.toList());
-            System.out.println(category+" 카테고리 정렬");
+//            System.out.println(category+" 카테고리 정렬");
             if(articleList.size()>0){
-                System.out.println("마지막 기사 아이디: "+articleList.get(articleList.size()-1).getArticleId());
+//                System.out.println("마지막 기사 아이디: "+articleList.get(articleList.size()-1).getArticleId());
                 categoryLast.add(articleList.get(articleList.size()-1).getArticleId());
             }
             else    categoryLast.add(0L);
-
         }
-//        System.out.println("전체 마지막 기사 아이디: " + result.get(result.size()-1).getArticleId());
+
         map.put("articles", result);
+        map.put("categoryLast", categoryLast);
+        return map;
+    }
+    public HashMap<String,List<?>> getNewsList(Long[] hotCategoryId, Long[] recentCategoryId){
+        HashMap<String, List<?>> map = new HashMap<>();
+        List<Article> hot = articleRepository.findByHowNews(hotCategoryId[0],hotCategoryId[1], hotCategoryId[2],
+                hotCategoryId[3],hotCategoryId[4],hotCategoryId[5],hotCategoryId[6],hotCategoryId[7]);
+        List<Article> recent = articleRepository.findByRecentNews(recentCategoryId[0],recentCategoryId[1], recentCategoryId[2],
+                recentCategoryId[3],recentCategoryId[4],recentCategoryId[5],recentCategoryId[6],recentCategoryId[7]);
+        List<List<ArticleDto>> articles = new ArrayList<>();
+        List<ArticleDto> hotArticles = hot.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
+        articles.add(hotArticles);
+        articles.add(recentArticles);
+//        System.out.println("카테고리별 인기뉴스 길이: " + hotArticles.size());
+//        System.out.println("카테고리별 최신뉴스 길이: " + recentArticles.size());
+        //각 카테고리별 마지막 기사아이디 조회
+        String [] categorys = {"금융", "증권", "산업/재계", "중기/벤처", "부동산", "글로벌 경제", "생활경제", "경제 일반"};
+        List<List<Long>> categoryLast = new ArrayList<>();    //전체
+
+        for(List<ArticleDto> list: articles){
+            List<Long> lastId = new ArrayList<>();
+            for (String category: categorys) {
+                List<ArticleDto> articleList = list.stream().filter(r -> r.getArticleCategory().equals(category)).sorted((o1, o2) -> -o1.getArticleId().compareTo(o2.getArticleId())).collect(Collectors.toList());
+                if(articleList.size()>0){
+                    lastId.add(articleList.get(articleList.size()-1).getArticleId());
+                }
+                else    lastId.add(0L);
+            }
+            categoryLast.add(lastId);
+        }
+
+        map.put("articles", articles);
         map.put("categoryLast", categoryLast);
         return map;
     }
@@ -118,18 +146,21 @@ public class ArticleService {
             //관련 기사 설정
             List<RelatedArticleDto> relatedArticleDtoList = new ArrayList<>();
             //관련 기사의 아이디 문자열 분리
-            StringTokenizer tokens = new StringTokenizer(article.getRelatedArticleList().get(0).getSubArticleId(), ",");
-            while(tokens.hasMoreTokens()){
-                //기사 정보 조회
-                Optional<Article> searchArticle = articleRepository.findById(Long.parseLong(tokens.nextToken()));
-                if(searchArticle.isPresent()){
-                    //entity -> DTO (article_id, article_title, article_thumbnail)
-                    Long relatedArticleId = searchArticle.get().getArticleId();
-                    String relatedArticleTitle = searchArticle.get().getArticleTitle();
-                    String relatedArticleThumbnail = searchArticle.get().getArticleThumbnail();
-                    relatedArticleDtoList.add(new RelatedArticleDto(relatedArticleId, relatedArticleTitle, relatedArticleThumbnail));
+            if (article.getRelatedArticleList().size() > 0) {
+                StringTokenizer tokens = new StringTokenizer(article.getRelatedArticleList().get(0).getSubArticleId(), ",");
+                while(tokens.hasMoreTokens()){
+                    //기사 정보 조회
+                    Optional<Article> searchArticle = articleRepository.findById(Long.parseLong(tokens.nextToken()));
+                    if(searchArticle.isPresent()){
+                        //entity -> DTO (article_id, article_title, article_thumbnail)
+                        Long relatedArticleId = searchArticle.get().getArticleId();
+                        String relatedArticleTitle = searchArticle.get().getArticleTitle();
+                        String relatedArticleThumbnail = searchArticle.get().getArticleThumbnail();
+                        relatedArticleDtoList.add(new RelatedArticleDto(relatedArticleId, relatedArticleTitle, relatedArticleThumbnail));
+                    }
                 }
             }
+
             //전체 List DTO로 보내주기
             articleDetailDto.updateRelatedArticle(relatedArticleDtoList);
 

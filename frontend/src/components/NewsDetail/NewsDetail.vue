@@ -52,7 +52,7 @@ import NewsDetailRelation from "./NewsDetailRelation/NewsDetailRelation.vue";
 import NewsDetailMemo from "./NewsDetailMemo/NewsDetailMemo.vue";
 import NewsDetailLoading from "./NewsDetailLoading.vue";
 import { mapActions, mapState } from "vuex";
-import memoStore from "@/store/modules/memoStore";
+// import memoStore from "@/store/modules/memoStore";
 import { getNewsDetail, updateReading } from "@/api/modules/article.js";
 import wordStore from "@/store/modules/wordStore";
 import NewsDetailContentWord from "@/components/NewsDetail/NewsDetailContentWord.vue";
@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     // vuex에 저장된 기사 읽음 snackbar 활성화
-    ...mapState("memoStore", ["done"]),
+    ...mapState("memoStore", ["done", "reading"]),
   },
   components: {
     NewsDetailContent,
@@ -85,7 +85,7 @@ export default {
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
   watch: {
     localDone() {
-      memoStore.state.done = this.localDone;
+      this.updateDone(this.localDone);
     },
     done() {
       this.localDone = this.done;
@@ -93,35 +93,56 @@ export default {
   },
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
-    ...mapActions("memoStore", ["updateReading"]),
+    ...mapActions("memoStore", ["updateReading", "updateDone"]),
     ...mapActions("newsStore", ["setCurNews"]),
-
-    addScrollEvent() {
+    finishReading() {
+      var link = document.location.href.split("/");
+      var id = parseInt(link[link.length - 1]);
+      // console.log("scroll 이벤트 실행 중");
+      // console.log(link);
+      // if (
+      //   !link.startsWith(`${process.env.VUE_APP_BASE_URL}/article`) ||
+      //   isNaN(parseInt(id))
+      // ) {
+      // }
       // content의 아래까지 스크롤이 이동하면 기사 읽음 처리
       var content = document.getElementById("news-content");
-      // 목표하는 스크롤 위치 (기사 맨 아래)
-      var target = content.offsetTop + content.offsetHeight;
-      // params에서 기사 ID 가져오기
-      var id = this.$route.params.id;
-      // 스크롤 이벤트에 넣을 함수
-      function finishReading() {
+      // content가 없는 경우 스크롤 이벤트 삭제
+      if (content == null) {
+        document.removeEventListener("scroll", this.finishReading);
+      } else {
+        // 목표하는 스크롤 위치 (기사 맨 아래)
+        var target = content.offsetTop + content.offsetHeight;
         // 현재 스크롤 위치
         var now = window.scrollY + document.documentElement.clientHeight * 0.8;
-        if (now > target && !memoStore.state.reading) {
-          memoStore.state.reading = true;
+        if (now > target && !this.reading) {
+          this.updateReading(true);
           // 스크롤 이벤트 삭제
-          document.removeEventListener("scroll", finishReading);
+          window.removeEventListener("scroll", this.finishReading);
           // 기사 읽음 처리 API 요청
           updateReading(id).then((res) => {
+            // console.log("before >>>", this.localDone, this.done);
             if (res) {
+              // memoStore.actions.updateDone(true);
               // vuex의 값을 변경해 snackbar 활성화
-              memoStore.state.done = true;
+              this.updateDone(true);
+
+              // memoStore.state.done = true;
+              // console.log("after 1 >>>", this.done, this.localDone);
+              // console.log("after 2 >>>", this.done, this.localDone);
             }
           });
         }
       }
+    },
+    addScrollEvent() {
+      // params에서 기사 ID 가져오기
+      // var id = this.$route.params.id;
+      // 스크롤 이벤트에 넣을 함수
+
+      // function finishReading() {}
       // 스크롤 이벤트 추가
-      window.addEventListener("scroll", finishReading);
+      window.addEventListener("scroll", this.finishReading);
     },
   },
   async mounted() {
@@ -148,10 +169,15 @@ export default {
         this.newsDetail = res;
         this.setWordInfo(res.articleWordList);
 
-        const newsTitle = this.newsDetail.articleTitle
-        const newsContent = this.newsDetail.articleContent.innerText
+        // 공유하기 제목, 내용, 이미지
+        const newsTitle = this.newsDetail.articleTitle;
+        const newsContent = this.newsDetail.articleContent.innerText;
+        var newsThumbnail = "";
+        if (this.newsDetail.articleThumbnail) {
+          newsThumbnail = this.newsDetail.articleThumbnail;
+        }
 
-        this.setCurNews([newsTitle, newsContent])
+        this.setCurNews([newsTitle, newsContent, newsThumbnail]);
 
         // newsDetail에 받아온 관련 기사 아이디 넣기
         this.newsRelated = this.newsDetail.relatedArticleList;
@@ -161,10 +187,15 @@ export default {
       }
     });
     // 기사를 아직 안 읽었다면 읽음 처리 Event 추가
+    // console.log(this.newsDetail, this.newsDetail.reading);
     if (this.newsDetail && !this.newsDetail.reading) {
+      // console.log("읽음 추가");
       this.addScrollEvent();
       this.updateReading(this.newsDetail.reading);
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.finishReading);
   },
 };
 </script>

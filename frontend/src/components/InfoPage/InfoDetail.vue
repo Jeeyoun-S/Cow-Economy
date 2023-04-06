@@ -40,6 +40,7 @@
     </div>
     <!-- 5개의 페이지 -->
     <Flicking class="flicking" ref="flicking" :options="flickingOptions">
+      <!-- page 1 -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
@@ -75,15 +76,16 @@
                 </div>
                 <span class="description">경제 기사를 읽으며</span>
                 <span class="description">경제에 대해 공부하는 서비스</span>
-                <MainHeaderLogin class="mt-3"></MainHeaderLogin>
+                <MainHeaderLogin class="point-th mt-3"></MainHeaderLogin>
                 <v-btn
-                  class="px-10 mt-3"
+                  class="point-th px-10 mt-3"
                   elevation="0"
                   color="var(--main-col-1)"
                   to="/home"
                   dark
                   rounded
                   outlined
+                  style="background-color: white"
                 >
                   로그인 없이 시작하기
                 </v-btn>
@@ -92,6 +94,7 @@
           </div>
         </div>
       </div>
+      <!-- page 2 -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main news">
@@ -181,6 +184,7 @@
           </div>
         </div>
       </div>
+      <!-- page 3 -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
@@ -196,10 +200,10 @@
                 <span class="white-col-1 point-md xxxxl-font pink-gradient"
                   >단어</span
                 >
-                <span class="main-col-1 md-font"
+                <span class="graph-2-col-4 md-font"
                   >기사 속 밑줄 친 경제 용어를 클릭해보세요!</span
                 >
-                <span class="main-col-1 md-font"
+                <span class="graph-2-col-4 md-font"
                   >해당 용어에 대한 설명을 볼 수 있습니다.</span
                 >
               </v-sheet>
@@ -230,17 +234,18 @@
                 <span class="white-col-1 point-md xxxxl-font pink-gradient"
                   >메모</span
                 >
-                <span class="main-col-1 md-font"
+                <span class="graph-2-col-4 md-font"
                   >기사 내용을 드래그해 메모를 써보세요!</span
                 >
-                <span class="main-col-1 md-font"
-                  >선택한 내용을 메모에 추가하는 창이 뜹니다</span
+                <span class="graph-2-col-4 md-font"
+                  >선택한 내용을 메모에 추가하는 창이 하단에 뜹니다.</span
                 >
               </v-sheet>
             </div>
           </div>
         </div>
       </div>
+      <!-- page 4 -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
@@ -248,74 +253,76 @@
               class="container d-flex flex-column justify-center align-center"
             >
               <v-sheet
-                class="mb-5 d-flex flex-column justify-center align-center"
+                class="mb-10 d-flex flex-column justify-center align-center"
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font">오늘의 Quiz</span>
-                <span class="sm-font"
-                  >경제 용어에 대한 퀴즈를 풀며 경제 지식을 한층 더
-                  높여보세요.</span
+                <span
+                  class="graph-1-col-4 point-md xxxxl-font main-col-1 white-2-gradient"
+                  >오늘의 Quiz</span
+                >
+                <span class="sm-font graph-1-col-4-1 md-font white-2-gradient"
+                  >읽었던 기사 속 단어를 맞혀보세요.</span
                 >
                 <div class="d-flex flex-column justify-center align-center">
-                  <v-chip class="my-1" color="var(--main-col-1)" outlined
-                    >1. 읽었던 기사 속 단어를 맞추는 퀴즈</v-chip
+                  <v-chip
+                    class="px-7 my-1 white-2-gradient"
+                    color="var(--graph-1-col-4)"
+                    outlined
+                    style="background-color: white !important"
+                    >15초 내에 보기 4개 중 답을 선택</v-chip
                   >
-                  <v-chip class="my-1">15초 내에 보기 4개 중 답을 선택</v-chip>
-                  <v-chip class="my-1"
-                    >총 7문제 중 5문제 이상 맞히면 성공</v-chip
+                  <v-chip
+                    class="px-7 my-1 white-2-gradient"
+                    color="var(--graph-1-col-4)"
+                    outlined
+                    style="background-color: white !important"
+                    >7문제 중 5문제 이상 맞히면 경험치 획득</v-chip
                   >
-                  <v-chip class="my-1">성공 시, 경험치 획득</v-chip>
                 </div>
               </v-sheet>
               <v-sheet
-                class="d-flex flex-column justify-center align-center"
+                class="d-flex flex-column justify-space-between align-center"
                 color="transparent"
                 width="80%"
               >
-                <span class="point-md xxxxl-font">나의 활동 그래프</span>
-                <span class="sm-font"
+                <span class="white-2-gradient point-md xxxxl-font graph-1-col-2"
+                  >나의 활동 그래프</span
+                >
+                <span class="sm-font graph-1-col-2-1 md-font"
                   >내가 읽은 기사를 통계로 알아볼 수 있습니다.</span
                 >
-                <div class="py-3 d-flex flex-row">
-                  <Flicking
-                    class="charts"
-                    :options="options"
-                    :plugins="chartPlugins"
-                  >
+                <div class="pb-3 d-flex flex-row">
+                  <Flicking class="charts" :options="options">
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="graph-gradient my-2 mr-3 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font lg-font">읽은 기사 수</span>
+                      <span class="my-2 point-th">읽은 기사 수</span>
                       <canvas ref="barChart"></canvas>
                     </v-sheet>
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="graph-gradient my-2 mr-3 pa-2 d-flex flex-column align-center justify-space-between"
                     >
-                      <span class="my-2 md-font lg-font"
-                        >읽은 기사의 카테고리</span
-                      >
+                      <span class="my-2 point-th">읽은 기사의 카테고리</span>
                       <canvas
                         ref="doughnutChart"
                         style="
-                          height: 200px !important;
-                          width: 200px !important;
+                          height: 180px !important;
+                          width: 180px !important;
                         "
                       ></canvas>
                     </v-sheet>
                     <v-sheet
-                      width="220"
-                      class="blue-shadow mr-2 pa-2 d-flex flex-column align-center justify-center"
+                      rounded="lg"
+                      width="180"
+                      class="graph-gradient mr-3 my-2 pa-2 d-flex flex-column align-center justify-start"
                     >
-                      <span class="my-2 md-font lg-font"
-                        >경제 용어의 카테고리</span
-                      >
-                      <canvas
-                        ref="radarChart"
-                        style="height: 200px !important"
-                      ></canvas>
+                      <span class="my-2 point-th">경제 용어의 카테고리</span>
+                      <canvas ref="radarChart"></canvas>
                     </v-sheet>
                   </Flicking>
                 </div>
@@ -324,18 +331,19 @@
           </div>
         </div>
       </div>
+      <!-- page 5 -->
       <div class="eg-flick-viewport">
         <div class="eg-flick-camera">
           <div class="page main">
             <div
               class="container d-flex flex-column justify-center align-center"
             >
-              <div class="d-flex flex-column align-center">
-                <span class="b-font xxl-font main-col-2">지금 바로</span>
-                <span class="black-font xxl-font main-col-2"
-                  >소귀경에 접속해</span
+              <div class="d-flex flex-column point-th align-center white-col-1">
+                <span class="xxl-font pink-gradient">지금 바로</span>
+                <span class="xxl-font pink-gradient"
+                  ><span class="point-md xxl-font">소귀경</span>에 접속해</span
                 >
-                <span class="b-font xxl-font main-col-2"
+                <span class="xxl-font pink-gradient"
                   >경제 공부를 시작해보세요!</span
                 >
                 <MainHeaderLogin class="mt-3"></MainHeaderLogin>
@@ -347,6 +355,7 @@
                   dark
                   rounded
                   outlined
+                  style="background-color: white"
                 >
                   로그인 없이 시작하기
                 </v-btn>
@@ -356,8 +365,9 @@
         </div>
       </div>
     </Flicking>
+    <!-- 맨 마지막 페이지에 들어가는 팀 설명 -->
     <div
-      class="team d-flex flex-column justify-center align-center main-col-1 white-gradient"
+      class="team d-flex flex-column justify-center align-center main-col-1 white-gradient sm-font"
     >
       <div class="point-th">SSAFY 8기 A509 오난쥉이조</div>
       <div class="point-th">엄희정 민동주 서지윤 손승환 신도연</div>
@@ -370,7 +380,6 @@ import { Flicking } from "@egjs/vue-flicking";
 import Scene from "scenejs";
 import { typing } from "@scenejs/effects";
 import MainHeaderLogin from "@/components/User/MainHeaderLogin.vue";
-// import { shakeY } from "@scenejs/effects";
 import { AutoPlay } from "@egjs/flicking-plugins";
 import { Chart } from "chart.js";
 
@@ -394,19 +403,12 @@ export default {
       plugins: [
         new AutoPlay({ duration: 1500, direction: "NEXT", stopOnHover: false }),
       ],
-      chartPlugins: [
-        new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false }),
-      ],
-      options: {
-        circular: true,
-        gap: 10,
-      },
+      options: {},
       snackbarSample: true,
     };
   },
   methods: {
     nextFlicking() {
-      console.log("여기 후보 3");
       this.$refs.flicking.next();
     },
     moveToHome() {
@@ -420,7 +422,6 @@ export default {
 
     dots.forEach((dot, i) => {
       dot.addEventListener("click", () => {
-        console.log("여기 후보 1");
         this.$refs.flicking.stopAnimation();
         this.$refs.flicking.moveTo(i);
       });
@@ -510,7 +511,6 @@ export default {
             transform: "translate(-50%, -50%) translateY(0vh)",
           },
           2: {
-            // width: "120vmax",
             transform: "translateY(-100vh) translate(-50%, -50%) scale(1)",
             "border-radius": "0%",
           },
@@ -548,7 +548,6 @@ export default {
           },
           1: {
             transform: "translate(0, -150%)",
-            // "z-index": 0,
             "border-color": "var(--main-col-5)",
           },
           1.5: {
@@ -569,7 +568,6 @@ export default {
             opacity: 1,
           },
           1: {
-            // transform: "translate(0, -100%) translate2(0vw, -100vh)",
             opacity: 0,
             "border-color": "var(--main-col-5)",
           },
@@ -681,7 +679,6 @@ export default {
             }),
           },
           {
-            // iterationCount: "1",
             direction: "alternate",
             selector: true,
           }
@@ -698,19 +695,9 @@ export default {
                 color: "var(--main-col-1)",
                 "font-family": "var(--main-font-5)",
               },
-            },
-            ".word": {
-              0: {
-                transform: "translate(0%, 0%) scale(0)",
-              },
-              0.8: {
-                transform: "translate(0%, 0%) scale(0)",
-              },
-              2.3: {
-                transform: "translate(70%, -250%) scale(1)",
-              },
-              3.8: {
-                transform: "translate(70%, -250%) scale(1)",
+              1.4: {
+                color: "var(--main-col-1)",
+                "font-family": "var(--main-font-5)",
               },
             },
             ".memo-sample": {
@@ -719,6 +706,10 @@ export default {
                 color: "black",
               },
               0.8: {
+                "background-color": "var(--main-col-2)",
+                color: "white",
+              },
+              1.4: {
                 "background-color": "var(--main-col-2)",
                 color: "white",
               },
@@ -1169,7 +1160,7 @@ export default {
     }
     function moveFlickingPage(e) {
       var link = document.location.href;
-      if (link != "http://localhost:3000/") {
+      if (link != `${process.env.VUE_APP_BASE_URL}/`) {
         window.removeEventListener("wheel", moveFlickingPage);
         return;
       }
@@ -1183,7 +1174,7 @@ export default {
       if (Math.abs(delta) > 40) {
         if (delta > 0 && flicking.index < 4) {
           setScrollTimer();
-          console.log("여기 후보 2", flicking.panelCount);
+          // console.log("여기 후보 2", flicking.panelCount);
           flicking.next();
         } else if (delta < 0 && flicking.index > 0) {
           flicking.prev();
@@ -1214,34 +1205,16 @@ export default {
   position: absolute;
   margin: 12px;
   height: 42px;
-  /* bottom: 5%;
-  left: 50%; */
-  /* margin-left: -22px; width의 50% */
-  /* margin-top: -50px; height의 50% */
-  /* transform: translateY(-50%); */
   z-index: 2080;
 }
 .next-icon {
-  /* position: fixed; */
-  /* bottom: 5%; */
-  /* left: 45.5%; */
-  /* left: 50%; */
   width: 44px;
   position: absolute;
   bottom: 5%;
   left: 50%;
   margin-left: -22px; /* width의 50% */
-  /* margin-top: -50px; height의 50% */
-  /* transform: translateY(-50%); */
   z-index: 2080;
-  /* z-index: 2080; */
 }
-/* .title .cursor {
-  display: inline-block;
-  width: 2px;
-  height: 30px;
-  background: white;
-} */
 .title span {
   font-size: 30px;
   color: var(--main-col-1);
@@ -1478,7 +1451,6 @@ body,
   width: 75%;
   height: 100%;
   border-radius: 10px;
-  /* background: #f55; */
   margin-right: 8px;
   background-size: cover;
   padding: 10px;
@@ -1487,32 +1459,26 @@ body,
   background-image: linear-gradient(to left, red, yellow);
 }
 .panels .panel:nth-child(6n + 1) {
-  /* background-color: #78caff; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/032/2023/03/28/0003213554_001_20230328074601106.jpg?type=w647");
 }
 .panels .panel:nth-child(6n + 2) {
-  /* background-color: #ffd99d; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/018/2023/03/28/0005450748_001_20230328074402156.jpg?type=w647");
 }
 .panels .panel:nth-child(6n + 3) {
-  /* background-color: #ffb0b9; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987742_001_20230328101902374.jpg?type=w647");
 }
 .panels .panel:nth-child(6n + 4) {
-  /* background-color: #b5f6b9; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/277/2023/04/02/0005239612_001_20230402082201352.jpg?type=w647");
 }
 .panels .panel:nth-child(6n + 5) {
-  /* background-color: #b5f6b9; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/015/2023/04/01/0004827547_001_20230401134201025.jpg?type=w647");
 }
 .panels .panel:nth-child(6n) {
-  /* background-color: #b5f6b9; */
   background-image: linear-gradient(to bottom, transparent, black),
     url("https://imgnews.pstatic.net/image/014/2023/03/28/0004987841_001_20230328115902063.jpg?type=w647");
 }
@@ -1534,22 +1500,11 @@ body,
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.flicking .page.news .container {
-  /* position: absolute;
-  left: 50%;
-  bottom: 30%;
-  transform: translate(-50%, -50%); */
-}
 .flicking .page.main .description {
-  /* font-size: 16px !important; */
-  /* max-width: 600px !important; */
   margin: 0px;
-  /* padding: 5px !important; */
-  /* box-sizing: border-box !important; */
   color: var(--main-col-1);
 }
 .pagination {
-  /* position: relative; */
   position: absolute;
   right: 0;
   top: 50%;
@@ -1557,14 +1512,13 @@ body,
   z-index: 2080;
 }
 .pagination .dot {
-  position: relative !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  /* background: rgba(255, 255, 255, 0.4) !important; */
-  margin: 10px 10px !important;
-  transition: background-color ease 0.5s !important;
-  cursor: pointer !important;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 10px 10px;
+  transition: background-color ease 0.5s;
+  cursor: pointer;
 }
 .pagination .dot {
   background: var(--main-col-4);
@@ -1573,12 +1527,12 @@ body,
   background: var(--main-col-1);
 }
 .wheel {
-  position: absolute !important;
-  bottom: 110px !important;
-  width: 2px !important;
-  height: 10px !important;
-  left: 50% !important;
-  transform: translate(-50%, 0) !important;
-  background: #eee !important;
+  position: absolute;
+  bottom: 110px;
+  width: 2px;
+  height: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: #eee;
 }
 </style>
