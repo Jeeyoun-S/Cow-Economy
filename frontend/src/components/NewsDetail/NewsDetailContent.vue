@@ -68,7 +68,7 @@
     </div>
 
     <!-- 6 : add reference -->
-    <v-snackbar v-model="memoBtn" color="var(--main-col-2)" rounded="pill">
+    <v-snackbar v-model="memoBtnLocal" color="var(--main-col-2)" rounded="pill">
       <div class="d-flex flex-row align-center">
         <v-icon>mdi-plus-circle</v-icon>
         <span class="ml-2">메모에 인용문 추가하기</span>
@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import { addSelectionEvent } from "@/common/function/textSelection";
-import { mapActions, mapState, mapGetters } from "vuex";
+// import { addSelectionEvent } from "@/common/function/textSelection";
+import { mapActions, mapGetters } from "vuex";
 
 const memoStore = "memoStore";
 
@@ -108,6 +108,7 @@ export default {
   data() {
     return {
       toggle_exclusive: 1,
+      memoBtnLocal: false,
     };
   },
   props: {
@@ -115,13 +116,14 @@ export default {
   },
   computed: {
     // 메모 인용문 추가 버튼 활성화 여부 memoBtn
-    ...mapState(memoStore, ["memoBtn"]),
+    // ...mapState(memoStore, ["memoBtn"]),
     ...mapGetters("userStore", ["isLoggedIn"]),
   },
   methods: {
     ...mapActions(memoStore, ["changeMemoBtn", "getSelectionText"]),
     // 인용문 추가하기
     addMemoReference() {
+      this.memoBtnLocal = false;
       // 메모 작성란으로 스크롤 이동
       document.getElementById("memo").scrollIntoView(true);
       // 선택한 인용문 정보 vuex에 저장하기
@@ -132,6 +134,32 @@ export default {
       const tab = window.open(this.newsDetail.articleUrl, "_blank");
       tab.focus();
     },
+    async addSelection() {
+      // await addSelectionEvent().then((res) => {
+      //   this.memoBtnLocal = res;
+      // });
+      try {
+        var selection = window.getSelection();
+        if (!selection) {
+          selection = document.getSelection();
+        }
+        if (this.memoBtnLocal && !selection.getRangeAt(0).toString()) {
+          this.memoBtnLocal = false;
+          // console.log("여기");
+        } else if (!this.memoBtnLocal && selection.getRangeAt(0).toString()) {
+          this.memoBtnLocal = true;
+          // console.log("여기2");
+        }
+        // console.log(
+        //   "selection",
+        //   selection.getRangeAt(0).toString(),
+        //   !!selection.getRangeAt(0).toString()
+        // );
+      } catch (err) {
+        err;
+        this.memoBtnLocal = false;
+      }
+    },
   },
   mounted() {
     document
@@ -141,12 +169,12 @@ export default {
     if (this.isLoggedIn) {
       // 텍스트 드래그하면 메모 추가 창이 생기는 event 추가
       // document 전체에 적용 (div#article에만 하면 미작동)
-      document.addEventListener("selectionchange", addSelectionEvent);
+      document.addEventListener("selectionchange", this.addSelection);
     }
   },
   beforeDestroy() {
     // 텍스트 드래그하면 메모 추가 창이 생기는 event 삭제
-    document.removeEventListener("selectionchange", addSelectionEvent);
+    document.removeEventListener("selectionchange", this.addSelection);
     // this.memoBtnLocal = false;
   },
 };

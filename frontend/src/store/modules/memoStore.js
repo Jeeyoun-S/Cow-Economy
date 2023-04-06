@@ -27,7 +27,12 @@ const memoStore = {
     reading: false
   },
   getters: {
-
+    getMemoBtn(state) {
+      return state.memoBtn;
+    },
+    getHighlightReference(state) {
+      return state.highlightReference;
+    }
   },
   mutations: {
     UPDATE_MEMO_BTN(state) {
@@ -71,9 +76,27 @@ const memoStore = {
     },
     UPDATE_DONE(state, payload) {
       state.done = payload;
+    },
+    UPDATE_HIGHLIGHT_ENDNODE(state, payload) {
+      state.highlightReference.endNode = payload;
+    },
+    UPDATE_HIGHLIGHT_STARTRANGE(state, payload) {
+      state.highlightReference.startRange = payload;
+    },
+    UPDATE_HIGHLIGHT_ENDRANGE(state, payload) {
+      state.highlightReference.endRange = payload;
     }
   },
   actions: {
+    updateHightlightEndNode({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_ENDNODE", value)
+    },
+    updateHightlightEndRange({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_ENDRANGE", value)
+    },
+    updateHightlightStartRange({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_STARTRANGE", value)
+    },
     updateDone({ commit }, value) {
       commit("UPDATE_DONE", value)
     },

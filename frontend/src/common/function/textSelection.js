@@ -1,78 +1,93 @@
-import memoStore from "@/store/modules/memoStore";
+// import memoStore from "@/store/modules/memoStore";
+import store from '@/store/index';
 
 /**
  * selection 이벤트 함수
  */
-function addSelectionEvent() {
-  var selection = document.getSelection();
-  memoStore.state.memoBtn = !selection.isCollapsed;
-}
+// async function addSelectionEvent() {
+//   var selection = window.getSelection();
+//   // console.log(store.getters['memoStore/getMemoBtn'])
+//   console.log(selection.getRangeAt(0))
+//   if (!store.getters['memoStore/getMemoBtn']) {
+//     store.dispatch("memoStore/changeMemoBtn");
+//     console.log(selection)
+//     console.log("getSelection1", selection.getRangeAt(0).toString())
+//   }
+//   // if (selection.getRangeAt(0).toString().length > 0) {
+//   // memoStore.state.memoBtn = !selection.isCollapsed;
+//   // }
+//   return await Promise.resolve(true);
+// }
 
 /** 
- * 드래그해서 선택된 텍스트의 정보를 가져오는 함수
+ * 드래그해서 선택된 텍스트의 정보를 가져오는 함수r
 */
 function getSelection() {
   var selection = window.getSelection();
-
-  if (selection.toString().length > 0) {
-    // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
-    var result = {
-      "text": null,
-      "startIndex": selection.baseOffset,
-      "endIndex": selection.focusOffset,
-      "startNode": selection.baseNode,
-      "endNode": selection.focusNode,
-      "startRange": null,
-      "endRange": null
-    };
-    // article이 있는 곳의 모든 요소 가져오기
-    var article = document.getElementById("article")
-    var contents = article.childNodes;
-
-    if (result.startNode.parentElement.tagName == "SPAN") {
-      result.startNode = result.startNode.parentElement;
-    }
-    if (result.endNode.parentElement.tagName == "SPAN") {
-      result.endNode = result.endNode.parentElement;
-    }
-
-    // 요소를 반복하며 마지막 node와 시작 node 인덱스 값 저장
-    for (var i = 0; i < contents.length; i++) {
-      var node = contents[i];
-      if (!result.startRange && node === result.startNode) result.startRange = i;
-      if (!result.endRange && node === result.endNode) result.endRange = i;
-    }
-
-    // <br> 또는 공백이 시작 node로 선택된 경우
-    if (result.startNode === article) {
-      result.startRange = result.startIndex;
-      result.startIndex = 0;
-    }
-
-    // <br> 또는 공백이 마지막 node로 선택된 경우
-    if (result.endNode === article) {
-      result.endRange = result.endIndex;
-      result.endIndex = 0;
-    }
-
-    // 거꾸로 선택된 경우를 고려
-    if (result.startRange > result.endRange) {
-      result.startIndex = selection.focusOffset;
-      result.endIndex = selection.baseOffset;
-      const startRange = result.startRange;
-      const endRange = result.endRange;
-      result.startRange = endRange;
-      result.endRange = startRange;
-    } else if (result.startRange == result.endRange) {
-      result.startIndex = Math.min(selection.focusOffset, selection.baseOffset);
-      result.endIndex = Math.max(selection.focusOffset, selection.baseOffset);
-    }
-
-    result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);
-
-    return result;
+  if (!selection) {
+    selection = document.getSelection();
   }
-  return null;
+  // console.log("getSelection2", selection.getRangeAt(0).toString())
+
+  // if (selection.getRangeAt(0).toString().length > 0) {
+  // 스크롤 위치 시작 index, 끝 index, 시작 위치, 끝 위치
+  var result = {
+    "text": null,
+    "startIndex": selection.baseOffset,
+    "endIndex": selection.focusOffset,
+    "startNode": selection.baseNode,
+    "endNode": selection.focusNode,
+    "startRange": null,
+    "endRange": null
+  };
+  // article이 있는 곳의 모든 요소 가져오기
+  var article = document.getElementById("article")
+  var contents = article.childNodes;
+
+  if (result.startNode.parentElement.tagName == "SPAN") {
+    result.startNode = result.startNode.parentElement;
+  }
+  if (result.endNode.parentElement.tagName == "SPAN") {
+    result.endNode = result.endNode.parentElement;
+  }
+
+  // 요소를 반복하며 마지막 node와 시작 node 인덱스 값 저장
+  for (var i = 0; i < contents.length; i++) {
+    var node = contents[i];
+    if (!result.startRange && node === result.startNode) result.startRange = i;
+    if (!result.endRange && node === result.endNode) result.endRange = i;
+  }
+
+  // <br> 또는 공백이 시작 node로 선택된 경우
+  if (result.startNode === article) {
+    result.startRange = result.startIndex;
+    result.startIndex = 0;
+  }
+
+  // <br> 또는 공백이 마지막 node로 선택된 경우
+  if (result.endNode === article) {
+    result.endRange = result.endIndex;
+    result.endIndex = 0;
+  }
+
+  // 거꾸로 선택된 경우를 고려
+  if (result.startRange > result.endRange) {
+    result.startIndex = selection.focusOffset;
+    result.endIndex = selection.baseOffset;
+    const startRange = result.startRange;
+    const endRange = result.endRange;
+    result.startRange = endRange;
+    result.endRange = startRange;
+  } else if (result.startRange == result.endRange) {
+    result.startIndex = Math.min(selection.focusOffset, selection.baseOffset);
+    result.endIndex = Math.max(selection.focusOffset, selection.baseOffset);
+  }
+
+  result.text = getReferenceHTML(result.startRange, result.endRange, result.startIndex, result.endIndex);
+
+  return result;
+  // }
+  // return null;
 }
 
 /** 
@@ -199,8 +214,10 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
   removeHighlightReference();
 
   // vuex에 저장
-  memoStore.state.highlightReference.startRange = startRange;
-  memoStore.state.highlightReference.endRange = endRange;
+  // memoStore.state.highlightReference.startRange = startRange;
+  store.dispatch("memoStore/updateHightlightStartRange", startRange)
+  // memoStore.state.highlightReference.endRange = endRange;
+  store.dispatch("memoStore/updateHightlightEndRange", endRange)
 
   // 기사 내용 내의 자식 요소들 가져오기
   var contents = document.getElementById("article").childNodes;
@@ -222,7 +239,8 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
         // 종료 element인 경우
         if (i == endRange) {
           // vuex에 마지막 노드 저장
-          memoStore.state.highlightReference.endNode = node;
+          store.dispatch("memoStore/updateHightlightEndNode", node);
+          // memoStore.state.highlightReference.endNode = node;
           // 0 ~ startIndex까지 넣고,
           insertBefore(node.parentElement, document.createTextNode(node.textContent.slice(0, startIndex)), node);
           // startIndex ~ endIndex까지 highlight해서 넣고,
@@ -241,7 +259,8 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
       // 종료 element인 경우
       else if (i == endRange) {
         // vuex에 마지막 노드 저장
-        memoStore.state.highlightReference.endNode = node;
+        // memoStore.state.highlightReference.endNode = node;
+        store.dispatch("memoStore/updateHightlightEndNode", node);
         // 0 ~ endIndex까지 highlight해서 넣고,
         highlight.innerText = node.textContent.slice(0, endIndex);
         insertBefore(node.parentElement, highlight, node);
@@ -267,7 +286,8 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
         // 종료 element인 경우
         if (i == endRange) {
           // vuex에 마지막 노드 저장
-          memoStore.state.highlightReference.endNode = node;
+          // memoStore.state.highlightReference.endNode = node;
+          store.dispatch("memoStore/updateHightlightEndNode", node);
           // 0 ~ startIndex까지 넣고,
           node.innerHTML += text.slice(0, startIndex);
           // startIndex ~ endIndex까지 highlight해서 넣고,
@@ -286,7 +306,8 @@ function addHighlightReference(startRange, endRange, startIndex, endIndex) {
       // 종료 element인 경우
       else if (i == endRange) {
         // vuex에 마지막 노드 저장
-        memoStore.state.highlightReference.endNode = node;
+        // memoStore.state.highlightReference.endNode = node;
+        store.dispatch("memoStore/updateHightlightEndNode", node)
         // 0 ~ endIndex까지 highlight해서 넣고,
         highlight.innerText = text.slice(0, endIndex);
         node.appendChild(highlight);
@@ -309,9 +330,14 @@ function removeHighlightReference() {
   var contents = document.getElementById("article").childNodes;
 
   // vuex에서 정보 가져오기
-  var startRange = memoStore.state.highlightReference.startRange;
-  var endRange = memoStore.state.highlightReference.endRange;
-  var endNode = memoStore.state.highlightReference.endNode;
+  const hightlightReference = store.getters['memoStore/getHighlightReference'];
+  var startRange = hightlightReference.startRange;
+  var endRange = hightlightReference.endRange;
+  var endNode = hightlightReference.endNode;
+
+  // var startRange = memoStore.state.highlightReference.startRange;
+  // var endRange = memoStore.state.highlightReference.endRange;
+  // var endNode = memoStore.state.highlightReference.endNode;
 
   if (startRange >= 0 && endRange >= 0 && !!endNode) {
 
@@ -372,9 +398,12 @@ function removeHighlightReference() {
   document.removeEventListener("mousedown", removeHighlightReference);
 
   // vuex에서 정보 삭제
-  memoStore.state.highlightReference.startRange = null;
-  memoStore.state.highlightReference.endRange = null;
-  memoStore.state.highlightReference.endNode = null;
+  // memoStore.state.highlightReference.startRange = null;
+  store.dispatch("memoStore/updateHightlightStartRange", null)
+  // memoStore.state.highlightReference.endRange = null;
+  store.dispatch("memoStore/updateHightlightEndRange", null)
+  // memoStore.state.highlightReference.endNode = null;
+  store.dispatch("memoStore/updateHightlightEndNode", null)
 }
 
 /**
@@ -387,7 +416,7 @@ function removeHighlightReference() {
 function moveReference(startRange, endRange, startIndex, endIndex) {
   moveReferenceScroll(startRange);
   addHighlightReference(startRange, endRange, startIndex, endIndex);
-  document.addEventListener("mousedown", removeHighlightReference);
+  window.addEventListener("mousedown", removeHighlightReference);
 }
 
-export { getSelection, addSelectionEvent, moveReference, insertBefore, getReferenceHTML, moveReferenceScroll, addHighlightReference, removeHighlightReference }
+export { getSelection, moveReference, insertBefore, getReferenceHTML, moveReferenceScroll, addHighlightReference, removeHighlightReference }
