@@ -129,7 +129,11 @@
 ## 산출물
 
 - [와이어프레임](https://www.figma.com/file/kxRoFFoYETbdrFJGrqAqJj/%EC%86%8C%EA%B7%80%EA%B2%BD-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0-1&t=mFMMCkOs3ytm6m7t-0)
+- [기능명세서](https://mercury-sole-13c.notion.site/5bf73261a066404d9dc038a88e5e2348)
+- [DB 설계서](https://mercury-sole-13c.notion.site/DB-2f2f7119771b4d31a374d6f0ca0374e6)
+- [API 명세서](https://mercury-sole-13c.notion.site/API-da736710b9644a75b92a38f8834eae3c)
 - [포팅 매뉴얼](https://lab.ssafy.com/s08-bigdata-dist-sub2/S08P22A509/-/tree/feat/readme/exec)
+- [Convention](https://mercury-sole-13c.notion.site/Convention-76c19c3ddc414066afedcff496085485)
 
 ## 서비스 화면
 
