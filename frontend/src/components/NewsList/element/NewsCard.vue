@@ -4,7 +4,7 @@
     class="d-flex flex-column"
     tile
     elevation="0"
-    @click="moveDetailArticle(this.article.articleId)"
+    @click="moveDetailArticle(article.articleId)"
   >
     <!-- <v-card>  -->
     <v-sheet class="px-5 py-3 d-flex flex-row align-center">
@@ -13,10 +13,10 @@
         class="mr-3"
         size="90"
         tile
-        v-if="this.article.articleThumbnail && this.article.articleThumbnail != 'NaN'"
+        v-if="article.articleThumbnail && article.articleThumbnail != 'NaN'"
       >
         <v-img
-          :src="this.article.articleThumbnail"
+          :src="article.articleThumbnail"
           :aspect-ratio="1000 / 1000"
         />
       </v-avatar>

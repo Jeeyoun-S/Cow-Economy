@@ -67,7 +67,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query(value = "SELECT * FROM article article, " +
             "      (SELECT a.article_title, min(a.article_id) AS article_id FROM article AS a, " +
-            "           (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_id DESC) AS RN " +
+            "           (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_hits DESC) AS RN " +
             "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
             "                                                               WHEN article_category='증권' THEN :stock " +
             "                                                               WHEN article_category='산업/재계' THEN :industry " +
@@ -81,7 +81,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "                   WHERE RANKING.RN <= 7) b " +
             "       WHERE a.article_title = b.article_title " +
             "       GROUP BY a.article_title) min_article, " +
-            "      (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_id DESC) AS RN " +
+            "      (SELECT * FROM ( SELECT *, RANK() OVER (PARTITION BY article_category ORDER BY article_hits DESC) AS RN " +
             "                         FROM article WHERE article_id < (CASE WHEN article_category='금융' THEN :finance " +
             "                                                               WHEN article_category='증권' THEN :stock " +
             "                                                               WHEN article_category='산업/재계' THEN :industry " +
