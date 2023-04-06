@@ -77,7 +77,6 @@ export default {
   methods: {
     // [@Method] 기사 상세페이지로 이동
     moveDetailArticle(articleId) {
-      console.log(articleId);
       this.$router.push(`/news/${articleId}`);
     },
   },
