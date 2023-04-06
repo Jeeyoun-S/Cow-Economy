@@ -1,11 +1,11 @@
 * {
-  -ms-user-select: auto;
-  -moz-user-select: -moz-auto;
-  -khtml-user-select: auto;
-  -webkit-user-select: auto;
-  user-select: auto;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
-/* #article {
+#article {
   -ms-user-select: text;
   -moz-user-select: -moz-text;
   -khtml-user-select: text;
@@ -18,7 +18,7 @@
   -khtml-user-select: text;
   -webkit-user-select: text;
   user-select: text;
-} */
+}
 #article::-moz-selection {
   color: white;
   background: var(--main-col-3);
