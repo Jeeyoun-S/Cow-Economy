@@ -106,17 +106,13 @@ export default {
   computed: {
     ...mapState("newsStore", ["searchText"]),
     filteredNews() {
-      console.log("filter " + this.sortKey);
-
       if (!this.sortKey) {
         console.log("sortKey")
         return [];
       }
       if (this.news.length == 0) {
-        console.log("전체뉴스길이 0")
         return [];
       }
-      console.log("현재 카테고리: " + this.selectedCategory);
       
       let articles = this.sortKey === "최신순" ? this.news[1] : this.news[0];
       let filtered=(this.selectedCategory==="전체"?articles:(articles.filter(
@@ -139,7 +135,6 @@ export default {
     });
   },
   created() {
-    console.log("created");
   },
   watch: {
     sort() {
@@ -152,11 +147,8 @@ export default {
   methods: {
     ...mapActions("newsStore", ["init", "setNews"]),
     async infiniteHandler($state) {
-      console.log("스크롤");
       await getAllNews({"hot":this.hotCategoryLast,"recent":this.recentCategoryLast}).then((res) => {
         this.news = [];
-        // console.log("getAllNews: "+ res.articles);
-
         this.hotCategoryLast = this.setCategoryLast(res.categoryLast[0]);
         this.recentCategoryLast = this.setCategoryLast(res.categoryLast[1]);
         this.hotNews = this.hotNews.concat(res.articles[0]);
