@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 import re
 
@@ -196,7 +197,7 @@ def getCosineSimilarity(nowData, totalData):
   
   return result_df
 
-def saveToDB(df):
+def saveToDB(df, chunk_size=10000):
   print("### 관련 기사 DB 저장 ###")
   
   if df is None:
@@ -210,14 +211,32 @@ def saveToDB(df):
   from pyspark.sql.functions import concat_ws
   df_str = df.withColumn("sub_article_id", concat_ws(",", "sub_article_id"))
   
-  print("관련 기사 아이디 >> Pandas 변환")
-  pdDf = df_str.toPandas()
+  print("관련 기사 아이디 나눠서 저장")
+  
+  total_rows = df_str.count()
+  num_chunks = int(np.ceil(total_rows / chunk_size))
+  print(f"총 {total_rows}개의 row가 존재합니다. {num_chunks}번 나눠서 처리합니다.")
+  
+  
+  # pdDf = df_str.toPandas()
   
   print("관련 기사 DB 저장")
+  
+  for i in range(num_chunks):
+        print(f"{i + 1}/{num_chunks} 번째 chunk 저장 중...")
+        start_idx = i * chunk_size
+        end_idx = min((i + 1) * chunk_size, total_rows)
+        pdDf = df_str.limit(end_idx).collect()[start_idx:end_idx]
+        pdDf = pd.DataFrame(pdDf, columns=df_str.columns)
+
+        # DB로 저장
+        db_connection = create_engine(db_connection_str)
+        pdDf.to_sql(name='related_article', con=db_connection, if_exists='append', index=False)
+
   # print("임시 데이터 >> ", pdDf.head())
   # DB로 저장
-  db_connection = create_engine(db_connection_str)
-  pdDf.to_sql(name='related_article', con=db_connection, if_exists='append',index=False)  
+  # db_connection = create_engine(db_connection_str)
+  # pdDf.to_sql(name='related_article', con=db_connection, if_exists='append',index=False)  
 
   
   print(f">> 관련 기사 RDD 변환 및 DB 저장 소요 시간 : {time.time() - start:.5f} 초")
@@ -351,7 +370,7 @@ totalTfidf = getTFIDF(week_total)
 related_df = getCosineSimilarity(nowTfidf, totalTfidf)
 
 # DB에 저장
-saveToDB(related_df)
+saveToDB(related_df, chunk_size=10000)
 
 # ---------- word cloud ----------
 # 오늘 뉴스 불용어 제거

@@ -48,6 +48,7 @@ column_name = ["article_id","article_category", "article_regtime", "article_edit
 # category
 sid1 = (101,) # 대분류
 sid2 = {'금융': 259, '증권': 258, '산업/재계': 261, '중기/벤처': 771, '부동산': 260, '글로벌 경제': 262, '생활경제': 310, '경제 일반': 263} # 소분류
+#sid2 = {'금융': 259, '증권': 258, '산업/재계': 261} # 소분류
 
 # date 
 end_date = dt.datetime.now(timezone('Asia/Seoul'))
@@ -151,7 +152,7 @@ for main in sid1:
                             # 마지막 기사 등록일자 이후 기사만 크롤링
                             if(article_time<=last_date):
                                 break
-
+                            
                             detail = {}
 
                             # 기사 카테고리 (article_category)
@@ -241,7 +242,6 @@ for main in sid1:
                 page += 1
             # 하루 더해서 다음날로 넘어가기
             s_date += dt.timedelta(days=1)
-            print(s_date)
         print("길이: ",len(results))
         if index > 0:
             print(subkey," 마지막 기사 시간: ", results[len(results)-index]['article_regtime'], "\n")
@@ -259,21 +259,29 @@ print("전체 길이", len(results))
 news_df = pd.DataFrame(results, columns=column_name)
 
 # 인덱스 재정렬
+#news_df = news_df.sort_index(ascending=False)
+#news_df = news_df.reset_index(drop=True)
+#list = news_df[["article_id"]].values.tolist()
+#list.reverse()
+#news_df[["article_id"]]=list
+
+# 인덱스 재정렬
 news_df = news_df.sort_index(ascending=False)
+news_df = news_df.sort_values(by=["article_regtime"], ascending=[True]) 
 news_df = news_df.reset_index(drop=True)
 list = news_df[["article_id"]].values.tolist()
-list.reverse()
+list.sort()   #현재 기사등록일자 정렬로 인해 기사 아이디  순서가 순차적이지 못하기 때문에 기사아이디 리스트 정렬
 news_df[["article_id"]]=list
-
+print(news_df)
 # 종료 시간
 end = time.time()
 
 print(f'소요 시간 {end - start}초')
 
 # # DB로 저장
-# db_connection_str = 'mysql+pymysql://root:ssafy@j8a509.p.ssafy.io:3306/ssafy_cow_db'
-# db_connection = create_engine(db_connection_str)
-# news_df.to_sql(name='article', con=db_connection, if_exists='append',index=False)  
+#db_connection_str = 'mysql+pymysql://root:ssafy@j8a509.p.ssafy.io:3306/ssafy_cow_db'
+#db_connection = create_engine(db_connection_str)
+#news_df.to_sql(name='article', con=db_connection, if_exists='append',index=False)  
 
 # HDFS 에 데이터 넣기
 newsdata.put_data(news_df)
