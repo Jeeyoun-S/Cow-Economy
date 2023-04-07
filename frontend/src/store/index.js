@@ -10,6 +10,8 @@ import mypageStore from "@/store/modules/mypageStore.js";
 import userStore from "@/store/modules/userStore.js";
 import memoStore from "@/store/modules/memoStore.js";
 import quizStore from "@/store/modules/quizStore.js";
+import wordStore from "@/store/modules/wordStore.js";
+import newsStore from "./modules/newsStore";
 
 Vue.use(Vuex);
 
@@ -39,12 +41,14 @@ export default new Vuex.Store({
     userStore: userStore,
     quizStore: quizStore,
     memoStore: memoStore,
+    wordStore: wordStore,
+    newsStore: newsStore,
   },
   plugins: [
     createPersistedState({
       // ! localStorage에 저장할 store만을 path에 등록
-      paths: ["userStore", "quizStore"],
-      // paths: ["userStore"],
+      // paths: ["userStore", "quizStore"],
+      paths: ["userStore"],
     }),
   ],
 });

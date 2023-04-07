@@ -5,8 +5,14 @@
 .xs-font {
   font-size: 12px;
 }
+.xsm-font {
+  font-size: 13px;
+}
 .sm-font {
   font-size: 14px;
+}
+.md-font {
+  font-size: 15px;
 }
 .lg-font {
   font-size: 18px;
@@ -20,30 +26,11 @@
 .xxxl-font {
   font-size: 24px;
 }
-/* 폰트 크기 비율 */
-.xxs-r-font {
-  font-size: 1em;
+.xxxxl-font {
+  font-size: 26px;
 }
-.xs-r-font {
-  font-size: 3em;
-}
-.sm-r-font {
-  font-size: 5em;
-}
-.md-r-font {
-  font-size: 7em;
-}
-.lg-r-font {
-  font-size: 9em;
-}
-.xl-r-font {
-  font-size: 11em;
-}
-.xxl-r-font {
-  font-size: 13em;
-}
-.xxxl-r-font {
-  font-size: 15em;
+.x-big-large-font {
+  font-size: 34px;
 }
 /* 폰트 색상 */
 .main-col-1 {
@@ -63,6 +50,27 @@
 }
 .error-col-5 {
   color: var(--error-col-1);
+}
+.black-col-1 {
+  color: black !important;
+}
+.white-col-1 {
+  color: white !important;
+}
+.graph-2-col-4 {
+  color: var(--graph-2-col-4);
+}
+.graph-1-col-4 {
+  color: var(--graph-1-col-4);
+}
+.graph-1-col-2 {
+  color: var(--graph-1-col-2);
+}
+.graph-1-col-2-1 {
+  color: var(--graph-1-col-2-1);
+}
+.graph-1-col-4-1 {
+  color: var(--graph-1-col-4-1);
 }
 /* 폰트 굵기 */
 .th-font {
@@ -99,6 +107,12 @@
 .point-b {
   font-family: var(--point-font-3);
 }
+.logo-th {
+  font-family: var(--logo-font-1);
+}
+.logo-b {
+  font-family: var(--logo-font-2);
+}
 /* 폰트 스타일 */
 .underline {
   text-decoration: underline;
@@ -106,16 +120,72 @@
 .italic {
   font-style: italic;
 }
+/* 줄 너비 */
+.narrow {
+  line-height: 1.1;
+}
 /* 기타 */
 .spacing-all {
   word-break: break-all;
 }
 .main-title-font {
-  font-size: 20px;
-  font-family: var(--main-font-3);
+  font-size: 18px;
+  font-family: var(--point-font-2);
 }
 .main-subtitle-font {
   font-size: 12px;
   font-family: var(--main-font-2);
   color: grey;
+}
+.main-hot-news-font {
+  font-size: 12px;
+  font-family: var(--main-font-2);
+  color: white;
+}
+.main-category-news-font {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+}
+.white-shadow {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+.team-shadow {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+.blue-gredient {
+  background: linear-gradient(
+    to right,
+    var(--graph-1-col-1),
+    var(--graph-1-col-6)
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+}
+.pink-gradient {
+  filter: drop-shadow(0px 0px 5px var(--main-col-1));
+}
+.card-gradient {
+  filter: drop-shadow(0px 0px 1px rgb(200, 200, 200));
+}
+.login-gradient {
+  filter: drop-shadow(0px 0px 5px var(--graph-1-col-4));
+}
+.white-gradient {
+  filter: drop-shadow(0px 0px 5px white);
+}
+.white-2-gradient {
+  filter: drop-shadow(0px 0px 3px white);
+}
+.team-gradient {
+  filter: drop-shadow(0px 0px 5px var(--graph-1-col-4));
+}
+.logo-gradient {
+  filter: drop-shadow(0px 0px 5px var(--graph-1-col-2));
+}
+.graph-gradient {
+  filter: drop-shadow(0px 0px 3px lightgray);
 }

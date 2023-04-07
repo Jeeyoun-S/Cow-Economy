@@ -11,9 +11,9 @@
     <!-- # for. axios 통신 시 Loading 창 -->
     <the-loading :loading="this.$store.state.loadingStatus"></the-loading>
     <!-- # for. quiz Loading 창 -->
-    <the-quiz-loading
+    <!-- <the-quiz-loading
       :loading="this.$store.state.quizLoadingStatus"
-    ></the-quiz-loading>
+    ></the-quiz-loading> -->
   </v-app>
 </template>
 
@@ -21,7 +21,7 @@
 // # for. axios 통신 시 Loading 창
 import TheLoading from "./views/TheLoading.vue";
 // # for. quiz Loading 창
-import TheQuizLoading from "./views/TheQuizLoading.vue";
+// import TheQuizLoading from "./views/TheQuizLoading.vue";
 
 export default {
   name: "App",
@@ -53,7 +53,7 @@ export default {
   // },
   components: {
     TheLoading,
-    TheQuizLoading,
+    // TheQuizLoading,
   },
 };
 </script>

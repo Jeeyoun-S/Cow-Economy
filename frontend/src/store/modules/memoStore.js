@@ -24,11 +24,15 @@ const memoStore = {
       startRange: null,
       endRange: null
     },
-    otherMemoList: [],
-    myMemoList: [],
+    reading: false
   },
   getters: {
-
+    getMemoBtn(state) {
+      return state.memoBtn;
+    },
+    getHighlightReference(state) {
+      return state.highlightReference;
+    }
   },
   mutations: {
     UPDATE_MEMO_BTN(state) {
@@ -44,19 +48,19 @@ const memoStore = {
       state.selectionResult["startRange"] = payload.startRange;
       state.selectionResult["endRange"] = payload.endRange;
     },
-    UPDATE_MY_MEMO(state, payload) {
-      if (payload.sort == "최신순") {
-        state.myMemoList.unshift(payload.memo);
-      } else {
-        state.myMemoList.push(payload.memo);
-      }
-    },
-    UPDATE_PUBLIC_SCOPE(state, payload) {
-      state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
-    },
-    DELETE_MEMO(state, payload) {
-      state.myMemoList.splice(payload, 1);
-    },
+    // UPDATE_MY_MEMO(state, payload) {
+    //   if (payload.sort == "최신순") {
+    //     state.myMemoList.unshift(payload.memo);
+    //   } else {
+    //     state.myMemoList.push(payload.memo);
+    //   }
+    // },
+    // UPDATE_PUBLIC_SCOPE(state, payload) {
+    //   state.myMemoList[payload].memoPublicScope = !state.myMemoList[payload].memoPublicScope;
+    // },
+    // DELETE_MEMO(state, payload) {
+    //   state.myMemoList.splice(payload, 1);
+    // },
     UPDATE_NEW_MEMO(state, payload) {
       state.newMemo.isModify = payload.isModify;
       state.newMemo.memoContent = payload.memoContent;
@@ -64,11 +68,38 @@ const memoStore = {
       state.newMemo.memoId = payload.memoId;
       state.newMemo.index = payload.index;
     },
-    UPDATE_ONE_MY_MEMO(state, payload) {
-      state.myMemoList[payload.index] = payload.newMemo;
+    // UPDATE_ONE_MY_MEMO(state, payload) {
+    //   state.myMemoList[payload.index] = payload.newMemo;
+    // }
+    UPDATE_READING(state, payload) {
+      state.reading = payload;
+    },
+    UPDATE_DONE(state, payload) {
+      state.done = payload;
+    },
+    UPDATE_HIGHLIGHT_ENDNODE(state, payload) {
+      state.highlightReference.endNode = payload;
+    },
+    UPDATE_HIGHLIGHT_STARTRANGE(state, payload) {
+      state.highlightReference.startRange = payload;
+    },
+    UPDATE_HIGHLIGHT_ENDRANGE(state, payload) {
+      state.highlightReference.endRange = payload;
     }
   },
   actions: {
+    updateHightlightEndNode({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_ENDNODE", value)
+    },
+    updateHightlightEndRange({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_ENDRANGE", value)
+    },
+    updateHightlightStartRange({ commit }, value) {
+      commit("UPDATE_HIGHLIGHT_STARTRANGE", value)
+    },
+    updateDone({ commit }, value) {
+      commit("UPDATE_DONE", value)
+    },
     changeMemoBtn({ commit }) {
       commit("UPDATE_MEMO_BTN");
     },
@@ -89,21 +120,24 @@ const memoStore = {
         "endRange": null,
       });
     },
-    addMyMemo({ commit }, data) {
-      commit("UPDATE_MY_MEMO", data);
-    },
-    updatePublicScope({ commit }, index) {
-      commit("UPDATE_PUBLIC_SCOPE", index);
-    },
+    // addMyMemo({ commit }, data) {
+    //   commit("UPDATE_MY_MEMO", data);
+    // },
+    // updatePublicScope({ commit }, index) {
+    //   commit("UPDATE_PUBLIC_SCOPE", index);
+    // },
     deleteMemo({ commit }, index) {
       commit("DELETE_MEMO", index);
     },
     updateNewMemo({ commit }, memo) {
       commit("UPDATE_NEW_MEMO", memo);
     },
-    modifyMyMemo({ commit }, memo) {
-      commit("UPDATE_ONE_MY_MEMO", memo);
+    updateReading({ commit }, reading) {
+      commit("UPDATE_READING", reading)
     }
+    // modifyMyMemo({ commit }, memo) {
+    //   commit("UPDATE_ONE_MY_MEMO", memo);
+    // }
   },
   modules: {
   }

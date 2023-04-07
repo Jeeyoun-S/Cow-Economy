@@ -57,19 +57,15 @@ public class MemoService {
 
                 // 저장할 UserArticleMemo Entity 생성
                 UserArticleMemo userArticleMemo = UserArticleMemo.builder()
-                        .user(optionalUser.get())
-                        .article(optionalArticle.get())
-                        .memoContent(memoRequestDto.getMemoContent())
-                        .memoStartRange(memoRequestDto.getMemoStartRange())
-                        .memoEndRange(memoRequestDto.getMemoEndRange())
-                        .memoStartIndex(memoRequestDto.getMemoStartIndex())
-                        .memoEndIndex(memoRequestDto.getMemoEndIndex())
-                        .memoPublicScope(memoRequestDto.isMemoPublicScope())
-                        .build();
+                    .user(optionalUser.get())
+                    .article(optionalArticle.get())
+                    .build();
 
-                // DB에 저장
+                // memoRequestDto에 받아온 값 넣기
+                userArticleMemo.updateMemo(memoRequestDto);
+
+                // DB에 insert
                 UserArticleMemo returnMemo =  userArticleMemoRepository.saveAndFlush(userArticleMemo);
-
                 return returnMemo;
             }
         }
@@ -78,27 +74,35 @@ public class MemoService {
     }
 
     /**
-     * 입력 받은 Memo Request 값을 DB에 저장
+     * 전달 받은 Memo Request 값을 DB에 저장
+     * @param userArticleMemo 기존에 저장돼 있던 Entity
      * @param memoRequestDto 전달 받은 메모 Request
      * @param memoId 메모 ID
      * @return memo Entity
      * **/
-    public UserArticleMemo modifyMemo(MemoRequestDto memoRequestDto, Long memoId) {
-        
-        // memoId로 memo 가져오기
-        Optional<UserArticleMemo> optionalMemo = userArticleMemoRepository.findById(memoId);
-        if (optionalMemo.isPresent()) {
-            UserArticleMemo existingMemo = optionalMemo.get();
+    public UserArticleMemo modifyMemo(UserArticleMemo userArticleMemo, MemoRequestDto memoRequestDto, Long memoId) {
 
-            // 가져온 기존 entity 기반으로 수정하기 (구현 안 됨)
+        // DB에서 가져온 기존 memo의 값 update하기
+        userArticleMemo.updateMemo(memoRequestDto);
 
+        // DB에 update
+        UserArticleMemo returnMemo = userArticleMemoRepository.save(userArticleMemo);
+        return returnMemo;
+    }
 
-            // DB에 저장
-            userArticleMemoRepository.save(existingMemo);
+    /**
+     * 전달 받은 Memo Entity의 공개 여부 변경
+     * @param userArticleMemo 기존에 저장돼 있던 Entity
+     * @return boolean 공개 여부
+     * **/
+    public boolean modifyMemoScope(UserArticleMemo userArticleMemo) {
 
-            return existingMemo;
-        }
-        return null;
+        // memoPublicScope 변경
+        userArticleMemo.updateMemoScope();
+
+        // DB에 update
+        userArticleMemoRepository.save(userArticleMemo);
+        return userArticleMemo.getMemoPublicScope();
     }
 
     /**
@@ -107,22 +111,23 @@ public class MemoService {
      * @param userId 사용자 ID
      * @return 맞다면 true, 아니면 false
      * **/
-    public boolean checkMemoWriter(Long memoId, Long userId) {
+    public UserArticleMemo checkMemoWriter(Long memoId, Long userId) {
+        
+        // memoId로 memo 값 가져오기
         Optional<UserArticleMemo> memo = userArticleMemoRepository.findById(memoId);
-
         if (memo.isPresent()) {
             Long correctId = memo.get().getUser().getUserId();
-            if (correctId == userId) return true;
+            if (correctId == userId) return memo.get();
         }
 
-        return false;
+        return null;
     }
 
     /**
      * memoId에 해당하는 메모를 삭제
-     * @param memoId 메모 ID
+     * @param userArticleMemo 삭제할 메모 Entity
      * **/
-    public void deleteMemo(Long memoId) {
-        userArticleMemoRepository.deleteById(memoId);
+    public void deleteMemo(UserArticleMemo userArticleMemo) {
+        userArticleMemoRepository.delete(userArticleMemo);
     }
 }

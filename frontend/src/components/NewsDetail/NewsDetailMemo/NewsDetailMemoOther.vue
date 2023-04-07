@@ -1,5 +1,10 @@
 <template>
   <v-sheet>
+    <v-sheet
+      class="pt-2 d-flex justify-center sm-font"
+      v-if="memoOther.length < 1"
+      >등록된 메모가 없습니다.</v-sheet
+    >
     <NewsDetailMemoBox
       :isMine="false"
       v-for="(memo, index) in memos"
@@ -17,246 +22,45 @@ export default {
   components: {
     NewsDetailMemoBox,
   },
+  props: {
+    // 정렬 방식
+    memoOther: Array,
+    sort: String,
+  },
   data() {
     return {
       memos: [],
-      memos_all: [
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 1,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 2,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 3,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 4,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 5,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 6,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 7,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 8,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 9,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 10,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 11,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 12,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 13,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 14,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 15,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 16,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          regtime: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 17,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 18,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 19,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 20,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 21,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 22,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 23,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 24,
-        },
-        {
-          referenceText: [
-            "코인마켓캡에서는 24시간 전보다 2.09% 상승한 2만3623달러를 나타냈다.",
-          ],
-          memoContent: "와~ 돈이 참 많네요... 진짜 부럽다...",
-          date: "2023.03.02 18:00",
-          userNickname: "경제왕이될거야",
-          memoId: 25,
-        },
-      ],
+      memos_all: [],
       memoIndex: 0,
       bottom: false,
     };
   },
   methods: {
     addMemo() {
-      this.memos.push(
-        ...this.memos_all.slice(this.memoIndex, this.memoIndex + 10)
-      );
-      this.memoIndex += 10;
+      if (this.memos.length < this.memos_all.length) {
+        // +10과 최대 Index 중 최솟값 구하기
+        const maxIndex = Math.min(this.memos_all.length, this.memoIndex + 10);
+        // 전체 메모 리스트에서 slice해서 memos에 추가
+        this.memos.push(...this.memos_all.slice(this.memoIndex, maxIndex));
+        // 이미 보여준 마지막 memoIndex 업데이트
+        this.memoIndex = maxIndex;
+      }
+    },
+    sortMemoList() {
+      if (this.sort == "레벨순") {
+        this.memos_all.sort(function (a, b) {
+          return b.userExperience - a.userExperience;
+        });
+      } else {
+        this.memos_all.sort(function (a, b) {
+          return new Date(b.regtime) - new Date(a.regtime);
+        });
+      }
+
+      // 무한스크롤 초기화하고 다시 넣기
+      this.memoIndex = 0;
+      this.memos = [];
+      this.addMemo();
     },
     bottomVisible() {
       const scrollY = window.scrollY;
@@ -266,6 +70,9 @@ export default {
       const bottomOfPage = visible + scrollY + 73 >= pageHeight;
       return bottomOfPage || pageHeight < visible;
     },
+    onTheBottom() {
+      this.bottom = this.bottomVisible();
+    },
   },
   watch: {
     bottom(bottom) {
@@ -273,12 +80,17 @@ export default {
         this.addMemo();
       }
     },
+    sort() {
+      this.sortMemoList();
+    },
   },
   created() {
-    window.addEventListener("scroll", () => {
-      this.bottom = this.bottomVisible();
-    });
-    this.addMemo();
+    window.addEventListener("scroll", this.onTheBottom);
+    this.memos_all = this.memoOther;
+    this.sortMemoList();
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onTheBottom);
   },
 };
 </script>
