@@ -19,15 +19,17 @@ const quiz = [
       header: HomeHeader,
       default: TodayQuizInfo,
     },
+    meta: { requiresAuth: true },
   },
   // Quiz 페이지
   {
     path: "/today-quiz",
     name: "today-quiz",
     components: {
-      header: HomeHeader,
+      // header: HomeHeader,
       default: TodayQuiz,
     },
+    meta: { requiresAuth: true },
   },
 ];
 

@@ -11,3 +11,44 @@
 .pointer {
   cursor: pointer;
 }
+.blue-shadow {
+  box-shadow: 0px 0px 8px 0px lightgrey !important;
+}
+.black-shadow {
+  box-shadow: 0px 0px 3px 0px var(--graph-2-col-4) !important;
+}
+.white-shadow {
+  box-shadow: 0px 0px 8px 0px white !important;
+}
+.graph-1-shadow {
+  box-shadow: 0px 0px 15px 0px var(--quiz-1-col-2) !important;
+}
+.graph-1-shadow:hover {
+  box-shadow: 0px 0px 10px 0px var(--graph-1-col-2) !important;
+  transform: scale(1.02);
+}
+.gradient {
+  background: linear-gradient(
+    180deg,
+    var(--quiz-1-col-1),
+    var(--quiz-1-col-3),
+    var(--quiz-1-col-6)
+  );
+}
+.gradient-2 {
+  background: linear-gradient(
+    270deg,
+    var(--graph-1-col-1),
+    var(--graph-1-col-3),
+    var(--graph-1-col-6)
+  ) !important;
+}
+.img-pink {
+  filter: drop-shadow(0px 0px 3px #ff81b1);
+}
+.img-mint {
+  filter: drop-shadow(0px 0px 3px #89ffe5);
+}
+.img-white {
+  filter: drop-shadow(0px 0px 5px white);
+}

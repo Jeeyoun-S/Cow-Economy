@@ -11,9 +11,9 @@
 $frameColor: slategrey;
 $buttonColor: slategrey;
 $ringColor: black;
-$lapTime: 10s;
+$lapTime: 15s;
 $infiniteLoop: true;
-$size: 3em;
+$size: 2.4em;
 
 #stopwatch {
   * {
@@ -48,7 +48,7 @@ $size: 3em;
     width: (0.8 * $size);
     height: (0.8 * $size);
     border-radius: 50%;
-    z-index: 500;
+    z-index: 10;
     box-shadow: inset 0 0 (0.03 * $size) 0 black;
   }
 

@@ -1,6 +1,7 @@
-import { getToken, logOut } from "@/api/user";
+import { getToken } from "@/api/user";
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "@/router/index.js";
 
 Vue.use(Vuex);
 
@@ -8,32 +9,54 @@ const userStore = {
   namespaced: true,
   state: {
     isLoggedIn: false,
+    // * graph에 필요한 data
+    articleList: {
+      articleCntList: [],
+      readCategoryList: [],
+      wordCategoryList: [],
+    },
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
+    getLastSixMonthsReadNews: (state) => {
+      const currentDate = new Date();
+      const sixMonthsAgo = new Date(
+        currentDate.setMonth(currentDate.getMonth() - 6)
+      );
+      return state.readNews.filter(([month]) => {
+        const date = new Date(`${month}-01`);
+        return date >= sixMonthsAgo;
+      });
+    },
   },
   mutations: {
     SET_IS_LOGGED_IN(state, value) {
       state.isLoggedIn = value;
-      console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
+      // console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin);
     },
-    SET_IS_LOGGED_OUT(state, value) {
-      state.isLoggedIn = value;
-      console.log("#SET_IS_LOGIN# isLogin 확인: ", state.isLogin)
-    }
+    SET_ARTICLE_LIST(state, articleList) {
+      state.articleList.articleCntList = articleList.articleCntList;
+      state.articleList.readCategoryList = articleList.articleCategoryCnt;
+      state.articleList.wordCategoryList = articleList.quizPassWordCategoryCnt;
+      // console.log("articleList 저장확인", state.articleList.articleCntList);
+    },
   },
   actions: {
     async executeToken({ commit }) {
       await getToken(
         ({ data }) => {
-          // jwt 토큰 localstorage에 저장
+          // jwt acces-token localstorage에 저장
           if (data.statusCode == 200) {
             const ACCESS_TOKEN = data.data.accessToken;
-            localStorage.setItem("access-token", ACCESS_TOKEN);
+            const REFRESH_TOKEN = data.data.refreshToken;
 
+            localStorage.setItem("access-token", ACCESS_TOKEN);
+            localStorage.setItem("refresh-token", REFRESH_TOKEN);
+
+            // vuex 로그인 처리
             commit("SET_IS_LOGGED_IN", true);
 
-            console.log("토큰 발급 성공!");
+            // my-page로 이동
             window.location.replace("/my-page");
           } else {
             console.error("토큰 발급 실패");
@@ -44,30 +67,17 @@ const userStore = {
         }
       );
     },
-
-    // 로그아웃
-    async executeLogOut({ commit }) {
-      await logOut(
-        ({data}) => {
-          if (data.statusCode == 200) {
-            // 로그아웃 성공 처리
-            localStorage.removeItem("access-token")
-            commit("SET_IS_LOGGED_IN", false);
-            window.location.replace("/my-page");
-          } else {
-            console.error("카카오 로그 아웃 실패");
-          }
-        }
-      )
-    }
+    async logout({ commit }) {
+      localStorage.removeItem("access-token");
+      await commit("SET_IS_LOGGED_IN", false);
+      await router.replace("/");
+    },
+    // [@Method] 읽은 기사 수, 카테고리, 경제 용어 data 저장(set)
+    setUserGraphData({ commit }, articleList) {
+      commit("SET_ARTICLE_LIST", articleList);
+    },
   },
   modules: {},
 };
 
 export default userStore;
-    //   try {
-    //     const accessToken = localStorage.getItem("access-token");
-
-    //     // 카카오 로그아웃 엔드포인트로 POST 요청 보내기
-    //     const response = await this.$
-    //   }
