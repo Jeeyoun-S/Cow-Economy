@@ -50,18 +50,18 @@ public class ArticleController {
 
         return BaseResponse.success(hotArticles);
     }
-    @ApiOperation(value = "카테고리별 조회", notes = "오늘 전체 기사 중 인기 기사 10개를 조회한다.")
+    @ApiOperation(value = "카테고리별 조회", notes = "오늘 전체 기사 중 카테고리별 최신순, 인기순으로 10개의 기사를 조회한다.")
     @GetMapping("/category-news")
     public BaseResponse getCategoryArticles(HttpServletRequest request){
         List<List<ArticleDto>> articles = articleService.getCategoryArticles();
         for (int i = 0; i < articles.get(1).size(); i++) {
             ArticleDto a = articles.get(1).get(i);
-            System.out.println(a.getArticleCategory()+" "+a.getArticleId()+" "+a.getArticleTitle());
+            System.out.println(a.getArticleCategory()+" "+a.getArticleId()+" "+a.getArticleTitle()+" "+a.getArticleRegtime());
         }
         return BaseResponse.success(articles);
     }
 
-    @ApiOperation(value = "키워드 검색", notes = "키워드로 기사를 조회한다.")
+    @ApiOperation(value = "키워드 검색", notes = "키워드로 최신순, 인기순 기사를 조회한다.")
     @PostMapping("/search")
     public BaseResponse searchByKeyword(HttpServletRequest request, @RequestParam String keyword, @RequestBody CategoryArticleDto categoryLast ){
         System.out.println("키워드: "+ keyword);
@@ -85,7 +85,7 @@ public class ArticleController {
         return BaseResponse.success(result);
     }
 
-    @ApiOperation(value = "전체 뉴스 조회", notes = "인기순, 최신순 기사를 조회한다.")
+    @ApiOperation(value = "전체 뉴스 조회", notes = "전체 기사에서 인기순, 최신순으로 기사를 조회한다.")
     @PostMapping("/all-news")
     public BaseResponse getNewsList(HttpServletRequest request, @RequestBody List<CategoryArticleDto> param){
         Long[] hot = param.get(0).setCategoryLast(param.get(0));
