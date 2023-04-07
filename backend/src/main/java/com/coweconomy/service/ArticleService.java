@@ -80,6 +80,9 @@ public class ArticleService {
         List<ArticleDto> recentArticles = recent.stream().map(a->new ArticleDto(a)).collect(Collectors.toList());
         articles.add(hotArticles);
         articles.add(recentArticles);
+        for (ArticleDto a: recentArticles) {
+            System.out.println(a.getArticleId()+" "+a.getArticleTitle()+" "+a.getArticleRegtime());
+        }
 //        System.out.println("카테고리별 인기뉴스 길이: " + hotArticles.size());
 //        System.out.println("카테고리별 최신뉴스 길이: " + recentArticles.size());
         //각 카테고리별 마지막 기사아이디 조회
