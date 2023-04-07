@@ -555,4 +555,102 @@ pipeline{
 
 ### OpenAI
 
-### KakaoTalk
+- [참고 Link] openAI API 공식 문서
+- https://platform.openai.com/docs/api-reference/introduction
+
+1. https://chat.openai.com/chat 회원가입
+2. openai api 키 발급
+3. Backend application.yml 환경설정 파일 내 OpenAI API KEY 추가
+
+```bash
+# appilcation.yml
+...
+spring:
+  profiles:  # chatGPT
+    include: 키 값 # chatGPT
+  data:
+...
+# chatGPT
+openai:
+  api-key: API 키
+chatgpt:
+  api-key: API 키
+```
+
+### Kakao Login
+
+- [참고 Link] Kakao Development 공식 문서
+
+1. 애플리케이션 등록
+   ![create-kakao-application](/exec/image/create-kakao-application.png)
+2. 인가 코드 받기
+
+```bash
+kakaoLogin() {
+      window.location.replace(
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.VUE_APP_KAKAO_REDIRECT_URI}&response_type=code`
+      );
+    },
+```
+
+3. 카카오 토큰 받기
+
+```bash
+async executeToken({ commit }) {
+      await getToken(
+        ({ data }) => {
+          // jwt acces-token localstorage에 저장
+          if (data.statusCode == 200) {
+            const ACCESS_TOKEN = data.data.accessToken;
+            const REFRESH_TOKEN = data.data.refreshToken;
+
+            localStorage.setItem("access-token", ACCESS_TOKEN);
+            localStorage.setItem("refresh-token", REFRESH_TOKEN);
+
+            // vuex 로그인 처리
+            commit("SET_IS_LOGGED_IN", true);
+
+            // my-page로 이동
+            window.location.replace("/my-page");
+          } else {
+            console.error("토큰 발급 실패");
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+```
+
+### Kakao Message
+
+1. SDK 추가
+
+```bash
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+```
+
+2. 커스텀 탬플릿으로 공유하기
+
+```bash
+initKakaoShare() {
+      if (!window.Kakao.isInitialized()) {
+        alert("카카오 SDK가 초기화되지 않았습니다.");
+        return;
+      }
+
+      const templateId = 91976;
+      this.$refs.kakaoShareButton.onclick = () => {
+        window.Kakao.Link.sendCustom({
+          templateId: templateId,
+          templateArgs: {
+            title: this.cur[0],
+            content: this.cur[1],
+            imageUrl: this.cur[2],
+            linkMobile: `https://j8a509.p.ssafy.io${window.location.pathname}`,
+            linkWeb: `https://j8a509.p.ssafy.io${window.location.pathname}`,
+          },
+        });
+      };
+```
