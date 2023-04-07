@@ -24,7 +24,7 @@ const newsStore = {
       state.beforeSearch = payload;
     },
     SET_SEARCH_TEXT(state, payload) {
-      console.log(payload);
+      // console.log(payload);
       state.searchText = payload;
     },
     SET_SEARCHED(state, payload) {
@@ -37,14 +37,14 @@ const newsStore = {
       state.cur = payload;
     },
     SET_CATEGORYLAST(state, categoryLast) {
-      console.log("금융: " + categoryLast[0]);
-      console.log("증권: " + categoryLast[1]);
-      console.log("산업: " + categoryLast[2]);
-      console.log("벤처: " + categoryLast[3]);
-      console.log("부동산: " + categoryLast[4]);
-      console.log("글로벌: " + categoryLast[5]);
-      console.log("생활: " + categoryLast[6]);
-      console.log("일반: " + categoryLast[7]);
+      // console.log("금융: " + categoryLast[0]);
+      // console.log("증권: " + categoryLast[1]);
+      // console.log("산업: " + categoryLast[2]);
+      // console.log("벤처: " + categoryLast[3]);
+      // console.log("부동산: " + categoryLast[4]);
+      // console.log("글로벌: " + categoryLast[5]);
+      // console.log("생활: " + categoryLast[6]);
+      // console.log("일반: " + categoryLast[7]);
 
       state.categoryLast.finance = categoryLast[0];
       state.categoryLast.stock = categoryLast[1];

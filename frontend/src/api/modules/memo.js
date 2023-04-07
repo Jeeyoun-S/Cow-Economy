@@ -34,6 +34,17 @@ async function updateMemo(newMemo, selectionResult, selectionText, articleId) {
       .then((res) => {
         if (res.data.statusCode == 200) {
           result = res.data.data;
+
+          var regtime = new Date(result.regtime);
+          var year = regtime.getFullYear();
+          var month = ('0' + (regtime.getMonth() + 1)).slice(-2);
+          var day = ('0' + regtime.getDate()).slice(-2);
+          var hours = ('0' + regtime.getHours()).slice(-2);
+          var minutes = ('0' + regtime.getMinutes()).slice(-2);
+          var seconds = ('0' + regtime.getSeconds()).slice(-2);
+          var dateString = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+          result.regtime = dateString;
+
           result.referenceText = selectionText;
         }
       })

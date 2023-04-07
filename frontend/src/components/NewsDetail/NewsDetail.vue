@@ -83,14 +83,14 @@ export default {
     ScrollTopBtn,
   },
   // data와 vuex 내 기사 읽음 snackbar 활성화 값을 동일하게
-  watch: {
-    localDone() {
-      this.updateDone(this.localDone);
-    },
-    done() {
-      this.localDone = this.done;
-    },
-  },
+  // watch: {
+  //   localDone() {
+  //     this.updateDone(this.localDone);
+  //   },
+  //   done() {
+  //     this.localDone = this.done;
+  //   },
+  // },
   methods: {
     ...mapActions("wordStore", ["setWordInfo"]),
     ...mapActions("memoStore", ["updateReading", "updateDone"]),
@@ -125,8 +125,9 @@ export default {
             if (res) {
               // memoStore.actions.updateDone(true);
               // vuex의 값을 변경해 snackbar 활성화
-              this.updateDone(true);
-
+              // this.updateDone(true);
+              // console.log("여기");
+              this.localDone = true;
               // memoStore.state.done = true;
               // console.log("after 1 >>>", this.done, this.localDone);
               // console.log("after 2 >>>", this.done, this.localDone);
