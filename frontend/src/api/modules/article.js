@@ -79,9 +79,9 @@ async function updateReading(articleId) {
   return await Promise.resolve(result);
 }
 
-async function getTodayHotNews(){
+async function getTodayHotNews() {
   var result = null;
-  await api.get('/article/hot-news').then((res)=>{
+  await api.get('/article/hot-news').then((res) => {
     result = res.data.data;
   });
   return await Promise.resolve(result);
@@ -89,25 +89,25 @@ async function getTodayHotNews(){
 
 async function getTodayAllNews() {
   var result = null;
-  await api.get('/article/category-news').then((res)=>{
+  await api.get('/article/category-news').then((res) => {
     result = res.data.data;
   });
   return await Promise.resolve(result);
 }
 
-async function searchNews(param, success, fail){
+async function searchNews(param, success, fail) {
   await api.post(`/article/search?keyword=${param.keyword}`,
-  JSON.stringify(param.categoryLast)
+    JSON.stringify(param.categoryLast)
   ).then(success).catch(fail);
 }
 
-async function getAllNews(param){
+async function getAllNews(param) {
   var result = null;
   let temp = [];
   temp.push(param.hot);
   temp.push(param.recent);
-  await api.post('/article/all-news',temp).then((res)=>{
-    console.log(res.data.data);
+  await api.post('/article/all-news', temp).then((res) => {
+    // console.log(res.data.data);
     result = res.data.data;
   });
   return await Promise.resolve(result);
